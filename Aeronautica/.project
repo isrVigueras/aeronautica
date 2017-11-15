@@ -21,11 +21,6 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>com.google.cloud.tools.eclipse.appengine.standard.java8.appengineWeb</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
 			<name>com.github.sdbg.integration.jdt.gwtsdmbuilder</name>
 			<arguments>
 			</arguments>
@@ -51,6 +46,11 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
+			<name>com.google.cloud.tools.eclipse.appengine.standard.java8.appengineWeb</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
 			<name>org.eclipse.m2e.core.maven2Builder</name>
 			<arguments>
 			</arguments>
@@ -64,6 +64,5 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 		<nature>com.github.sdbg.integration.jdt.gwtsdmnature</nature>
-		<nature>com.google.appengine.eclipse.core.gaeNature</nature>
 	</natures>
 </projectDescription>
