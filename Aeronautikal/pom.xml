@@ -89,6 +89,16 @@
 				<artifactId>appengine-maven-plugin</artifactId>
 				<version>1.9.42</version>
 			</plugin>
+			<plugin>
+    			 <groupId> org.eclipse.jetty</groupId >
+   				  <artifactId> jetty-maven-plugin</artifactId >
+    				 <configuration>
+     					<webAppConfig>
+     				 			   <contextPath> /${project.artifactId}</contextPath >
+      				  			 <webInfIncludeJarPattern> busines-letter-*.</webInfIncludeJarPattern >
+     					</webAppConfig>
+     				</configuration>
+     		</plugin>
 		</plugins>
 		</pluginManagement>
 	</build>

@@ -16,7 +16,9 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.googlecode.objectify.Key;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
+import com.tikal.aeronautikal.entity.OrdenEntity;
 import com.tikal.aeronautikal.model.Aeronave;
+import com.tikal.aeronautikal.service.OrdenService;
 import com.tikal.aeronautikal.service.SelectionService;
 import com.tikal.aeronautikal.util.JsonConvertidor;
 
@@ -33,6 +35,29 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public class OrdenController {
+	
+	   @Autowired
+	    private OrdenService ordenService;
+	
+	 @RequestMapping(value = "/add", method = RequestMethod.POST)   //put folio
+	    public String addOrdenPost(ModelMap model, @ModelAttribute("entry") OrdenEntity entry, HttpServletResponse response )throws IOException {
+	    	  
+	        try {
+	            // server validation. Link should be unique
+	            Map<String, Object> conditions = new HashMap<String, Object>();	
+	            conditions.put("folio", entry.getFolio());
+	            ordenService.getUniqueEntity(OrdenEntity.class, conditions);
+	            model.put("notUniqueMatricula", true);
+	            return "addAeronave";
+	        } catch (RuntimeException ignored) {
+	            // getUniqueEntity should throw exception
+	        }
+	       
+	        //entry.setDate(Calendar.getInstance().getTime());
+	        ordenService.save(entry);
+	        response.getWriter().printf("Ya se creo una orden de trabajo con un folio generado...");
+	        return "redirect:/aeronave";
+	    }
 
 	 //// EJEMPLO DE FUNCION CONSUMIENDO EL WEB SERVICE
 	   @RequestMapping(value={"/guarda"},method = RequestMethod.GET, consumes="application/json")
