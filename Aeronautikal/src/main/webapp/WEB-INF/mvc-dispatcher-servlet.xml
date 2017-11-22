@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" 
@@ -12,12 +12,17 @@
         http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
  	<context:component-scan base-package="com.tikal.aeronautikal.controller"/>
-     <context:component-scan base-package="com.tikal.aeronautikal.service.impl"/>
-     <context:component-scan base-package="com.tikal.aeronautikal.service"/>
+    <context:component-scan base-package="com.tikal.aeronautikal.service.impl"/>
+
+   
     <context:component-scan base-package="com.tikal.aeronautikal.dao.impl"/>
     <context:component-scan base-package="com.tikal.aeronautikal.util"/>
     
-    <mvc:annotation-driven/>
    
+
+
+    <mvc:annotation-driven/>
+
+    
     
 </beans>

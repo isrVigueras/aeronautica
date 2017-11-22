@@ -1,9 +1,13 @@
 package com.tikal.aeronautikal.model;
 
+import com.googlecode.objectify.annotation.Container;
+
 public class Contacto {
 	private String nombre;
 	private String telefono;
 	private String correoElectronico;
+	
+	
 	/**
 	 * Recupera el valor del campo nombre para su uso.
 	 * @return the nombre

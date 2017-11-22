@@ -11,10 +11,10 @@
 		<servlet-class>
                       org.springframework.web.servlet.DispatcherServlet
          </servlet-class>
-         <init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/mvc-dispatcher-servlet.xml</param-value>
-		</init-param>
+<!--          <init-param> -->
+<!-- 			<param-name>contextConfigLocation</param-name> -->
+<!-- 			<param-value>/WEB-INF/mvc-dispatcher-servlet.xml</param-value> -->
+<!-- 		</init-param> -->
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
@@ -22,10 +22,10 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
-	<!-- <context-param>
+	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/mvc-dispatcher-servlet.xml</param-value>
-	</context-param> -->
+	</context-param>
 	
 	<listener>
 		<listener-class>
@@ -91,7 +91,27 @@
 <!--     </auth-constraint> -->
 <!--   </security-constraint> -->
 
-	
- 
-
+	<security-constraint>
+        <web-resource-collection>
+            <web-resource-name>add orden</web-resource-name>
+            <url-pattern>/orden/add</url-pattern>
+        </web-resource-collection>
+       
+    </security-constraint>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>add aeronave</web-resource-name>
+            <url-pattern>/aeronave/add</url-pattern>
+        </web-resource-collection>
+        
+    </security-constraint>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>add contacto</web-resource-name>
+            <url-pattern>/contacto/add</url-pattern>
+        </web-resource-collection>
+      
+    </security-constraint>
 </web-app>

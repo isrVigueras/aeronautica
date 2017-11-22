@@ -48,6 +48,7 @@ public interface SelectionService {
      * @param conditions    Map with key as a field name and value as a field value
      * @return              Entity by given criteria
      */
+    
     <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions);
 
 }

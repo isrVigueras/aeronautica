@@ -35,6 +35,8 @@ public class SelectionServiceImpl implements SelectionService {
     }
 
     public <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions) {
+    	 System.out.println("ESTOY EN AERO SERVICEIMPL");
         return selectionDao.getUniqueEntity(clazz, conditions);
+        
     }
 }

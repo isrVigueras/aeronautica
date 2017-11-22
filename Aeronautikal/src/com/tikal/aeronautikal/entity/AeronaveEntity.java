@@ -1,5 +1,6 @@
 package com.tikal.aeronautikal.entity;
 
+import com.googlecode.objectify.annotation.Container;
 import  com.googlecode.objectify.annotation.Entity ;
 import  com.googlecode.objectify.annotation.Id ;
 import  com.googlecode.objectify.annotation.Index ;
@@ -8,11 +9,13 @@ import  com.googlecode.objectify.annotation.Index ;
 
 @Entity 
 public  class  AeronaveEntity implements BaseEntity{
-    @Id  private String matricula;
+    @Index  private String matricula;
     @Index private String modelo;
-    @Index private String numeroSerie;
+    @Id private long numeroSerie;
     private int aterrizaje;
     private int tiempovuelo;
+    
+	@Container OrdenEntity orden;
     
     
 	public String getMatricula() {
@@ -24,15 +27,16 @@ public  class  AeronaveEntity implements BaseEntity{
 	public String getModelo() {
 		return modelo;
 	}
+	public long getNumeroSerie() {
+		return numeroSerie;
+	}
+	public void setNumeroSerie(long numeroSerie) {
+		this.numeroSerie = numeroSerie;
+	}
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
-	public String getNumeroSerie() {
-		return numeroSerie;
-	}
-	public void setNumeroSerie(String numeroSerie) {
-		this.numeroSerie = numeroSerie;
-	}
+	
 	public int getAterrizaje() {
 		return aterrizaje;
 	}
