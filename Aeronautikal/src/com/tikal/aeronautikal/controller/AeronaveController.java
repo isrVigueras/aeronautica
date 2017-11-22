@@ -47,7 +47,7 @@ public class AeronaveController  {
 	   System.out.println("si entra aqui 1");
 	   try {
         
-            entry.setMatricula("MAT-444");
+            entry.setMatricula("MAT-44477");
             entry.setModelo("Super");
             entry.setNumeroSerie(22221);
             entry.setTiempovuelo(1620);
