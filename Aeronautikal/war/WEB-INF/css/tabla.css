@@ -1,0 +1,18 @@
+     table.tito {
+   
+    width: 95%;
+    margin: 1% 2%;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+  
+    }
+      th, td {
+   width: 25%;
+    border: 1px solid #000;
+    background-color: rgba(83, 73, 61, 0.68);
+    text-align: center;
+    color:#EEE6E6;
+}
+caption {
+   padding: 0.10em;
+}

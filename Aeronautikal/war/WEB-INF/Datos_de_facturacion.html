@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<title>Datos de facturacion</title>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
+ 
+    <script src="//code.angularjs.org/1.2.19/i18n/angular-locale_es-es.js"></script>
+    
+    <script src="js/script.js"></script>
+</head>
+<body ng-controller="facturacionController">
+	 <h1>Facturacion</h1>
+	 <leabl></label>
+	<form>
+  <h3>Datos de la empresa</h3>
+  <label for="nom_empresa">Nombre de la empresa:</label><input class="form-control" placeholder="Escriba el nombre de la empresa" id="nom_empresa" name="nom_empresa" type="text"/>
+  <label for="em_rfc">RFC:</label><input class="form-control" placeholder="Escriba el RFC" id="em_rfc" name="em_rfc" type="text"/>
+  <label for="em_razon">Razon Social:</label><input class="form-control" placeholder="Escriba la razon social" id="em_razon" name="em_razon" type="text"/>
+  <br>
+  <leabl></label>
+  <h3>Direccion</h3>
+    <label for="em-pais">Pais:</label><select class="form-control" id="em-pais" name="em-pais" type="checkbox">
+  <option value="">Elige un pais</option>
+  </select>
+    <label for="a_t_vuelo">Tiempo de Vuelo:</label><select class="form-control" id="a_t_vuelo" name="a_t_vuelo" type="checkbox">
+  <option value="">Elige Tiempo de Vuelo</option>
+  </select>
+  <label for="nom_empresa">Nombre de la empresa:</label><input class="form-control" placeholder="Escriba el nombre de la empresa" id="nom_empresa" name="nom_empresa" type="text"/>
+	</form>
+
+</body>
+<br>
+<a href="http://localhost/aeronau/Orden_de_trabajo.html">ordendetrabajo</a>
+<a href="http://localhost/aeronau/Datos_de_facturacion.html">facturacion</a>
+<a href="http://localhost/aeronau/Detalle_discrepancias.html">detalle</a>
+<a href="http://localhost/aeronau/Discrepancias.html">discrepancias</a>
+<a href="http://localhost/aeronau/Ordenes_generadas.html">ordenes generadas</a>
+</html>

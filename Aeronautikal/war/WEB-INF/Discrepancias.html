@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="css/estilos.css" rel="stylesheet" type="text/css" />
+<link href="css/tabla.css" rel="stylesheet" type="text/css" />
+<!--*************************estilos y librerias de boostrap********************-->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script>
+  $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+</script>
+<script>
+  $('#mycompo').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+</script>
+<script>
+  $('#segundav').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+</script>
+<script>
+  $('#myper').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+</script>
+
+	<title>Discrepancias</title>
+</head>
+<style>
+    #mdialTamanio{
+      width: 60% !important;
+    }
+  </style>
+<body background="img/3.jpg">
+    <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">SACSA</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="http://localhost/aeronau/Orden_de_trabajo.html">Generar una O/T</a></li>
+      <li><a href="http://localhost/aeronau/Ordenes_generadas.html">Ordenes Generadas</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="http://localhost/aeronau/Orden_de_trabajo.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a href="http://localhost/aeronau/Ordenes_generadas.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+  </div>
+</nav>
+  <!--<div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-secondary" OnClick="location.href='http://localhost/aeronau/Orden_de_trabajo.html'">Generar una O/T</button>
+  <button type="button" class="btn btn-secondary" OnClick="location.href='http://localhost/aeronau/Ordenes_generadas.html'">Ordenes Generadas</button>
+</div>-->
+	<div class="contenedor">
+    <ul class="nav nav-tabs">
+  <li><a style="color:#EEE6E6" href="http://localhost/aeronau/Detalle_discrepancias.html">Detalles</a></li>
+  <li class="active"><a href="http://localhost/aeronau/Discrepancias.html">Discrepancias</a></li>
+</ul>
+<center><h3 style="color:#EEE6E6">Discrepancias</h3></center>
+  <br>
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal" data-target="#myModal">
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Discrepancia
+</button>
+  <table class="table table-striped">
+
+  <tr bgcolor="#A9F5F2">
+
+    <th>Taller</th>
+
+    <th>Seccion</th>
+
+    <th>Detalle</th>
+    
+    <th>Accion</th>
+
+  </tr>
+
+  <tr>
+
+    <td>01</td>
+
+    <td>02</td>
+
+    <td>Mantenimiento progrmado</td>
+
+    <td>
+      <!--<button type="button" class="btn btn-default" aria-label="Left Align" OnClick="location.href='http://localhost/aeronau/s.html'">
+  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+</button>--><button type="button" class="btn btn-default" data-toggle="modal" data-target="#segundav">
+          <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button type="button" class="btn btn-default" aria-label="Left Align" href="http://localhost/aeronau/Detalle_discrepancias.html">
+  <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+</button></td>
+
+  </tr>
+
+  <tr>
+
+    <td>01</td>
+
+    <td>03</td>
+
+    <td>Trabajos de inspeccion</td>
+
+     <td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#segundav">
+          <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button type="button" class="btn btn-default" aria-label="Left Align" href="http://localhost/aeronau/Detalle_discrepancias.html">
+  <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+</button></td>
+
+  </tr>
+
+  <tr>
+
+    <td>03</td>
+
+    <td>01</td>
+
+    <td>Trabajos de electrico</td>
+
+    <td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#segundav">
+          <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button type="button" class="btn btn-default" aria-label="Left Align" href="http://localhost/aeronau/Detalle_discrepancias.html">
+  <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+</button></td>
+
+  </tr>
+</table>
+<br><br><br>
+</div>
+<!--********************************** Modal ***********************************-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <center><h4 class="modal-title" id="myModalLabel">Discrepancia</h4></center>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <form>
+  <center><label for="con_nombre">Descripcion/description:</label></center>
+  <br>
+  <center><textarea class="form-control" rows="4" cols="30" placeholder="Escriba la Descripcion.">
+</textarea></center>
+<br>
+<center><label for="con_nombre">Acion Tomada:</label></center>
+<br>
+<center><textarea class="form-control"  rows="4" cols="30" placeholder="Escriba la accion Tomada.">
+</textarea></center>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myper">
+          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>Personal</button>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#mycompo">
+          <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>Componente</button>
+           <button type="button" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--************************ Modalcomponente********************************* -->
+<div class="modal fade" id="mycompo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Componente</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+                <form>
+        <label for="d_componente">Componente/component:</label><input class="form-control" placeholder="Escriba el Nombre del Componente" id="d_componente" name="d_componente" type="text"/>
+        <label for="d_componente">No.De parte/p.n.:</label><input class="form-control" placeholder="Escriba el No. de Parte" id="d_componente" name="d_componente" type="text"/>
+         <label for="d_componente">Cant/qty:</label><input class="form-control" placeholder="Escriba la Cantidad" id="d_componente" name="d_componente" type="text"/>
+          <label for="d_componente">C.Falt/peding:</label><input class="form-control" placeholder="" id="d_componente" name="d_componente" type="text"/>
+           <label for="d_componente">No.Req./requisition:</label><input class="form-control" placeholder="" id="d_componente" name="d_componente" type="text"/>
+            <label for="d_componente">No.Vale/ticket:</label><input class="form-control" placeholder="" id="d_componente" name="d_componente" type="text"/>
+             <label for="d_componente">N.S. Removido/s.n.removed:</label><input class="form-control" placeholder="" id="d_componente" name="d_componente" type="text"/>
+              <label for="d_componente">N.S Instalado/s.n.installed:</label><input class="form-control" placeholder="" id="d_componente" name="d_componente" type="text"/>
+
+                </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Guardar los cambios</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--************************ Modalseundavista********************************* -->
+<div class="modal fade" id="segundav" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document" id="mdialTamanio">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Componente</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+  <h3>&nbsp;&nbsp;Detalle OT</h3>
+<div class="row" style="margin: 1% 1%;">
+  <div class="col-xs-3">
+  <label for="folio">Folio:</label><p class="form-control-static" id="folio" name="folio" type="number">125634</p>
+</div>
+<div class="col-xs-3">
+  <label for="fechaCreacion">Fecha:</label><p class="form-control-static" id="folio" name="folio" type="number">11/10/2017</p>
+</div>
+<div class="col-xs-3">
+  <label for="empresa">Empresa:</label><p class="form-control-static" id="folio" name="folio" type="number">Airbus Industrie  </p>
+  </div>
+<div class="col-xs-3">
+  <label for="folio">Discrepancia/discrepancy:</label><p class="form-control-static" id="folio" name="folio" type="number">007</p>
+</div>
+</div>
+  <br> 
+  <h3>&nbsp;&nbsp;Aeronave</h3>
+  <div class="row" style="margin: 1% 1%;">
+    <div class="col-xs-3">
+  <label for="a_matricula">Matricula:</label><p class="form-control-static" id="folio" name="folio" type="number">G-KELS</p>
+  </div>
+  <div class="col-xs-3">
+  <label for="a_modelo">Modelo:</label><p class="form-control-static" id="folio" name="folio" type="number">LEARJET 25</p>
+    </div>
+    <div class="col-xs-3">
+  <label for="n_serie">Numero de serie:</label><p class="form-control-static" id="folio" name="folio" type="number">FL45SE8R77896423E</p>
+    </div>
+    <div class="col-xs-3">
+  <label for="a_t_vuelo">Tiempo de Vuelo:</label><p class="form-control-static" id="folio" name="folio" type="number">14 Horas</p>
+    </div>
+    <div class="col-xs-3">
+  <label for="a_t_aterrizaje">Aterrizaje:</label><p class="form-control-static" id="folio" name="folio" type="number">Toluca</p>
+    </div>
+  </div>
+   
+  <h3>&nbsp;&nbsp;Discrepancia</h3>
+  <br>
+  <div class="row" style="margin: 1% 1%;">
+    <div class="col-xs-2">
+  <label for="a_matricula">Taller/shop:</label><p class="form-control-static" id="folio" name="folio" type="number">01 MANTENIMIENTO</p>
+  </div>
+  <div class="col-xs-2">
+  <label for="a_modelo">Seccion/section:</label><p class="form-control-static" id="folio" name="folio" type="number">02 MANTENIMIENTO PROGRAMADO</p>
+    </div>
+      <div class="col-xs-3">
+  <label for="con_nombre">Descripcion/description:</label>
+  <br>
+  <p class="form-control-static" id="folio" name="folio" type="number">Ejecutar fases A1-A6 conforme al manual de mantenimiento.</p>
+    </div>
+    <div class="col-xs-4">
+  <label for="con_nombre">Accion Tomada/action taken:</label>
+  <br>
+  <p class="form-control-static" id="folio" name="folio" type="number">Se efectuaron fases A1,A2,A3,A4,A5 y A6 de acuerdo al MM 05-10-01 hasta 05-10-06.</p>
+  </div>
+    </div>
+    <h3>&nbsp;&nbsp;Componentes</h3>
+  <div class="table-responsive" >
+        <table class="table table-striped" >
+
+  <tr bgcolor="#A9F5F2">
+
+    <th>Componente/componet</th>
+
+    <th>No.DeParte/p.n</th>
+
+    <th>Cant./qty</th>
+
+    <th>C.Falt/pending</th>
+    
+    <th>No.Req/requisition</th>
+    
+    <th>No.Vale/tiket</th>
+  
+  <th>N.S.Removido/s.n.removed</th>
+
+  <th>N.S Instaldo/s.n.installed</th>
+  </tr>
+
+  <tr>
+
+    <td>GASTEK</td>
+
+    <td>101244</td>
+
+    <td>2.00</td>
+
+    <td>0.00</td>
+     <td></td>
+      <td>20029</td>
+       <td></td>
+        <td></td>
+  </tr>
+
+  <tr bgcolor="#CEECF5">
+
+    
+    <td>GASTEK</td>
+
+    <td>101246</td>
+
+    <td>2.00</td>
+
+    <td>0.00</td>
+     <td></td>
+      <td>20029</td>
+       <td></td>
+        <td></td>
+
+  </tr>
+
+  <tr bgcolor="#CEECF5">
+
+      
+    <td>FILTER ELEMENT</td>
+
+    <td>6600489-1</td>
+
+    <td>2.00</td>
+
+    <td>0.00</td>
+     <td></td>
+      <td>20029</td>
+       <td></td>
+        <td></td>
+
+  </tr>
+  <tr bgcolor="#CEECF5">
+
+      
+    <td>PACKING/EMPAQUE</td>
+
+    <td>MS29513-238</td>
+
+    <td>2.00</td>
+
+    <td>0.00</td>
+     <td></td>
+      <td>20029</td>
+       <td></td>
+        <td></td>
+
+  </tr>
+  <tr bgcolor="#CEECF5">
+
+      
+    <td>SCREW</td>
+
+    <td>MS35265-31</td>
+
+    <td>3.00</td>
+
+    <td>0.00</td>
+     <td></td>
+      <td>20029</td>
+       <td></td>
+        <td></td>
+
+  </tr>
+</table>
+    
+      </div>
+      <h3>&nbsp;&nbsp;Horas de Hombre</h3>
+  <br>
+  <div class="row" style="margin: 1% 1%;">
+    <div class="col-xs-7">
+      <table class="table table-striped">
+
+  <tr bgcolor="#A9F5F2">
+
+    <th>No. Empleado</th>
+
+    <th>Licencia</th>
+
+    <th>Fecha</th>
+
+    <th>Hrs Normal</th>
+    
+    <th>Hrs Extra</th>
+    
+    <th>Autorizo Supervisor</th>
+  
+  </tr>
+
+  <tr bgcolor="#CEECF5">
+
+    <td>566</td>
+
+    <td>z00000249</td>
+
+    <td>15/04/06</td>
+
+    <td>6</td>
+     <td>1</td>
+      <td>Cesar Martinez</td>
+  </tr>
+
+  <tr bgcolor="#CEECF5">
+
+    
+     <td>568</td>
+
+    <td>z00000250</td>
+
+    <td>15/04/06</td>
+
+    <td>2</td>
+     <td>1</td>
+      <td>Cesar Martinez</td>
+
+  </tr>
+
+  <tr bgcolor="#CEECF5">
+
+      
+ <td>5670</td>
+
+    <td>z00000251</td>
+
+    <td>20/04/06</td>
+
+    <td>5</td>
+     <td>0</td>
+      <td>Cesar Martinez</td>
+
+  </tr>
+  <!--<tr bgcolor="#CEECF5">
+
+      
+   <td>572</td>
+
+    <td>z00000255</td>
+
+    <td>15/04/06</td>
+
+    <td>12</td>
+     <td>6</td>
+      <td>Cesar Martinez</td>
+
+  </tr>
+  <tr bgcolor="#CEECF5">
+
+      
+    <td>580</td>
+
+    <td>z00000260</td>
+
+    <td>15/04/06</td>
+
+    <td>7</td>
+     <td>0</td>
+      <td>Cesar Martinez</td>
+
+  </tr>
+   <tr bgcolor="#CEECF5">
+
+      
+    <td>581</td>
+
+    <td>z00000300</td>
+
+    <td>17/04/06</td>
+
+    <td>4</td>
+     <td>2</td>
+      <td>Cesar Martinez</td>
+
+  </tr>-->
+</table>
+    </div>
+  </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Guardar los cambios</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--********************** Modal_agregar_personal****************************** -->
+<div class="modal fade" id="myper" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Personal</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+                <form>
+        <label for="d_componente">Nombre:</label>
+        <br>
+        <select multiple class="form-control">
+<option value="1">Octavio Ramirez Flores</option>
+
+<option value="2">Alberto Dasaed Martinez Ocampo</option>
+
+<option value="3">David Paz Albarran</option>
+<option value="4">Israel Peaz Sanchez</option>
+<option value="5">Roque Roa Mejia</option>
+<option value="6">Luis Alberto Dias Albarran</option>
+<option value="6">Jorgue Solis Ramos</option>
+<option value="6">Joel Herrera Cruz</option>
+<option value="6">Daniel Edmundo Perez</option>
+<option value="6">Calos Jose Hernandez  </option>
+</select>
+<br><br>
+        <label for="d_componente">Horas normales:</label><input class="form-control" placeholder="Escriba el No. de Horas laborales" id="d_componente" name="d_componente" type="number"/>
+         <label for="d_componente">Horas extras:</label><input class="form-control" placeholder="Escriba el No. de Horas Extra" id="d_componente" name="d_componente" type="number"/>
+          <label for="d_componente">Supervisor que Autoriza:</label><input class="form-control" placeholder="" id="d_componente" name="d_componente" type="text"/>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Guardar los cambios</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br>
+<footer class="footer-distributed">
+
+      <div class="footer-right">
+
+        <a href="#"><i class="fa fa-facebook"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="#"><i class="fa fa-linkedin"></i></a>
+        <a href="#"><i class="fa fa-github"></i></a>
+
+      </div>
+
+      <div class="footer-left">
+
+        <p class="footer-links">
+          <a href="#">Home</a>
+          ·
+          <a href="#">Blog</a>
+          ·
+          <a href="#">Pricing</a>
+          ·
+          <a href="#">About</a>
+          ·
+          <a href="#">Faq</a>
+          ·
+          <a href="#">Contact</a>
+        </p>
+
+        <p>SACSA &copy; 2017</p>
+      </div>
+
+    </footer>
+</body>
+</html>
