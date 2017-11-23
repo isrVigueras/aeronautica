@@ -60,6 +60,7 @@ app.controller('ordenController', ['$scope', 'remoteResource',function($scope, r
  $scope.fo = {
 
     folio:undefined,
+    fechaApertura:undefined,
     con_nombre:"",    
     con_telefono:undefined,
     con_correo:"",
