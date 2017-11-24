@@ -9,11 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.annotation.OnLoad;
+import com.tikal.aeronautikal.dao.AeronaveDao;
+import com.tikal.aeronautikal.dao.EmpresaDao;
+import com.tikal.aeronautikal.entity.EmpresaEntity;
 import com.tikal.aeronautikal.entity.OrdenEntity;
 import com.tikal.aeronautikal.model.Aeronave;
-import com.tikal.aeronautikal.model.Empresa;
 import com.tikal.aeronautikal.service.OrdenService;
 import com.tikal.aeronautikal.util.JsonConvertidor;
+
+
 import java.io.IOException;
 
 import java.util.HashMap;
@@ -32,17 +37,28 @@ public class OrdenController {
 	
 	   @Autowired
 	   
-	    private OrdenService ordenService;   
+	    private OrdenService ordenService;
 	   
-	   static {
-	        ObjectifyService.register(OrdenEntity.class);
-	    }
+	
+
+	   
+
 	   
 	   
 //	   @RequestMapping(value = "/add", method = RequestMethod.GET)
 //	    public String addOrdenGet(@ModelAttribute("entry") OrdenEntity entry) {
 //	        return "Orden_de_trabajo";
 //	    }
+	   
+//		@RequestMapping(value = {"/add1" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+//		public void addEmpresa(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
+//		throws IOException {
+//		System.out.println(json);
+//		EmpresaEntity e = (EmpresaEntity) JsonConvertidor.fromJson(json, EmpresaEntity.class);
+//		e.getNickName().setTipoRegimen(e.getTipo());
+//		empresasdao.aplicarUnRegimen(e.getRegimen(), empresasdao.consultar(e.getEmpresa()));
+
+//}
 	   
 	   
 	   @RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -130,7 +146,6 @@ public class OrdenController {
 	    }
 	   
 	   
-	    
-
 	   
 }
+	    

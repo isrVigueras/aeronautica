@@ -28,8 +28,8 @@ public class ContactoController {
 		   System.out.println("si entra aqui 1");
 		   try {
 	        
-	            entry.setNombre("nombre del Contacto");
-	            entry.setCorreoElectronico("correoElectronico");
+	            entry.setNombre("Juan Perez");
+	            entry.setCorreoElectronico("juan@perez");
 	            entry.setTelefono("722-333-33-33");          
 	      
 	            System.out.println("si asigna valor a contactos : "+entry);

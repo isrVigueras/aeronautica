@@ -1,16 +1,22 @@
 package com.tikal.aeronautikal.entity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
-
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Load;
+import com.googlecode.objectify.annotation.OnLoad;
 import com.tikal.aeronautikal.model.Aeronave;
 import com.tikal.aeronautikal.model.Contacto;
 import com.tikal.aeronautikal.model.Empresa;
 import com.tikal.aeronautikal.model.otBody.Discrepancia;
+
 
 @Entity
 
@@ -18,16 +24,45 @@ public class OrdenEntity implements BaseEntity{
 	
 	  
 	    @Id private long folio;
-	    @Index private Empresa laEmpresa;
-	    @Index private Aeronave elAeronave;
+	    @Ignore private Empresa laEmpresa;
+	    @Ignore private Aeronave elAeronave;
 		private Contacto datosContacto;		
 		private Calendar fechaApertura;
 		private String condiciones;
 		private List<Discrepancia> discrepancias;
+		
+		@Load List<Ref<Discrepancia>> refDiscrepancias;
+		@Index @Load Ref<Empresa> refEmpresa;
+		@Index @Load Ref<Aeronave> refAeronave;
+		
 	
 		//SortedSet<Discrepancia> discrepancias = new TreeSet<>(new TreadRemainingComparator()); es para inicializar el 
 		
+		  @OnLoad
+		    public void getRefs() {
+		        if( refEmpresa.isLoaded() ){
+		            laEmpresa = refEmpresa.get();
+		        }
+		        if (refAeronave.isLoaded()){
+		        	elAeronave =refAeronave.get();
+		        }
+		        
+		    }
+		  
+		  public List<Discrepancia> getDisgrepancias() {
+				List<Discrepancia> ret = new ArrayList<Discrepancia>();
+				Iterator<Ref<Discrepancia>> it = refDiscrepancias.iterator();
+
+				while (it.hasNext()) {
+					ret.add(it.next().getValue());
+				}
+				return ret;
+			}
+
 		
+		  public void Orden() {
+				this.refDiscrepancias = new ArrayList<Ref<Discrepancia>>();
+			}
 		public long getFolio() {
 			return folio;
 		}

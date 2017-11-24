@@ -15,7 +15,7 @@ public class EmpresaEntity implements BaseEntity{
 
 	
 	@Id private String nickName;
-	@Index private DatosFacturacion datosFacturacion;
+	private DatosFacturacion datosFacturacion;
 	@Container OrdenEntity orden;
 	
 	public String getNickName() {

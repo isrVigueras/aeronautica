@@ -2,7 +2,7 @@ package com.tikal.aeronautikal.dao.impl;
 
 
 import com.googlecode.objectify.cmd.Query;
-import com.tikal.aeronautikal.dao.SelectionDao;
+import com.tikal.aeronautikal.dao.AeronaveDao;
 import com.tikal.aeronautikal.entity.BaseEntity;
 import com.tikal.aeronautikal.exception.ObjectNotFoundException;
 
@@ -19,7 +19,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 @Service("selectionDao")
 
-public class SelectionDaoImpl implements SelectionDao {
+public class AeronaveDaoImpl implements AeronaveDao {
 
     public <T extends BaseEntity> void save(T object) {
     	

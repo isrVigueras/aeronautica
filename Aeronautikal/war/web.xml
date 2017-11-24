@@ -114,4 +114,12 @@
         </web-resource-collection>
       
     </security-constraint>
+    
+     <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>add empresa</web-resource-name>
+            <url-pattern>/empresa/add</url-pattern>
+        </web-resource-collection>
+      
+    </security-constraint>
 </web-app>

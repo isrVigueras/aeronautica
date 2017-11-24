@@ -3,9 +3,9 @@ package com.tikal.aeronautikal.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tikal.aeronautikal.dao.SelectionDao;
+import com.tikal.aeronautikal.dao.AeronaveDao;
 import com.tikal.aeronautikal.entity.BaseEntity;
-import com.tikal.aeronautikal.service.SelectionService;
+import com.tikal.aeronautikal.service.AeronaveService;
 
 import java.util.List;
 import java.util.Map;
@@ -13,10 +13,10 @@ import java.util.Map;
  * @author 
  */
 @Service("selectionService")
-public class SelectionServiceImpl implements SelectionService {
+public class AeronaveServiceImpl implements AeronaveService {
 
     @Autowired
-    protected SelectionDao selectionDao;
+    protected AeronaveDao selectionDao;
 
     public <T extends BaseEntity> void save(T object) {
         selectionDao.save(object);

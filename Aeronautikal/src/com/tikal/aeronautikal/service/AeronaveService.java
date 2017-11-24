@@ -11,7 +11,7 @@ import com.tikal.aeronautikal.entity.BaseEntity;
  *
  * @author tikal
  */
-public interface SelectionService {
+public interface AeronaveService {
 
     /**
      * saves given object in database

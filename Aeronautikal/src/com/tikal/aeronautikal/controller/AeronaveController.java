@@ -18,7 +18,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.exception.ObjectNotFoundException;
 import com.tikal.aeronautikal.model.Aeronave;
-import com.tikal.aeronautikal.service.SelectionService;
+import com.tikal.aeronautikal.service.AeronaveService;
 import com.tikal.aeronautikal.util.JsonConvertidor;
 
 import java.io.IOException;
@@ -39,7 +39,7 @@ public class AeronaveController  {
 	private static final int RECORDS_PER_PAGE = 5;
 
     @Autowired
-    private SelectionService selectionService;
+    private AeronaveService selectionService;
 
  
     @RequestMapping(value = "/add", method = RequestMethod.GET)
