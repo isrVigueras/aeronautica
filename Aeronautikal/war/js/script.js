@@ -1,5 +1,28 @@
 var app = angular.module('app', []);
-
+ app.service('OrdenesService', [ '$http', '$q', '$cookieStore', function($http, $q, $cookieStore) {
+  this.genera_orden = function(folio,fechaApertura,con_nombre,con_telefono,con_correo,empresa,a_matricula,a_modelo,n_serie,a_t_vuelo,a_t_aterrizaje) {
+    var d = $q.defer();
+    var enviar = {
+      lista : folio,
+              fechaApertura,
+              con_nombre,    
+              con_telefono,
+              con_correo,
+              empresa,
+              a_matricula,
+              a_modelo,
+              n_serie,
+              a_t_vuelo,
+              a_t_aterrizaje
+    }
+    $http.post("/OrdenController/add/", enviar).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
 function RemoteResource($http,$q, baseUrl) {
   this.get = function() {
     var defered=$q.defer();
@@ -18,7 +41,7 @@ function RemoteResource($http,$q, baseUrl) {
     
   }
 }
-
+//
 function RemoteResourceProvider() {
   var _baseUrl;
   this.setBaseUrl = function(baseUrl) {
@@ -31,7 +54,7 @@ function RemoteResourceProvider() {
 
 app.provider("remoteResource", RemoteResourceProvider);
 
-
+//provedor de recursos remotos
 app.constant("baseUrl", ".");
 app.config(['baseUrl', 'remoteResourceProvider',
   function(baseUrl, remoteResourceProvider) {
@@ -39,7 +62,7 @@ app.config(['baseUrl', 'remoteResourceProvider',
   }
 ]);
 
-
+//este es el plugin para el calendario 
 app.directive('caDatepicker', [function(dateFormat) {
   return {
     restrict: 'A',
