@@ -20,8 +20,8 @@ public class OrdenServiceImpl implements OrdenService {
 	        ordenDao.save(object);
 	    }
 	    
-	    public <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions) {
-	        return ordenDao.getUniqueEntity(clazz, conditions);
-	    }
+//	    public <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions) {
+//	        return ordenDao.getUniqueEntity(clazz, conditions);
+//	    }
 
 }

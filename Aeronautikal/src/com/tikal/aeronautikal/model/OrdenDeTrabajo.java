@@ -15,7 +15,8 @@ public class OrdenDeTrabajo {
 	private Aeronave elAeronave;
 	private Contacto datosContacto;
 	private int folio;
-	private Calendar fechaApertura;
+	//private Calendar fechaApertura;
+	private String fechaApertura;
 	private String condiciones;
 	private List<Discrepancia> discrepancias;
 
@@ -94,7 +95,7 @@ public class OrdenDeTrabajo {
 	 * Recupera el valor del campo fechaApertura para su uso.
 	 * @return the fechaApertura
 	 */
-	public Calendar getFechaApertura() {
+	public String getFechaApertura() {
 		return fechaApertura;
 	}
 
@@ -102,7 +103,7 @@ public class OrdenDeTrabajo {
 	 * Establece el valor del campo fechaApertura.
 	 * @param fechaApertura the fechaApertura to set
 	 */
-	public void setFechaApertura(Calendar fechaApertura) {
+	public void setFechaApertura(String fechaApertura) {
 		this.fechaApertura = fechaApertura;
 	}
 

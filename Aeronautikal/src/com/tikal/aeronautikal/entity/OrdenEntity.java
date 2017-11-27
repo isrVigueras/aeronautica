@@ -26,8 +26,9 @@ public class OrdenEntity implements BaseEntity{
 	    @Id private long folio;
 	    @Ignore private Empresa laEmpresa;
 	    @Ignore private Aeronave elAeronave;
-		private Contacto datosContacto;		
-		private Calendar fechaApertura;
+		private Contacto datosContacto;	
+		//private Calendar fechaApertura;
+		private String fechaApertura;
 		private String condiciones;
 		private List<Discrepancia> discrepancias;
 		
@@ -87,10 +88,10 @@ public class OrdenEntity implements BaseEntity{
 		public void setDatosContacto(Contacto datosContacto) {
 			this.datosContacto = datosContacto;
 		}
-		public Calendar getFechaApertura() {
+		public String getFechaApertura() {
 			return fechaApertura;
 		}
-		public void setFechaApertura(Calendar fechaApertura) {
+		public void setFechaApertura(String fechaApertura) {
 			this.fechaApertura = fechaApertura;
 		}
 		public String getCondiciones() {

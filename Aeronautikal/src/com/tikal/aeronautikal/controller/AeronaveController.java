@@ -84,43 +84,43 @@ public class AeronaveController  {
 
     
     
-    @RequestMapping(value = "/page/{matricula}", method = RequestMethod.GET)
-    public String aeronavePage(ModelMap model, @PathVariable("matricula") int matricula) {
-        preparePagedModel(model, matricula);
-        return "aeronave";
-    }
+//    @RequestMapping(value = "/page/{matricula}", method = RequestMethod.GET)
+//    public String aeronavePage(ModelMap model, @PathVariable("matricula") int matricula) {
+//        preparePagedModel(model, matricula);
+//        return "aeronave";
+//    }
     
-    private void preparePagedModel(ModelMap model, int index) {
-        model.put("currentIndex", index);
-        long totalRecords = selectionService.countAll(AeronaveEntity.class);
-        if (totalRecords < (index - 1) * RECORDS_PER_PAGE) {
-            // requested page doesn't exist
-            throw new ObjectNotFoundException("Requested page doesn't exist");
-        }
-        model.put("pages", Math.ceil(totalRecords / (float) RECORDS_PER_PAGE));
-        List<AeronaveEntity> aeronaveList = selectionService.listObjectByPage(AeronaveEntity.class, index,
-                RECORDS_PER_PAGE, "-date");
-        model.put("entries", aeronaveList);
-    }
-  
-    @RequestMapping(value = "/view/{modelo}", method = RequestMethod.GET)
-    public String aeronaveEntry(ModelMap model, @PathVariable("modelo") String modelo,
-                           @ModelAttribute("entry") AeronaveEntity entity, HttpServletRequest request) {
-        Map<String, Object> conditions = new HashMap<String, Object>();
-        conditions.put("modelo", modelo);
-        conditions.put("matricula", "MAT-444");
-        System.out.println("ESTOY EN VIEW");
-        entity = selectionService.getUniqueEntity(AeronaveEntity.class, conditions);
-        System.out.println("ESTOY********* EN VIEW");
-        model.put("entry", entity);
-        //model.put("backLink", request.getHeader("referer"));
-        //UserService userService = UserServiceFactory.getUserService();
-        //if (userService.getCurrentUser() != null && userService.isUserAdmin()) {
-        //    model.put("isAdmin", true);
-        //}
-        return "aeronaveEntry";
-    }
-    
+//    private void preparePagedModel(ModelMap model, int index) {
+//        model.put("currentIndex", index);
+//        long totalRecords = selectionService.countAll(AeronaveEntity.class);
+//        if (totalRecords < (index - 1) * RECORDS_PER_PAGE) {
+//            // requested page doesn't exist
+//            throw new ObjectNotFoundException("Requested page doesn't exist");
+//        }
+//        model.put("pages", Math.ceil(totalRecords / (float) RECORDS_PER_PAGE));
+//        List<AeronaveEntity> aeronaveList = selectionService.listObjectByPage(AeronaveEntity.class, index,
+//                RECORDS_PER_PAGE, "-date");
+//        model.put("entries", aeronaveList);
+//    }
+//  
+//    @RequestMapping(value = "/view/{modelo}", method = RequestMethod.GET)
+//    public String aeronaveEntry(ModelMap model, @PathVariable("modelo") String modelo,
+//                           @ModelAttribute("entry") AeronaveEntity entity, HttpServletRequest request) {
+//        Map<String, Object> conditions = new HashMap<String, Object>();
+//        conditions.put("modelo", modelo);
+//        conditions.put("matricula", "MAT-444");
+//        System.out.println("ESTOY EN VIEW");
+//        entity = selectionService.getUniqueEntity(AeronaveEntity.class, conditions);
+//        System.out.println("ESTOY********* EN VIEW");
+//        model.put("entry", entity);
+//        //model.put("backLink", request.getHeader("referer"));
+//        //UserService userService = UserServiceFactory.getUserService();
+//        //if (userService.getCurrentUser() != null && userService.isUserAdmin()) {
+//        //    model.put("isAdmin", true);
+//        //}
+//        return "aeronaveEntry";
+//    }
+//    
     
     @RequestMapping(value={"/prueba2"},method = RequestMethod.GET)
    public void prueba2(HttpServletResponse response, HttpServletRequest request) throws IOException {
@@ -148,25 +148,25 @@ public class AeronaveController  {
 
 	}
     
-    @RequestMapping(value = "/add__", method = RequestMethod.POST)   //put matricula
-    public String addAeronavePost(ModelMap model, @ModelAttribute("entry") AeronaveEntity entry ) {
-    	  
-        try {
-            // server validation. Link should be unique
-            Map<String, Object> conditions = new HashMap<String, Object>();	
-            conditions.put("matricula", entry.getMatricula().toLowerCase());
-            selectionService.getUniqueEntity(AeronaveEntity.class, conditions);
-            model.put("notUniqueMatricula", true);
-            return "addAeronave";
-        } catch (RuntimeException ignored) {
-            // getUniqueEntity should throw exception
-        }
-       
-        //entry.setDate(Calendar.getInstance().getTime());
-        selectionService.save(entry);
-        return "redirect:/aeronave";
-    }
-//    
+//    @RequestMapping(value = "/add__", method = RequestMethod.POST)   //put matricula
+//    public String addAeronavePost(ModelMap model, @ModelAttribute("entry") AeronaveEntity entry ) {
+//    	  
+//        try {
+//            // server validation. Link should be unique
+//            Map<String, Object> conditions = new HashMap<String, Object>();	
+//            conditions.put("matricula", entry.getMatricula().toLowerCase());
+//            selectionService.getUniqueEntity(AeronaveEntity.class, conditions);
+//            model.put("notUniqueMatricula", true);
+//            return "addAeronave";
+//        } catch (RuntimeException ignored) {
+//            // getUniqueEntity should throw exception
+//        }
+//       
+//        //entry.setDate(Calendar.getInstance().getTime());
+//        selectionService.save(entry);
+//        return "redirect:/aeronave";
+//    }
+////    
 //    @RequestMapping(value = "/delete/{matricula}", method = RequestMethod.POST)
 //    public String deleteAeronave(@PathVariable("matricula") String matricula) {
 //        Map<String, Object> conditions = new HashMap<String, Object>();

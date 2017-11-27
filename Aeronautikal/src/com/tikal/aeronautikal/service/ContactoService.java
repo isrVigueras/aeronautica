@@ -9,7 +9,7 @@ public interface ContactoService {
 	
 		<T extends BaseEntity> void save(T object);
 		
-		<T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions);
+		//<T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions);
 
 
 }

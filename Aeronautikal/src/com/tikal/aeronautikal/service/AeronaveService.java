@@ -23,7 +23,7 @@ public interface AeronaveService {
      * deletes given object from database
      * @param object object to save
      */
-    <T extends BaseEntity> void delete(T object);
+  //  <T extends BaseEntity> void delete(T object);
 
     /**
      * gets objects from db for pagination
@@ -33,14 +33,14 @@ public interface AeronaveService {
      * @param order     sorting for query
      * @return          list of objects for given page
      */
-    <T extends BaseEntity> List<T> listObjectByPage(Class<T> clazz, int page, int pageSize, String order);
+ //   <T extends BaseEntity> List<T> listObjectByPage(Class<T> clazz, int page, int pageSize, String order);
 
     /**
      * counts total number of records in database
      * @param clazz class of object to count
      * @return      amount of records
      */
-    <T extends BaseEntity> long countAll(Class<T> clazz);
+  //  <T extends BaseEntity> long countAll(Class<T> clazz);
 
     /**
      * gets entity by given conditions
@@ -49,6 +49,6 @@ public interface AeronaveService {
      * @return              Entity by given criteria
      */
     
-    <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions);
+  //  <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions);
 
 }

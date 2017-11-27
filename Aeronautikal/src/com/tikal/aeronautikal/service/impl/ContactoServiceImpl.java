@@ -20,9 +20,9 @@ public class ContactoServiceImpl implements ContactoService {
 	        contactoDao.save(object);
 	    }
 	    
-	    public <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions) {
+	 //   public <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions) {
 	
-	    	return contactoDao.getUniqueEntity(clazz, conditions);
-	    }
+	    	//return contactoDao.getUniqueEntity(clazz, conditions);
+	 //   }
 
 }

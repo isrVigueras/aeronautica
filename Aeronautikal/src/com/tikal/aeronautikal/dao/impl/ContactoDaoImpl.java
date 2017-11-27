@@ -23,21 +23,21 @@ public class ContactoDaoImpl implements ContactoDao {
         System.out.println("si sale de conactoDaoImpl");
     }
 	
-	 public <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions) {
-	        Query<T> query = ofy().load().type(clazz);
-	        for (Map.Entry<String, Object> entry : conditions.entrySet()) {
-	            query = query.filter(entry.getKey(), entry.getValue());
-	        }
-	        List<T> list = query.list();
-	        if (CollectionUtils.isEmpty(list)) {
-	            throw new ObjectNotFoundException("Object of class " + clazz.getCanonicalName() +
-	                    " not found by given conditions: " + conditions);
-	        }
-	        if (list.size() > 1) {
-	            throw new ObjectNotFoundException("There are several objects of class " + clazz.getCanonicalName() +
-	                    " found by given conditions: " + conditions);
-	        }
-	        return list.get(0);
-	    }
+//	 public <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions) {
+//	        Query<T> query = ofy().load().type(clazz);
+//	        for (Map.Entry<String, Object> entry : conditions.entrySet()) {
+//	            query = query.filter(entry.getKey(), entry.getValue());
+//	        }
+//	        List<T> list = query.list();
+//	        if (CollectionUtils.isEmpty(list)) {
+//	            throw new ObjectNotFoundException("Object of class " + clazz.getCanonicalName() +
+//	                    " not found by given conditions: " + conditions);
+//	        }
+//	        if (list.size() > 1) {
+//	            throw new ObjectNotFoundException("There are several objects of class " + clazz.getCanonicalName() +
+//	                    " found by given conditions: " + conditions);
+//	        }
+//	        return list.get(0);
+//	    }
 
 }
