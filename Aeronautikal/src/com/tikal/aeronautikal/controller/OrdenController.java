@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.annotation.OnLoad;
+import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.dao.AeronaveDao;
 import com.tikal.aeronautikal.dao.EmpresaDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
@@ -73,7 +74,10 @@ public class OrdenController {
 	    	  System.out.println("si entra al add por POST"+json);
 	        try {
 	        	AsignadorDeCharset.asignar(request, response);
-	        	OrdenEntity orden =(OrdenEntity) JsonConvertidor.fromJson(json, EmpresaEntity.class);
+	        	 System.out.println("request......."+request);
+	        	 System.out.println("request......."+response);
+	        	OrdenVo orden =(OrdenVo) JsonConvertidor.fromJson(json, OrdenVo.class);
+	        	 System.out.println("el nuevo objeto: "+orden );
 	        	//pegar el valor de empresa, aeronave y contacato
 	        	orden.setFolio(1111);
 	        	ordenDao.save(orden);	            
