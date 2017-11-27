@@ -1,5 +1,5 @@
-var app = angular.module('app', []);
- app.service('OrdenesService', [ '$http', '$q', '$cookieStore', function($http, $q, $cookieStore) {
+var app = angular.module('app', ['ngRoute']);
+app.service('OrdenesService', [ '$http', '$q', function($http, $q) {
   this.genera_orden = function(folio,fechaApertura,con_nombre,con_telefono,con_correo,empresa,a_matricula,a_modelo,n_serie,a_t_vuelo,a_t_aterrizaje) {
     var d = $q.defer();
     var enviar = {
@@ -15,7 +15,7 @@ var app = angular.module('app', []);
               a_t_vuelo,
               a_t_aterrizaje
     }
-    $http.post("/OrdenController/add/", enviar).then(function(response) {
+    $http.post("/orden/add/", enviar).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -23,6 +23,50 @@ var app = angular.module('app', []);
     return d.promise;
   }
 } ]);
+
+app.config(['$routeProvider',function($routeProvider) {
+ 
+  $routeProvider.when('/', {
+    templateUrl: "login.html",
+    controller: "MainController"
+  }); 
+ 
+  $routeProvider.when('/Orden/generadas', {
+    templateUrl: "Ordenes_generadas.html",
+    controller: ""
+  });
+     
+  $routeProvider.when('/Orden/generar', {
+    templateUrl: "Orden_de_trabajo.html",
+    controller: "ordenController"
+  });
+
+  $routeProvider.when('/Orden/detalle', {
+    templateUrl: "Detalle_discrepancias.html",
+    controller: "detalledisController"
+  });
+
+    $routeProvider.when('/Orden/discrepancia', {
+    templateUrl: "Discrepancias.html",
+    controller: ""
+  });      
+  
+  $routeProvider.when('/seguro/edit/:idSeguro', {
+    templateUrl: "Orden_de_trabajo.html",
+    controller: "DetalleSeguroController",
+    resolve: {
+      seguro:['remoteResource','$route',function(remoteResource,$route) {
+        return remoteResource.get($route.current.params.idSeguro);
+      }]
+    }
+  });
+   
+  $routeProvider.otherwise({
+        redirectTo: '/'
+  });   
+ 
+}]);
+
 function RemoteResource($http,$q, baseUrl) {
   this.get = function() {
     var defered=$q.defer();
@@ -41,7 +85,7 @@ function RemoteResource($http,$q, baseUrl) {
     
   }
 }
-//
+
 function RemoteResourceProvider() {
   var _baseUrl;
   this.setBaseUrl = function(baseUrl) {
@@ -54,7 +98,7 @@ function RemoteResourceProvider() {
 
 app.provider("remoteResource", RemoteResourceProvider);
 
-//provedor de recursos remotos
+
 app.constant("baseUrl", ".");
 app.config(['baseUrl', 'remoteResourceProvider',
   function(baseUrl, remoteResourceProvider) {
@@ -62,7 +106,7 @@ app.config(['baseUrl', 'remoteResourceProvider',
   }
 ]);
 
-//este es el plugin para el calendario 
+
 app.directive('caDatepicker', [function(dateFormat) {
   return {
     restrict: 'A',
@@ -78,7 +122,7 @@ app.directive('caDatepicker', [function(dateFormat) {
   };
 }]);
 
-app.controller('ordenController', ['$scope', 'remoteResource',function($scope, remoteResource) {
+app.controller('ordenController', ['$scope', 'remoteResource','OrdenesService',function($scope, remoteResource,OrdenesService) {
  //$scope.fo = {}; alamcenar los datos en mi objeto para vidarlos
  $scope.fo = {
 
@@ -103,7 +147,12 @@ app.controller('ordenController', ['$scope', 'remoteResource',function($scope, r
   
  $scope.guardar=function() {
     if ($scope.form.$valid) {
-      alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
+      OrdenesService.genera_orden(folio,fechaApertura,con_nombre,con_telefono,con_correo,empresa,a_matricula,a_modelo,n_serie,a_t_vuelo,a_t_aterrizaje).then(
+        function(data) {
+          console.log(data);
+          alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
+        })
+              
     }else {
       alert("Hay datos inválidos");
     }
@@ -132,5 +181,8 @@ app.controller('detalledisController', ['$scope', 'remoteResource',function($sco
     }, function(status) {
       alert("Ha fallado la petición. Estado HTTP:" + status);
     });
+
+}]);
+app.controller("MainController", ['$scope',function($scope) {
 
 }]);
