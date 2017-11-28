@@ -1,0 +1,20 @@
+
+  <div class="contenedor" style="color:#EEE6E6">
+ <center><h1>Alta de inventario</h1></center>
+	 <div class="row" style="margin: 1% 20%;">
+	<div class="col-xs-11">
+		<form name="form" novalidate>
+        <label for="d_componente">Componente/component:</label><input class="form-control" placeholder="Escriba el Nombre del Componente" id="d_componente" name="d_componente" type="text"/>
+        <label for="d_parte">No.De parte/p.n.:</label><input class="form-control" placeholder="Escriba el No. de Parte" id="d_parte" name="d_parte" type="text"/>
+         <label for="d_cantidad">Cant/qty:</label><input class="form-control" placeholder="Escriba la Cantidad" id="d_cantidad" name="d_cantidad" type="number"/>
+          <label for="d_pendientes">C.Falt/peding:</label><input class="form-control" placeholder="Escriba la cantidad de de pendientes" id="d_pendientes" name="d_pendientes" type="number"/>
+           <label for="d_requisicion">No.Req./requisition:</label><input class="form-control" placeholder="Escriba No. de requisicion" id="d_requisicion" name="d_requisicion" type="text"/>
+            <label for="d_vale">No.Vale/ticket:</label><input class="form-control" placeholder="Escribe el No. de Vale" id="d_vale" name="d_vale" type="text"/>
+                <br>
+			  <center><button type="button" class="btn btn-primary" ng-click="alta_inventario()" ng-disabled="form.$invalid">
+			  <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Generar
+			  </button></center>
+			</form>
+          </div>
+      </div>
+</div>

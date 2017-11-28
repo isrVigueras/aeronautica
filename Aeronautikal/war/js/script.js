@@ -1,8 +1,8 @@
 var app = angular.module('app', ['ngRoute']);
 app.service('OrdenesService', [ '$http', '$q', function($http, $q) {
-  this.genera_orden = function(fo) {
+  this.genera_orden = function(folio,fechaApertura,con_nombre,con_telefono,con_correo,empresa,a_matricula,a_modelo,n_serie,a_t_vuelo,a_t_aterrizaje) {
     var d = $q.defer();
-    /*var enviar = {
+    var enviar = {
       lista : folio,
               fechaApertura,
               con_nombre,    
@@ -14,8 +14,8 @@ app.service('OrdenesService', [ '$http', '$q', function($http, $q) {
               n_serie,
               a_t_vuelo,
               a_t_aterrizaje
-    }*/
-    $http.post("/orden/add/",fo).then(function(response) {
+    }
+    $http.post("/orden/add/",enviar).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -50,7 +50,10 @@ app.config(['$routeProvider',function($routeProvider) {
     templateUrl: "Discrepancias.html",
     controller: ""
   });      
-  
+        $routeProvider.when('/Inventario/alta', {
+    templateUrl: "inventario.html",
+    controller: ""
+  });     
   $routeProvider.when('/seguro/edit/:idSeguro', {
     templateUrl: "Orden_de_trabajo.html",
     controller: "DetalleSeguroController",
@@ -147,8 +150,8 @@ app.controller('ordenController', ['$scope', 'remoteResource','OrdenesService',f
   
  $scope.guardar=function() {
     if ($scope.form.$valid) {
-      alert("lala"+$scope.fo.con_nombre);
-      OrdenesService.genera_orden($scope.fo).then(
+      
+      OrdenesService.genera_orden(folio,fechaApertura,con_nombre,con_telefono,con_correo,empresa,a_matricula,a_modelo,n_serie,a_t_vuelo,a_t_aterrizaje).then(
         function(data) {
           console.log(data);
           alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");

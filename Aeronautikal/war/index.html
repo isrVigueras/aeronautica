@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
-	<title>Sistema</title>
+  <title>Sistema</title>
 <link href="css/estilos.css" rel="stylesheet" type="text/css" />
 <link href="css/footer-distributed.css" rel="stylesheet" type="text/css" />
 <!--*************************estilos y librerias de boostrap********************-->
@@ -9,7 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <!--***************************librerias y estilos de jquery********************-->
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.0/css/smoothness/jquery-ui-1.10.0.custom.min.css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.0/css/smoothness/jquery-ui-1.10.0.custom.min.css" />
    
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>    
     <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.0/jquery-ui.js"></script>
@@ -29,9 +29,26 @@
     </div>
     <ul class="nav navbar-nav">
       <li><a href="#">Inicio</a></li>
-      <li><a href="#/Orden/generar">Generar una O/T</a></li>
-      <li><a href="#/Orden/generadas">Ordenes Generadas</a></li>
-      <li><a href="#/Orden/generadas">Inventario</a></li>
+      <li>
+          <a data-toggle="dropdown" type="button" href="">Ordenes de Trabajo
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Orden/generar">Generar O/T</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Orden/generadas">Consultar O/T</a></li>
+          <!--<li role="presentation" class="divider"></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>-->    
+          </ul>
+      </li>
+      <li>
+          <a data-toggle="dropdown" type="button" href="">Inventario
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/alta">Alta</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="">Consulta</a></li>
+          <!--<li role="presentation" class="divider"></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>-->    
+          </ul>
+      </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href=""><span class="glyphicon glyphicon-user"></span> Entrar</a></li>

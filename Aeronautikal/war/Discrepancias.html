@@ -118,6 +118,28 @@
       </div>
       <div class="modal-body">
         <form>
+           <center><label for="con_nombre">Selecione taller:</label></center>
+              <br>
+           <select>
+              <option value="1">01</option>
+              <option value="2">02</option>
+              <option value="3">03</option>
+              <option value="4">04</option>
+              <option value="5">05</option>
+              <option value="6">06</option>
+              <option value="7">07</option>
+            </select>
+             <center><label for="con_nombre">Selecione taller:</label></center>
+              <br>
+           <select>
+              <option value="1">01</option>
+              <option value="2">02</option>
+              <option value="3">03</option>
+              <option value="4">04</option>
+              <option value="5">05</option>
+              <option value="6">06</option>
+              <option value="7">07</option>
+            </select>
   <center><label for="con_nombre">Descripcion/description:</label></center>
   <br>
   <center><textarea class="form-control" rows="4" cols="30" placeholder="Escriba la Descripcion.">
@@ -149,20 +171,42 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
-                <form>
-        <label for="d_componente">Componente/component:</label><input class="form-control" placeholder="Escriba el Nombre del Componente" id="d_componente" name="d_componente" type="text"/>
-        <label for="d_componente">No.De parte/p.n.:</label><input class="form-control" placeholder="Escriba el No. de Parte" id="d_componente" name="d_componente" type="text"/>
-         <label for="d_componente">Cant/qty:</label><input class="form-control" placeholder="Escriba la Cantidad" id="d_componente" name="d_componente" type="text"/>
-          <label for="d_componente">C.Falt/peding:</label><input class="form-control" placeholder="" id="d_componente" name="d_componente" type="text"/>
-           <label for="d_componente">No.Req./requisition:</label><input class="form-control" placeholder="" id="d_componente" name="d_componente" type="text"/>
-            <label for="d_componente">No.Vale/ticket:</label><input class="form-control" placeholder="" id="d_componente" name="d_componente" type="text"/>
-             <label for="d_componente">N.S. Removido/s.n.removed:</label><input class="form-control" placeholder="" id="d_componente" name="d_componente" type="text"/>
-              <label for="d_componente">N.S Instalado/s.n.installed:</label><input class="form-control" placeholder="" id="d_componente" name="d_componente" type="text"/>
-
-                </form>
+                 <form>
+        <label for="d_componente">Seleciona componenete de almacen:</label>
+        <br>
+        <select multiple class="form-control">
+              <option value="1">GASKET</option>
+              <option value="2">FILTER ELEMENT</option>
+              <option value="3">PACKING/EMPAQUE</option>
+              <option value="4">SCREW</option>
+              <option value="5">ORING</option>
+              <option value="6">ORING/SELLO</option>
+              <option value="7">PAKING</option>
+              <option value="8">HOSE/MANGUERA</option>
+              <option value="9">HOSE ASSY</option>
+              <option value="10">SEAL</option>
+              <option value="11">NUT/TUERCA</option>
+              <option value="12">BOLT</option>
+              <option value="13">WHASHER</option>
+              <option value="14">PAKING-PREFORMED</option>
+              <option value="15">BREAKE ASSY-MAIN GEAR</option>
+              <option value="16">BEARING</option>
+              <option value="17">BOLT/PERNO</option>
+              <option value="18">GASKET-PUMP</option>
+              <option value="19">PUMP ENGINE DRIVEN HYD</option>
+              <option value="20">MOUNT BUTTON HALF</option>
+              <option value="21">ROD END</option>
+              <option value="22">TUBE ASSY</option>
+              </select>
+              <br><br>
+        <label for="d_componente">Numero de piezas requeridas:</label><input class="form-control" placeholder="Escriba el No. piezas que se requieren" id="d_componente" name="d_componente" type="number"/>
+         <label for="d_componente">Quien las requiere:</label><input class="form-control" placeholder="Niombre de la persona responsable" id="d_componente" name="d_componente" type="number"/>
+          <label for="d_componente">Folio de la O/T:</label><input class="form-control" placeholder="Escriba el folio de la orden de trabajo" id="d_componente" name="d_componente" type="text"/>
+          </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Guardar los cambios</button>
+        <button type="button" class="btn btn-primary">Has una requisicion</button>
+        <button type="button" class="btn btn-primary">Agregar componete</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
