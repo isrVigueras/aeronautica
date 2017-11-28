@@ -3,6 +3,7 @@ package com.tikal.aeronautikal.service;
 import java.util.List;
 import java.util.Map;
 
+import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.BaseEntity;
 
 
@@ -23,7 +24,13 @@ public interface AeronaveService {
      * deletes given object from database
      * @param object object to save
      */
-  //  <T extends BaseEntity> void delete(T object);
+    <T extends BaseEntity> void delete(T object);
+    
+    <T extends BaseEntity> void update(T object);
+    
+    public void update(AeronaveEntity ae);
+    
+    public AeronaveEntity consult(long numeroSerie);
 
     /**
      * gets objects from db for pagination
@@ -49,6 +56,6 @@ public interface AeronaveService {
      * @return              Entity by given criteria
      */
     
-  //  <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions);
+    <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions);
 
 }

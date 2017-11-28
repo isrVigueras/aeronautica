@@ -19,36 +19,38 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
  * @author 
  */
 
-@Service("selectionDao")
+@Service("aeronaveDao")
 
 public class AeronaveDaoImpl implements AeronaveDao {
 
-    public <T extends BaseEntity> void save(T object) {
-    	
+    public <T extends BaseEntity> void save(T object) {    	
         ofy().save().entity(object).now();
     }
 
-   //// public <T extends BaseEntity> void delete(T object) {
-  //      ofy().delete().entity(object).now();
-  //  }
-
- //   @Override
-	//public void update(AeronaveEntity nave) {
-//		AeronaveEntity old = this.consult(nave.getNumeroSerie());
-//		if (old != null) {
-//			old.setMatricula(nave.getMatricula());
-//			old.setModelo(nave.getModelo());
-//			old.setTiempovuelo(nave.getTiempovuelo());
-//			old.setAterrizaje(nave.getAterrizaje());
-//			ofy().save().entity(old);
-//		}
-
-////	}
     
-    //@Override
-//	public AeronaveEntity consult(String noSerie) {
-	//	return ofy().load().type(AeonaveEntity.class).id(noSerie).now();
+    public <T extends BaseEntity> void delete(T object) {
+        ofy().delete().entity(object).now();
+    }
+
+   @Override
+	public void update(AeronaveEntity nave) {
+	AeronaveEntity old = this.consult(nave.getNumeroSerie());
+		if (old != null) {
+			old.setMatricula(nave.getMatricula());
+			old.setModelo(nave.getModelo());
+			old.setTiempovuelo(nave.getTiempovuelo());
+			old.setAterrizaje(nave.getAterrizaje());
+			ofy().save().entity(old);
+		}
+
+	}
+   
+    
+//   @Override
+//	public AeronaveEntity consult(long noSerie) {
+//		return ofy().load().type(AeronaveEntity.class).id(noSerie).now();
 //	}
+   
     public <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions) {
         Query<T> query = ofy().load().type(clazz);
         for (Map.Entry<String, Object> entry : conditions.entrySet()) {
@@ -65,6 +67,21 @@ public class AeronaveDaoImpl implements AeronaveDao {
         }
         return list.get(0);
     }
+
+    
+
+	@Override
+	public AeronaveEntity consult(long numeroSerie) {
+		
+       return ofy().load().type(AeronaveEntity.class).id(numeroSerie).now();
+		
+	}
+
+	@Override
+	public <T extends BaseEntity> void findAll(T object) {
+		// TODO Auto-generated method stub
+		
+	}
    
 
 }

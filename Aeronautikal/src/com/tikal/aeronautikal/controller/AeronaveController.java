@@ -39,7 +39,7 @@ public class AeronaveController  {
 	private static final int RECORDS_PER_PAGE = 5;
 
     @Autowired
-    private AeronaveService selectionService;
+    private AeronaveService aeronaveService;
 
  
     @RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -57,7 +57,7 @@ public class AeronaveController  {
             // getUniqueEntity should throw exception
         }
 	   System.out.println("yaaaaa estoy en add con get");	    
-        selectionService.save(entry);   //implementa el dao
+	   aeronaveService.save(entry);   //implementa el dao
         return "addAeronave";
 	   
     }
@@ -167,14 +167,14 @@ public class AeronaveController  {
 //        return "redirect:/aeronave";
 //    }
 ////    
-//    @RequestMapping(value = "/delete/{matricula}", method = RequestMethod.POST)
-//    public String deleteAeronave(@PathVariable("matricula") String matricula) {
-//        Map<String, Object> conditions = new HashMap<String, Object>();
-//        conditions.put("matricula", matricula);
-//        AeronaveEntity entity = selectionService.getUniqueEntity(AeronaveEntity.class, conditions);
-//        selectionService.delete(entity);
-//        return "redirect:/aeronave";
-//    }
+    @RequestMapping(value = "/delete/{numeroSerie}", method = RequestMethod.POST)
+    public String deleteAeronave(@PathVariable("numeroSerie") String numeroSerie) {
+        Map<String, Object> conditions = new HashMap<String, Object>();
+        conditions.put("numeroSerie", numeroSerie);
+        AeronaveEntity entity = aeronaveService.getUniqueEntity(AeronaveEntity.class, conditions);
+        aeronaveService.delete(entity);
+        return "redirect:/aeronave";
+    }
 //    
 //    @ExceptionHandler(ObjectNotFoundException.class)
 //    public String error404() {
