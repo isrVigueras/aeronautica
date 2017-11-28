@@ -29,7 +29,7 @@ package com.tikal.aeronautikal.controller;
 		    public String addEmpresaGet(@ModelAttribute("entry") EmpresaEntity entry) {
 			   System.out.println("si entra aqui 1");
 			   try {
-		        
+				   	entry.setId(1);
 		            entry.setNickName("SACSA"); 
 		      
 		            System.out.println("si asigna valor a contactos : "+entry);

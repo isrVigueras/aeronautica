@@ -12,14 +12,14 @@ public class OrdenVo implements BaseEntity {
 	@Id Integer folio;
 	String fechaApertura;
 	String con_nombre;
-	String con_telefono;
+	Long con_telefono;
 	String con_correo;
-	String empresa;
+	Integer empresa;
 	String a_a_matricula;
 	String modelo;
 	String n_serie;
 	Integer a_t_vuelo;
-	Integer a_t_aterrizaje;
+	String a_t_aterrizaje;
 	public Integer getFolio() {
 		return folio;
 	}
@@ -38,10 +38,10 @@ public class OrdenVo implements BaseEntity {
 	public void setCon_nombre(String con_nombre) {
 		this.con_nombre = con_nombre;
 	}
-	public String getCon_telefono() {
+	public Long getCon_telefono() {
 		return con_telefono;
 	}
-	public void setCon_telefono(String con_telefono) {
+	public void setCon_telefono(Long con_telefono) {
 		this.con_telefono = con_telefono;
 	}
 	public String getCon_correo() {
@@ -50,10 +50,10 @@ public class OrdenVo implements BaseEntity {
 	public void setCon_correo(String con_correo) {
 		this.con_correo = con_correo;
 	}
-	public String getEmpresa() {
+	public Integer getEmpresa() {
 		return empresa;
 	}
-	public void setEmpresa(String empresa) {
+	public void setEmpresa(Integer empresa) {
 		this.empresa = empresa;
 	}
 	public String getA_a_matricula() {
@@ -80,12 +80,13 @@ public class OrdenVo implements BaseEntity {
 	public void setA_t_vuelo(Integer a_t_vuelo) {
 		this.a_t_vuelo = a_t_vuelo;
 	}
-	public Integer getA_t_aterrizaje() {
+	public String getA_t_aterrizaje() {
 		return a_t_aterrizaje;
 	}
-	public void setA_t_aterrizaje(Integer a_t_aterrizaje) {
+	public void setA_t_aterrizaje(String a_t_aterrizaje) {
 		this.a_t_aterrizaje = a_t_aterrizaje;
 	}
+	
 	
 	
 	

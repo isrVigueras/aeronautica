@@ -82,6 +82,7 @@ public class OrdenController {
 	        	orden.setFolio(1111);
 	        	ordenDao.save(orden);	            
 	        } catch (RuntimeException ignored) {
+	        	ignored.printStackTrace();
 	            // getUniqueEntity should throw exception
 	        }
 	       

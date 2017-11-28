@@ -14,10 +14,18 @@ import com.tikal.aeronautikal.model.otBody.Taller;
 public class EmpresaEntity implements BaseEntity{
 
 	
-	@Id private String nickName;
+	@Id private long id;	
+	private String nickName;
 	private DatosFacturacion datosFacturacion;
 	@Container OrdenEntity orden;
 	
+
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public String getNickName() {
 		return nickName;
 	}
