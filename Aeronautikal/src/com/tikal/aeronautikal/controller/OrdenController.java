@@ -17,10 +17,11 @@ import com.tikal.aeronautikal.dao.AeronaveDao;
 import com.tikal.aeronautikal.dao.EmpresaDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
-import com.tikal.aeronautikal.entity.OrdenEntity;
+//import com.tikal.aeronautikal.entity.OrdenEntity;
 import com.tikal.aeronautikal.model.Aeronave;
 import com.tikal.aeronautikal.service.OrdenService;
 import com.tikal.aeronautikal.util.JsonConvertidor;
+
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 
 import java.io.IOException;
@@ -74,12 +75,12 @@ public class OrdenController {
 	    	  System.out.println("si entra al add por POST"+json);
 	        try {
 	        	AsignadorDeCharset.asignar(request, response);
-	        	 System.out.println("request......."+request);
-	        	 System.out.println("request......."+response);
+	        	// System.out.println("request......."+request);
+	        	// System.out.println("request......."+response);
 	        	OrdenVo orden =(OrdenVo) JsonConvertidor.fromJson(json, OrdenVo.class);
-	        	 System.out.println("el nuevo objeto: "+orden );
+	        	// System.out.println("el nuevo objeto: "+orden );
 	        	//pegar el valor de empresa, aeronave y contacato
-	        	orden.setFolio(1111);
+	        	//orden.setFolio(1111);
 	        	ordenDao.save(orden);	            
 	        } catch (RuntimeException ignored) {
 	        	ignored.printStackTrace();
@@ -111,7 +112,24 @@ public class OrdenController {
 		}
 	   
 	   /////////////////////////////////////////////////////////////////////////////////////////**********************
+	   @RequestMapping(value = { "/findAll" }, method = RequestMethod.GET, produces = "application/json")
+		public void findAllOrdenes(HttpServletResponse response, HttpServletRequest request) throws IOException {
+			AsignadorDeCharset.asignar(request, response);
+			List<OrdenVo> lista = ordenDao.getAll();
+			if (lista == null) {
+				lista = new ArrayList<OrdenVo>();
+			}
+			response.getWriter().println(JsonConvertidor.toJson(lista));
+
+		}
+	   
+	   @RequestMapping(value = {"/delete/{folio}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+	   public void deleteOrden(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
+		@PathVariable Long folio) throws IOException {
+		   ordenDao.delete(ordenDao.consult(folio));
+	   }
 	   
 	   //////////////////////////////////////////////////////////////////////////////////////////*******************
 }
+
 	    

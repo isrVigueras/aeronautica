@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.tikal.aeronautikal.entity.AeronaveEntity;
-import com.tikal.aeronautikal.entity.BaseEntity;
+//import com.tikal.aeronautikal.entity.BaseEntity;
 
 
 
@@ -12,22 +12,22 @@ import com.tikal.aeronautikal.entity.BaseEntity;
 public interface AeronaveDao {
 
 
-	<T extends BaseEntity> void save(T object);
+	public void save(AeronaveEntity a);
 
-	<T extends BaseEntity> void delete(T object);
+	public void delete(AeronaveEntity a);
 
 	public void update(AeronaveEntity nave);
 	
     public AeronaveEntity consult(long numeroSerie);
 
-	<T extends BaseEntity> void findAll(T object);
+	public void findAll(AeronaveEntity a);
 
 	
 //////	<T extends BaseEntity> List<T> listObjectByPage(Class<T> clazz, int page, int pageSize, String order);
 
 //	<T extends BaseEntity> long countAll(Class<T> clazz);
 
-	<T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions);
+	//<T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions);
 
 
 	

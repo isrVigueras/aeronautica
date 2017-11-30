@@ -1,14 +1,20 @@
 package com.tikal.aeronautikal.service;
 
+import java.util.List;
 import java.util.Map;
 
-import com.tikal.aeronautikal.entity.BaseEntity;
+import com.tikal.aeronautikal.controller.vo.OrdenVo;
+
+
 
 public interface OrdenService {
 	
 	 	
-	  <T extends BaseEntity> void save(T object);
+	  public void save(OrdenVo o);
 	  
-	 // <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions);
+	  public void consult(Long folio);
+	  
+	  public List<OrdenVo> getAll();
+
 
 }

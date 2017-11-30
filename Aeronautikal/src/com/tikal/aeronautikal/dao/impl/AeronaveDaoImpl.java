@@ -23,13 +23,13 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 public class AeronaveDaoImpl implements AeronaveDao {
 
-    public <T extends BaseEntity> void save(T object) {    	
-        ofy().save().entity(object).now();
+    public  void save(AeronaveEntity a) {    	
+        ofy().save().entity(a).now();
     }
 
     
-    public <T extends BaseEntity> void delete(T object) {
-        ofy().delete().entity(object).now();
+    public void delete(AeronaveEntity a) {
+        ofy().delete().entity(a).now();
     }
 
    @Override
@@ -51,22 +51,22 @@ public class AeronaveDaoImpl implements AeronaveDao {
 //		return ofy().load().type(AeronaveEntity.class).id(noSerie).now();
 //	}
    
-    public <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions) {
-        Query<T> query = ofy().load().type(clazz);
-        for (Map.Entry<String, Object> entry : conditions.entrySet()) {
-            query = query.filter(entry.getKey(), entry.getValue());
-        }
-        List<T> list = query.list();
-        if (CollectionUtils.isEmpty(list)) {
-            throw new ObjectNotFoundException("Object of class " + clazz.getCanonicalName() +
-                    " not found by given conditions: " + conditions);
-        }
-        if (list.size() > 1) {
-            throw new ObjectNotFoundException("There are several objects of class " + clazz.getCanonicalName() +
-                    " found by given conditions: " + conditions);
-        }
-        return list.get(0);
-    }
+//    public T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions) {
+//        Query<T> query = ofy().load().type(clazz);
+//        for (Map.Entry<String, Object> entry : conditions.entrySet()) {
+//            query = query.filter(entry.getKey(), entry.getValue());
+//        }
+//        List<T> list = query.list();
+//        if (CollectionUtils.isEmpty(list)) {
+//            throw new ObjectNotFoundException("Object of class " + clazz.getCanonicalName() +
+//                    " not found by given conditions: " + conditions);
+//        }
+//        if (list.size() > 1) {
+//            throw new ObjectNotFoundException("There are several objects of class " + clazz.getCanonicalName() +
+//                    " found by given conditions: " + conditions);
+//        }
+//        return list.get(0);
+//    }
 
     
 
@@ -78,7 +78,7 @@ public class AeronaveDaoImpl implements AeronaveDao {
 	}
 
 	@Override
-	public <T extends BaseEntity> void findAll(T object) {
+	public void findAll(AeronaveEntity a) {
 		// TODO Auto-generated method stub
 		
 	}

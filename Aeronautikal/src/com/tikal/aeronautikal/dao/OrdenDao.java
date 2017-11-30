@@ -1,21 +1,25 @@
 package com.tikal.aeronautikal.dao;
 
+import java.util.List;
 import java.util.Map;
 
-import com.tikal.aeronautikal.entity.BaseEntity;
+import com.tikal.aeronautikal.controller.vo.OrdenVo;
 
 
 public interface OrdenDao {
 	
-	<T extends BaseEntity> void save(T object);
+	public void save(OrdenVo o);
 	
-	//<T extends BaseEntity> void delete(T object);
+	public void delete(OrdenVo o);
 	
-	//<T extends BaseEntity> void update(T object);
+	public void update(OrdenVo o);
 	
-	//<T extends BaseEntity> void findAll(T object);
+	public OrdenVo consult(Long folio);
 	
-	//<T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions);
+	public List<OrdenVo> getAll();
+
+	void findAll();
+
 
 
 }

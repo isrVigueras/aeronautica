@@ -7,23 +7,24 @@ import com.tikal.aeronautikal.entity.BaseEntity;
 
 
 @Entity
-public class OrdenVo implements BaseEntity {
+public class OrdenVo {
 	
-	@Id Integer folio;
+	@Id Long folio;
 	String fechaApertura;
 	String con_nombre;
 	Long con_telefono;
 	String con_correo;
-	Integer empresa;
-	String a_a_matricula;
-	String modelo;
+	String empresa;
+	String a_matricula;
+	String a_modelo;
 	String n_serie;
 	Integer a_t_vuelo;
 	String a_t_aterrizaje;
-	public Integer getFolio() {
+	
+	public Long getFolio() {
 		return folio;
 	}
-	public void setFolio(Integer folio) {
+	public void setFolio(Long folio) {
 		this.folio = folio;
 	}
 	public String getFechaApertura() {
@@ -50,23 +51,23 @@ public class OrdenVo implements BaseEntity {
 	public void setCon_correo(String con_correo) {
 		this.con_correo = con_correo;
 	}
-	public Integer getEmpresa() {
+	public String getEmpresa() {
 		return empresa;
 	}
-	public void setEmpresa(Integer empresa) {
+	public void setEmpresa(String empresa) {
 		this.empresa = empresa;
 	}
-	public String getA_a_matricula() {
-		return a_a_matricula;
+	public String getA_matricula() {
+		return a_matricula;
 	}
-	public void setA_a_matricula(String a_a_matricula) {
-		this.a_a_matricula = a_a_matricula;
+	public void setA_matricula(String a_matricula) {
+		this.a_matricula = a_matricula;
 	}
 	public String getModelo() {
-		return modelo;
+		return a_modelo;
 	}
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
+	public void setModelo(String a_modelo) {
+		this.a_modelo = a_modelo;
 	}
 	public String getN_serie() {
 		return n_serie;

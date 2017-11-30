@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.tikal.aeronautikal.entity.AeronaveEntity;
-import com.tikal.aeronautikal.entity.BaseEntity;
+
 
 
 /**
@@ -18,17 +18,15 @@ public interface AeronaveService {
      * saves given object in database
      * @param object object to save
      */
-    <T extends BaseEntity> void save(T object);
+    public void save(AeronaveEntity a);
 
     /**
      * deletes given object from database
      * @param object object to save
      */
-    <T extends BaseEntity> void delete(T object);
+    public void delete(AeronaveEntity a);
     
-    <T extends BaseEntity> void update(T object);
-    
-    public void update(AeronaveEntity ae);
+    public void update(AeronaveEntity a);
     
     public AeronaveEntity consult(long numeroSerie);
 
@@ -56,6 +54,6 @@ public interface AeronaveService {
      * @return              Entity by given criteria
      */
     
-    <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions);
+   // <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions);
 
 }

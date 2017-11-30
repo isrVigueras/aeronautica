@@ -2,6 +2,7 @@ package com.tikal.aeronautikal.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,10 +16,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.tikal.aeronautikal.dao.AeronaveDao;
+import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.exception.ObjectNotFoundException;
 import com.tikal.aeronautikal.model.Aeronave;
 import com.tikal.aeronautikal.service.AeronaveService;
+import com.tikal.aeronautikal.service.ComponenteService;
+import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
 
 import java.io.IOException;
@@ -40,6 +45,10 @@ public class AeronaveController  {
 
     @Autowired
     private AeronaveService aeronaveService;
+   
+    @Autowired
+    @Qualifier("aeronaveDao")
+    AeronaveDao aeronaveDao;
 
  
     @RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -127,15 +136,10 @@ public class AeronaveController  {
 	   response.getWriter().println("Prueba del mètodo guardar");
 
     } 
-    
-//    @RequestMapping(value = "/add", method = RequestMethod.GET)
-//    public String addAeronaveGet(@ModelAttribute("entry") AeronaveEntity entry) {
-//        return "addAeronave";
-//    }
+ 
     
     
-    
-    @RequestMapping(value="/add", method = RequestMethod.POST)
+    @RequestMapping(value="/add_", method = RequestMethod.POST)
 	public ModelAndView add(HttpServletRequest request, ModelMap model) {
 
 	      
@@ -148,31 +152,27 @@ public class AeronaveController  {
 
 	}
     
-//    @RequestMapping(value = "/add__", method = RequestMethod.POST)   //put matricula
-//    public String addAeronavePost(ModelMap model, @ModelAttribute("entry") AeronaveEntity entry ) {
-//    	  
-//        try {
-//            // server validation. Link should be unique
-//            Map<String, Object> conditions = new HashMap<String, Object>();	
-//            conditions.put("matricula", entry.getMatricula().toLowerCase());
-//            selectionService.getUniqueEntity(AeronaveEntity.class, conditions);
-//            model.put("notUniqueMatricula", true);
-//            return "addAeronave";
-//        } catch (RuntimeException ignored) {
-//            // getUniqueEntity should throw exception
-//        }
-//       
-//        //entry.setDate(Calendar.getInstance().getTime());
-//        selectionService.save(entry);
-//        return "redirect:/aeronave";
-//    }
-////    
+    
+    @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
+	   public void addComponente(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
+	    	  System.out.println("si entra al add por POST"+json);
+	        try {
+	        	AsignadorDeCharset.asignar(request, response);
+	        	AeronaveEntity a =(AeronaveEntity) JsonConvertidor.fromJson(json, AeronaveEntity.class);
+	        	aeronaveDao.save(a);	            
+	        } catch (RuntimeException ignored) {
+	        	ignored.printStackTrace();
+	        }
+	       
+	    }
+    
+     
     @RequestMapping(value = "/delete/{numeroSerie}", method = RequestMethod.POST)
-    public String deleteAeronave(@PathVariable("numeroSerie") String numeroSerie) {
-        Map<String, Object> conditions = new HashMap<String, Object>();
-        conditions.put("numeroSerie", numeroSerie);
-        AeronaveEntity entity = aeronaveService.getUniqueEntity(AeronaveEntity.class, conditions);
-        aeronaveService.delete(entity);
+    public String deleteAeronave(@PathVariable("numeroSerie") Long numeroSerie) {
+       // Map<String, Object> conditions = new HashMap<String, Object>();
+       // conditions.put("numeroSerie", numeroSerie);
+      //  AeronaveEntity entity = aeronaveService.getUniqueEntity(AeronaveEntity.class, conditions);
+        aeronaveService.delete(aeronaveService.consult(numeroSerie));
         return "redirect:/aeronave";
     }
 //    

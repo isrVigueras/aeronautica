@@ -8,7 +8,7 @@ import  com.googlecode.objectify.annotation.Index ;
 
 
 @Entity 
-public  class  AeronaveEntity implements BaseEntity{
+public  class  AeronaveEntity {
     @Index  private String matricula;
     @Index private String modelo;
     @Id private long numeroSerie;

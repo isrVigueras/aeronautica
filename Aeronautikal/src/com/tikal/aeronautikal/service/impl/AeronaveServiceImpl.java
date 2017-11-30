@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.tikal.aeronautikal.dao.AeronaveDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
-import com.tikal.aeronautikal.entity.BaseEntity;
 import com.tikal.aeronautikal.service.AeronaveService;
 
 
@@ -22,37 +21,17 @@ public class AeronaveServiceImpl implements AeronaveService {
     @Autowired
     protected AeronaveDao aeronaveDao;
 
-    public <T extends BaseEntity> void save(T object) {
-    	aeronaveDao.save(object);
+    public  void save(AeronaveEntity a) {
+    	aeronaveDao.save(a);
     }
 
-    public <T extends BaseEntity> void delete(T object) {
-    	aeronaveDao.delete(object);
+    public  void delete(AeronaveEntity a) {
+    	aeronaveDao.delete(a);
     }
     
     public void update(AeronaveEntity a){
     	aeronaveDao.update(a);
     }
-
-//    public <T extends BaseEntity> List<T> listObjectByPage(Class<T> clazz, int page, int pageSize, String order) {
-//        return selectionDao.listObjectByPage(clazz, page, pageSize, order);
-//    }
-
- //   public <T extends BaseEntity> long countAll(Class<T> clazz) {
- //       return selectionDao.countAll(clazz);
-//    }
-
-    public <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions) {
-    	 System.out.println("ESTOY EN AERO SERVICEIMPL");
-    return aeronaveDao.getUniqueEntity(clazz, conditions);
-        
-    }
-
-	@Override
-	public <T extends BaseEntity> void update(T object) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public  AeronaveEntity consult(long numeroSerie) {
