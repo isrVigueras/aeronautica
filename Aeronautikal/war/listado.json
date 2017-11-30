@@ -1,0 +1,52 @@
+[{
+  "folio":"1500",
+    "con_nombre":"Luis Alberto Solis Ramos",    
+    "con_telefono":7223615721,
+    "con_correo":"sacsa.l@hotmail.com",
+    "empresa":"SACSA",
+    "a_matricula":"G-KELS",
+    "a_modelo":"LEARJET 25",
+    "n_serie":"FL45SE8R77896423E",
+    "a_t_vuelo":14,
+    "a_t_aterrizaje":"Toluca",
+  "discrepancias": {
+    "folio": "15000102",
+    "taller": "01",
+    "seccion": "02",
+    "detalle": "Mantenimiento progrmado"
+  }
+}, {
+    "folio":"1501",
+    "con_nombre":"Edgar israel paez sanchez",    
+    "con_telefono":7223612388,
+    "con_correo":"edgar.paez@gmail.com",
+    "empresa":"SACSA",
+    "a_matricula":"G-KELS",
+    "a_modelo":"LEARJET 25",
+    "n_serie":"FL45SE8R77896423E",
+    "a_t_vuelo":5,
+    "a_t_aterrizaje":"ciudad de mexico",
+  "discrepancias": {
+    "folio": "15010103",
+    "taller": "01",
+    "seccion": "03",
+    "detalle": "Trabajos de inspeccion"
+  }
+}, {
+    "folio":"1502",
+    "con_nombre":"Alberto Matamoros ",    
+    "con_telefono":5553615784,
+    "con_correo":"matamoros@sacsa.mx",
+    "empresa":"SACSA",
+    "a_matricula":"G-KELS",
+    "a_modelo":"LEARJET 25",
+    "n_serie":"FL45SE8R77896423E",
+    "a_t_vuelo":0,
+    "a_t_aterrizaje":"Toluca",
+  "discrepancias": {
+    "folio": "15020301",
+    "taller": "03",
+    "seccion": "01",
+    "detalle": "Trabajos de electrico"
+  }
+}]

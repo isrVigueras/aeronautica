@@ -1,4 +1,4 @@
-
+<body ng-controller="OrdenesgeneradasController">
 <link href="css/tabla.css" rel="stylesheet" type="text/css" />
 <!--<div class="btn-group" role="group" aria-label="Basic example">
   <button type="button" class="btn btn-secondary" OnClick="location.href='http://localhost/aeronau/Orden_de_trabajo.html'">Generar una O/T</button>
@@ -8,30 +8,23 @@
 	<div class="contenedor">
 <center><h3 style="color:#EEE6E6">Ordenes Generadas</h3></center>
   <br>
-  <table class="tito">
+ 
 
-  <tr style="background-color: #201b17c9;">
-
-    <th>Folio</th>
-
-    <th>Compa&ntilde;ia</th>
-
-    <th>Feha</th>
-
-    <th>Accion</th>
-
-  </tr>
-
-  <tr>
-
-    <td>125634</td>
-
-    <td>Sacsa</td>
-
-    <td>11/10/2017</td>
-
-    <td>
-    	<button type="button" class="btn btn-default" aria-label="Left Align" OnClick="location.href='#/Orden/detalle'">
+ <table class="tito">>
+    <thead>
+      <tr style="background-color: #201b17c9;">
+        <th>Folio</th>
+        <th>Compañia</th>
+        <th>Fecha</th>
+        <th>Accion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="generada in generadas">
+        <td>{{generada.folio}}</td>
+        <td>{{generada.empresa}}</td>
+        <td>{{generada.fechaCreacion}}</td>
+        <td>      <button type="button" class="btn btn-default" aria-label="Left Align" OnClick="location.href='#/Orden/detalle/{{generada.folio}}'">
   <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <button type="button" class="btn btn-default" aria-label="Left Align">
@@ -39,50 +32,16 @@
 </button>
 <!--<input type ='button' value = 'texto boton' onclick="window.open('http://localhost/aeronau/Detalle_discrepancias.html', 'width=800,height=600');"/>--> 
 
-
 </td>
-  </tr>
-
-  <tr>
-
-    
-    <td>125655</td>
-
-    <td>Sacsa</td>
-
-    <td>28/11/2017</td>
-
-    <td><button type="button" class="btn btn-default" aria-label="Left Align" OnClick="location.href='http://localhost/aeronau/Detalle_discrepancias.html'">
-  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<button type="button" class="btn btn-default" aria-label="Left Align">
-  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-</button>
-
-</td>
-
-  </tr>
-
-  <tr>
-
-    	
-    <td>125666</td>
-
-    <td>Sacsa</td>
-
-    <td>15/12/2017</td>
-
-    <td><button type="button" class="btn btn-default" aria-label="Left Align" OnClick="location.href='http://localhost/aeronau/Detalle_discrepancias.html'">
-  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<button type="button" class="btn btn-default" aria-label="Left Align">
-  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-</button>
-
-</td>
-
-  </tr>
-</table>
+      </tr>
+    </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="3">El Numero de ordenes Generadas es:</td>
+        <td ng-bind="generadas.length"></td>
+      </tr>
+    </tfoot>
+  </table>
 <br><br><br><br><br>
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
