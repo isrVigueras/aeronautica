@@ -1,24 +1,23 @@
 package com.tikal.aeronautikal.dao;
 
 
-	import com.tikal.aeronautikal.entity.BaseEntity;
+
 	import com.tikal.aeronautikal.entity.EmpresaEntity;
+	import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 	import java.util.List;
 	import java.util.Map;
 
 	public interface EmpresaDao {
 
-		<T extends BaseEntity> void save(T object);
+		public void save(EmpresaEntity e);
 		
-	//	<T extends BaseEntity> void delete(T object);
+		public void delete(EmpresaEntity c);
 		
-	//	<T extends BaseEntity> void update(T object);
+		public void update(EmpresaEntity c); 
 		
-	//	<T extends BaseEntity> void findAll(T object);
+		public EmpresaEntity consult(Long id);
 		
-	//	<T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions);
-		
-		//<T extends BaseEntity> getAllEmpresas_();
+		public List<EmpresaEntity> getAll();
 		
 		public List<EmpresaEntity> getAllEmpresas();
 	}

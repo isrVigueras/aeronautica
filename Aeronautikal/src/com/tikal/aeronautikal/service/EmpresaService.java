@@ -5,14 +5,16 @@ import java.util.Map;
 
 import com.tikal.aeronautikal.entity.BaseEntity;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
+import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 
 public interface EmpresaService {
-	
- 	
-	  <T extends BaseEntity> void save(T object);
 	  
-	//  <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions);
-
+	  public void save(EmpresaEntity e);
+	  
+	  public void consult(Long id);
+		  
+	  public List<EmpresaEntity> getAll();
+	  
 	  public List<EmpresaEntity> getAllEmpresas();
 
 }

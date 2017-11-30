@@ -19,7 +19,7 @@ public interface ComponenteDao {
 	
 	public List<ComponenteEntity> getAll();
 
-	void findAll();
+	//void findAll();
 	
 	
 }

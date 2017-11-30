@@ -11,7 +11,7 @@ import  com.googlecode.objectify.annotation.Index ;
 public  class  AeronaveEntity {
     @Index  private String matricula;
     @Index private String modelo;
-    @Id private long numeroSerie;
+    @Id private String numeroSerie;
     private int aterrizaje;
     private int tiempovuelo;
     
@@ -27,10 +27,10 @@ public  class  AeronaveEntity {
 	public String getModelo() {
 		return modelo;
 	}
-	public long getNumeroSerie() {
+	public String getNumeroSerie() {
 		return numeroSerie;
 	}
-	public void setNumeroSerie(long numeroSerie) {
+	public void setNumeroSerie(String numeroSerie) {
 		this.numeroSerie = numeroSerie;
 	}
 	public void setModelo(String modelo) {

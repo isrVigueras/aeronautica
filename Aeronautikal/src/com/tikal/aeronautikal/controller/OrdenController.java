@@ -39,7 +39,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class OrdenController {
 	
-	private static final int RECORDS_PER_PAGE = 5;
 
 	@Autowired
 	@Qualifier("empresaDao")
@@ -54,10 +53,19 @@ public class OrdenController {
 	
 	   
 //	   @RequestMapping(value = "/add", method = RequestMethod.GET)
-//	    public String addOrdenGet(@ModelAttribute("entry") OrdenEntity entry) {
+//	    public String addOrdenGet(@ModelAttribute("entry") OrdenVo entry) {
 //		   System.out.println("si entra a Orden controller");   
 //		   	try {
-//		   		entry.setFolio(1234);
+//		   		entry.setFolio(Long.parseLong("99999"));
+//		   		entry.setA_matricula("LWA-123456");
+//		   		entry.setA_t_aterrizaje("23 minutos");
+//		   		entry.setA_t_vuelo(2342);
+//		   		entry.setCon_correo("a.e@mail.com");
+//		   		entry.setCon_nombre("Fulanito de tal");
+//		   		entry.setEmpresa("volaris");
+//		   		entry.setCon_telefono(Long.parseLong("300000012"));
+//		   		entry.setModelo("Super 16089");
+//		   		entry.setN_serie("aaa-111-ww09");
 //	           // entry.setCondiciones("todas las condiciones que deseen");
 //				entry.setFechaApertura("01-12-2017");
 //				//entry.setDate(Calendar.getInstance().getTime());
@@ -68,7 +76,7 @@ public class OrdenController {
 //		   System.out.println("yaaaaa");	    
 //	        ordenService.save(entry);   //implementa el dao  
 //	        return "Orden_de_trabajo";
-//		   }
+//		}
 	
 	   @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
 	   public void addOrden(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{

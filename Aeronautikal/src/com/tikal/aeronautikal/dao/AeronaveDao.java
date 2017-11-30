@@ -9,6 +9,7 @@ import com.tikal.aeronautikal.entity.AeronaveEntity;
 
 
 
+
 public interface AeronaveDao {
 
 
@@ -18,9 +19,14 @@ public interface AeronaveDao {
 
 	public void update(AeronaveEntity nave);
 	
-    public AeronaveEntity consult(long numeroSerie);
+    public static AeronaveEntity consult(String numeroSerie) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	public void findAll(AeronaveEntity a);
+	
+	public List<AeronaveEntity> getAll();
 
 	
 //////	<T extends BaseEntity> List<T> listObjectByPage(Class<T> clazz, int page, int pageSize, String order);

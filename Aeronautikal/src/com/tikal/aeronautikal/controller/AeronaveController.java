@@ -17,16 +17,18 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.tikal.aeronautikal.dao.AeronaveDao;
-import com.tikal.aeronautikal.dao.ComponenteDao;
+//import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
+//import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.exception.ObjectNotFoundException;
 import com.tikal.aeronautikal.model.Aeronave;
 import com.tikal.aeronautikal.service.AeronaveService;
-import com.tikal.aeronautikal.service.ComponenteService;
+//import com.tikal.aeronautikal.service.ComponenteService;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,9 +42,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AeronaveController  {
 	
-  
-	private static final int RECORDS_PER_PAGE = 5;
-
     @Autowired
     private AeronaveService aeronaveService;
    
@@ -51,36 +50,27 @@ public class AeronaveController  {
     AeronaveDao aeronaveDao;
 
  
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addAeronaveGet(@ModelAttribute("entry") AeronaveEntity entry) {
-	   System.out.println("si entra aqui 1");
-	   try {
-        
-            entry.setMatricula("MAT-44477");
-            entry.setModelo("Super");
-            entry.setNumeroSerie(22221);
-            entry.setTiempovuelo(1620);
-            System.out.println("si asigna valores de aeronave : "+entry);
-          
-        } catch (RuntimeException ignored) {
-            // getUniqueEntity should throw exception
-        }
-	   System.out.println("yaaaaa estoy en add con get");	    
-	   aeronaveService.save(entry);   //implementa el dao
-        return "addAeronave";
-	   
-    }
-    //// EJEMPLO DE FUNCION CONSUMIENDO EL WEB SERVICE
-   @RequestMapping(value={"/guarda"},method = RequestMethod.GET, consumes="application/json")
-  
-   public void guardar(HttpServletResponse response, HttpServletRequest request,@RequestBody String json) throws IOException {
-	   Aeronave a= (Aeronave) JsonConvertidor.fromJson(json, Aeronave.class);
-	   String txt = a.getMatricula();
-	   response.getWriter().printf("Prueba del mètodo guardar",txt);
-
-    }
-   ////////////////////////////////////////////////////
-   
+//    @RequestMapping(value = "/add", method = RequestMethod.GET)
+//    public String addAeronaveGet(@ModelAttribute("entry") AeronaveEntity entry) {
+//	   System.out.println("si entra aqui 1");
+//	   try {
+//        
+//            entry.setMatricula("MAT-44477");
+//            entry.setModelo("Super");
+//            entry.setNumeroSerie("22221");
+//            entry.setTiempovuelo(1620);
+//            System.out.println("si asigna valores de aeronave : "+entry);
+//          
+//        } catch (RuntimeException ignored) {
+//            // getUniqueEntity should throw exception
+//        }
+//	   System.out.println("yaaaaa estoy en add con get");	    
+//	   aeronaveService.save(entry);   //implementa el dao
+//        return "addAeronave";
+//	   
+//    }
+//    //// EJEMPLO DE FUNCION CONSUMIENDO EL WEB SERVICE
+ 
    
    @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
    
@@ -88,56 +78,6 @@ public class AeronaveController  {
 	   response.getWriter().println("Prueba del mètodo PROBAR");
 
     }
-    
-    
-
-    
-    
-//    @RequestMapping(value = "/page/{matricula}", method = RequestMethod.GET)
-//    public String aeronavePage(ModelMap model, @PathVariable("matricula") int matricula) {
-//        preparePagedModel(model, matricula);
-//        return "aeronave";
-//    }
-    
-//    private void preparePagedModel(ModelMap model, int index) {
-//        model.put("currentIndex", index);
-//        long totalRecords = selectionService.countAll(AeronaveEntity.class);
-//        if (totalRecords < (index - 1) * RECORDS_PER_PAGE) {
-//            // requested page doesn't exist
-//            throw new ObjectNotFoundException("Requested page doesn't exist");
-//        }
-//        model.put("pages", Math.ceil(totalRecords / (float) RECORDS_PER_PAGE));
-//        List<AeronaveEntity> aeronaveList = selectionService.listObjectByPage(AeronaveEntity.class, index,
-//                RECORDS_PER_PAGE, "-date");
-//        model.put("entries", aeronaveList);
-//    }
-//  
-//    @RequestMapping(value = "/view/{modelo}", method = RequestMethod.GET)
-//    public String aeronaveEntry(ModelMap model, @PathVariable("modelo") String modelo,
-//                           @ModelAttribute("entry") AeronaveEntity entity, HttpServletRequest request) {
-//        Map<String, Object> conditions = new HashMap<String, Object>();
-//        conditions.put("modelo", modelo);
-//        conditions.put("matricula", "MAT-444");
-//        System.out.println("ESTOY EN VIEW");
-//        entity = selectionService.getUniqueEntity(AeronaveEntity.class, conditions);
-//        System.out.println("ESTOY********* EN VIEW");
-//        model.put("entry", entity);
-//        //model.put("backLink", request.getHeader("referer"));
-//        //UserService userService = UserServiceFactory.getUserService();
-//        //if (userService.getCurrentUser() != null && userService.isUserAdmin()) {
-//        //    model.put("isAdmin", true);
-//        //}
-//        return "aeronaveEntry";
-//    }
-//    
-    
-    @RequestMapping(value={"/prueba2"},method = RequestMethod.GET)
-   public void prueba2(HttpServletResponse response, HttpServletRequest request) throws IOException {
-	   response.getWriter().println("Prueba del mètodo guardar");
-
-    } 
- 
-    
     
     @RequestMapping(value="/add_", method = RequestMethod.POST)
 	public ModelAndView add(HttpServletRequest request, ModelMap model) {
@@ -166,27 +106,26 @@ public class AeronaveController  {
 	       
 	    }
     
+    /////////////////////////////////////////////////////////////////////////////////////////**********************
+	   @RequestMapping(value = { "/findAll" }, method = RequestMethod.GET, produces = "application/json")
+		public void findAllComp(HttpServletResponse response, HttpServletRequest request) throws IOException {
+			AsignadorDeCharset.asignar(request, response);
+			List<AeronaveEntity> lista = aeronaveDao.getAll();
+			if (lista == null) {
+				lista = new ArrayList<AeronaveEntity>();
+			}
+			response.getWriter().println(JsonConvertidor.toJson(lista));
+
+		}
+	   
+	   @RequestMapping(value = {"/delete/{numeroSerie}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+	   public void deleteAeronave(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
+		@PathVariable String numeroSerie) throws IOException {
+		   ////////////ojo cuando borra aeronave, checr muy bien lo de Static en el dao y el @override de daoimpl
+		   aeronaveDao.delete(AeronaveDao.consult(numeroSerie));
+	   }
+	   
+	   //////////////////////////////////////////////////////////////////////////////////////////*******************
      
-    @RequestMapping(value = "/delete/{numeroSerie}", method = RequestMethod.POST)
-    public String deleteAeronave(@PathVariable("numeroSerie") Long numeroSerie) {
-       // Map<String, Object> conditions = new HashMap<String, Object>();
-       // conditions.put("numeroSerie", numeroSerie);
-      //  AeronaveEntity entity = aeronaveService.getUniqueEntity(AeronaveEntity.class, conditions);
-        aeronaveService.delete(aeronaveService.consult(numeroSerie));
-        return "redirect:/aeronave";
-    }
-//    
-//    @ExceptionHandler(ObjectNotFoundException.class)
-//    public String error404() {
-//        return "error";
-//    }
-    
-	//public String main() {
-    //    return "index";
-   // }
-  
-  
-  //public void setaeronaveDao(AeronaveDaoImpl aeronaveDao) {
-  //  this.aeronaveDao = aeronaveDao;
-  //}
+   
 }

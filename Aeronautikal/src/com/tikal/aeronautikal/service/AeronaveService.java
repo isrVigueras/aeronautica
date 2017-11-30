@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.tikal.aeronautikal.entity.AeronaveEntity;
+import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 
 
 
@@ -28,7 +29,9 @@ public interface AeronaveService {
     
     public void update(AeronaveEntity a);
     
-    public AeronaveEntity consult(long numeroSerie);
+    public AeronaveEntity consult(String numeroSerie);
+    
+    public List<AeronaveEntity> getAll();
 
     /**
      * gets objects from db for pagination

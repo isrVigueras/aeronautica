@@ -12,7 +12,7 @@ import com.tikal.aeronautikal.model.otBody.Taller;
 
 @Entity
 
-public class EmpresaEntity implements BaseEntity{
+public class EmpresaEntity {
 
 	
 	@Id private long id;	

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.tikal.aeronautikal.dao.AeronaveDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
+import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.service.AeronaveService;
 
 
@@ -33,10 +34,19 @@ public class AeronaveServiceImpl implements AeronaveService {
     	aeronaveDao.update(a);
     }
 
-	@Override
-	public  AeronaveEntity consult(long numeroSerie) {
+	
+	public  AeronaveEntity consult(String numeroSerie) {
 		return ofy().load().type(AeronaveEntity.class).id(numeroSerie).now();
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public List<AeronaveEntity> getAll(){
+		// TODO Auto-generated method stub
+    		return ofy().load().type(AeronaveEntity.class).list();
+    		// TODO Auto-generated method stub
+    		
+    	
 	}
 }

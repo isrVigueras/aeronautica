@@ -5,6 +5,7 @@ import com.googlecode.objectify.cmd.Query;
 import com.tikal.aeronautikal.dao.AeronaveDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.BaseEntity;
+import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.exception.ObjectNotFoundException;
 
 
@@ -70,8 +71,7 @@ public class AeronaveDaoImpl implements AeronaveDao {
 
     
 
-	@Override
-	public AeronaveEntity consult(long numeroSerie) {
+   public AeronaveEntity consult(String numeroSerie) {
 		
        return ofy().load().type(AeronaveEntity.class).id(numeroSerie).now();
 		
@@ -83,5 +83,7 @@ public class AeronaveDaoImpl implements AeronaveDao {
 		
 	}
    
-
+	public List<AeronaveEntity> getAll() {
+		return ofy().load().type(AeronaveEntity.class).list();
+	}
 }

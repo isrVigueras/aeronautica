@@ -4,6 +4,7 @@ package com.tikal.aeronautikal.dao.impl;
 import com.tikal.aeronautikal.dao.EmpresaDao;
 import com.tikal.aeronautikal.entity.BaseEntity;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
+
 import com.tikal.aeronautikal.exception.ObjectNotFoundException;
 
 
@@ -22,49 +23,55 @@ import org.springframework.stereotype.Service;
 
 	public class EmpresaDaoImpl implements EmpresaDao {
 
-	    public <T extends BaseEntity> void save(T object) {
+	    public void save(EmpresaEntity e) {
 	    	
-	        ofy().save().entity(object).now();
+	        ofy().save().entity(e).now();
 	    }
 
-//	    public <T extends BaseEntity> void delete(T object) {
-//	        ofy().delete().entity(object).now();
-//	    }
-//
-//	    public <T extends BaseEntity> List<T> listObjectByPage(Class<T> clazz, int page, int pageSize, String order) {
-//	        return ofy().load().type(clazz).offset((page - 1) * pageSize).limit(pageSize).order(order).list();
-//	    }
-//
-//	    public <T extends BaseEntity> long countAll(Class<T> clazz) {
-//	        return ofy().load().type(clazz).count();
-//	    }
-//
-//	    public <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions) {
-//	    	System.out.println("ESTOY EN AERO DAOIMPL");
-//	        Query<T> query = ofy().load().type(clazz);
-//	        System.out.println("query: "+query);
-//	        System.out.println("conditions: "+conditions);
-//	        for (Map.Entry<String, Object> entry : conditions.entrySet()) {
-//	            query = query.filter(entry.getKey(), entry.getValue());
-//	            System.out.println("qqqqqqqqqqq: "+query);
-//	        }
-//	        System.out.println("--queryList :"+query.list());
-//	        List<T> list = query.list();
-//	        System.out.println("list: "+list);
-//	        if (CollectionUtils.isEmpty(list)) {
-//	        	 System.out.println("EMPTY");
-//	            throw new ObjectNotFoundException("Object of class " + clazz.getCanonicalName() +
-//	                    " not found by given conditions: " + conditions);
-//	        }
-//	        if (list.size() > 1) {
-//	        	 System.out.println("NO EMPTY");
-//	            throw new ObjectNotFoundException("There are several objects of class " + clazz.getCanonicalName() +
-//	                    " found by given conditions: " + conditions);
-//	        }
-//	        System.out.println("SALI DE AERO DAOIMPL");
-//	        return list.get(0);
-//	    }
-//
+		public List<EmpresaEntity> getAll() {
+			return ofy().load().type(EmpresaEntity.class).list();
+		}
+
+
+		public void findAll() {
+		// TODO Auto-generated method stub
+		
+		}
+
+		@Override
+		public void delete(EmpresaEntity e) {
+			// TODO Auto-generated method stub@Override
+			
+				//object.setActivo(false);
+				update(e);
+			
+			
+		}
+
+
+		@Override
+		public void update(EmpresaEntity e) {
+			// TODO Auto-generated method stub
+			EmpresaEntity old = this.consult(e.getId());
+			if (old != null) {
+//				//old.setDireccion(e.getDireccion());
+				old.setNickName(e.getNickName());				
+				ofy().save().entity(old);
+			
+			}
+
+			
+		}
+
+
+		@Override
+		public EmpresaEntity consult(Long id) {
+			
+	       return ofy().load().type(EmpresaEntity.class).id(id).now();
+			
+		}
+	    
+	    
 		@Override
 		public List<EmpresaEntity> getAllEmpresas() {
 			return ofy().load().type(EmpresaEntity.class).list();
