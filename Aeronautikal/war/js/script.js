@@ -1,9 +1,9 @@
 var app = angular.module('app', ['ngRoute']);
 //servicio para mandar los datos del formulario a la ruta del maping del controlador java mediante post
 app.service('OrdenesService', [ '$http', '$q', function($http, $q) {
-  this.genera_orden = function(folio,fechaApertura,con_nombre,con_telefono,con_correo,empresa,a_matricula,a_modelo,n_serie,a_t_vuelo,a_t_aterrizaje) {
+  this.genera_orden = function(fo) {
     var d = $q.defer();
-    var enviar = {
+    /*var enviar = {
       lista : folio,
               fechaApertura,
               con_nombre,    
@@ -15,8 +15,8 @@ app.service('OrdenesService', [ '$http', '$q', function($http, $q) {
               n_serie,
               a_t_vuelo,
               a_t_aterrizaje
-    }
-    $http.post("/orden/add/",enviar).then(function(response) {
+    }*/
+    $http.post("/orden/add/",fo).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -24,6 +24,7 @@ app.service('OrdenesService', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+
 //recursos remotos mediante el get generacion de promesas
 function RemoteResource($http,$q, baseUrl) {
   this.get = function() {
@@ -49,7 +50,7 @@ function RemoteResource($http,$q, baseUrl) {
     
     $http({
       method: 'GET',
-      url: baseUrl + '/listado.json'
+      url: baseUrl + '/orden/findAll'
     }).success(function(data, status, headers, config) {
       defered.resolve(data);
     }).error(function(data, status, headers, config) {
@@ -163,27 +164,28 @@ app.controller('ordenController', ['$scope', 'remoteResource','OrdenesService',f
     a_modelo:"",
     n_serie:"",
     a_t_vuelo:"",
-    a_t_aterrizaje:"",
-    fechaCreacion: new Date()
+    a_t_aterrizaje:""
   }
+
+  $scope.CurrentDate = new Date();
 
   remoteResource.get().then(function(fo) {
       $scope.fo = fo;
     }, function(status) {
-      alert("Ha fallado la petici√≥n. Estado HTTP:" + status);
+      alert("Ha fallado la peticiÛn. Estado HTTP:" + status);
     });
   
  $scope.guardar=function() {
     if ($scope.form.$valid) {
-      
-      OrdenesService.genera_orden(folio,fechaApertura,con_nombre,con_telefono,con_correo,empresa,a_matricula,a_modelo,n_serie,a_t_vuelo,a_t_aterrizaje).then(
+      alert("variable comprobada: "+$scope.fo.con_nombre+" y la fecha "+ $scope.CurrentDate);
+      OrdenesService.genera_orden($scope.fo).then(
         function(data) {
           console.log(data);
-          alert("Los datos aqui se habr√≠an enviado al servidor  y estar√≠an validados en la parte cliente");
+          alert("Los datos aqui se habrÌan enviado al servidor  y estarÌan validados en la parte cliente");
         })
               
     }else {
-      alert("Hay datos inv√°lidos");
+      alert("Hay datos inv·lidos");
     }
   }
 
@@ -208,13 +210,12 @@ app.controller('detalledisController', ['$scope', 'remoteResource',function($sco
   remoteResource.get().then(function(detalle) {
       $scope.detalle = detalle;
     }, function(status) {
-      alert("Ha fallado la petici√≥n. Estado HTTP:" + status);
+      alert("Ha fallado la peticiÛn. Estado HTTP:" + status);
     });
 
 }]);
 app.controller("OrdenesgeneradasController", ['$scope', 'generadas',function($scope,generadas) {
 $scope.generadas = generadas;
- fechaCreacion: new Date()
 }]);
 
 app.controller("InventarioController", ['$scope',function($scope) {
