@@ -150,12 +150,12 @@ app.directive('caDatepicker', [function(dateFormat) {
   };
 }]);
 
-app.controller('ordenController', ['$scope', 'remoteResource','OrdenesService',function($scope, remoteResource,OrdenesService) {
+app.controller('ordenController', ['$scope','OrdenesService',function($scope,OrdenesService) {
  //$scope.fo = {}; alamcenar los datos en mi objeto para vidarlos
  $scope.fo = {
 
     folio:undefined,
-    fechaApertura:undefined,
+    fechaApertura:new Date(),
     con_nombre:"",    
     con_telefono:undefined,
     con_correo:"",
@@ -167,17 +167,11 @@ app.controller('ordenController', ['$scope', 'remoteResource','OrdenesService',f
     a_t_aterrizaje:""
   }
 
-  $scope.CurrentDate = new Date();
+  //$scope.CurrentDate = new Date();
 
-  remoteResource.get().then(function(fo) {
-      $scope.fo = fo;
-    }, function(status) {
-      alert("Ha fallado la petición. Estado HTTP:" + status);
-    });
-  
  $scope.guardar=function() {
     if ($scope.form.$valid) {
-      alert("variable comprobada: "+$scope.fo.con_nombre+" y la fecha "+ $scope.CurrentDate);
+      alert("variable comprobada: "+$scope.fo.con_nombre+" y la fecha "+ $scope.fo.fechaApertura);
       OrdenesService.genera_orden($scope.fo).then(
         function(data) {
           console.log(data);

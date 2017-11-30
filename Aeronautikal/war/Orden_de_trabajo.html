@@ -4,7 +4,8 @@
 <form name="form" novalidate>
   <div class="row" style="margin: 1% 1%;">
   <div class="col-xs-1">
-	<label for="folio" >Folio:</label><p class="form-control-static" id="folio" name="folio" type="number" >1501</p>
+	<label for="folio" >Folio:</label><input class="form-control" placeholder="" id="folio" name="folio" type="text" ng-model="fo.folio" required/>
+  <p class="form-control-static" id="folio" name="folio" type="number" >1501</p>
   </div>
   <div class="col-xs-3">
   <label for="fechaCreacion">Fecha:</label><p><span id ="fecha">{{CurrentDate | date:'dd-MM-yyyy'}}</span></p>
