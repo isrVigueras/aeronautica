@@ -3,9 +3,7 @@ package com.tikal.aeronautikal.service;
 import java.util.List;
 import java.util.Map;
 
-import com.tikal.aeronautikal.entity.BaseEntity;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
-import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 
 public interface EmpresaService {
 	  

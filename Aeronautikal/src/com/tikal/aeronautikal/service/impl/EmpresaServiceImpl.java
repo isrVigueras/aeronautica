@@ -3,18 +3,14 @@ package com.tikal.aeronautikal.service.impl;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tikal.aeronautikal.dao.EmpresaDao;
-import com.tikal.aeronautikal.entity.BaseEntity;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
-import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.service.EmpresaService;
 
-@Service ("empresaService")
+@Service("empresaService")
 
 public class EmpresaServiceImpl implements EmpresaService {
 	

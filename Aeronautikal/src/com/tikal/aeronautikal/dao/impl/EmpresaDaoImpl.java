@@ -1,18 +1,10 @@
 package com.tikal.aeronautikal.dao.impl;
 
-	import com.googlecode.objectify.cmd.Query;
-import com.tikal.aeronautikal.dao.EmpresaDao;
-import com.tikal.aeronautikal.entity.BaseEntity;
-import com.tikal.aeronautikal.entity.EmpresaEntity;
-
-import com.tikal.aeronautikal.exception.ObjectNotFoundException;
-
-
-import org.springframework.stereotype.Service;
-	import org.springframework.util.CollectionUtils;
-
-	import java.util.List;
-	import java.util.Map;
+	
+	import com.tikal.aeronautikal.dao.EmpresaDao;
+	import com.tikal.aeronautikal.entity.EmpresaEntity;
+    import org.springframework.stereotype.Service;
+	import java.util.List;	
 	import static com.googlecode.objectify.ObjectifyService.ofy;
 
 	/**
@@ -33,8 +25,9 @@ import org.springframework.stereotype.Service;
 		}
 
 
-		public void findAll() {
+		public List<EmpresaEntity> findAll() {
 		// TODO Auto-generated method stub
+			return ofy().load().type(EmpresaEntity.class).list();
 		
 		}
 

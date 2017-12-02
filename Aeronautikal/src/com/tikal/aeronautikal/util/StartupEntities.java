@@ -16,6 +16,7 @@ import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 @Component
 public class StartupEntities {
 	
+	
 	public StartupEntities() {
 		
 		ObjectifyService.register(AeronaveEntity.class);

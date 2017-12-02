@@ -14,7 +14,16 @@ public class ComponenteEntity{
 	private Integer d_cantidad;
 	private Integer d_pendientes;
 	private String d_requisicion;
+	private String fechaApertura;
 	private String d_vale;
+	
+	
+	public String getFechaApertura() {
+		return fechaApertura;
+	}
+	public void setFechaApertura(String fechaApertura) {
+		this.fechaApertura = fechaApertura;
+	}
 	public Long getId() {
 		return id;
 	}

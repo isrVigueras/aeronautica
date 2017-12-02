@@ -15,7 +15,6 @@ package com.tikal.aeronautikal.controller;
 	import org.springframework.web.bind.annotation.RequestMethod;
 	import com.tikal.aeronautikal.dao.EmpresaDao;
 	import com.tikal.aeronautikal.entity.EmpresaEntity;
-	import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 	import com.tikal.aeronautikal.service.EmpresaService;
 	import com.tikal.aeronautikal.util.AsignadorDeCharset;
 	import com.tikal.aeronautikal.util.JsonConvertidor;
@@ -81,7 +80,7 @@ package com.tikal.aeronautikal.controller;
 		 
 		   /////////////////////////////////////////////////////////////////////////////////////////**********************
 		   @RequestMapping(value = { "/findAll" }, method = RequestMethod.GET, produces = "application/json")
-			public void findAllComp(HttpServletResponse response, HttpServletRequest request) throws IOException {
+			public void findAll(HttpServletResponse response, HttpServletRequest request) throws IOException {
 				AsignadorDeCharset.asignar(request, response);
 				List<EmpresaEntity> lista = empresaDao.getAll();
 				if (lista == null) {

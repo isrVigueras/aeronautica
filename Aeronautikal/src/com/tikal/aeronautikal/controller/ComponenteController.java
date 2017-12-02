@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +42,32 @@ public class ComponenteController {
 		   response.getWriter().println("Prueba del mètodo PROBAR en Componente");
 
 	    }
+	 
+	 ////////////////////////////////////////////////*****************************************************************
+	 
+	 @RequestMapping(value = "/add", method = RequestMethod.GET)
+	    public String addComponenteGet(@ModelAttribute("entry") ComponenteEntity entry) {
+		   System.out.println("si entra a Orden controller");   
+		   	try {
+		   		
+		   		entry.setId(Long.parseLong("1119"));
+		   		entry.setD_componente("123_descripcion del componente");
+		   		entry.setD_parte("no. de parte ");
+		   		entry.setD_pendientes(3);
+		   		entry.setD_cantidad(8);
+		   		entry.setD_requisicion("num de requisicion");
+		   		entry.setD_vale("numero de vale");
+		   		entry.setFechaApertura("01/12/2017");
+	            System.out.println("si asign/ valor"+entry);
+	        } catch (RuntimeException ignored) {
+	            // getUniqueEntity should throw exception
+	        }
+		   System.out.println("yaaaaa");	    
+	        componenteService.save(entry);   //implementa el dao  
+	        return "Orden_de_trabajo";
+		}
+	
+	 /////////////////////////////////////////////////////********************************************************
 
 	 
 	 @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 

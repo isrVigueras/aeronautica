@@ -3,9 +3,9 @@ package com.tikal.aeronautikal.dao;
 
 
 	import com.tikal.aeronautikal.entity.EmpresaEntity;
-	import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
+
 	import java.util.List;
-	import java.util.Map;
+
 
 	public interface EmpresaDao {
 
