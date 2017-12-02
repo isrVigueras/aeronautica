@@ -24,13 +24,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="generada in generadas">
-        <td>{{generada.folio}}</td>
-        <td>{{generada.empresa}}</td>
-        <td>{{generada.fechaCreacion}}</td>
-        <td>{{generada.fechaCreacion}}</td>
-        <td>{{generada.fechaCreacion}}</td>
-        <td>{{generada.fechaCreacion}}</td>
+      <tr ng-repeat="inv_alta in inv_altas">
+        <td>{{inv_alta.id}}</td>
+        <td>{{inv_alta.fechaApertura}}</td>
+        <td>{{inv_alta.d_componente}}</td>
+        <td>{{inv_alta.d_parte}}</td>
+        <td>{{inv_alta.d_cantidad}}</td>
+        <td>{{inv_alta.d_pendientes}}</td>
+        <td>{{inv_alta.d_requisicion}}</td>
+        <td>{{inv_alta.d_vale}}</td>
         <td>      <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="location.href='#/Orden/detalle/{{generada.folio}}'">
   <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -44,8 +46,8 @@
     </tbody>
       <tfoot>
       <tr>
-        <td colspan="3">El Numero de ordenes Generadas es:</td>
-        <td ng-bind="generadas.length"></td>
+        <td colspan="3">El Numero piezas registradas es:</td>
+        <td ng-bind="inv_alta.length"></td>
       </tr>
     </tfoot>
   </table>

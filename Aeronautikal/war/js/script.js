@@ -251,7 +251,7 @@ app.controller("OrdenesgeneradasController", ['$scope', 'generadas',function($sc
 $scope.generadas = generadas;
 }]);
 
-app.controller("InventarioController", ['$scope','InventarioService','remoteResource',function($scope,InventarioService,remoteResource) {
+app.controller("InventarioController", ['$scope','InventarioService','inv_altas',function($scope,InventarioService,inv_altas) {
  $scope.inventario = {
     id:undefined,
     fechaApertura:new Date(),
@@ -276,6 +276,7 @@ app.controller("InventarioController", ['$scope','InventarioService','remoteReso
       alert("Hay datos inválidos");
     }
   }
+  $scope.inv_altas =inv_altas;
 
 }]);
 app.controller("In", ['$scope',function($scope) {
