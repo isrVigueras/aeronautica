@@ -1,0 +1,54 @@
+<link href="css/tabla.css" rel="stylesheet" type="text/css" />
+<!--<div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-secondary" OnClick="location.href='http://localhost/aeronau/Orden_de_trabajo.html'">Generar una O/T</button>
+  <button type="button" class="btn btn-secondary" OnClick="location.href='http://localhost/aeronau/Ordenes_generadas.html'">Ordenes Generadas</button>
+</div>-->
+
+	<div class="contenedor">
+<center><h3 style="color:#EEE6E6">Ordenes Generadas</h3></center>
+  <br>
+ 
+
+ <table class="tito">>
+    <thead>
+      <tr style="background-color: #201b17c9;">
+        <th>ID</th>
+        <th>Feha de ingreso</th>
+        <th>Componente</th>
+        <th>No. de parte</th>
+        <th>Cantidad</th>
+        <th>Faltantes</th>
+        <th>No.requisicion</th>
+        <th>No.Vale</th>
+        <th>Accion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="generada in generadas">
+        <td>{{generada.folio}}</td>
+        <td>{{generada.empresa}}</td>
+        <td>{{generada.fechaCreacion}}</td>
+        <td>{{generada.fechaCreacion}}</td>
+        <td>{{generada.fechaCreacion}}</td>
+        <td>{{generada.fechaCreacion}}</td>
+        <td>      <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="location.href='#/Orden/detalle/{{generada.folio}}'">
+  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button type="button" class="btn btn-default" aria-label="Left Align">
+  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+</button>
+<!--<input type ='button' value = 'texto boton' onclick="window.open('http://localhost/aeronau/Detalle_discrepancias.html', 'width=800,height=600');"/>--> 
+
+</td>
+      </tr>
+    </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="3">El Numero de ordenes Generadas es:</td>
+        <td ng-bind="generadas.length"></td>
+      </tr>
+    </tfoot>
+  </table>
+<br><br><br><br><br>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
