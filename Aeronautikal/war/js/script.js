@@ -24,6 +24,19 @@ app.service('OrdenesService', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+//servicio alta Inventario
+app.service('InventarioService', [ '$http', '$q', function($http, $q) {
+  this.genera_inventario = function(inventario) {
+    var d = $q.defer();
+    $http.post("/componente/add",inventario).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
+
 
 //recursos remotos mediante el get generacion de promesas
 function RemoteResource($http,$q, baseUrl) {
@@ -51,6 +64,23 @@ function RemoteResource($http,$q, baseUrl) {
     $http({
       method: 'GET',
       url: baseUrl + '/orden/findAll'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+
+      this.listado_inv = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/componente/findAll'
     }).success(function(data, status, headers, config) {
       defered.resolve(data);
     }).error(function(data, status, headers, config) {
@@ -116,8 +146,17 @@ app.config(['$routeProvider',function($routeProvider) {
   });      
         $routeProvider.when('/Inventario/alta', {
     templateUrl: "inventario.html",
-    controller: ""
+    controller: "InventarioController"
   });     
+           $routeProvider.when('/Inventario/colsulta', {
+    templateUrl: "consul_inventario.html",
+    controller: "InventarioController",
+     resolve: {
+      inv_altas:['remoteResource',function(remoteResource) {
+        return remoteResource.listado_inv();
+      }]
+    }
+  });  
   /*$routeProvider.when('/seguro/edit/:idSeguro', {
     templateUrl: "Orden_de_trabajo.html",
     controller: "DetalleSeguroController",
@@ -212,7 +251,34 @@ app.controller("OrdenesgeneradasController", ['$scope', 'generadas',function($sc
 $scope.generadas = generadas;
 }]);
 
-app.controller("InventarioController", ['$scope',function($scope) {
+app.controller("InventarioController", ['$scope','InventarioService','remoteResource',function($scope,InventarioService,remoteResource) {
+ $scope.inventario = {
+    id:undefined,
+    fechaApertura:new Date(),
+    d_componente:"",
+    d_parte:"",
+    d_cantidad:undefined,
+    d_pendientes:undefined,    
+    d_requisicion:"",
+    d_vale:""
+  }
+
+   $scope.alta_inventario=function() {
+    if ($scope.form.$valid) {
+      alert("variable comprobada: "+$scope.inventario.d_componente+" y la fecha "+ $scope.inventario.fechaApertura);
+      InventarioService.genera_inventario($scope.inventario).then(
+        function(data) {
+          console.log(data);
+          alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
+        })
+              
+    }else {
+      alert("Hay datos inválidos");
+    }
+  }
+
+}]);
+app.controller("In", ['$scope',function($scope) {
 
 }]);
 app.controller("MainController", ['$scope',function($scope) {
