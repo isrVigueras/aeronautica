@@ -1,0 +1,66 @@
+package com.tikal.aeronautikal.dao.impl;
+
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.tikal.aeronautikal.dao.RequisicionDao;
+import com.tikal.aeronautikal.entity.RequisicionEntity;
+
+
+@Service ("requisicionDao")
+public class RequisicionDaoImpl implements RequisicionDao {
+	
+	public void save(RequisicionEntity r) {   
+		System.out.println("si lega aqui");
+        ofy().save().entity(r).now();
+    }
+	public List<RequisicionEntity> getAll() {
+		return ofy().load().type(RequisicionEntity.class).list();
+	}
+
+
+	public void findAll() {
+	// TODO Auto-generated method stub
+	
+	}
+
+	@Override
+	public void delete(RequisicionEntity r) {
+		// TODO Auto-generated method stub@Override
+		ofy().delete().entity(r).now();
+			//object.setActivo(false);
+			//update(c);
+		
+		
+	}
+
+
+	@Override
+	public void update(RequisicionEntity r) {
+		// TODO Auto-generated method stub
+		RequisicionEntity old = this.consult(r.getFolio());
+		if (old != null) {
+//			//old.setDireccion(e.getDireccion());
+			old.setFolio(r.getFolio());
+			old.setNumero_parte(r.getNumero_parte());
+			old.setCantidad(r.getCantidad());
+			ofy().save().entity(old);
+		
+		}
+
+		
+	}
+
+
+	@Override
+	public RequisicionEntity consult(Long folio) {
+		System.out.println("aqui esta consultando la entidad que va a borrar" );
+       return ofy().load().type(RequisicionEntity.class).id(folio).now();
+		
+	}
+
+
+}
