@@ -7,11 +7,11 @@ import com.googlecode.objectify.annotation.Index;
 
 
 @Entity
-public class ContactoEntity implements BaseEntity{
-	
+public class ContactoEntity{
+	@Id private Long id;
 	@Index private String nombre;
 	@Index private String telefono;
-	@Id private String correoElectronico;
+	 private String correoElectronico;
 
 	@Container EmpresaEntity empresa;
 	//@Container OrdenEntity orden;
@@ -22,6 +22,7 @@ public class ContactoEntity implements BaseEntity{
 	public void setEmpresa(EmpresaEntity empresa) {
 		this.empresa = empresa;
 	}
+	
 	//public OrdenEntity getOrden() {
 	//	return orden;
 	//}
@@ -30,6 +31,12 @@ public class ContactoEntity implements BaseEntity{
 	//}
 	
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getNombre() {
 		return nombre;
 	}

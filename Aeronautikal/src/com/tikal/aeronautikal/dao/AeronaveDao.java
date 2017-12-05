@@ -28,13 +28,6 @@ public interface AeronaveDao {
 	
 	public List<AeronaveEntity> getAll();
 
-	
-//////	<T extends BaseEntity> List<T> listObjectByPage(Class<T> clazz, int page, int pageSize, String order);
-
-//	<T extends BaseEntity> long countAll(Class<T> clazz);
-
-	//<T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions);
-
 
 	
 }

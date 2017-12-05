@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.tikal.aeronautikal.dao.DiscrepanciaDao;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
+import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.service.DiscrepanciaService;
 
 @Service ("discrepanciaService")
@@ -32,8 +33,9 @@ public class DiscrepanciaServiceImpl implements DiscrepanciaService{
 		}
 
 		@Override
-		public void consult(Long folio) {
+		public DiscrepanciaEntity consult(Long folio) {
 			// TODO Auto-generated method stub
+			return ofy().load().type(DiscrepanciaEntity.class).id(folio).now();
 			
 		}
 

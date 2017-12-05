@@ -10,9 +10,11 @@ public interface ComponenteService {
 	
 	 public void save(ComponenteEntity c);
   
-	 public void consult(Long id);
+	 public ComponenteEntity consult(Long id);
 	  
 	 public List<ComponenteEntity> getAll();
+	 
+	 public void delete(ComponenteEntity c);
 
 
 }

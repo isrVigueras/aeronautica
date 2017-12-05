@@ -11,33 +11,63 @@ import org.springframework.util.CollectionUtils;
 import com.googlecode.objectify.cmd.Query;
 import com.tikal.aeronautikal.dao.ContactoDao;
 import com.tikal.aeronautikal.entity.BaseEntity;
+import com.tikal.aeronautikal.entity.ContactoEntity;
+import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.exception.ObjectNotFoundException;
 
 @Service("contactoDao")
 
 public class ContactoDaoImpl implements ContactoDao {
 	
-	public <T extends BaseEntity> void save(T object) {
-		System.out.println("si entra a contacoDaoImpl"+object);
-        ofy().save().entity(object).now();
-        System.out.println("si sale de conactoDaoImpl");
+	public void save(ContactoEntity c) {   
+		System.out.println("si lega aqui");
+        ofy().save().entity(c).now();
     }
+	public List<ContactoEntity> getAll() {
+		return ofy().load().type(ContactoEntity.class).list();
+	}
+
+
+	public void findAll() {
+	// TODO Auto-generated method stub
 	
-//	 public <T extends BaseEntity> T getUniqueEntity(Class<T> clazz, Map<String, Object> conditions) {
-//	        Query<T> query = ofy().load().type(clazz);
-//	        for (Map.Entry<String, Object> entry : conditions.entrySet()) {
-//	            query = query.filter(entry.getKey(), entry.getValue());
-//	        }
-//	        List<T> list = query.list();
-//	        if (CollectionUtils.isEmpty(list)) {
-//	            throw new ObjectNotFoundException("Object of class " + clazz.getCanonicalName() +
-//	                    " not found by given conditions: " + conditions);
-//	        }
-//	        if (list.size() > 1) {
-//	            throw new ObjectNotFoundException("There are several objects of class " + clazz.getCanonicalName() +
-//	                    " found by given conditions: " + conditions);
-//	        }
-//	        return list.get(0);
-//	    }
+	}
+
+	@Override
+	public void delete(ContactoEntity c) {
+		// TODO Auto-generated method stub@Override
+		ofy().delete().entity(c).now();
+			//object.setActivo(false);
+			//update(c);
+		
+		
+	}
+
+
+	@Override
+	public void update(ContactoEntity c) {
+		// TODO Auto-generated method stub
+		ContactoEntity old = this.consult(c.getId());
+		if (old != null) {
+//			//old.setDireccion(e.getDireccion());
+			old.setNombre(c.getNombre());
+			old.setTelefono(c.getTelefono());
+			old.setCorreoElectronico(c.getCorreoElectronico());
+			
+			ofy().save().entity(old);
+		
+		}
+
+		
+	}
+
+
+	@Override
+	public ContactoEntity consult(Long id) {
+		System.out.println("aqui esta consultando la entidad que va a borrar" );
+       return ofy().load().type(ContactoEntity.class).id(id).now();
+		
+	}
+
 
 }

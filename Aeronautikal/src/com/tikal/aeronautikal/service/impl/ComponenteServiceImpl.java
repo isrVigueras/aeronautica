@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.dao.AeronaveDao;
 import com.tikal.aeronautikal.dao.ComponenteDao;
+import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.BaseEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.service.ComponenteService;
@@ -38,9 +39,17 @@ public class ComponenteServiceImpl implements ComponenteService{
 		}
 
 		@Override
-		public void consult(Long id) {
+		public ComponenteEntity consult(Long folio) {
 			// TODO Auto-generated method stub
+			return ofy().load().type(ComponenteEntity.class).id(folio).now();
 			
+		}
+		
+		@Override
+		public void delete(ComponenteEntity c) {
+		// TODO Auto-generated method stub
+		componenteDao.delete(c); 
+		
 		}
 
 }

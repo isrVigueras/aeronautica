@@ -12,6 +12,7 @@ import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.dao.OrdenDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.BaseEntity;
+import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.service.OrdenService;
 
 @Service("ordenService")
@@ -34,8 +35,9 @@ public class OrdenServiceImpl implements OrdenService {
 		}
 
 		@Override
-		public void consult(Long folio) {
+		public OrdenVo consult(Long folio) {
 			// TODO Auto-generated method stub
+			return ofy().load().type(OrdenVo.class).id(folio).now();
 			
 		}
 	    

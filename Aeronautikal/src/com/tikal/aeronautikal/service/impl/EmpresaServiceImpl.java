@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.tikal.aeronautikal.dao.EmpresaDao;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
+import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.service.EmpresaService;
 
 @Service("empresaService")
@@ -34,8 +35,9 @@ public class EmpresaServiceImpl implements EmpresaService {
 		}
 
 		@Override
-		public void consult(Long id) {
+		public EmpresaEntity consult(Long id) {
 			// TODO Auto-generated method stub
+			return ofy().load().type(EmpresaEntity.class).id(id).now();
 			
 		}
 

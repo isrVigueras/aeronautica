@@ -9,7 +9,7 @@ public interface DiscrepanciaService {
 	
 	 public void save(DiscrepanciaEntity c);
 	  
-	 public void consult(Long folio);
+	 public DiscrepanciaEntity consult(Long folio);
 	  
 	 public List<DiscrepanciaEntity> getAll();
 
