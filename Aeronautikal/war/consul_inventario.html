@@ -5,11 +5,14 @@
 </div>-->
 
 	<div class="contenedor">
-<center><h3 style="color:#EEE6E6">Ordenes Generadas</h3></center>
+<center><h3 style="color:#EEE6E6">Inventario Registrado</h3></center>
   <br>
- 
-
- <table class="tito">>
+  <div class="row" style="margin: 1% 1%;">
+ <div class="col-xs-4">
+  <label for="d_componente" style="color:#EEE6E6">Filtrar por componente:</label><input  class="form-control" placeholder="Escriba el nombre del componente" ng-model="filtro.ape1">
+  <div>
+  </div>
+ <table class="tito">
     <thead>
       <tr style="background-color: #201b17c9;">
         <th>ID</th>
@@ -24,15 +27,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="inv_alta in inv_altas">
-        <td>{{inv_alta.id}}</td>
-        <td>{{inv_alta.fechaApertura}}</td>
-        <td>{{inv_alta.d_componente}}</td>
-        <td>{{inv_alta.d_parte}}</td>
-        <td>{{inv_alta.d_cantidad}}</td>
-        <td>{{inv_alta.d_pendientes}}</td>
-        <td>{{inv_alta.d_requisicion}}</td>
-        <td>{{inv_alta.d_vale}}</td>
+      <tr ng-repeat="inv_consulta in inv_consultas">
+        <td>{{inv_consulta.id}}</td>
+        <td>{{inv_consulta.fechaApertura}}</td>
+        <td>{{inv_consulta.d_componente}}</td>
+        <td>{{inv_consulta.d_parte}}</td>
+        <td>{{inv_consulta.d_cantidad}}</td>
+        <td>{{inv_consulta.d_pendientes}}</td>
+        <td>{{inv_consulta.d_requisicion}}</td>
+        <td>{{inv_consulta.d_vale}}</td>
         <td>      <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="location.href='#/Orden/detalle/{{generada.folio}}'">
   <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -47,7 +50,7 @@
       <tfoot>
       <tr>
         <td colspan="3">El Numero piezas registradas es:</td>
-        <td ng-bind="inv_alta.length"></td>
+        <td ng-bind="inv_consultas.length"></td>
       </tr>
     </tfoot>
   </table>

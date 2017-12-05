@@ -21,6 +21,11 @@
   $('#myInput').focus()
 })
 </script>
+<script>
+  $('#myrequis').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+</script>
 <style>
     #mdialTamanio{
       width: 60% !important;
@@ -227,8 +232,34 @@
           </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Has una requisicion</button>
+         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myrequis">
+          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>Has una requisicion</button>
         <button type="button" class="btn btn-primary">Agregar componete</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--*************************Modalrequisisiones*********************************-->
+<div class="modal fade" id="myrequis" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Complete los campos de la requisicion</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+                 <form>
+        <br>
+        <label for="d_componente">Nombre de la pieza que se requiere:</label><input class="form-control" placeholder="Escriba el nombre completo de la pieza" id="r_nombre" name="d_componente" type="number"/>
+        <br>
+        <label for="d_componente">Numero de piezas requeridas:</label><input class="form-control" placeholder="Escriba el No. piezas que se requieren" id="r_numero" name="d_componente" type="number"/>
+        <!-- <label for="d_componente">Quien las requiere:</label><input class="form-control" placeholder="Niombre de la persona responsable" id="d_componente" name="d_componente" type="number"/>
+          <label for="d_componente">Folio de la O/T:</label><input class="form-control" placeholder="Escriba el folio de la orden de trabajo" id="d_componente" name="d_componente" type="text"/>-->
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Generar</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       </div>
     </div>

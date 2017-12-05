@@ -38,7 +38,7 @@ app.service('InventarioService', [ '$http', '$q', function($http, $q) {
 } ]);
 
 
-//recursos remotos mediante el get generacion de promesas
+//recursos remotos para traer informacion, mediante el get generacion de promesas
 function RemoteResource($http,$q, baseUrl) {
   this.get = function() {
     var defered=$q.defer();
@@ -90,6 +90,40 @@ function RemoteResource($http,$q, baseUrl) {
     return promise;
     
   }
+     this.generacion_folio = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/orden/getFolio'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+
+    this.empresas = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/orden/getEmpresas'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+
 }
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
 function RemoteResourceProvider() {
@@ -132,7 +166,15 @@ app.config(['$routeProvider',function($routeProvider) {
      
   $routeProvider.when('/Orden/generar', {
     templateUrl: "Orden_de_trabajo.html",
-    controller: "ordenController"
+    controller: "ordenController",
+    resolve: {
+      new_folio:['remoteResource',function(remoteResource) {
+        return remoteResource.generacion_folio();
+      }],
+       empresass:['remoteResource',function(remoteResource) {
+        return remoteResource.empresas();
+      }]
+    }
   });
 
   $routeProvider.when('/Orden/detalle', {
@@ -150,9 +192,9 @@ app.config(['$routeProvider',function($routeProvider) {
   });     
            $routeProvider.when('/Inventario/colsulta', {
     templateUrl: "consul_inventario.html",
-    controller: "InventarioController",
+    controller: "InventarioconsultaController",
      resolve: {
-      inv_altas:['remoteResource',function(remoteResource) {
+      inv_consultas:['remoteResource',function(remoteResource) {
         return remoteResource.listado_inv();
       }]
     }
@@ -189,7 +231,7 @@ app.directive('caDatepicker', [function(dateFormat) {
   };
 }]);
 
-app.controller('ordenController', ['$scope','OrdenesService',function($scope,OrdenesService) {
+app.controller('ordenController', ['$scope','OrdenesService','new_folio',function($scope,OrdenesService,new_folio) {
  //$scope.fo = {}; alamcenar los datos en mi objeto para vidarlos
  $scope.fo = {
 
@@ -207,10 +249,10 @@ app.controller('ordenController', ['$scope','OrdenesService',function($scope,Ord
   }
 
   //$scope.CurrentDate = new Date();
-
+$scope.new_folio = new_folio;
  $scope.guardar=function() {
     if ($scope.form.$valid) {
-      alert("variable comprobada: "+$scope.fo.con_nombre+" y la fecha "+ $scope.fo.fechaApertura);
+      alert("variable comprobada: "+$scope.fo.con_nombre+" y la fecha "+ $scope.fo.fechaApertura+"folio: "+ $scope.new_folio );
       OrdenesService.genera_orden($scope.fo).then(
         function(data) {
           console.log(data);
@@ -251,7 +293,7 @@ app.controller("OrdenesgeneradasController", ['$scope', 'generadas',function($sc
 $scope.generadas = generadas;
 }]);
 
-app.controller("InventarioController", ['$scope','InventarioService','inv_altas',function($scope,InventarioService,inv_altas) {
+app.controller("InventarioController", ['$scope','InventarioService',function($scope,InventarioService) {
  $scope.inventario = {
     id:undefined,
     fechaApertura:new Date(),
@@ -276,11 +318,10 @@ app.controller("InventarioController", ['$scope','InventarioService','inv_altas'
       alert("Hay datos inválidos");
     }
   }
-  $scope.inv_altas =inv_altas;
-
 }]);
-app.controller("In", ['$scope',function($scope) {
-
+app.controller("InventarioconsultaController", ['$scope','inv_consultas',function($scope,inv_consultas) {
+ $scope.inv_consultas =inv_consultas;
+  console.log($scope.inv_consultas);
 }]);
 app.controller("MainController", ['$scope',function($scope) {
 
