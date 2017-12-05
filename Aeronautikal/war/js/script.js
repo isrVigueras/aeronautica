@@ -36,6 +36,19 @@ app.service('InventarioService', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+//servicio alta Discrepeancia
+app.service('DiscrepanciaServicio', [ '$http', '$q', function($http, $q) {
+  this.genera_discrepancia = function(discrepancia) {
+    var d = $q.defer();
+    $http.post("/discrepancia/add",discrepancia).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
+
 
 
 //recursos remotos para traer informacion, mediante el get generacion de promesas
@@ -184,7 +197,7 @@ app.config(['$routeProvider',function($routeProvider) {
 
     $routeProvider.when('/Orden/discrepancia', {
     templateUrl: "Discrepancias.html",
-    controller: ""
+    controller: "DiscrepanciaController"
   });      
         $routeProvider.when('/Inventario/alta', {
     templateUrl: "inventario.html",
@@ -213,6 +226,39 @@ app.config(['$routeProvider',function($routeProvider) {
         redirectTo: '/'
   });   
  
+}]);
+app.filter("filteri18n",["$filter",function($filter) {
+  var filterFn=$filter("filter");
+   
+  /** Transforma el texto quitando todos los acentos diéresis, etc. **/
+  function normalize(texto) {
+    texto = texto.replace(/[áàäâ]/g, "a");
+    texto = texto.replace(/[éèëê]/g, "e");
+    texto = texto.replace(/[íìïî]/g, "i");
+    texto = texto.replace(/[óòôö]/g, "o");
+    texto = texto.replace(/[úùüü]/g, "u");
+    texto = texto.toUpperCase();
+    return texto;
+  }
+    
+  /** Esta función es el comparator en el filter **/
+  function comparator(actual, expected) {
+      if (normalize(actual).indexOf(normalize(expected))>=0) {
+        return true;
+      } else {
+        return false;
+      }
+  }
+   
+  /** Este es realmente el filtro **/
+  function filteri18n(array,expression) {
+    //Lo único que hace es llamar al filter original pero pasado
+    //la nueva función de comparator
+    return filterFn(array,expression,comparator)
+  }
+   
+  return filteri18n;
+   
 }]);
 
 //directiva de angular para mostrar el calendario usando el plugin de Jquery
@@ -294,6 +340,9 @@ $scope.generadas = generadas;
 }]);
 
 app.controller("InventarioController", ['$scope','InventarioService',function($scope,InventarioService) {
+  $scope.filtro = {
+      d_componente: ""
+    }
  $scope.inventario = {
     id:undefined,
     fechaApertura:new Date(),
@@ -322,6 +371,31 @@ app.controller("InventarioController", ['$scope','InventarioService',function($s
 app.controller("InventarioconsultaController", ['$scope','inv_consultas',function($scope,inv_consultas) {
  $scope.inv_consultas =inv_consultas;
   console.log($scope.inv_consultas);
+}]);
+app.controller("DiscrepanciaController", ['$scope','DiscrepanciaServicio',function($scope,DiscrepanciaServicio) {
+ $scope.discrepancia = {
+    id:undefined,
+    fechaApertura:new Date(),
+    d_componente:"",
+    d_parte:"",
+    d_cantidad:undefined,
+    d_pendientes:undefined,    
+    d_requisicion:"",
+    d_vale:""
+  }
+   $scope.alta_discrepancia=function() {
+    if ($scope.form.$valid) {
+      alert("variable comprobada: "+$scope.discrepancia.d_componente+" y la fecha "+ $scope.discrepancia.fechaApertura);
+      DiscrepanciaServicio.genera_discrepancia($scope.discrepancia).then(
+        function(data) {
+          console.log(data);
+          alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
+        })
+              
+    }else {
+      alert("Hay datos inválidos");
+    }
+  }
 }]);
 app.controller("MainController", ['$scope',function($scope) {
 
