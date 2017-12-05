@@ -3,6 +3,7 @@ package com.tikal.aeronautikal.controller.vo;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Load;
 import com.tikal.aeronautikal.entity.BaseEntity;
@@ -24,8 +25,11 @@ public class OrdenVo {
 	String n_serie;
 	Integer a_t_vuelo;
 	String a_t_aterrizaje;
+	//@Ignore private Empresa laEmpresa;
 	
-	@Index @Load Ref<Empresa> refEmpresa;
+	//@Index @Load Ref<Empresa> refEmpresa;
+	
+	
 	
 	public String getA_modelo() {
 		return a_modelo;
@@ -33,12 +37,12 @@ public class OrdenVo {
 	public void setA_modelo(String a_modelo) {
 		this.a_modelo = a_modelo;
 	}
-	public Ref<Empresa> getRefEmpresa() {
-		return refEmpresa;
-	}
-	public void setRefEmpresa(Ref<Empresa> refEmpresa) {
-		this.refEmpresa = refEmpresa;
-	}
+//	public Ref<Empresa> getRefEmpresa() {
+//		return refEmpresa;
+//	}
+//	public void setRefEmpresa(Ref<Empresa> refEmpresa) {
+//		this.refEmpresa = refEmpresa;
+//	}
 	public Long getFolio() {
 		return folio;
 	}

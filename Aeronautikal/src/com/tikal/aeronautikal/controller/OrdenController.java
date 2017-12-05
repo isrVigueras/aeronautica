@@ -17,10 +17,10 @@ import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.dao.AeronaveDao;
 import com.tikal.aeronautikal.dao.EmpresaDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
+import com.tikal.aeronautikal.entity.Contador;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
 //import com.tikal.aeronautikal.entity.OrdenEntity;
 import com.tikal.aeronautikal.model.Aeronave;
-import com.tikal.aeronautikal.model.Contador;
 import com.tikal.aeronautikal.service.OrdenService;
 import com.tikal.aeronautikal.util.JsonConvertidor;
 
@@ -121,15 +121,7 @@ public class OrdenController {
 	   
 	   
 	   
-	   @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
-	   
-	   public void prueba(HttpServletResponse response, HttpServletRequest request) throws IOException {
-		   response.getWriter().println("Prueba del mètodo PROBAR en Orden de trabajo");
-
-	    }
-	   
-	   
-	   @RequestMapping(value = { "/getEmpresas" }, method = RequestMethod.GET, produces = "application/json")
+	    @RequestMapping(value = { "/getEmpresas" }, method = RequestMethod.GET, produces = "application/json")
 		public void getAllEmpresas(HttpServletResponse response, HttpServletRequest request) throws IOException {
 			AsignadorDeCharset.asignar(request, response);
 						
@@ -155,10 +147,15 @@ public class OrdenController {
 	   @RequestMapping(value = {"/delete/{folio}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
 	   public void deleteOrden(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
 		@PathVariable Long folio) throws IOException {
+		   System.out.println("ya entro a delete");
 		   ordenDao.delete(ordenDao.consult(folio));
 	   }
 	   
-	  
+	   @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
+	   public void prueba(HttpServletResponse response, HttpServletRequest request) throws IOException {
+		   response.getWriter().println("Prueba del mètodo PROBAR en Orden de trabajo");
+
+	    }
 	   
 	 
 	   

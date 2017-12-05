@@ -18,7 +18,7 @@ public class EmpresaEntity {
 	@Id private long id;	
 	private String nickName;
 	private DatosFacturacion datosFacturacion;
-	@Container OrdenVo orden;
+	//@Container OrdenVo orden;
 	
 
 	public long getId() {

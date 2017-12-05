@@ -6,11 +6,13 @@ import com.googlecode.objectify.ObjectifyService;
 import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.ContactoEntity;
+import com.tikal.aeronautikal.entity.Contador;
 import com.tikal.aeronautikal.entity.DatosFacturacionEntity;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.EmpleadoEntity;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
 import com.tikal.aeronautikal.entity.OrdenEntity;
+import com.tikal.aeronautikal.entity.RequisicionEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 
 @Component
@@ -28,6 +30,8 @@ public class StartupEntities {
 		ObjectifyService.register(EmpresaEntity.class);
 		ObjectifyService.register(EmpleadoEntity.class);
 		ObjectifyService.register(ComponenteEntity.class);
+		ObjectifyService.register(Contador.class);
+		ObjectifyService.register(RequisicionEntity.class);
 	}
 	
     

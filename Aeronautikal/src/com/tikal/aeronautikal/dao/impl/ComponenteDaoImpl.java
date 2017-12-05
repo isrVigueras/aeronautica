@@ -31,9 +31,9 @@ public class ComponenteDaoImpl implements ComponenteDao{
 	@Override
 	public void delete(ComponenteEntity c) {
 		// TODO Auto-generated method stub@Override
-		
+		ofy().delete().entity(c).now();
 			//object.setActivo(false);
-			update(c);
+			//update(c);
 		
 		
 	}
@@ -62,7 +62,7 @@ public class ComponenteDaoImpl implements ComponenteDao{
 
 	@Override
 	public ComponenteEntity consult(Long id) {
-		
+		System.out.println("aqui esta consultando la entidad que va a borrar" );
        return ofy().load().type(ComponenteEntity.class).id(id).now();
 		
 	}

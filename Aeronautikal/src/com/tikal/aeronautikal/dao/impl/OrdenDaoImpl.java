@@ -45,8 +45,8 @@ public class OrdenDaoImpl implements OrdenDao{
 	public void delete(OrdenVo o) {
 		// TODO Auto-generated method stub@Override
 		
-			//object.setActivo(false);
-			update(o);
+			//o.setActivo(false);
+			//update(o);
 		
 		
 	}

@@ -122,5 +122,13 @@
         </web-resource-collection>
       
     </security-constraint>
+    
+     <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>add discrepancia</web-resource-name>
+            <url-pattern>/discrepancia/add</url-pattern>
+        </web-resource-collection>
+      
+    </security-constraint>
 
 </web-app>

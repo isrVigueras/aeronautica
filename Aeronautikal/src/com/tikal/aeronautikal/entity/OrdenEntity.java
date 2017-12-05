@@ -11,7 +11,6 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Load;
-import com.googlecode.objectify.annotation.OnLoad;
 import com.tikal.aeronautikal.model.Aeronave;
 import com.tikal.aeronautikal.model.Contacto;
 import com.tikal.aeronautikal.model.Empresa;
@@ -33,22 +32,13 @@ public class OrdenEntity implements BaseEntity{
 		private List<Discrepancia> discrepancias;
 		
 		@Load List<Ref<Discrepancia>> refDiscrepancias;
-		@Index @Load Ref<Empresa> refEmpresa;
+//		@Index @Load Ref<Empresa> refEmpresa;
 		@Index @Load Ref<Aeronave> refAeronave;
 		
 	
 		//SortedSet<Discrepancia> discrepancias = new TreeSet<>(new TreadRemainingComparator()); es para inicializar el 
 		
-		  @OnLoad
-		    public void getRefs() {
-		        if( refEmpresa.isLoaded() ){
-		            laEmpresa = refEmpresa.get();
-		        }
-		        if (refAeronave.isLoaded()){
-		        	elAeronave =refAeronave.get();
-		        }
-		        
-		    }
+		
 		  
 		  public List<Discrepancia> getDisgrepancias() {
 				List<Discrepancia> ret = new ArrayList<Discrepancia>();

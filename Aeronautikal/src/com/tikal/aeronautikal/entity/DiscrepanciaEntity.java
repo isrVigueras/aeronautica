@@ -11,7 +11,7 @@ import com.tikal.aeronautikal.model.Empleado;
 import com.tikal.aeronautikal.model.otBody.Componente;
 import com.tikal.aeronautikal.model.otBody.Seccion;
 import com.tikal.aeronautikal.model.otBody.Taller;
-
+ 
 @Entity
 
 public class DiscrepanciaEntity implements BaseEntity{
@@ -27,7 +27,7 @@ public class DiscrepanciaEntity implements BaseEntity{
 	private Empleado removidoPor;
 	private Empleado instaladoPor;
 	private Empleado originadoPor;
-	@Container OrdenEntity orden;
+//	@Container OrdenEntity orden;
 	
 	public Long getFolio() {
 		return folio;

@@ -12,6 +12,9 @@ public class ContactoEntity implements BaseEntity{
 	@Index private String nombre;
 	@Index private String telefono;
 	@Id private String correoElectronico;
+
+	@Container EmpresaEntity empresa;
+	//@Container OrdenEntity orden;
 	
 	public EmpresaEntity getEmpresa() {
 		return empresa;
@@ -19,14 +22,13 @@ public class ContactoEntity implements BaseEntity{
 	public void setEmpresa(EmpresaEntity empresa) {
 		this.empresa = empresa;
 	}
-	public OrdenEntity getOrden() {
-		return orden;
-	}
-	public void setOrden(OrdenEntity orden) {
-		this.orden = orden;
-	}
-	@Container EmpresaEntity empresa;
-	@Container OrdenEntity orden;
+	//public OrdenEntity getOrden() {
+	//	return orden;
+	//}
+	//public void setOrden(OrdenEntity orden) {
+	//	this.orden = orden;
+	//}
+	
 	
 	public String getNombre() {
 		return nombre;
