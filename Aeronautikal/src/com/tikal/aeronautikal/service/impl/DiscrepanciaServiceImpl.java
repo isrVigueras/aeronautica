@@ -39,5 +39,12 @@ public class DiscrepanciaServiceImpl implements DiscrepanciaService{
 			
 		}
 
+		@Override
+		public List<DiscrepanciaEntity> getByOrden(Long folio) {
+			// TODO Auto-generated method stub}
+			return discrepanciaDao.getByOrden(folio);
+			//return null;
+		}
+
 
 }

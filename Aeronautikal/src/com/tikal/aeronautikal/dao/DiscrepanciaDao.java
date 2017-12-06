@@ -16,5 +16,7 @@ public interface DiscrepanciaDao {
 	public DiscrepanciaEntity consult(Long folio);
 	
 	public List<DiscrepanciaEntity> getAll();
+	
+	public List<DiscrepanciaEntity> getByOrden(Long folio);
 
 }

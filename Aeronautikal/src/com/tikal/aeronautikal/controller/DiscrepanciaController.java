@@ -23,6 +23,7 @@ import com.tikal.aeronautikal.service.DiscrepanciaService;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
 
+
 @Controller
 @RequestMapping(value="/discrepancia")
 public class DiscrepanciaController {
@@ -45,30 +46,31 @@ public class DiscrepanciaController {
 		 
 		 ////////////////////////////////////////////////*****************************************************************
 		 
-//		 @RequestMapping(value = "/add", method = RequestMethod.GET)
-//		    public String addDiscrepanciaGet(@ModelAttribute("entry") DiscrepanciaEntity entry) {
-//			   System.out.println("si entra a Discrepancia controller");   
-//			   	try {
-//			   	
-//			   		entry.setFolio(Long.parseLong("1000123119"));
-//			   		entry.setAccion("reparar electricidad de....");
-//			   		entry.setDescripcion("123_descripcion del componente");
-//			   		////entry.setInstaladoPor();
-//			   		//entry.setOriginadoPor();
-//			   		//entry.setFechaApertura("01/12/2017");
-//		            System.out.println("si asign/ valor"+entry);
-//		        } catch (RuntimeException ignored) {
-//		            // getUniqueEntity should throw exception
-//		        }
-//			   System.out.println("yaaaaa");	    
-//		        discrepanciaService.save(entry);   //implementa el dao  
-//		        return "Orden_de_trabajo";
-//			}
+		 @RequestMapping(value = "/add", method = RequestMethod.GET)
+		    public String addDiscrepanciaGet(@ModelAttribute("entry") DiscrepanciaEntity entry) {
+			   System.out.println("si entra a Discrepancia controller");   
+			   	try {
+			   	
+			   		entry.setFolio(Long.parseLong("55555555"));
+			   		entry.setAccion("reparar electricidad de....");
+			   		entry.setDescripcion("123_descripcion del componente");
+			   		entry.setFolioOrden(Long.parseLong("3"));
+			   		////entry.setInstaladoPor();
+			   		//entry.setOriginadoPor();
+			   		//entry.setFechaApertura("01/12/2017");
+	            System.out.println("si asign/ valor"+entry);
+		        } catch (RuntimeException ignored) {
+		            // getUniqueEntity should throw exception
+		        }
+			   System.out.println("yaaaaa");	    
+		        discrepanciaService.save(entry);   //implementa el dao  
+		        return "Orden_de_trabajo";
+			}
 		
 		 /////////////////////////////////////////////////////********************************************************
 
 		 
-		 @RequestMapping(value = {"/add/{folio}"}, method = RequestMethod.GET, produces = "application/json", consumes = "application/json") 
+		 @RequestMapping(value = {"/add_/{folio}"}, method = RequestMethod.GET, produces = "application/json", consumes = "application/json") 
 		   public void addDiscrepancia(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
 				   @PathVariable Long folio) throws IOException{
 		    	  System.out.println("si entra al add con el folio de orden :"+folio+"el json: "+json);
@@ -79,6 +81,7 @@ public class DiscrepanciaController {
 		        	DiscrepanciaEntity d =(DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
 		        	// System.out.println("el nuevo objeto: "+orden );
 		        	//pegar el valor de empresa, aeronave y contacato
+		        	d.setFolioOrden(folio);
 		        	d.setFolio(Long.valueOf((Long.toString(folio)+d.getTaller()+d.getSeccion())).longValue());
 		        	 System.out.println("el nuevo folio de discrepancia: "+ Long.valueOf((Long.toString(folio)+d.getTaller()+d.getSeccion())).longValue());
 		        	discrepanciaDao.save(d);
@@ -108,4 +111,13 @@ public class DiscrepanciaController {
 			@PathVariable Long folio) throws IOException {
 			   discrepanciaDao.delete(discrepanciaDao.consult(folio));
 		   }
+		   
+		   
+		   @RequestMapping(value = { "/getByOrden/{folio}" }, method = RequestMethod.GET, produces = "application/json")
+			public void findByOrden(HttpServletResponse response, HttpServletRequest request,
+					@PathVariable Long folio) throws IOException {
+				AsignadorDeCharset.asignar(request, response);
+				List<DiscrepanciaEntity> dis= discrepanciaDao.getByOrden(folio);
+				response.getWriter().println(JsonConvertidor.toJson(dis));
+			}
 }

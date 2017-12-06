@@ -25,6 +25,7 @@ public class OrdenVo {
 	String n_serie;		//aeronave
 	Integer a_t_vuelo;		//aeronave
 	String a_t_aterrizaje;		//aeronave
+	
 	//@Ignore private Empresa laEmpresa;
 	
 	//@Index @Load Ref<Empresa> refEmpresa;

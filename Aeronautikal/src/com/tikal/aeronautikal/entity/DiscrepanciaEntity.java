@@ -18,6 +18,7 @@ public class DiscrepanciaEntity implements BaseEntity{
 
     
     @Id private Long folio;
+    @Index private Long folioOrden;
     @Index private Taller taller;
 	@Index private Seccion seccion;
 	@Index private String descripcion;
@@ -34,6 +35,13 @@ public class DiscrepanciaEntity implements BaseEntity{
 	}
 	public void setFolio(Long folio) {
 		this.folio = folio;
+	}
+	
+	public Long getFolioOrden() {
+		return folioOrden;
+	}
+	public void setFolioOrden(Long folioOrden) {
+		this.folioOrden = folioOrden;
 	}
 	public Taller getTaller() {
 		return taller;

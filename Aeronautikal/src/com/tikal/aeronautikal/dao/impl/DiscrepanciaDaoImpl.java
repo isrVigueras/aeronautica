@@ -2,13 +2,16 @@ package com.tikal.aeronautikal.dao.impl;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.dao.DiscrepanciaDao;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
+
 
 @Service ("discrepanciaDao")
 public class DiscrepanciaDaoImpl implements DiscrepanciaDao {
@@ -65,7 +68,14 @@ public class DiscrepanciaDaoImpl implements DiscrepanciaDao {
        return ofy().load().type(DiscrepanciaEntity.class).id(folio).now();
 		
 	}
+	
+	@Override
+	public List<DiscrepanciaEntity> getByOrden(Long folio) {
+		// TODO Auto-generated method stub
+		List<DiscrepanciaEntity> dis = ofy().load().type(DiscrepanciaEntity.class).filter("folioOrden", folio).list();
+		return dis;
+	}
 
-
+	
 
 }

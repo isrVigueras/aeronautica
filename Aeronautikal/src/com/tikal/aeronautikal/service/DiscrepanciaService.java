@@ -12,6 +12,8 @@ public interface DiscrepanciaService {
 	 public DiscrepanciaEntity consult(Long folio);
 	  
 	 public List<DiscrepanciaEntity> getAll();
+	 
+	 public List<DiscrepanciaEntity> getByOrden(Long Folio);
 
 
 }
