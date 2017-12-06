@@ -100,6 +100,8 @@ public class OrdenController {
 	        	//pegar el valor de empresa, aeronave y contacato
 	        	//orden.setFolio(Long.parseLong("1111"));
 	        	//crearListaIdsOT();
+	        	
+	        	orden.setFolio(Contador.getFolio());
 	        	ordenDao.save(orden);	 
 	        	Contador.incremeta();
 	        } catch (RuntimeException ignored) {
@@ -158,7 +160,7 @@ public class OrdenController {
 	   
 	 
 	   @RequestMapping(value = { "/find/{folio}" }, method = RequestMethod.GET, produces = "application/json")
-		public void findEmpresa(HttpServletResponse response, HttpServletRequest request,
+		public void findFolio(HttpServletResponse response, HttpServletRequest request,
 				@PathVariable Long folio) throws IOException {
 			AsignadorDeCharset.asignar(request, response);
 			OrdenVo o=ordenDao.consult(folio);
