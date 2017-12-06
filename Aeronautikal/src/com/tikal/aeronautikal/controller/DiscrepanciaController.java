@@ -45,32 +45,33 @@ public class DiscrepanciaController {
 		 
 		 ////////////////////////////////////////////////*****************************************************************
 		 
-		 @RequestMapping(value = "/add", method = RequestMethod.GET)
-		    public String addDiscrepanciaGet(@ModelAttribute("entry") DiscrepanciaEntity entry) {
-			   System.out.println("si entra a Discrepancia controller");   
-			   	try {
-			   	
-			   		entry.setFolio(Long.parseLong("1000123119"));
-			   		entry.setAccion("reparar electricidad de....");
-			   		entry.setDescripcion("123_descripcion del componente");
-			   		////entry.setInstaladoPor();
-			   		//entry.setOriginadoPor();
-			   		//entry.setFechaApertura("01/12/2017");
-		            System.out.println("si asign/ valor"+entry);
-		        } catch (RuntimeException ignored) {
-		            // getUniqueEntity should throw exception
-		        }
-			   System.out.println("yaaaaa");	    
-		        discrepanciaService.save(entry);   //implementa el dao  
-		        return "Orden_de_trabajo";
-			}
+//		 @RequestMapping(value = "/add", method = RequestMethod.GET)
+//		    public String addDiscrepanciaGet(@ModelAttribute("entry") DiscrepanciaEntity entry) {
+//			   System.out.println("si entra a Discrepancia controller");   
+//			   	try {
+//			   	
+//			   		entry.setFolio(Long.parseLong("1000123119"));
+//			   		entry.setAccion("reparar electricidad de....");
+//			   		entry.setDescripcion("123_descripcion del componente");
+//			   		////entry.setInstaladoPor();
+//			   		//entry.setOriginadoPor();
+//			   		//entry.setFechaApertura("01/12/2017");
+//		            System.out.println("si asign/ valor"+entry);
+//		        } catch (RuntimeException ignored) {
+//		            // getUniqueEntity should throw exception
+//		        }
+//			   System.out.println("yaaaaa");	    
+//		        discrepanciaService.save(entry);   //implementa el dao  
+//		        return "Orden_de_trabajo";
+//			}
 		
 		 /////////////////////////////////////////////////////********************************************************
 
 		 
-		 @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
-		   public void addDiscrepancia(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
-		    	  System.out.println("si entra al add por POST"+json);
+		 @RequestMapping(value = {"/add/{folio}"}, method = RequestMethod.GET, produces = "application/json", consumes = "application/json") 
+		   public void addDiscrepancia(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
+				   @PathVariable Long folio) throws IOException{
+		    	  System.out.println("si entra al add con el folio de orden :"+folio+"el json: "+json);
 		        try {
 		        	AsignadorDeCharset.asignar(request, response);
 		        	// System.out.println("request......."+request);
@@ -78,12 +79,15 @@ public class DiscrepanciaController {
 		        	DiscrepanciaEntity d =(DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
 		        	// System.out.println("el nuevo objeto: "+orden );
 		        	//pegar el valor de empresa, aeronave y contacato
-		        	//orden.setFolio(1111);
-		        	discrepanciaDao.save(d);	            
+		        	d.setFolio(Long.valueOf((Long.toString(folio)+d.getTaller()+d.getSeccion())).longValue());
+		        	 System.out.println("el nuevo folio de discrepancia: "+ Long.valueOf((Long.toString(folio)+d.getTaller()+d.getSeccion())).longValue());
+		        	discrepanciaDao.save(d);
+		        	 response.getWriter().println(JsonConvertidor.toJson(d));
 		        } catch (RuntimeException ignored) {
 		        	ignored.printStackTrace();
 		            // getUniqueEntity should throw exception
 		        }
+		    	//  response.getWriter().println(JsonConvertidor.toJson(d));
 		       
 		    }
 		 
