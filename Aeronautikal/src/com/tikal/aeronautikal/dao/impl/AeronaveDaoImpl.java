@@ -70,7 +70,7 @@ public class AeronaveDaoImpl implements AeronaveDao {
 //    }
 
     
-
+  // @Override
    public AeronaveEntity consult(String numeroSerie) {
 		
        return ofy().load().type(AeronaveEntity.class).id(numeroSerie).now();

@@ -15,6 +15,10 @@ public interface OrdenService {
 	  public OrdenVo consult(Long folio);
 	  
 	  public List<OrdenVo> getAll();
+	  
+	  public void delete(OrdenVo o);
+	  
+	 
 
 
 }

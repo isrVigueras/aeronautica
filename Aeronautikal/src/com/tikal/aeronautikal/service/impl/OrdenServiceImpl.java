@@ -21,25 +21,37 @@ public class OrdenServiceImpl implements OrdenService {
 	  @Autowired
 	    protected OrdenDao ordenDao;
 
-	    public void save(OrdenVo o) {
-	    	System.out.println("si entra a OrdenServiceImpl");
-	        ordenDao.save(o);
-	    }
+	   
 	 
-	    public List<OrdenVo> getAll(){
+	    public  void save(OrdenVo a) {
+	    	ordenDao.save(a);
+	    }
+
+	    public  void delete(OrdenVo a) {
+	    	ordenDao.delete(a);
+	    }
+	    
+	    public void update(OrdenVo a){
+	    	ordenDao.update(a);
+	    }
+
+		
+		public  OrdenVo consult(Long folio) {
+			return ordenDao.consult(folio);
+					
 			// TODO Auto-generated method stub
-	    		return ofy().load().type(OrdenVo.class).list();
+			// ofy().load().type(OrdenVo.class).id(numeroSerie).now();
+		}
+		
+		@Override
+		public List<OrdenVo> getAll(){
+			return ordenDao.getAll();
+			// TODO Auto-generated method stub
+	    		//return ofy().load().type(OrdenVo.class).list();
 	    		// TODO Auto-generated method stub
 	    		
 	    	
 		}
-
-		@Override
-		public OrdenVo consult(Long folio) {
-			// TODO Auto-generated method stub
-			return ofy().load().type(OrdenVo.class).id(folio).now();
-			
-		}
-	    
+		
 		
 }

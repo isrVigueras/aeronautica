@@ -36,7 +36,8 @@ public class AeronaveServiceImpl implements AeronaveService {
 
 	
 	public  AeronaveEntity consult(String numeroSerie) {
-		return ofy().load().type(AeronaveEntity.class).id(numeroSerie).now();
+		return AeronaveDao.consult(numeroSerie);
+		//return ofy().load().type(AeronaveEntity.class).id(numeroSerie).now();
 		// TODO Auto-generated method stub
 		
 	}
@@ -44,7 +45,8 @@ public class AeronaveServiceImpl implements AeronaveService {
 	@Override
 	public List<AeronaveEntity> getAll(){
 		// TODO Auto-generated method stub
-    		return ofy().load().type(AeronaveEntity.class).list();
+		return aeronaveDao.getAll();
+    		//return ofy().load().type(AeronaveEntity.class).list();
     		// TODO Auto-generated method stub
     		
     	

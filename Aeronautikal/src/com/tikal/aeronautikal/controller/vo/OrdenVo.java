@@ -16,15 +16,15 @@ public class OrdenVo {
 	
 	@Id Long folio;
 	String fechaApertura;
-	String con_nombre;
-	Long con_telefono;
-	String con_correo;
-	String empresa;
-	String a_matricula;
-	String a_modelo;
-	String n_serie;
-	Integer a_t_vuelo;
-	String a_t_aterrizaje;
+	String con_nombre;  //contacto
+	Long con_telefono;	//contacto
+	String con_correo;	//contacto
+	String empresa;           //empresa
+	String a_matricula;		//aeronave
+	String a_modelo;	//aeronave
+	String n_serie;		//aeronave
+	Integer a_t_vuelo;		//aeronave
+	String a_t_aterrizaje;		//aeronave
 	//@Ignore private Empresa laEmpresa;
 	
 	//@Index @Load Ref<Empresa> refEmpresa;

@@ -44,10 +44,10 @@ public class OrdenDaoImpl implements OrdenDao{
 	@Override
 	public void delete(OrdenVo o) {
 		// TODO Auto-generated method stub@Override
-		
+		  ofy().delete().entity(o).now();
 			//o.setActivo(false);
 			//update(o);
-		
+	
 		
 	}
 

@@ -23,7 +23,6 @@ import com.tikal.aeronautikal.entity.EmpresaEntity;
 import com.tikal.aeronautikal.model.Aeronave;
 import com.tikal.aeronautikal.service.OrdenService;
 import com.tikal.aeronautikal.util.JsonConvertidor;
-
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 
 import java.io.IOException;
@@ -99,7 +98,7 @@ public class OrdenController {
 	        	OrdenVo orden =(OrdenVo) JsonConvertidor.fromJson(json, OrdenVo.class);
 	        	// System.out.println("el nuevo objeto: "+orden );
 	        	//pegar el valor de empresa, aeronave y contacato
-	        	orden.setFolio(Long.parseLong("1111"));
+	        	//orden.setFolio(Long.parseLong("1111"));
 	        	//crearListaIdsOT();
 	        	ordenDao.save(orden);	 
 	        	Contador.incremeta();
@@ -158,6 +157,14 @@ public class OrdenController {
 	    }
 	   
 	 
+	   @RequestMapping(value = { "/find/{folio}" }, method = RequestMethod.GET, produces = "application/json")
+		public void findEmpresa(HttpServletResponse response, HttpServletRequest request,
+				@PathVariable Long folio) throws IOException {
+			AsignadorDeCharset.asignar(request, response);
+			OrdenVo o=ordenDao.consult(folio);
+			response.getWriter().println(JsonConvertidor.toJson(o));
+		
+		}
 	   
 	  
 }
