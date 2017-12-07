@@ -57,4 +57,10 @@ public class RequisicionServiceImpl implements RequisicionService {
 			
 		}
 
+		@Override
+		public List<RequisicionEntity> getByComponente(Long id) {
+			// TODO Auto-generated method stub
+			return requisicionDao.getByComponente(id);
+		}
+
 }

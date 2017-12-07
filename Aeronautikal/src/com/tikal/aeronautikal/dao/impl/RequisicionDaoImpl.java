@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.tikal.aeronautikal.dao.RequisicionDao;
+import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
 
 
@@ -60,6 +61,13 @@ public class RequisicionDaoImpl implements RequisicionDao {
 		System.out.println("aqui esta consultando la entidad que va a borrar" );
        return ofy().load().type(RequisicionEntity.class).id(folio).now();
 		
+	}
+	
+	@Override
+	public List<RequisicionEntity> getByComponente(Long id) {
+		// TODO Auto-generated method stub
+		List<RequisicionEntity> reqs = ofy().load().type(RequisicionEntity.class).filter("idComponente", id).list();
+		return reqs;
 	}
 
 

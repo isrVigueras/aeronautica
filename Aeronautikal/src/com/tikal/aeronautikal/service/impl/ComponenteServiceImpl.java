@@ -52,4 +52,10 @@ public class ComponenteServiceImpl implements ComponenteService{
 		
 		}
 
+		@Override
+		public void updateExistencias(Long id, Integer d_cantidad, Integer d_pendientes) {
+			// TODO Auto-generated method stub
+			componenteDao.updateExistencias(id, d_cantidad, d_pendientes);
+		}
+
 }

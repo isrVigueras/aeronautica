@@ -66,6 +66,11 @@ public class ComponenteDaoImpl implements ComponenteDao{
        return ofy().load().type(ComponenteEntity.class).id(id).now();
 		
 	}
+	@Override
+	public void updateExistencias(Long id, Integer d_cantidad, Integer d_pendientes) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 }

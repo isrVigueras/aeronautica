@@ -18,6 +18,8 @@ import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 	public ComponenteEntity consult(Long id);
 	
 	public List<ComponenteEntity> getAll();
+	
+	public void updateExistencias(Long id, Integer d_cantidad, Integer d_pendientes);
 
 	//void findAll();
 	

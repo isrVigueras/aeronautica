@@ -58,6 +58,7 @@ public class ComponenteController {
 		   		entry.setD_requisicion("num de requisicion");
 		   		entry.setD_vale("numero de vale");
 		   		entry.setFechaApertura("01/12/2017");
+		  
 	            System.out.println("si asign/ valor"+entry);
 	        } catch (RuntimeException ignored) {
 	            // getUniqueEntity should throw exception
@@ -108,4 +109,15 @@ public class ComponenteController {
 	   }
 	   
 	   //////////////////////////////////////////////////////////////////////////////////////////*******************
+	   //////// update de existencias segun las requisiciones
+	   
+	   @RequestMapping(value = {"/update/{id}/{d_cantidad}/{d_pendientes}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+	   public void updateExistencias(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
+		@PathVariable Long id, @PathVariable Integer d_cantidad, @PathVariable Integer d_pendientes) throws IOException {
+		   //componenteDao.updateExistencias(componenteDao.updateExistencias(id, d_cantidad, d_pendientes));
+	   }
+	   
+	   
+	   
+	   
 }

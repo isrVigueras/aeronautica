@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tikal.aeronautikal.dao.RequisicionDao;
+import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
 import com.tikal.aeronautikal.service.RequisicionService;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
@@ -34,6 +35,8 @@ public class RequisicionController {
 	 @Qualifier("requisicionDao")
 	 RequisicionDao requisicionDao;
 	 
+	 
+	 
 	 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 	   
 	   public void prueba(HttpServletResponse response, HttpServletRequest request) throws IOException {
@@ -48,9 +51,10 @@ public class RequisicionController {
 		   System.out.println("si entra a Requisicion controller");   
 		   	try {
 		   		
-		   		entry.setFolio(Long.parseLong("99999"));
+		   		entry.setFolio(Long.parseLong("11111111"));
 		   		entry.setNumero_parte("Tablero modelo mnku-34");
-		   		entry.setCantidad(4);
+		   		entry.setCantidad(2);
+		   		entry.setIdComponente(Long.parseLong("1119"));
 	            System.out.println("si asign/ valor"+entry);
 	        } catch (RuntimeException ignored) {
 	            // getUniqueEntity should throw exception
@@ -99,6 +103,15 @@ public class RequisicionController {
 		@PathVariable Long id) throws IOException {
 		   requisicionDao.delete(requisicionDao.consult(id));
 	   }
+	   
+	   
+	   @RequestMapping(value = { "/getByComponente/{id}" }, method = RequestMethod.GET, produces = "application/json")
+		public void findByOrden(HttpServletResponse response, HttpServletRequest request,
+				@PathVariable Long id) throws IOException {
+			AsignadorDeCharset.asignar(request, response);
+			List<RequisicionEntity> reqs= requisicionDao.getByComponente(id);
+			response.getWriter().println(JsonConvertidor.toJson(reqs));
+		}
 	
 
 }

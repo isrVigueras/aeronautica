@@ -54,7 +54,7 @@ public class DiscrepanciaController {
 			   		entry.setFolio(Long.parseLong("55555555"));
 			   		entry.setAccion("reparar electricidad de....");
 			   		entry.setDescripcion("123_descripcion del componente");
-			   		entry.setFolioOrden(Long.parseLong("3"));
+			   		entry.setFolioOrden(Long.parseLong("1111"));
 			   		////entry.setInstaladoPor();
 			   		//entry.setOriginadoPor();
 			   		//entry.setFechaApertura("01/12/2017");

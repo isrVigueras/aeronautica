@@ -16,5 +16,7 @@ public interface RequisicionService {
 	 public void delete(RequisicionEntity r);
 	    
 	 public void update(RequisicionEntity r);
+	 
+	 public List<RequisicionEntity> getByComponente(Long id);
 	    
 }

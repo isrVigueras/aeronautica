@@ -17,5 +17,7 @@ public interface RequisicionDao {
 		public RequisicionEntity consult(Long folio);
 		
 		public List<RequisicionEntity> getAll();
+		
+		public List<RequisicionEntity> getByComponente(Long id);
 
 }
