@@ -136,6 +136,39 @@ function RemoteResource($http,$q, baseUrl) {
     return promise;
     
   }
+    this.discrepancias = function(folio) {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/discrepancia/getByOrden/'+folio
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+
+   this.Detalle_discrepancias = function(folio) {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/orden/find/'+folio
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
 
 }
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
@@ -190,14 +223,25 @@ app.config(['$routeProvider',function($routeProvider) {
     }
   });
 
-  $routeProvider.when('/Orden/detalle', {
+  $routeProvider.when('/Orden/detalle/:folio', {
     templateUrl: "Detalle_discrepancias.html",
-    controller: "detalledisController"
+    controller: "detalledisController",
+     resolve: {
+      detalle_dis:['remoteResource','$route',function(remoteResource,$route) {
+        return remoteResource.Detalle_discrepancias($route.current.params.folio);
+      }]
+    }
   });
 
-    $routeProvider.when('/Orden/discrepancia', {
+    $routeProvider.when('/Orden/discrepancia/:folio', {
     templateUrl: "Discrepancias.html",
-    controller: "DiscrepanciaController"
+    controller: "DiscrepanciamuestraController",
+       resolve: {
+      discrepancias:['remoteResource','$route',function(remoteResource,$route) {
+        return remoteResource.discrepancias($route.current.params.folio);
+      }]
+    }
+
   });      
         $routeProvider.when('/Inventario/alta', {
     templateUrl: "inventario.html",
@@ -312,28 +356,8 @@ $scope.new_folio = new_folio;
 
 }]);
 
-app.controller('detalledisController', ['$scope', 'remoteResource',function($scope, remoteResource) {
- $scope.detalle ={
-
-    folio:undefined,
-    con_nombre:"",    
-    con_telefono:undefined,
-    con_correo:"",
-    empresa:"",
-    a_matricula:"",
-    a_modelo:"",
-    n_serie:"",
-    a_t_vuelo:"",
-    a_t_aterrizaje:""
-  }
-
-
-  remoteResource.get().then(function(detalle) {
-      $scope.detalle = detalle;
-    }, function(status) {
-      alert("Ha fallado la petición. Estado HTTP:" + status);
-    });
-
+app.controller('detalledisController', ['$scope', 'detalle_dis',function($scope, detalle_dis) {
+ $scope.detalle_dis = detalle_dis;
 }]);
 app.controller("OrdenesgeneradasController", ['$scope', 'generadas',function($scope,generadas) {
 $scope.generadas = generadas;
@@ -373,6 +397,7 @@ app.controller("InventarioconsultaController", ['$scope','inv_consultas',functio
   console.log($scope.inv_consultas);
 }]);
 app.controller("DiscrepanciaController", ['$scope','DiscrepanciaServicio',function($scope,DiscrepanciaServicio) {
+
  $scope.discrepancia = {
     id:undefined,
     fechaApertura:new Date(),
@@ -396,6 +421,9 @@ app.controller("DiscrepanciaController", ['$scope','DiscrepanciaServicio',functi
       alert("Hay datos inválidos");
     }
   }
+}]);
+app.controller("DiscrepanciamuestraController", ['$scope','discrepancias',function($scope,discrepancias) {
+$scope.discrepancias =discrepancias; 
 }]);
 app.controller("MainController", ['$scope',function($scope) {
 
