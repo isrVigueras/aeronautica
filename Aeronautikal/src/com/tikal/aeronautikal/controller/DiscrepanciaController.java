@@ -70,7 +70,7 @@ public class DiscrepanciaController {
 		 /////////////////////////////////////////////////////********************************************************
 
 		 
-		 @RequestMapping(value = {"/add/{folio}"}, method = RequestMethod.GET, produces = "application/json", consumes = "application/json") 
+		 @RequestMapping(value = {"/add/{folio}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
 		   public void addDiscrepancia(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
 				   @PathVariable Long folio) throws IOException{
 		    	  System.out.println("si entra al add con el folio de orden :"+folio+"el json: "+json);

@@ -70,6 +70,7 @@ public class ComponenteDaoImpl implements ComponenteDao{
 	public void updateExistencias(Long id, Integer d_cantidad, Integer d_pendientes) {
 		// TODO Auto-generated method stub
 		
+		//return null;
 	}
 
 
