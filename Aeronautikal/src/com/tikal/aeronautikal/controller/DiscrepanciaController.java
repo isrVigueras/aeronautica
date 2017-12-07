@@ -46,7 +46,7 @@ public class DiscrepanciaController {
 		 
 		 ////////////////////////////////////////////////*****************************************************************
 		 
-		 @RequestMapping(value = "/add", method = RequestMethod.GET)
+		 @RequestMapping(value = "/add_", method = RequestMethod.GET)
 		    public String addDiscrepanciaGet(@ModelAttribute("entry") DiscrepanciaEntity entry) {
 			   System.out.println("si entra a Discrepancia controller");   
 			   	try {
@@ -60,17 +60,17 @@ public class DiscrepanciaController {
 			   		//entry.setFechaApertura("01/12/2017");
 	            System.out.println("si asign/ valor"+entry);
 		        } catch (RuntimeException ignored) {
-		            // getUniqueEntity should throw exception
+		            // getUniqueEntity should throw exception 
 		        }
 			   System.out.println("yaaaaa");	    
-		        discrepanciaService.save(entry);   //implementa el dao  
+		         discrepanciaService.save(entry);   //implementa el dao  
 		        return "Orden_de_trabajo";
 			}
 		
 		 /////////////////////////////////////////////////////********************************************************
 
 		 
-		 @RequestMapping(value = {"/add_/{folio}"}, method = RequestMethod.GET, produces = "application/json", consumes = "application/json") 
+		 @RequestMapping(value = {"/add/{folio}"}, method = RequestMethod.GET, produces = "application/json", consumes = "application/json") 
 		   public void addDiscrepancia(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
 				   @PathVariable Long folio) throws IOException{
 		    	  System.out.println("si entra al add con el folio de orden :"+folio+"el json: "+json);
