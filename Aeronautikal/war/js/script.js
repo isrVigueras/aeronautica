@@ -38,9 +38,9 @@ app.service('InventarioService', [ '$http', '$q', function($http, $q) {
 } ]);
 //servicio alta Discrepeancia
 app.service('DiscrepanciaServicio', [ '$http', '$q', function($http, $q) {
-  this.genera_discrepancia = function(discrepancia) {
+  this.genera_discrepancia = function(folio,discrepancia) {
     var d = $q.defer();
-    $http.post("/discrepancia/add",discrepancia).then(function(response) {
+    $http.post("/discrepancia/add/"+folio,discrepancia).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -396,34 +396,33 @@ app.controller("InventarioconsultaController", ['$scope','inv_consultas',functio
  $scope.inv_consultas =inv_consultas;
   console.log($scope.inv_consultas);
 }]);
-app.controller("DiscrepanciaController", ['$scope','DiscrepanciaServicio',function($scope,DiscrepanciaServicio) {
 
+app.controller("DiscrepanciamuestraController", ['$scope','discrepancias','DiscrepanciaServicio',function($scope,discrepancias,DiscrepanciaServicio) {
+$scope.discrepancias =discrepancias;
+console.log($scope.discrepancias[0].folioOrden); 
  $scope.discrepancia = {
+    folio:discrepancias.folioOrden,
     id:undefined,
     fechaApertura:new Date(),
-    d_componente:"",
-    d_parte:"",
-    d_cantidad:undefined,
-    d_pendientes:undefined,    
-    d_requisicion:"",
-    d_vale:""
+    taller:"",
+    seccion:"",
+    descripcion:"",
+    accion:""
+    
   }
    $scope.alta_discrepancia=function() {
-    if ($scope.form.$valid) {
-      alert("variable comprobada: "+$scope.discrepancia.d_componente+" y la fecha "+ $scope.discrepancia.fechaApertura);
-      DiscrepanciaServicio.genera_discrepancia($scope.discrepancia).then(
+    console.log($scope.discrepancias.folioOrden);
+      alert("variable comprobada: "+$scope.discrepancia.taller+" folio: "+ $scope.discrepancias[0].folioOrden);
+      DiscrepanciaServicio.genera_discrepancia($scope.discrepancias[0].folioOrden,$scope.discrepancia).then(
         function(data) {
           console.log(data);
           alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
+  
+          location.reload();
         })
               
-    }else {
-      alert("Hay datos inválidos");
-    }
+   
   }
-}]);
-app.controller("DiscrepanciamuestraController", ['$scope','discrepancias',function($scope,discrepancias) {
-$scope.discrepancias =discrepancias; 
 }]);
 app.controller("MainController", ['$scope',function($scope) {
 

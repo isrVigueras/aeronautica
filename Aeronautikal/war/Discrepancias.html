@@ -46,6 +46,7 @@
   <button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal" data-target="#myModal">
   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Discrepancia
 </button>
+<label for="folio" >Folio:</label>{{$scope.discrepancias[0].folioOrden}}
   <table class="table table-striped">
 
   <tr bgcolor="#A9F5F2">
@@ -135,27 +136,27 @@
             <div class="col-xs-4">
            <label for="con_nombre">Selecione Taller:</label>
               <br>
-           <select  class="form-control">
-              <option value="1">01</option>
-              <option value="2">02</option>
-              <option value="3">03</option>
-              <option value="4">04</option>
-              <option value="5">05</option>
-              <option value="6">06</option>
-              <option value="7">07</option>
+           <select ng-model="discrepancia.taller" class="form-control">
+              <option value="01">01</option>
+              <option value="02">02</option>
+              <option value="03">03</option>
+              <option value="04">04</option>
+              <option value="05">05</option>
+              <option value="06">06</option>
+              <option value="07">07</option>
             </select>
             </div>
             <div class="col-xs-4">
              <label for="con_nombre">Selecione Seccion:</label>
               <br>
-           <select  class="form-control">
-              <option value="1">01</option>
-              <option value="2">02</option>
-              <option value="3">03</option>
-              <option value="4">04</option>
-              <option value="5">05</option>
-              <option value="6">06</option>
-              <option value="7">07</option>
+           <select ng-model="discrepancia.seccion"  class="form-control">
+              <option value="01">01</option>
+              <option value="02">02</option>
+              <option value="03">03</option>
+              <option value="04">04</option>
+              <option value="05">05</option>
+              <option value="06">06</option>
+              <option value="07">07</option>
             </select>
           </div>
           </div>
@@ -164,7 +165,7 @@
           <label for="con_nombre">&nbsp;&nbsp;Descripcion/description:</label>
           <br>
           <div class="col-xs-11">
-          <center><textarea class="form-control" rows="4" cols="30" placeholder="Escriba la Descripcion.">
+          <center><textarea class="form-control" rows="4" cols="30" placeholder="Escriba la Descripcion." ng-model="discrepancia.descripcion">
         </textarea></center>
       </div>
         <br>
@@ -172,10 +173,11 @@
           <br>
         <label for="con_nombre">Acion Tomada:</label>
         <br>
-        <center><textarea class="form-control"  rows="4" cols="30" placeholder="Escriba la accion Tomada.">
+        <center><textarea class="form-control"  rows="4" cols="30" placeholder="Escriba la accion Tomada." ng-model="discrepancia.accion">
         </textarea></center>
             </div>
             </div>
+            <button type="button" class="btn btn-primary" ng-click="alta_discrepancia()">Guardar</button>
             </form>
       </div>
       <div class="modal-footer">
@@ -183,7 +185,7 @@
           <span class="glyphicon glyphicon-user" aria-hidden="true"></span>Personal</button>
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#mycompo">
           <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>Componente</button>
-           <button type="button" class="btn btn-primary">Guardar</button>
+           <button type="button" class="btn btn-primary" ng-click="alta_discrepancia()">Guardar</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
