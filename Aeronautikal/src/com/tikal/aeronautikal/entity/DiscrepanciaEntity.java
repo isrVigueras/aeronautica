@@ -19,11 +19,11 @@ public class DiscrepanciaEntity implements BaseEntity{
     
     @Id private Long folio;
     @Index private Long folioOrden;
-    @Index private Taller taller;
-	@Index private Seccion seccion;
+    @Index private String taller;
+	@Index private String seccion;
 	@Index private String descripcion;
 	@Index private String accion;	
-	private Calendar fechaApertura;
+	private String fechaApertura;
 	private List<Componente> losComponentes;
 	private Empleado removidoPor;
 	private Empleado instaladoPor;
@@ -43,16 +43,17 @@ public class DiscrepanciaEntity implements BaseEntity{
 	public void setFolioOrden(Long folioOrden) {
 		this.folioOrden = folioOrden;
 	}
-	public Taller getTaller() {
+	
+	public String getTaller() {
 		return taller;
 	}
-	public void setTaller(Taller taller) {
+	public void setTaller(String taller) {
 		this.taller = taller;
 	}
-	public Seccion getSeccion() {
+	public String getSeccion() {
 		return seccion;
 	}
-	public void setSeccion(Seccion seccion) {
+	public void setSeccion(String seccion) {
 		this.seccion = seccion;
 	}
 	public String getDescripcion() {
@@ -67,10 +68,11 @@ public class DiscrepanciaEntity implements BaseEntity{
 	public void setAccion(String accion) {
 		this.accion = accion;
 	}
-	public Calendar getFechaApertura() {
+
+	public String getFechaApertura() {
 		return fechaApertura;
 	}
-	public void setFechaApertura(Calendar fechaApertura) {
+	public void setFechaApertura(String fechaApertura) {
 		this.fechaApertura = fechaApertura;
 	}
 	public List<Componente> getLosComponentes() {

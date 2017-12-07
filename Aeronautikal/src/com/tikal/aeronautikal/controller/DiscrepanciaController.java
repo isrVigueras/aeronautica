@@ -75,11 +75,12 @@ public class DiscrepanciaController {
 				   @PathVariable Long folio) throws IOException{
 		    	  System.out.println("si entra al add con el folio de orden :"+folio+"el json: "+json);
 		        try {
+		        	System.out.println("++++++++");
 		        	AsignadorDeCharset.asignar(request, response);
-		        	// System.out.println("request......."+request);
-		        	// System.out.println("request......."+response);
+		        	 System.out.println("request......."+request);
+		        	 System.out.println("response......."+response);
 		        	DiscrepanciaEntity d =(DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
-		        	// System.out.println("el nuevo objeto: "+orden );
+		        	 System.out.println("el nuevo objeto: "+d );
 		        	//pegar el valor de empresa, aeronave y contacato
 		        	d.setFolioOrden(folio);
 		        	d.setFolio(Long.valueOf((Long.toString(folio)+d.getTaller()+d.getSeccion())).longValue());
