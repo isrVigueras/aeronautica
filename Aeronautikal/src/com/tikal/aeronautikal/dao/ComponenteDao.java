@@ -21,6 +21,8 @@ import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 	
 	public void updateExistencias(Long id, Integer existencias, Integer pendientes);
 
+
+
 	//void findAll();
 	
 	

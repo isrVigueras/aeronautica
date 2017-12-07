@@ -69,7 +69,19 @@ public class ComponenteDaoImpl implements ComponenteDao{
 	@Override
 	public void updateExistencias(Long id, Integer d_cantidad, Integer d_pendientes) {
 		// TODO Auto-generated method stub
+		ComponenteEntity old = this.consult(id);
+		if (old != null) {
+//			//old.setDireccion(e.getDireccion());
+			old.setD_cantidad(d_cantidad);
+			//old.setD_componente(c.getD_componente());
+		//	old.setD_parte(c.getD_parte());;
+			old.setD_pendientes(d_pendientes);
+		//	old.setD_vale(c.getD_vale());
+		//	old.setD_requisicion(c.getD_requisicion());
+			
+			ofy().save().entity(old);
 		
+		}
 		//return null;
 	}
 
