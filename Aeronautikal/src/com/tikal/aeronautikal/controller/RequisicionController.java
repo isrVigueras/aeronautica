@@ -53,6 +53,7 @@ public class RequisicionController {
 		   		
 		   		entry.setFolio(Long.parseLong("11111111"));
 		   		entry.setD_componente("Tablero modelo mnku-34");
+		   		entry.setFechaApertura("21/12/2017");
 		   		entry.setCantidad(2);
 		   		entry.setIdComponente(Long.parseLong("1119"));
 	            System.out.println("si asign/ valor"+entry);
