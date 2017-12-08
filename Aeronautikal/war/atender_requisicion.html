@@ -1,0 +1,37 @@
+
+<link href="css/estilos.css" rel="stylesheet" type="text/css" />
+<link href="css/tabla.css" rel="stylesheet" type="text/css" />
+<div class="contenedor" style="color:#EEE6E6">
+<table class="table table-striped">
+    <thead>
+      <tr bgcolor="#A9F5F2">
+       <!-- <th>ID del Componente</th>
+        <th>nombre del Componente</th>-->
+        <th>Folio de la requisicion</th>
+        <th>Feha de ingreso</th>
+        <th>Cantidad requerida</th>
+        <th>Accion</th>
+      </tr>
+  </thead>
+    <tbody>
+      <tr ng-repeat="requisicion in requisiciones | filteri18n:{d_componente:filtro.d_componente}">
+        <!--<td>{{requisicion.idComponente}}</td>
+        <td>{{requisicion.d_componente}}</td>-->
+        <td>{{requisicion.folio}}</td>
+        <td>{{requisicion.fechaApertura}}</td>
+        <td>{{requisicion.cantidad}}</td>
+        <td>
+<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="actualizar(requisicion.folio)">
+          <span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+<!--<input type ='button' value = 'texto boton' onclick="window.open('http://localhost/aeronau/Detalle_discrepancias.html', 'width=800,height=600');"/>--> 
+</td>
+      </tr>
+    </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="3">El Numero requisiciones es:</td>
+        <td ng-bind="requisiciones.length"></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
