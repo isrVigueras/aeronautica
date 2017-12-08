@@ -7,6 +7,7 @@ import com.googlecode.objectify.annotation.Id;
 public class Contador {
 	 @Id private Long id;
 	private static Long folio;
+	private static Long folioDiscrepancia;
 	
 	
 	public Long getId() {
@@ -24,6 +25,12 @@ public class Contador {
 		Contador.folio = folio;
 	}
 	
+	public static Long getFolioDiscrepancia() {
+		return folioDiscrepancia;
+	}
+	public static void setFolioDiscrepancia(Long folioDiscrepancia) {
+		Contador.folioDiscrepancia = folioDiscrepancia;
+	}
 	public static Long incremeta(){
 		
 		Contador.folio=getFolio()+1;
