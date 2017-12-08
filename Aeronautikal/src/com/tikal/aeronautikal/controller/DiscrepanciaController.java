@@ -23,7 +23,6 @@ import com.tikal.aeronautikal.service.DiscrepanciaService;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
 
-
 @Controller
 @RequestMapping(value="/discrepancia")
 public class DiscrepanciaController {
@@ -83,7 +82,7 @@ public class DiscrepanciaController {
 		        	 System.out.println("el nuevo objeto: "+d );
 		        	//pegar el valor de empresa, aeronave y contacato
 		        	d.setFolioOrden(folio);
-		        	d.setFolio(Long.valueOf((Long.toString(folio)+d.getTaller()+d.getSeccion())).longValue());
+		        	d.setFolio(Long.valueOf((d.getTaller()+d.getSeccion()+Long.toString(folio))).longValue());
 		        	 System.out.println("el nuevo folio de discrepancia: "+ Long.valueOf((Long.toString(folio)+d.getTaller()+d.getSeccion())).longValue());
 		        	discrepanciaDao.save(d);
 		        	 response.getWriter().println(JsonConvertidor.toJson(d));
@@ -121,4 +120,15 @@ public class DiscrepanciaController {
 				List<DiscrepanciaEntity> dis= discrepanciaDao.getByOrden(folio);
 				response.getWriter().println(JsonConvertidor.toJson(dis));
 			}
+		   
+		   @RequestMapping(value = {"/update" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+		   public void updateEmpresa(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
+			throws IOException {
+			   AsignadorDeCharset.asignar(request, response);
+			   DiscrepanciaEntity d = (DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
+			   discrepanciaDao.update(d);
+			   response.getWriter().println(JsonConvertidor.toJson(discrepanciaDao.consult(d.getFolio())));
+		   }
+		   
+		   
 }
