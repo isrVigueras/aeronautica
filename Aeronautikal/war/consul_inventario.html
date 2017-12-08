@@ -1,20 +1,26 @@
+<link href="css/estilos.css" rel="stylesheet" type="text/css" />
 <link href="css/tabla.css" rel="stylesheet" type="text/css" />
 <!--<div class="btn-group" role="group" aria-label="Basic example">
   <button type="button" class="btn btn-secondary" OnClick="location.href='http://localhost/aeronau/Orden_de_trabajo.html'">Generar una O/T</button>
   <button type="button" class="btn btn-secondary" OnClick="location.href='http://localhost/aeronau/Ordenes_generadas.html'">Ordenes Generadas</button>
 </div>-->
-
+<script>
+  $('#myactualizacion').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+</script>
 	<div class="contenedor">
 <center><h3 style="color:#EEE6E6">Inventario Registrado</h3></center>
   <br>
   <div class="row" style="margin: 1% 1%;">
  <div class="col-xs-4">
-  <label for="d_componente" style="color:#EEE6E6">Filtrar por componente:</label><input  class="form-control" placeholder="Escriba el nombre del componente" ng-model="filtro.d_componente">
-  <div>
+  <label for="d_componente" style="color:#EEE6E6">Filtrar por componente:</label><input class="form-control" placeholder="Escriba el nombre del componente" ng-model="filtro.d_componente"/>
   </div>
- <table class="tito">
+  </div>
+<br>
+ <table class="table table-striped">
     <thead>
-      <tr style="background-color: #201b17c9;">
+      <tr bgcolor="#A9F5F2">
         <th>ID</th>
         <th>Feha de ingreso</th>
         <th>Componente</th>
@@ -23,7 +29,7 @@
         <th>Faltantes</th>
         <th>Accion</th>
       </tr>
-    </thead>
+  </thead>
     <tbody>
       <tr ng-repeat="inv_consulta in inv_consultas | filteri18n:{d_componente:filtro.d_componente}">
         <td>{{inv_consulta.id}}</td>
@@ -35,6 +41,11 @@
         <td>      <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="location.href='#/Orden/detalle/{{generada.folio}}'">
   <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a ng-href="#/Inventario/requisicion/{{inv_consulta.id}}">
+           <button type="button" class="btn btn-default" aria-label="Left Align">
+  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+</button></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <button type="button" class="btn btn-default" aria-label="Left Align">
   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 </button>
@@ -53,3 +64,37 @@
 <br><br><br><br><br>
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<!--*****************************************MODAL DE REQUISICIONES***************************************
+<div class="modal fade" id="myactualizacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <center><h4 class="modal-title" id="myModalLabel">Atender Requisiciones</h4></center>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-xs-4">
+           <label for="con_nombre">Seleciona Requsicion:</label>
+              <br>
+           <select ng-model="discrepancia.taller" class="form-control">
+              <option value="01">01</option>
+              <option value="02">02</option>
+              <option value="03">03</option>
+              <option value="04">04</option>
+              <option value="05">05</option>
+              <option value="06">06</option>
+              <option value="07">07</option>
+            </select>
+            </div>
+          </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+           <button type="button" class="btn btn-primary" ng-click="alta_discrepancia()">Guardar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>-->

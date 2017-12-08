@@ -38,9 +38,9 @@ app.service('InventarioService', [ '$http', '$q', function($http, $q) {
 } ]);
 //servicio alta Discrepeancia
 app.service('DiscrepanciaServicio', [ '$http', '$q', function($http, $q) {
-  this.genera_discrepancia = function(folio,discrepancia) {
+  this.genera_discrepancia = function(discrepancia) {
     var d = $q.defer();
-    $http.post("/discrepancia/add/"+folio,discrepancia).then(function(response) {
+    $http.post("/discrepancia/add/"+discrepancia).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -48,9 +48,18 @@ app.service('DiscrepanciaServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
-
-
-
+//servicio update requisicion
+app.service('actualizaRequiServicio', [ '$http', '$q', function($http, $q) {
+  this.actualizar_requisicion = function(folio) {
+    var d = $q.defer();
+    $http.post("/componente/upExistencias/"+folio).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
 //recursos remotos para traer informacion, mediante el get generacion de promesas
 function RemoteResource($http,$q, baseUrl) {
   this.get = function() {
@@ -170,6 +179,23 @@ function RemoteResource($http,$q, baseUrl) {
     
   }
 
+     this.lista_requisiciones = function(folio) {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/requisicion/getByComponente/'+folio
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+
 }
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
 function RemoteResourceProvider() {
@@ -256,16 +282,15 @@ app.config(['$routeProvider',function($routeProvider) {
       }]
     }
   });  
-  /*$routeProvider.when('/seguro/edit/:idSeguro', {
-    templateUrl: "Orden_de_trabajo.html",
-    controller: "DetalleSeguroController",
-    resolve: {
-      seguro:['remoteResource','$route',function(remoteResource,$route) {
-        return remoteResource.get($route.current.params.idSeguro);
+       $routeProvider.when('/Inventario/requisicion/:folio', {
+    templateUrl: "atender_requisicion.html",
+    controller: "RequisicionesController",
+     resolve: {
+      requisiciones:['remoteResource','$route',function(remoteResource,$route) {
+        return remoteResource.lista_requisiciones($route.current.params.folio);
       }]
     }
-  });*/
-   
+  });
   $routeProvider.otherwise({
         redirectTo: '/'
   });   
@@ -395,7 +420,19 @@ app.controller("InventarioconsultaController", ['$scope','inv_consultas',functio
  $scope.inv_consultas =inv_consultas;
   console.log($scope.inv_consultas);
 }]);
-
+app.controller("RequisicionesController", ['$scope','requisiciones','actualizaRequiServicio',function($scope,requisiciones,actualizaRequiServicio) {
+ $scope.requisiciones =requisiciones;
+  console.log($scope.requisiciones);
+   
+   $scope.actualizar=function(folio) {
+      alert("variable comprobada: "+folio);
+      actualizaRequiServicio.actualizar_requisicion(folio).then(
+        function(data) {
+          console.log(data);
+          location.href="#/Inventario/requisicion/"+folio;
+        })         
+  }
+}]);
 app.controller("DiscrepanciamuestraController", ['$scope','discrepancias','DiscrepanciaServicio',function($scope,discrepancias,DiscrepanciaServicio) {
 $scope.discrepancias =discrepancias;
 console.log($scope.discrepancias); 
@@ -410,8 +447,8 @@ console.log($scope.discrepancias);
   }
    $scope.alta_discrepancia=function() {
     console.log($scope.discrepancias.folioOrden);
-      alert("variable comprobada: "+$scope.discrepancia.taller+" folio: "+ $scope.discrepancias[0].folioOrden);
-      DiscrepanciaServicio.genera_discrepancia($scope.discrepancias[0].folioOrden,$scope.discrepancia).then(
+     
+      DiscrepanciaServicio.genera_discrepancia($scope.discrepancia).then(
         function(data) {
           console.log(data);
           alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
