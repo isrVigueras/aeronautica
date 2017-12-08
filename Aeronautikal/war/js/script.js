@@ -60,6 +60,18 @@ app.service('actualizaRequiServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+//servicio alta requisicion
+app.service('insertaRequiServicio', [ '$http', '$q', function($http, $q) {
+  this.inserta_requisicion = function() {
+    var d = $q.defer();
+    $http.post("/requisicion/add/").then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
 //recursos remotos para traer informacion, mediante el get generacion de promesas
 function RemoteResource($http,$q, baseUrl) {
   this.get = function() {
@@ -432,8 +444,9 @@ app.controller("RequisicionesController", ['$scope','requisiciones','actualizaRe
           location.href="#/Inventario/requisicion/"+folio;
         })         
   }
+
 }]);
-app.controller("DiscrepanciamuestraController", ['$scope','discrepancias','DiscrepanciaServicio',function($scope,discrepancias,DiscrepanciaServicio) {
+app.controller("DiscrepanciamuestraController", ['$scope','discrepancias','DiscrepanciaServicio','insertaRequiServicio',function($scope,discrepancias,DiscrepanciaServicio,insertaRequiServicio) {
 $scope.discrepancias =discrepancias;
 console.log($scope.discrepancias); 
  $scope.discrepancia = {
@@ -457,6 +470,15 @@ console.log($scope.discrepancias);
         })
               
    
+  }
+
+      $scope.alta_requisicion=function() {
+      alert("variable comprobada: ");
+      insertaRequiServicio.inserta_requisicion().then(
+        function(data) {
+          console.log(data);
+          location.href="#/Inventario/requisicion/"+folio;
+        })         
   }
 }]);
 app.controller("MainController", ['$scope',function($scope) {
