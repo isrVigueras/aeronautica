@@ -119,7 +119,7 @@ public class ComponenteController {
 	   //////// update de existencias segun las requisiciones
 	   /////////////   //////////id componente, folio de la req
 	   
-	   @RequestMapping(value = {"/upExistencias/{folio}" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+	   @RequestMapping(value = {"/upExistencias/{folio}" }, method = RequestMethod.POST, consumes = "application/json")
 	   public void updateExistencias(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
 		@PathVariable Long id, @PathVariable Long folio, @PathVariable Integer d_pendientes) throws IOException {
 		   System.out.println("wwwwwwwwwww");
