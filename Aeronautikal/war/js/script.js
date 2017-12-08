@@ -38,9 +38,9 @@ app.service('InventarioService', [ '$http', '$q', function($http, $q) {
 } ]);
 //servicio alta Discrepeancia
 app.service('DiscrepanciaServicio', [ '$http', '$q', function($http, $q) {
-  this.genera_discrepancia = function(discrepancia) {
+  this.genera_discrepancia = function(folio,discrepancia) {
     var d = $q.defer();
-    $http.post("/discrepancia/add/"+discrepancia).then(function(response) {
+    $http.post("/discrepancia/add/"+folio,discrepancia).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -447,8 +447,8 @@ console.log($scope.discrepancias);
   }
    $scope.alta_discrepancia=function() {
     console.log($scope.discrepancias.folioOrden);
-     
-      DiscrepanciaServicio.genera_discrepancia($scope.discrepancia).then(
+      alert("variable comprobada: "+$scope.discrepancia.taller+" folio: "+ $scope.discrepancias[0].folioOrden);
+      DiscrepanciaServicio.genera_discrepancia($scope.discrepancias[0].folioOrden,$scope.discrepancia).then(
         function(data) {
           console.log(data);
           alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
