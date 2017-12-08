@@ -51,7 +51,8 @@ public class ComponenteController {
 		   	try {
 		   		
 		   		entry.setId(Long.parseLong("1119"));
-		   		entry.setD_componente("123_descripcion del componente");
+		   		entry.setD_componente("nombre del componente");
+		   		entry.setD_descripcion("descripcion del componente");
 		   		entry.setD_parte("no. de parte ");
 		   		entry.setD_pendientes(3);
 		   		entry.setD_cantidad(8);

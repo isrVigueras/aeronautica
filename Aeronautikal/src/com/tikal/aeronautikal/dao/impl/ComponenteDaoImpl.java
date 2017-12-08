@@ -47,6 +47,7 @@ public class ComponenteDaoImpl implements ComponenteDao{
 //			//old.setDireccion(e.getDireccion());
 			old.setD_cantidad(c.getD_cantidad());
 			old.setD_componente(c.getD_componente());
+			old.setD_descripcion(c.getD_descripcion());
 			old.setD_parte(c.getD_parte());;
 			old.setD_pendientes(c.getD_pendientes());
 			old.setD_vale(c.getD_vale());
