@@ -119,6 +119,6 @@ public class DiscrepanciaController {
 					@PathVariable Long folio) throws IOException {
 				AsignadorDeCharset.asignar(request, response);
 				List<DiscrepanciaEntity> dis= discrepanciaDao.getByOrden(folio);
-				response.getWriter().println(JsonConvertidor.toJson(dis)+","+ Long.toString(folio));
+				response.getWriter().println(JsonConvertidor.toJson(dis));
 			}
 }
