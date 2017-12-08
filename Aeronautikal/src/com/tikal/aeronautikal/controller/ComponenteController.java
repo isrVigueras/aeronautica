@@ -112,13 +112,18 @@ public class ComponenteController {
 	   //////// update de existencias segun las requisiciones
 	   /////////////   //////////id componente, cantidad en req
 	   
-	   @RequestMapping(value = {"/update/{id}/{cantidad}" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+	   @RequestMapping(value = {"/upExistencias/{id}/{cantidad}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
 	   public void updateExistencias(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
 		@PathVariable Long id, @PathVariable Integer cantidad, @PathVariable Integer d_pendientes) throws IOException {
+		   System.out.println("wwwwwwwwwww");
 		   ComponenteEntity old = componenteDao.consult(id);
 		   Integer existencias = old.getD_cantidad()+cantidad;
 		   Integer pendientes = old.getD_pendientes()-cantidad;
-		   componenteDao.update(old);
+		   System.out.println("EXISTENCIAS:"+existencias);
+		   System.out.println("PENDIENTES:"+pendientes);
+		   old.setD_cantidad(existencias);
+		   old.setD_pendientes(d_pendientes);
+		   componenteDao.save(old);
 		 //  componenteDao.updateExistencias(componenteDao.updateExistencias(id,existencias,pendientes));
 	   }
 	   

@@ -10,6 +10,7 @@ public class ComponenteEntity{
 	
 	@Id private Long id;
 	private String d_componente;
+	private String d_descripcion;
 	private String d_parte;
 	private Integer d_cantidad;
 	private Integer d_pendientes;
@@ -35,6 +36,13 @@ public class ComponenteEntity{
 	}
 	public void setD_componente(String d_componente) {
 		this.d_componente = d_componente;
+	}
+	
+	public String getD_descripcion() {
+		return d_descripcion;
+	}
+	public void setD_descripcion(String d_descripcion) {
+		this.d_descripcion = d_descripcion;
 	}
 	public String getD_parte() {
 		return d_parte;
