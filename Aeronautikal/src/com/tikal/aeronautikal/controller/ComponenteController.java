@@ -121,7 +121,7 @@ public class ComponenteController {
 	   
 	   @RequestMapping(value = {"/upExistencias/{folio}" }, method = RequestMethod.POST, consumes = "application/json")
 	   public void updateExistencias(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
-		@PathVariable Long id, @PathVariable Long folio, @PathVariable Integer d_pendientes) throws IOException {
+		 @PathVariable Long folio, @PathVariable Integer d_pendientes) throws IOException {
 		   System.out.println("wwwwwwwwwww");
 		  // ComponenteEntity old = componenteDao.consult(id);
 		   RequisicionEntity r = requisicionDao.consult(folio);
