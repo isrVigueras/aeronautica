@@ -18,11 +18,9 @@
         <th>ID</th>
         <th>Feha de ingreso</th>
         <th>Componente</th>
-        <th>No. de parte</th>
-        <th>Cantidad</th>
+        <th>Descripcipn</th>
+        <th>Existencia</th>
         <th>Faltantes</th>
-        <th>No.requisicion</th>
-        <th>No.Vale</th>
         <th>Accion</th>
       </tr>
     </thead>
@@ -31,11 +29,9 @@
         <td>{{inv_consulta.id}}</td>
         <td>{{inv_consulta.fechaApertura}}</td>
         <td>{{inv_consulta.d_componente}}</td>
-        <td>{{inv_consulta.d_parte}}</td>
+        <td>{{inv_consulta.d_descripcion}}</td>
         <td>{{inv_consulta.d_cantidad}}</td>
         <td>{{inv_consulta.d_pendientes}}</td>
-        <td>{{inv_consulta.d_requisicion}}</td>
-        <td>{{inv_consulta.d_vale}}</td>
         <td>      <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="location.href='#/Orden/detalle/{{generada.folio}}'">
   <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

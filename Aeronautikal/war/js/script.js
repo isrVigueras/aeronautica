@@ -371,11 +371,10 @@ app.controller("InventarioController", ['$scope','InventarioService',function($s
     id:undefined,
     fechaApertura:new Date(),
     d_componente:"",
+    d_descripcion:"",
     d_parte:"",
     d_cantidad:undefined,
-    d_pendientes:undefined,    
-    d_requisicion:"",
-    d_vale:""
+    d_pendientes:undefined
   }
 
    $scope.alta_inventario=function() {
@@ -399,10 +398,9 @@ app.controller("InventarioconsultaController", ['$scope','inv_consultas',functio
 
 app.controller("DiscrepanciamuestraController", ['$scope','discrepancias','DiscrepanciaServicio',function($scope,discrepancias,DiscrepanciaServicio) {
 $scope.discrepancias =discrepancias;
-console.log($scope.discrepancias[0].folioOrden); 
+console.log($scope.discrepancias); 
  $scope.discrepancia = {
-    folio:discrepancias.folioOrden,
-    id:undefined,
+    folio:undefined,
     fechaApertura:new Date(),
     taller:"",
     seccion:"",

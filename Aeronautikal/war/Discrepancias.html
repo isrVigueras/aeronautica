@@ -42,77 +42,46 @@
 </ul>
 <center><h3 style="color:#EEE6E6">Discrepancias</h3></center>
   <br>
+  <label for="folio" style="color:#EEE6E6">Folio:</label>{{$scope.discrepancia.folioOrden}}
+  <br>
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal" data-target="#myModal">
   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Discrepancia
 </button>
-<label for="folio" >Folio:</label>{{$scope.discrepancias[0].folioOrden}}
   <table class="table table-striped">
 
   <tr bgcolor="#A9F5F2">
 
     <th>Folio</th>
 
+    <th>Fecha</th>
+
     <th>Taller</th>
 
     <th>Seccion</th>
 
-    <th>Detalle</th>
+    <th>Descripcion</th>
     
     <th>Accion</th>
 
   </tr>
 
-  <tr>
+  <tr ng-repeat="discrepancia in discrepancias">
 
-    <td>15000102</td>
+    <td>{{discrepancia.folio}}</td>
 
-    <td>01</td>
+    <td>{{discrepancia.fechaApertura}}</td>
 
-    <td>02</td>
+    <td>{{discrepancia.taller}}</td>
 
-    <td>Mantenimiento progrmado</td>
+    <td>{{discrepancia.seccion}}</td>
+
+    <td>{{discrepancia.descripcion}}</td>
 
     <td>
       <!--<button type="button" class="btn btn-default" aria-label="Left Align" OnClick="location.href='http://localhost/aeronau/s.html'">
   <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 </button>--><button type="button" class="btn btn-default" data-toggle="modal" data-target="#segundav">
-          <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<button type="button" class="btn btn-default" aria-label="Left Align" href="http://localhost/aeronau/Detalle_discrepancias.html">
-  <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-</button></td>
-
-  </tr>
-
-  <tr>
-
-    <td>15000103</td>
-
-    <td>01</td>
-
-    <td>03</td>
-
-    <td>Trabajos de inspeccion</td>
-
-     <td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#segundav">
-          <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<button type="button" class="btn btn-default" aria-label="Left Align" href="http://localhost/aeronau/Detalle_discrepancias.html">
-  <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-</button></td>
-
-  </tr>
-
-  <tr>
-
-    <td>15000301</td>
-
-    <td>03</td>
-
-    <td>01</td>
-
-    <td>Trabajos de electrico</td>
-
-    <td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#segundav">
           <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <button type="button" class="btn btn-default" aria-label="Left Align" href="http://localhost/aeronau/Detalle_discrepancias.html">
   <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
