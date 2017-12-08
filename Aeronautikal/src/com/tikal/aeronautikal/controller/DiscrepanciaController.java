@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 import com.tikal.aeronautikal.dao.DiscrepanciaDao;
-import com.tikal.aeronautikal.entity.Contador;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.service.DiscrepanciaService;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
@@ -51,10 +50,13 @@ public class DiscrepanciaController {
 			   System.out.println("si entra a Discrepancia controller");   
 			   	try {
 			   	
-			   		entry.setFolio(Long.parseLong("55555555"));
+			   		entry.setFolio(Long.parseLong("070712"));
 			   		entry.setAccion("reparar electricidad de....");
 			   		entry.setDescripcion("123_descripcion del componente");
-			   		entry.setFolioOrden(Long.parseLong("1111"));
+			   		entry.setFolioOrden(Long.parseLong("2"));
+			   		entry.setFechaApertura("12/12/2017");
+			   		entry.setSeccion("03");
+			   		entry.setTaller("03");
 			   		////entry.setInstaladoPor();
 			   		//entry.setOriginadoPor();
 			   		//entry.setFechaApertura("01/12/2017");
@@ -70,10 +72,10 @@ public class DiscrepanciaController {
 		 /////////////////////////////////////////////////////********************************************************
 
 		 
-		 @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
-		   public void addDiscrepancia(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)		
-				   throws IOException{
-		    	  System.out.println("si entra al add con el folio de orden :"+Contador.getFolioDiscrepancia()+"el json: "+json);
+		 @RequestMapping(value = {"/add/{folio}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
+		   public void addDiscrepancia(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
+				   @PathVariable Long folio) throws IOException{
+		    	  System.out.println("si entra al add con el folio de orden :"+folio+"el json: "+json);
 		        try {
 		        	System.out.println("++++++++");
 		        	AsignadorDeCharset.asignar(request, response);
@@ -82,9 +84,9 @@ public class DiscrepanciaController {
 		        	DiscrepanciaEntity d =(DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
 		        	 System.out.println("el nuevo objeto: "+d );
 		        	//pegar el valor de empresa, aeronave y contacato
-		        	d.setFolioOrden(Contador.getFolioDiscrepancia());
-		        	d.setFolio(Long.valueOf((d.getTaller()+d.getSeccion()+Long.toString(Contador.getFolioDiscrepancia()))).longValue());
-		        	 System.out.println("el nuevo folio de discrepancia: "+ Long.valueOf((Long.toString(Contador.getFolioDiscrepancia())+d.getTaller()+d.getSeccion())).longValue());
+		        	d.setFolioOrden(folio);
+		        	d.setFolio(Long.valueOf((d.getTaller()+d.getSeccion()+Long.toString(folio))).longValue());
+		        	 System.out.println("el nuevo folio de discrepancia: "+ Long.valueOf((Long.toString(folio)+d.getTaller()+d.getSeccion())).longValue());
 		        	discrepanciaDao.save(d);
 		        	 response.getWriter().println(JsonConvertidor.toJson(d));
 		        } catch (RuntimeException ignored) {
@@ -118,9 +120,11 @@ public class DiscrepanciaController {
 			public void findByOrden(HttpServletResponse response, HttpServletRequest request,
 					@PathVariable Long folio) throws IOException {
 				AsignadorDeCharset.asignar(request, response);
-				Contador.setFolioDiscrepancia(folio);
-				System.out.println("el nuevo folio : de Contador : "+Contador.getFolioDiscrepancia());
 				List<DiscrepanciaEntity> dis= discrepanciaDao.getByOrden(folio);
+				if (dis==null){
+					dis= new ArrayList<DiscrepanciaEntity>();
+				}
+				
 				response.getWriter().println(JsonConvertidor.toJson(dis));
 				
 			}
@@ -131,6 +135,7 @@ public class DiscrepanciaController {
 			   AsignadorDeCharset.asignar(request, response);
 			   DiscrepanciaEntity d = (DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
 			   discrepanciaDao.update(d);
+			   
 			   response.getWriter().println(JsonConvertidor.toJson(discrepanciaDao.consult(d.getFolio())));
 		   }
 		   
