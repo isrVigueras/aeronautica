@@ -121,7 +121,7 @@ public class ComponenteController {
 	   
 	   @RequestMapping(value = {"/upExistencias/{folio}" }, method = RequestMethod.POST, consumes = "application/json")
 	   public void updateExistencias(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
-		 @PathVariable Long folio, @PathVariable Integer d_pendientes) throws IOException {
+		 @PathVariable Long folio) throws IOException {
 		   System.out.println("wwwwwwwwwww");
 		  // ComponenteEntity old = componenteDao.consult(id);
 		   RequisicionEntity r = requisicionDao.consult(folio);
@@ -132,7 +132,7 @@ public class ComponenteController {
 		   System.out.println("EXISTENCIAS:"+existencias);
 		   System.out.println("PENDIENTES:"+pendientes);
 		   old.setD_cantidad(existencias);
-		   old.setD_pendientes(d_pendientes);  
+		   old.setD_pendientes(pendientes);  
 		   componenteDao.update(old);
 		 //  componenteDao.updateExistencias(componenteDao.updateExistencias(id,existencias,pendientes));
 	   }
