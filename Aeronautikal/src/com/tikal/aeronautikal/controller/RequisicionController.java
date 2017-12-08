@@ -52,7 +52,7 @@ public class RequisicionController {
 		   	try {
 		   		
 		   		entry.setFolio(Long.parseLong("11111111"));
-		   		entry.setNumero_parte("Tablero modelo mnku-34");
+		   		entry.setD_componente("Tablero modelo mnku-34");
 		   		entry.setCantidad(2);
 		   		entry.setIdComponente(Long.parseLong("1119"));
 	            System.out.println("si asign/ valor"+entry);

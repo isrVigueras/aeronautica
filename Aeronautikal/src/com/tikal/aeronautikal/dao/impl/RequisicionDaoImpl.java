@@ -46,8 +46,9 @@ public class RequisicionDaoImpl implements RequisicionDao {
 		if (old != null) {
 //			//old.setDireccion(e.getDireccion());
 			old.setFolio(r.getFolio());
-			old.setNumero_parte(r.getNumero_parte());
+			old.setD_componente(r.getD_componente());
 			old.setCantidad(r.getCantidad());
+			old.setFechaApertura(r.getFechaApertura());
 			ofy().save().entity(old);
 		
 		}

@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
+import com.tikal.aeronautikal.dao.RequisicionDao;
+import com.tikal.aeronautikal.entity.RequisicionEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.service.AeronaveService;
 import com.tikal.aeronautikal.service.ComponenteService;
@@ -35,6 +37,10 @@ public class ComponenteController {
 	 @Autowired
 	 @Qualifier("componenteDao")
 	 ComponenteDao componenteDao;
+	 
+	 @Autowired
+	 @Qualifier("requisicionDao")
+	 RequisicionDao requisicionDao;
 	 
 	 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 	   
@@ -111,19 +117,20 @@ public class ComponenteController {
 	   
 	   //////////////////////////////////////////////////////////////////////////////////////////*******************
 	   //////// update de existencias segun las requisiciones
-	   /////////////   //////////id componente, cantidad en req
+	   /////////////   //////////id componente, folio de la req
 	   
-	   @RequestMapping(value = {"/upExistencias/{id}/{cantidad}" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+	   @RequestMapping(value = {"/upExistencias/{id}/{folio}" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	   public void updateExistencias(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
-		@PathVariable Long id, @PathVariable Integer cantidad, @PathVariable Integer d_pendientes) throws IOException {
+		@PathVariable Long id, @PathVariable Long folio, @PathVariable Integer d_pendientes) throws IOException {
 		   System.out.println("wwwwwwwwwww");
 		   ComponenteEntity old = componenteDao.consult(id);
-		   Integer existencias = old.getD_cantidad()+cantidad;
-		   Integer pendientes = old.getD_pendientes()-cantidad;
+		   RequisicionEntity r = requisicionDao.consult(folio);
+		   Integer existencias = old.getD_cantidad()+r.getCantidad();
+		   Integer pendientes = old.getD_pendientes()-r.getCantidad();
 		   System.out.println("EXISTENCIAS:"+existencias);
 		   System.out.println("PENDIENTES:"+pendientes);
 		   old.setD_cantidad(existencias);
-		   old.setD_pendientes(d_pendientes);
+		   old.setD_pendientes(d_pendientes);  
 		   componenteDao.update(old);
 		 //  componenteDao.updateExistencias(componenteDao.updateExistencias(id,existencias,pendientes));
 	   }
@@ -132,3 +139,4 @@ public class ComponenteController {
 	   
 	   
 }
+ 

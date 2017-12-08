@@ -9,18 +9,14 @@ public class RequisicionEntity {
 		@Id Long folio;
 		@Index Long idComponente;
 		Integer cantidad;
-		String numero_parte;
-		
-		
+		String d_componente;
+		String fechaApertura;
 		public Long getFolio() {
 			return folio;
 		}
 		public void setFolio(Long folio) {
 			this.folio = folio;
-		}		
-		
-		
-		
+		}
 		public Long getIdComponente() {
 			return idComponente;
 		}
@@ -33,14 +29,20 @@ public class RequisicionEntity {
 		public void setCantidad(Integer cantidad) {
 			this.cantidad = cantidad;
 		}
-		
-		public String getNumero_parte() {
-			return numero_parte;
+		public String getD_componente() {
+			return d_componente;
+		}
+		public void setD_componente(String d_componente) {
+			this.d_componente = d_componente;
+		}
+		public String getFechaApertura() {
+			return fechaApertura;
+		}
+		public void setFechaApertura(String fechaApertura) {
+			this.fechaApertura = fechaApertura;
 		}
 		
-		public void setNumero_parte(String numero_parte) {
-			this.numero_parte = numero_parte;
-		}
+		
 		
 		
 
