@@ -1,41 +1,4 @@
 var app = angular.module('app', ['ngRoute']);
-//servicio para mandar los datos del formulario a la ruta del maping del controlador java mediante post
-app.service('OrdenesService', [ '$http', '$q', function($http, $q) {
-  this.genera_orden = function(fo) {
-    var d = $q.defer();
-    /*var enviar = {
-      lista : folio,
-              fechaApertura,
-              con_nombre,    
-              con_telefono,
-              con_correo,
-              empresa,
-              a_matricula,
-              a_modelo,
-              n_serie,
-              a_t_vuelo,
-              a_t_aterrizaje
-    }*/
-    $http.post("/orden/add/",fo).then(function(response) {
-      console.log(response);
-      d.resolve(response.data);
-    }, function(response) {
-    });
-    return d.promise;
-  }
-} ]);
-//servicio alta Inventario
-app.service('InventarioService', [ '$http', '$q', function($http, $q) {
-  this.genera_inventario = function(inventario) {
-    var d = $q.defer();
-    $http.post("/componente/add",inventario).then(function(response) {
-      console.log(response);
-      d.resolve(response.data);
-    }, function(response) {
-    });
-    return d.promise;
-  }
-} ]);
 //servicio alta Discrepeancia
 app.service('DiscrepanciaServicio', [ '$http', '$q', function($http, $q) {
   this.genera_discrepancia = function(folio,discrepancia) {
@@ -62,9 +25,9 @@ app.service('actualizaRequiServicio', [ '$http', '$q', function($http, $q) {
 } ]);
 //servicio alta requisicion
 app.service('insertaRequiServicio', [ '$http', '$q', function($http, $q) {
-  this.inserta_requisicion = function() {
+  this.inserta_requisicion = function(cosas) {
     var d = $q.defer();
-    $http.post("/requisicion/add/").then(function(response) {
+    $http.post("/requisicion/add/",cosas).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -277,6 +240,9 @@ app.config(['$routeProvider',function($routeProvider) {
        resolve: {
       discrepancias:['remoteResource','$route',function(remoteResource,$route) {
         return remoteResource.discrepancias($route.current.params.folio);
+      }],
+      foliarrastrado:['remoteResource','$route',function(remoteResource,$route) {
+        return ($route.current.params.folio);
       }]
     }
 
@@ -358,41 +324,6 @@ app.directive('caDatepicker', [function(dateFormat) {
   };
 }]);
 
-app.controller('ordenController', ['$scope','OrdenesService','new_folio',function($scope,OrdenesService,new_folio) {
- //$scope.fo = {}; alamcenar los datos en mi objeto para vidarlos
- $scope.fo = {
-
-    folio:undefined,
-    fechaApertura:new Date(),
-    con_nombre:"",    
-    con_telefono:undefined,
-    con_correo:"",
-    empresa:"",
-    a_matricula:"",
-    a_modelo:"",
-    n_serie:"",
-    a_t_vuelo:"",
-    a_t_aterrizaje:""
-  }
-
-  //$scope.CurrentDate = new Date();
-$scope.new_folio = new_folio;
- $scope.guardar=function() {
-    if ($scope.form.$valid) {
-      alert("variable comprobada: "+$scope.fo.con_nombre+" y la fecha "+ $scope.fo.fechaApertura+"folio: "+ $scope.new_folio );
-      OrdenesService.genera_orden($scope.fo).then(
-        function(data) {
-          console.log(data);
-          alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
-        })
-              
-    }else {
-      alert("Hay datos inválidos");
-    }
-  }
-
-}]);
-
 app.controller('detalledisController', ['$scope', 'detalle_dis',function($scope, detalle_dis) {
  $scope.detalle_dis = detalle_dis;
 }]);
@@ -400,34 +331,6 @@ app.controller("OrdenesgeneradasController", ['$scope', 'generadas',function($sc
 $scope.generadas = generadas;
 }]);
 
-app.controller("InventarioController", ['$scope','InventarioService',function($scope,InventarioService) {
-  $scope.filtro = {
-      d_componente: ""
-    }
- $scope.inventario = {
-    id:undefined,
-    fechaApertura:new Date(),
-    d_componente:"",
-    d_descripcion:"",
-    d_parte:"",
-    d_cantidad:undefined,
-    d_pendientes:undefined
-  }
-
-   $scope.alta_inventario=function() {
-    if ($scope.form.$valid) {
-      alert("variable comprobada: "+$scope.inventario.d_componente+" y la fecha "+ $scope.inventario.fechaApertura);
-      InventarioService.genera_inventario($scope.inventario).then(
-        function(data) {
-          console.log(data);
-          alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
-        })
-              
-    }else {
-      alert("Hay datos inválidos");
-    }
-  }
-}]);
 app.controller("InventarioconsultaController", ['$scope','inv_consultas',function($scope,inv_consultas) {
  $scope.inv_consultas =inv_consultas;
   console.log($scope.inv_consultas);
@@ -446,7 +349,7 @@ app.controller("RequisicionesController", ['$scope','requisiciones','actualizaRe
   }
 
 }]);
-app.controller("DiscrepanciamuestraController", ['$scope','discrepancias','DiscrepanciaServicio','insertaRequiServicio',function($scope,discrepancias,DiscrepanciaServicio,insertaRequiServicio) {
+app.controller("DiscrepanciamuestraController", ['$scope','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio',function($scope,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio) {
 $scope.discrepancias =discrepancias;
 console.log($scope.discrepancias); 
  $scope.discrepancia = {
@@ -458,10 +361,11 @@ console.log($scope.discrepancias);
     accion:""
     
   }
+  $scope.foliarrastrado =foliarrastrado;
    $scope.alta_discrepancia=function() {
-    console.log($scope.discrepancias.folioOrden);
-      alert("variable comprobada: "+$scope.discrepancia.taller+" folio: "+ $scope.discrepancias[0].folioOrden);
-      DiscrepanciaServicio.genera_discrepancia($scope.discrepancias[0].folioOrden,$scope.discrepancia).then(
+    console.log($scope.foliarrastrado);
+      alert("variable comprobada folio arrastrado: "+$scope.foliarrastrado);
+      DiscrepanciaServicio.genera_discrepancia($scope.foliarrastrado,$scope.discrepancia).then(
         function(data) {
           console.log(data);
           alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
@@ -472,12 +376,17 @@ console.log($scope.discrepancias);
    
   }
 
+ $scope.req = {
+    fechaApertura:new Date(),
+    r_nombre:"",
+    r_cantidad:undefined
+  }
       $scope.alta_requisicion=function() {
       alert("variable comprobada: ");
-      insertaRequiServicio.inserta_requisicion().then(
+      insertaRequiServicio.inserta_requisicion($scope.req).then(
         function(data) {
           console.log(data);
-          location.href="#/Inventario/requisicion/"+folio;
+         location.reload();
         })         
   }
 }]);
