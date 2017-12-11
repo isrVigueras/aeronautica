@@ -1,21 +1,10 @@
 var app = angular.module('app', ['ngRoute']);
-//servicio alta Discrepeancia
-app.service('DiscrepanciaServicio', [ '$http', '$q', function($http, $q) {
-  this.genera_discrepancia = function(folio,discrepancia) {
-    var d = $q.defer();
-    $http.post("/discrepancia/add/"+folio,discrepancia).then(function(response) {
-      console.log(response);
-      d.resolve(response.data);
-    }, function(response) {
-    });
-    return d.promise;
-  }
-} ]);
+
 //servicio update requisicion
 app.service('actualizaRequiServicio', [ '$http', '$q', function($http, $q) {
-  this.actualizar_requisicion = function(folio) {
+  this.actualizar_requisicion = function() {
     var d = $q.defer();
-    $http.post("/componente/upExistencias/"+folio).then(function(response) {
+    $http.post("/componente/upExistencias/").then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -341,7 +330,7 @@ app.controller("RequisicionesController", ['$scope','requisiciones','actualizaRe
    
    $scope.actualizar=function(folio) {
       alert("variable comprobada: "+folio);
-      actualizaRequiServicio.actualizar_requisicion(folio).then(
+      actualizaRequiServicio.actualizar_requisicion().then(
         function(data) {
           console.log(data);
           location.href="#/Inventario/requisicion/"+folio;
@@ -349,47 +338,7 @@ app.controller("RequisicionesController", ['$scope','requisiciones','actualizaRe
   }
 
 }]);
-app.controller("DiscrepanciamuestraController", ['$scope','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio',function($scope,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio) {
-$scope.discrepancias =discrepancias;
-console.log($scope.discrepancias); 
- $scope.discrepancia = {
-    folio:undefined,
-    fechaApertura:new Date(),
-    taller:"",
-    seccion:"",
-    descripcion:"",
-    accion:""
-    
-  }
-  $scope.foliarrastrado =foliarrastrado;
-   $scope.alta_discrepancia=function() {
-    console.log($scope.foliarrastrado);
-      alert("variable comprobada folio arrastrado: "+$scope.foliarrastrado);
-      DiscrepanciaServicio.genera_discrepancia($scope.foliarrastrado,$scope.discrepancia).then(
-        function(data) {
-          console.log(data);
-          alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
-  
-          location.reload();
-        })
-              
-   
-  }
 
- $scope.req = {
-    fechaApertura:new Date(),
-    r_nombre:"",
-    r_cantidad:undefined
-  }
-      $scope.alta_requisicion=function() {
-      alert("variable comprobada: ");
-      insertaRequiServicio.inserta_requisicion($scope.req).then(
-        function(data) {
-          console.log(data);
-         location.reload();
-        })         
-  }
-}]);
 app.controller("MainController", ['$scope',function($scope) {
 
 }]);
