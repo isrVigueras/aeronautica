@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.tikal.aeronautikal.controller.vo.RequisicionesComponenteVo;
+import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.RequisicionDao;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
@@ -35,7 +37,9 @@ public class RequisicionController {
 	 @Qualifier("requisicionDao")
 	 RequisicionDao requisicionDao;
 	 
-	 
+	 @Autowired
+	 @Qualifier("componenteDao")
+	 ComponenteDao componenteDao;
 	 
 	 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 	   
@@ -112,7 +116,11 @@ public class RequisicionController {
 	
 			AsignadorDeCharset.asignar(request, response);
 			List<RequisicionEntity> reqs= requisicionDao.getByComponente(id);			
-			response.getWriter().println(JsonConvertidor.toJson(reqs));
+			RequisicionesComponenteVo reqComp = new RequisicionesComponenteVo();
+			reqComp.setRequisiciones(reqs);
+			reqComp.setIdComponente((componenteDao.consult(id)).getId());
+			reqComp.setDesComponente((componenteDao.consult(id)).getD_descripcion());
+			response.getWriter().println(JsonConvertidor.toJson(reqComp));
 		}
 	
 
