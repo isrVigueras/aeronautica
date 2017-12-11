@@ -119,9 +119,9 @@ public class RequisicionController {
 			RequisicionesComponenteVo reqComp = new RequisicionesComponenteVo();
 			reqComp.setRequisiciones(reqs);
 			reqComp.setIdComponente((componenteDao.consult(id)).getId());
-			reqComp.setDesComponente((componenteDao.consult(id)).getD_descripcion());
+			reqComp.setDesComponente((componenteDao.consult(id)).getD_componente());
 			response.getWriter().println(JsonConvertidor.toJson(reqComp));
-		}   
+		}
 	
 
 }
