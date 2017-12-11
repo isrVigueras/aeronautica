@@ -2,8 +2,11 @@
 <link href="css/estilos.css" rel="stylesheet" type="text/css" />
 <link href="css/tabla.css" rel="stylesheet" type="text/css" />
 <div class="contenedor">
-  <center><h3 style="color:#EEE6E6">Requisiciones para la pieza: {{requisicion.d_componente}}</h3></center>
+  <center><h3 style="color:#EEE6E6">Requisiciones para la pieza:</h3> <samp>{{requisicionescomponente.idComponente}}</samp></center>
   <br>
+  <samp>{{requisicionescomponente.desComponente}}</samp>
+   <samp>{{requisicionescomponente.d_componente}}</samp>
+  <samp>{{requisicionescomponente.requisiciones[0].folio}}</samp>
    <div class="row" style="margin: 1% 1%;">
  <div class="col-xs-4">
   
@@ -21,12 +24,12 @@
       </tr>
   </thead>
     <tbody>
-      <tr ng-repeat="requisicion in requisiciones | filteri18n:{d_componente:filtro.d_componente}">
+      <tr ng-repeat="rq in requisicionescomponente.requisiciones">
         <!--<td>{{requisicion.idComponente}}</td>
         <td>{{requisicion.d_componente}}</td>-->
-        <td>{{requisicion.folio}}</td>
-        <td>{{requisicion.fechaApertura}}</td>
-        <td>{{requisicion.cantidad}}</td>
+        <td>{{rq.folio}}</td>
+        <td>{{rq.fechaApertura}}</td>
+        <td>{{rq.cantidad}}</td>
         <td>
 <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="actualizar(requisicion)">
           <span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>

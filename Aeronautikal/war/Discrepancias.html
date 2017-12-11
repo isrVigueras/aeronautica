@@ -113,26 +113,25 @@
            <label for="con_nombre">Selecione Taller:</label>
               <br>
            <select ng-model="discrepancia.taller" class="form-control">
-              <option value="01">01</option>
+              <option value="01">01 MANTENIMIENTO</option>
               <option value="02">02</option>
-              <option value="03">03</option>
-              <option value="04">04</option>
-              <option value="05">05</option>
-              <option value="06">06</option>
-              <option value="07">07</option>
+              <option value="03">03 ELECTRICO</option>
+              <option value="04">04 LAMINISTERIA</option>
+              <option value="05">05 AVIONIC´S</option>
+              <option value="06">06 PINTURA</option>
+              <option value="07">07 CARPINTERIA</option>
+              <option value="07">08 VESTIDURAS</option>
             </select>
             </div>
             <div class="col-xs-4">
              <label for="con_nombre">Selecione Seccion:</label>
               <br>
            <select ng-model="discrepancia.seccion"  class="form-control">
-              <option value="01">01</option>
-              <option value="02">02</option>
-              <option value="03">03</option>
-              <option value="04">04</option>
-              <option value="05">05</option>
-              <option value="06">06</option>
-              <option value="07">07</option>
+              <option value="01">01 TRABAJOS DE ELECTRICO</option>
+              <option value="02">02 PROGRAMADO</option>
+              <option value="03">03 TRABAJOS DE INSPECCION</option>
+              <option value="04">04 INCORPORACION DE DIRECTIVAS</option>
+              <option value="05">05 TRABAJOS DE AVIONICS</option>
             </select>
           </div>
           </div>
@@ -227,8 +226,8 @@
       </div>
       <div class="modal-body">
                  <form>
-        <br>
-        <label for="d_componente">Nombre de la pieza que se requiere:</label><input class="form-control" placeholder="Escriba el nombre completo de la pieza" id="r_nombre" name="r_nombre" type="text" ng-model="req.r_nombre"/>
+        <!--<br>
+        <label for="d_componente">Nombre de la pieza que se requiere:</label><input class="form-control" placeholder="Escriba el nombre completo de la pieza" id="r_nombre" name="r_nombre" type="text" ng-model="req.r_nombre"/>-->
         <br>
         <label for="d_componente">Numero de piezas requeridas:</label><input class="form-control" placeholder="Escriba el No. piezas que se requieren" id="r_cantidad" name="r_cantidad" type="number" ng-model="req.r_cantidad"/>
         <!-- <label for="d_componente">Quien las requiere:</label><input class="form-control" placeholder="Niombre de la persona responsable" id="d_componente" name="d_componente" type="number"/>

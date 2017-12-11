@@ -37,8 +37,8 @@
         <td>{{inv_consulta.d_componente}}</td>
         <td>{{inv_consulta.d_descripcion}}</td>
         <td>{{inv_consulta.d_cantidad}}</td>
-        <td>{{inv_consulta.d_pendientes}}</td>
-        <td>      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mydetalle">
+        <td>{{inv_consulta.d_pendientes}}</td> 
+        <td>      <button type="button" class="btn btn-default" data-toggle="modal" ng-click="muestra(inv_consulta)" data-target="#mydetalle">
   <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a ng-href="#/Inventario/requisicion/{{inv_consulta.id}}">
@@ -78,15 +78,17 @@
             <div class="col-xs-4">
            <label for="con_nombre">Seleciona Requsicion:</label>
               <br>
-           <select ng-model="discrepancia.taller" class="form-control">
-              <option value="01">01</option>
-              <option value="02">02</option>
-              <option value="03">03</option>
-              <option value="04">04</option>
-              <option value="05">05</option>
-              <option value="06">06</option>
-              <option value="07">07</option>
-            </select>
+                <label>ID:</label><span>{{detalle_componentes.id}}</span>
+                <br>
+                <label>Nombre del componente:</label><span>{{detalle_componentes.d_componente}}</span>
+                <br>
+                <label>Cantidad:</label><span>{{detalle_componentes.d_cantidad}}</span>
+                <br>
+                <label>ID:</label><span>{{detalle_componentes.id}}</span>
+                <label>ID:</label><span>{{detalle_componentes.id}}</span>
+                <label>ID:</label><span>{{detalle_componentes.id}}</span>
+                <label>ID:</label><span>{{detalle_componentes.id}}</span>
+                <label>Descripcion:</label><span>{{detalle_componentes.descomponente}}</span>
             </div>
           </div>
             </form>

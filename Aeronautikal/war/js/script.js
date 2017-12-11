@@ -323,10 +323,14 @@ $scope.generadas = generadas;
 app.controller("InventarioconsultaController", ['$scope','inv_consultas',function($scope,inv_consultas) {
  $scope.inv_consultas =inv_consultas;
   console.log($scope.inv_consultas);
+   $scope.muestra=function(data) {
+    console.log(data);
+    $scope.detalle_componentes = data; 
+  }
 }]);
 app.controller("RequisicionesController", ['$scope','requisiciones','actualizaRequiServicio',function($scope,requisiciones,actualizaRequiServicio) {
- $scope.requisiciones =requisiciones;
-  console.log($scope.requisiciones);
+ $scope.requisicionescomponente =requisiciones;
+  console.log($scope.requisicionescomponente);
    
    $scope.actualizar=function(requisicion) {
       alert("variable comprobada: "+requisicion.folio);
