@@ -16,16 +16,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.dao.ComponenteDao;
-import com.tikal.aeronautikal.dao.OrdenDao;
 import com.tikal.aeronautikal.dao.RequisicionDao;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
-import com.tikal.aeronautikal.service.AeronaveService;
 import com.tikal.aeronautikal.service.ComponenteService;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
+
+
+
 
 @Controller
 @RequestMapping(value="/componente")
@@ -119,25 +119,51 @@ public class ComponenteController {
 	   //////// update de existencias segun las requisiciones
 	   /////////////   //////////id componente, folio de la req
 	   
-	   @RequestMapping(value = {"/upExistencias/{folio}" }, method = RequestMethod.POST, consumes = "application/json")
-	   public void updateExistencias(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
-		 @PathVariable Long folio) throws IOException {
-		   System.out.println("wwwwwwwwwww");
-		  // ComponenteEntity old = componenteDao.consult(id);
-		   RequisicionEntity r = requisicionDao.consult(folio);
-		   ComponenteEntity old = componenteDao.consult(r.getFolio());
-		   Integer existencias = old.getD_cantidad()+r.getCantidad();
-		   Integer pendientes = old.getD_pendientes()-r.getCantidad();
-		   Long x = r.getFolio();
+	 
+	 //  @RequestMapping(value = {
+//		"/update" }, method = RequestMethod.POST, consumes = "application/json")
+//public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
+//		throws IOException {
+	   
+	   /**
+		
+		 * @param response
+		 * @param request
+		 * @param json
+		 * @throws IOException
+		 */
+	  
+	   @RequestMapping(value = {"/upExistencias"}, method = RequestMethod.POST, consumes = "application/json")
+	   public void updateExistencias(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) 
+		throws IOException {
+		   System.out.println("si entra a actualizar existencias");
+		   AsignadorDeCharset.asignar(request, response);
+		   RequisicionEntity req = (RequisicionEntity) JsonConvertidor.fromJson(json, RequisicionEntity.class);
+		   System.out.println("el  id del objeto que me manda es: "+req.getIdComponente());
+		   
+		   ComponenteEntity old = componenteDao.consult(req.getIdComponente());
+		
+		   Integer existencias = old.getD_cantidad()+req.getCantidad();
+		   Integer pendientes = old.getD_pendientes()-req.getCantidad();
 		   System.out.println("EXISTENCIAS:"+existencias);
 		   System.out.println("PENDIENTES:"+pendientes);
 		   old.setD_cantidad(existencias);
 		   old.setD_pendientes(pendientes);  
 		   componenteDao.update(old);
-		 //  componenteDao.updateExistencias(componenteDao.updateExistencias(id,existencias,pendientes));
+		  // response.getWriter().println(JsonConvertidor.toJson(old));
+
 	   }
 	   
-	   
+	   @RequestMapping(value = {
+		"/update" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+		public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
+				throws IOException {
+			AsignadorDeCharset.asignar(request, response);
+			ComponenteEntity c = (ComponenteEntity) JsonConvertidor.fromJson(json, ComponenteEntity.class);
+			//Empleado e= evo.getEmpleado();
+			componenteDao.update(c);
+			response.getWriter().println(JsonConvertidor.toJson(c));
+		}
 	    
 	   
 }

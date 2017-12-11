@@ -42,28 +42,18 @@ public class ComponenteDaoImpl implements ComponenteDao{
 	@Override
 	public void update(ComponenteEntity c) {
 		// TODO Auto-generated method stub
-		ComponenteEntity old = this.consult(c.getId());
-		if (old != null) {
-//			//old.setDireccion(e.getDireccion());
-			old.setD_cantidad(c.getD_cantidad());
-			old.setD_componente(c.getD_componente());
-			old.setD_descripcion(c.getD_descripcion());
-			old.setD_parte(c.getD_parte());;
-			old.setD_pendientes(c.getD_pendientes());
-			old.setD_vale(c.getD_vale());
-			old.setD_requisicion(c.getD_requisicion());
-			
-			ofy().save().entity(old);
+		
+			ofy().save().entity(c).now();
 		
 		}
 
 		
-	}
+	
 
 
 	@Override
 	public ComponenteEntity consult(Long id) {
-		System.out.println("aqui esta consultando la entidad que va a borrar" );
+		System.out.println("aqui esta consultando el componente " );
        return ofy().load().type(ComponenteEntity.class).id(id).now();
 		
 	}

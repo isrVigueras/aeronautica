@@ -109,8 +109,9 @@ public class RequisicionController {
 	   @RequestMapping(value = { "/getByComponente/{id}" }, method = RequestMethod.GET, produces = "application/json")
 		public void findByOrden(HttpServletResponse response, HttpServletRequest request,
 				@PathVariable Long id) throws IOException {
+	
 			AsignadorDeCharset.asignar(request, response);
-			List<RequisicionEntity> reqs= requisicionDao.getByComponente(id);
+			List<RequisicionEntity> reqs= requisicionDao.getByComponente(id);			
 			response.getWriter().println(JsonConvertidor.toJson(reqs));
 		}
 	

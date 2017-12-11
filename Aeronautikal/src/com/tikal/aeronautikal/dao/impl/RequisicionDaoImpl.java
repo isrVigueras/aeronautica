@@ -59,7 +59,7 @@ public class RequisicionDaoImpl implements RequisicionDao {
 
 	@Override
 	public RequisicionEntity consult(Long folio) {
-		System.out.println("aqui esta consultando la entidad que va a borrar" );
+		System.out.println("aqui esta consultando la requisicion" );
        return ofy().load().type(RequisicionEntity.class).id(folio).now();
 		
 	}

@@ -53,7 +53,7 @@ public class OrdenController {
 	   private OrdenService ordenService;
 	
 	   
-	   @RequestMapping(value = "/add", method = RequestMethod.GET)
+	   @RequestMapping(value = "/add_", method = RequestMethod.GET)
 	    public String addOrdenGet(@ModelAttribute("entry") OrdenVo entry) {
 		   System.out.println("si entra a Orden controller");   
 		   	try {

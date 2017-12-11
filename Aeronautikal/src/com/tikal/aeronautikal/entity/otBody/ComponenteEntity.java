@@ -6,6 +6,7 @@ import com.tikal.aeronautikal.entity.BaseEntity;
 import com.tikal.aeronautikal.model.otBody.ComponenteStatus;
 
 @Entity
+
 public class ComponenteEntity{
 	
 	@Id private Long id;
@@ -17,6 +18,8 @@ public class ComponenteEntity{
 	private String d_requisicion;
 	private String fechaApertura;
 	private String d_vale;
+	
+	
 	
 	
 	public String getFechaApertura() {
