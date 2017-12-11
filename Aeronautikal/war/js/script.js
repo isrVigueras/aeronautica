@@ -2,9 +2,9 @@ var app = angular.module('app', ['ngRoute']);
 
 //servicio update requisicion
 app.service('actualizaRequiServicio', [ '$http', '$q', function($http, $q) {
-  this.actualizar_requisicion = function() {
+  this.actualizar_requisicion = function(requisicion) {
     var d = $q.defer();
-    $http.post("/componente/upExistencias/").then(function(response) {
+    $http.post("/componente/upExistencias/",requisicion).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -328,12 +328,12 @@ app.controller("RequisicionesController", ['$scope','requisiciones','actualizaRe
  $scope.requisiciones =requisiciones;
   console.log($scope.requisiciones);
    
-   $scope.actualizar=function(folio) {
-      alert("variable comprobada: "+folio);
-      actualizaRequiServicio.actualizar_requisicion().then(
+   $scope.actualizar=function(requisicion) {
+      alert("variable comprobada: "+requisicion.folio);
+      actualizaRequiServicio.actualizar_requisicion(requisicion).then(
         function(data) {
           console.log(data);
-          location.href="#/Inventario/requisicion/"+folio;
+          location.href="#/Inventario/requisicion/"+requisicion.folio;
         })         
   }
 
