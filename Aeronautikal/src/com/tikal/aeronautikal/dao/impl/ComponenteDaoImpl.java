@@ -44,16 +44,14 @@ public class ComponenteDaoImpl implements ComponenteDao{
 		// TODO Auto-generated method stub
 		
 			ofy().save().entity(c).now();
-		
+			System.out.println("guarda los nuevos datos" );
 		}
 
 		
 	
-
-
 	@Override
 	public ComponenteEntity consult(Long id) {
-		System.out.println("aqui esta consultando el componente " );
+		System.out.println("consultando el componente " );
        return ofy().load().type(ComponenteEntity.class).id(id).now();
 		
 	}

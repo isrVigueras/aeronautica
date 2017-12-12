@@ -3,12 +3,13 @@ package com.tikal.aeronautikal.controller.vo;
 import java.util.List;
 
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
 
 @Entity
 public class RequisicionesComponenteVo {
 	
-	private Long idComponente;
+	@Id private Long idComponente;
 	private String desComponente;
 	
 	private List<RequisicionEntity> requisiciones;

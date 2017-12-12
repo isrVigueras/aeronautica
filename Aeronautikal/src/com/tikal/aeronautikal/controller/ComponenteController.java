@@ -133,7 +133,7 @@ public class ComponenteController {
 		 * @throws IOException
 		 */
 	  
-	   @RequestMapping(value = {"/upExistencias_"}, method = RequestMethod.POST, consumes = "application/json")
+	/*   @RequestMapping(value = {"/upExistencias_"}, method = RequestMethod.POST, consumes = "application/json")
 	   public void updateExistencias_(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) 
 		throws IOException {
 		   System.out.println("si entra a actualizar existencias");
@@ -143,7 +143,7 @@ public class ComponenteController {
 		   
 		   ComponenteEntity old = componenteDao.consult(req.getIdComponente());
 		
-		   Integer existencias = old.getD_cantidad()+req.getCantidad();
+		   Integer existencias = old.getD_cantidad()-req.getCantidad();
 		   Integer pendientes = old.getD_pendientes()-req.getCantidad();
 		   System.out.println("EXISTENCIAS:"+existencias);
 		   System.out.println("PENDIENTES:"+pendientes);
@@ -152,11 +152,11 @@ public class ComponenteController {
 		   componenteDao.update(old);
 		  // response.getWriter().println(JsonConvertidor.toJson(old));
 
-	   }
+	   }*/
 	   
 	   
-	   @RequestMapping(value = {"/upExistencias/{idRequisicion}"}, method = RequestMethod.POST)
-	   public void updateExistencias(@PathVariable Long idRequisicion) 
+	   @RequestMapping(value = {"/upExistencias/{idRequisicion}"}, method = RequestMethod.POST,  produces = "application/json" )
+	   public void updateExistencias(HttpServletResponse response, HttpServletRequest request,  @PathVariable Long idRequisicion) 
 		throws IOException {
 		   System.out.println("si entra a actualizar existencias con este id de requisicion"+ idRequisicion);
 		  // AsignadorDeCharset.asignar(request, response);
@@ -172,7 +172,9 @@ public class ComponenteController {
 		   old.setD_cantidad(existencias);
 		   old.setD_pendientes(pendientes);  
 		   componenteDao.update(old);
-		  // response.getWriter().println(JsonConvertidor.toJson(old));
+		   System.out.println("termino de actualizar.........");
+		  //// AsignadorDeCharset.asignar(request, response);
+		  // response.getWriter().println(JsonConvertidor.toJson(old)); 
 
 	   }
 	   
