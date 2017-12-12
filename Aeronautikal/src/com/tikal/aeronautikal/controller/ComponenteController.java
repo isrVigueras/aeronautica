@@ -56,14 +56,14 @@ public class ComponenteController {
 		   System.out.println("si entra a Orden controller");   
 		   	try {
 		   		
-		   		entry.setId(Long.parseLong("1119"));
-		   		entry.setD_componente("nombre del componente");
-		   		entry.setD_descripcion("descripcion del componente");
-		   		entry.setD_parte("no. de parte ");
+		   		entry.setId(Long.parseLong("1001"));
+		   		entry.setD_componente("GASKET");
+		   		entry.setD_descripcion("pieza que sirve para ...");
+		   		entry.setD_parte("PARTE_1");
 		   		entry.setD_pendientes(3);
-		   		entry.setD_cantidad(8);
-		   		entry.setD_requisicion("num de requisicion");
-		   		entry.setD_vale("numero de vale");
+		   		entry.setD_cantidad(100);
+		   		//entry.setD_requisicion("num de requisicion");
+		   		//entry.setD_vale("numero de vale");
 		   		entry.setFechaApertura("01/12/2017");
 		  
 	            System.out.println("si asign/ valor"+entry);
@@ -72,7 +72,7 @@ public class ComponenteController {
 	        }
 		   System.out.println("yaaaaa");	    
 	        componenteService.save(entry);   //implementa el dao  
-	        return "Orden_de_trabajo";
+	        return "inventario";
 		}
 	
 	 /////////////////////////////////////////////////////********************************************************
@@ -133,8 +133,8 @@ public class ComponenteController {
 		 * @throws IOException
 		 */
 	  
-	   @RequestMapping(value = {"/upExistencias"}, method = RequestMethod.POST, consumes = "application/json")
-	   public void updateExistencias(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) 
+	   @RequestMapping(value = {"/upExistencias_"}, method = RequestMethod.POST, consumes = "application/json")
+	   public void updateExistencias_(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) 
 		throws IOException {
 		   System.out.println("si entra a actualizar existencias");
 		   AsignadorDeCharset.asignar(request, response);
@@ -153,6 +153,29 @@ public class ComponenteController {
 		  // response.getWriter().println(JsonConvertidor.toJson(old));
 
 	   }
+	   
+	   
+	   @RequestMapping(value = {"/upExistencias/{idRequisicion}"}, method = RequestMethod.POST)
+	   public void updateExistencias(@PathVariable Long idRequisicion) 
+		throws IOException {
+		   System.out.println("si entra a actualizar existencias con este id de requisicion"+ idRequisicion);
+		  // AsignadorDeCharset.asignar(request, response);
+		   RequisicionEntity req = requisicionDao.consult(idRequisicion);
+		   System.out.println("el  id del componente, segun la req es: "+req.getIdComponente());
+		   
+		   ComponenteEntity old = componenteDao.consult(req.getIdComponente());
+		
+		   Integer existencias = old.getD_cantidad()+req.getCantidad();
+		   Integer pendientes = old.getD_pendientes()-req.getCantidad();
+		   System.out.println("EXISTENCIAS:"+existencias);
+		   System.out.println("PENDIENTES:"+pendientes);
+		   old.setD_cantidad(existencias);
+		   old.setD_pendientes(pendientes);  
+		   componenteDao.update(old);
+		  // response.getWriter().println(JsonConvertidor.toJson(old));
+
+	   }
+	   
 	   
 	   @RequestMapping(value = {
 		"/update" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
