@@ -2,11 +2,11 @@
 <link href="css/estilos.css" rel="stylesheet" type="text/css" />
 <link href="css/tabla.css" rel="stylesheet" type="text/css" />
 <div class="contenedor">
-  <center><h3 style="color:#EEE6E6">Requisiciones para la pieza:</h3> <samp>{{requisicionescomponente.idComponente}}</samp></center>
+  <center><h3 style="color:#EEE6E6">Requisiciones para la pieza: <samp>{{requisicionescomponente.desComponente}}</samp></h3></center>
   <br>
-  <samp>{{requisicionescomponente.desComponente}}</samp>
-   <samp>{{requisicionescomponente.d_componente}}</samp>
-  <samp>{{requisicionescomponente.requisiciones[0].folio}}</samp>
+  <label style="color:#EEE6E6">Clave del componente</label>
+   <samp style="color:#EEE6E6">{{requisicionescomponente.idComponente}}</samp>
+  
    <div class="row" style="margin: 1% 1%;">
  <div class="col-xs-4">
   
@@ -40,7 +40,7 @@
       <tfoot>
       <tr>
         <td colspan="3">El Numero requisiciones es:</td>
-        <td ng-bind="requisiciones.length"></td>
+        <td ng-bind="requisicionescomponente.requisiciones.length"></td>
       </tr>
     </tfoot>
   </table>

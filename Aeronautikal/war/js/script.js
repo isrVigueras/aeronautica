@@ -2,9 +2,9 @@ var app = angular.module('app', ['ngRoute']);
 
 //servicio update requisicion
 app.service('actualizaRequiServicio', [ '$http', '$q', function($http, $q) {
-  this.actualizar_requisicion = function(requisicion) {
+  this.actualizar_requisicion = function(rd) {
     var d = $q.defer();
-    $http.post("/componente/upExistencias/"+requisicion).then(function(response) {
+    $http.post("/componente/upExistencias/"+rd).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -341,7 +341,7 @@ app.controller("RequisicionesController", ['$scope','requisiciones','actualizaRe
       actualizaRequiServicio.actualizar_requisicion(rd).then(
         function(data) {
           console.log(data);
-          location.href="#/Inventario/requisicion/"+rd;
+          location.reload();
         })         
   }
 
