@@ -55,11 +55,12 @@ public class RequisicionController {
 		   System.out.println("si entra a Requisicion controller");   
 		   	try {
 		   		
-		   		entry.setFolio(Long.parseLong("56789"));
-		   		entry.setD_componente("Tablero modelo mnku-34");
-		   		entry.setFechaApertura("21/12/2017");
-		   		entry.setCantidad(2);
-		   		entry.setIdComponente(Long.parseLong("1001"));
+		   		entry.setFolio(Long.parseLong("1000"));
+		   		entry.setD_componente("ORING/SELLO");
+		   		entry.setFechaApertura("01/12/2017");
+		   		entry.setCantidad(5);
+		   		entry.setIdComponente(Long.parseLong("6333186975989760"));
+		   		entry.setEstatus("ABIERTA");
 	            System.out.println("si asign/ valor"+entry);
 	        } catch (RuntimeException ignored) {
 	            // getUniqueEntity should throw exception
@@ -83,6 +84,7 @@ public class RequisicionController {
 	        	// System.out.println("el nuevo objeto: "+orden );
 	        	//pegar el valor de empresa, aeronave y contacato
 	        	//orden.setFolio(1111);
+	        	req.setEstatus("ABIERTA");
 	        	requisicionDao.save(req);	            
 	        } catch (RuntimeException ignored) {
 	        	ignored.printStackTrace();

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.RequisicionDao;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
@@ -60,7 +59,7 @@ public class ComponenteController {
 		   		entry.setD_componente("GASKET");
 		   		entry.setD_descripcion("pieza que sirve para ...");
 		   		entry.setD_parte("PARTE_1");
-		   		entry.setD_pendientes(3);
+		   		//entry.setD_pendientes(3);
 		   		entry.setD_cantidad(100);
 		   		//entry.setD_requisicion("num de requisicion");
 		   		//entry.setD_vale("numero de vale");
@@ -88,6 +87,7 @@ public class ComponenteController {
 	        	ComponenteEntity cmp =(ComponenteEntity) JsonConvertidor.fromJson(json, ComponenteEntity.class);
 	        	// System.out.println("el nuevo objeto: "+orden );
 	        	//pegar el valor de empresa, aeronave y contacato
+	        	//cmp.setD_pendientes(50);//aqui va funcion para calcular cuantas piezas pendientes hay de cada componente
 	        	//orden.setFolio(1111);
 	        	componenteDao.save(cmp);	            
 	        } catch (RuntimeException ignored) {
@@ -98,7 +98,7 @@ public class ComponenteController {
 	    }
 	 
 	   /////////////////////////////////////////////////////////////////////////////////////////**********************
-	   @RequestMapping(value = { "/findAll" }, method = RequestMethod.GET, produces = "application/json")
+	   @RequestMapping(value = { "/findAll_antes" }, method = RequestMethod.GET, produces = "application/json")
 		public void findAllComp(HttpServletResponse response, HttpServletRequest request) throws IOException {
 			AsignadorDeCharset.asignar(request, response);
 			List<ComponenteEntity> lista = componenteDao.getAll();
@@ -108,6 +108,28 @@ public class ComponenteController {
 			response.getWriter().println(JsonConvertidor.toJson(lista));
 
 		}
+	   
+	   @RequestMapping(value = { "/findAll" }, method = RequestMethod.GET, produces = "application/json")
+		public void findAllComplete(HttpServletResponse response, HttpServletRequest request) throws IOException {
+			AsignadorDeCharset.asignar(request, response);
+			//List<ComponenteVo> cvos= new ArrayList<ComponenteVo>();
+			List<ComponenteEntity> lista = componenteDao.getAll();
+			
+					for (ComponenteEntity c : lista){
+							c.setD_pendientes(requisicionDao.getPendientes(c.getId()));
+							componenteDao.update(c);
+						   
+					}
+		
+					
+			response.getWriter().println(JsonConvertidor.toJson(lista));
+
+		}
+	   
+	   
+	   
+	
+	   
 	   
 	   @RequestMapping(value = {"/delete/{folio}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
 	   public void deleteOrden(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
@@ -165,12 +187,14 @@ public class ComponenteController {
 		   
 		   ComponenteEntity old = componenteDao.consult(req.getIdComponente());
 		
-		   Integer existencias = old.getD_cantidad()+req.getCantidad();
-		   Integer pendientes = old.getD_pendientes()-req.getCantidad();
+		   Integer existencias = (old.getD_cantidad()==0)? old.getD_cantidad():old.getD_cantidad()-req.getCantidad();
+		   Integer pendientes = (old.getD_pendientes()==0)? old.getD_pendientes():old.getD_pendientes()-req.getCantidad();
 		   System.out.println("EXISTENCIAS:"+existencias);
 		   System.out.println("PENDIENTES:"+pendientes);
 		   old.setD_cantidad(existencias);
 		   old.setD_pendientes(pendientes);  
+		   req.setEstatus("CERRADA");
+		   requisicionDao.update(req);
 		   componenteDao.update(old);
 		   System.out.println("termino de actualizar.........");
 		  //// AsignadorDeCharset.asignar(request, response);

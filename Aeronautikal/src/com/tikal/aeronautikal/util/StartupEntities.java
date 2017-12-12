@@ -34,6 +34,7 @@ public class StartupEntities {
 		ObjectifyService.register(Contador.class);
 		ObjectifyService.register(RequisicionEntity.class);
 		ObjectifyService.register(RequisicionesComponenteVo.class);
+		
 	}
 	
     

@@ -2,6 +2,7 @@ package com.tikal.aeronautikal.dao.impl;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -42,19 +43,13 @@ public class RequisicionDaoImpl implements RequisicionDao {
 	@Override
 	public void update(RequisicionEntity r) {
 		// TODO Auto-generated method stub
-		RequisicionEntity old = this.consult(r.getFolio());
-		if (old != null) {
-//			//old.setDireccion(e.getDireccion());
-			old.setFolio(r.getFolio());
-			old.setD_componente(r.getD_componente());
-			old.setCantidad(r.getCantidad());
-			old.setFechaApertura(r.getFechaApertura());
-			ofy().save().entity(old);
+
+			ofy().save().entity(r);
 		
 		}
 
 		
-	}
+	
 
 
 	@Override
@@ -67,8 +62,19 @@ public class RequisicionDaoImpl implements RequisicionDao {
 	@Override
 	public List<RequisicionEntity> getByComponente(Long id) {
 		// TODO Auto-generated method stub
-		List<RequisicionEntity> reqs = ofy().load().type(RequisicionEntity.class).filter("idComponente", id).list();
+		List<RequisicionEntity> reqs = ofy().load().type(RequisicionEntity.class).filter("idComponente", id).filter("estatus", "ABIERTA").list();
 		return reqs;
+	}
+	@Override
+	public Integer getPendientes(Long idComponente) {
+		// TODO Auto-generated method stub
+		Integer suma=0;
+		List<RequisicionEntity> reqs = ofy().load().type(RequisicionEntity.class).filter("idComponente", idComponente).filter("estatus","ABIERTA").list();		
+		for(RequisicionEntity r : reqs) {
+            suma= suma+r.getCantidad();
+        }
+		return suma;
+		
 	}
 
 

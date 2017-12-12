@@ -8,9 +8,27 @@ public class RequisicionEntity {
 		
 		@Id Long folio;
 		@Index Long idComponente;
+		Long idDiscrepancia;
 		Integer cantidad;
 		String d_componente;
 		String fechaApertura;
+		@Index String estatus;
+		
+		
+		
+		
+		public Long getIdDiscrepancia() {
+			return idDiscrepancia;
+		}
+		public void setIdDiscrepancia(Long idDiscrepancia) {
+			this.idDiscrepancia = idDiscrepancia;
+		}
+		public String getEstatus() {
+			return estatus;
+		}
+		public void setEstatus(String estatus) {
+			this.estatus = estatus;
+		}
 		public Long getFolio() {
 			return folio;
 		}
