@@ -11,8 +11,11 @@ app.service('DiscrepanciaServicio', [ '$http', '$q', function($http, $q) {
   }
 } ]);
 
-app.controller("DiscrepanciamuestraController", ['$scope','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio',function($scope,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio) {
+app.controller("DiscrepanciamuestraController", ['$scope','inv_consultas','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio',function($scope,inv_consultas,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio) {
 $scope.discrepancias =discrepancias;
+ $scope.provincias=inv_consultas; 
+  $scope.miProvinciaSeleccionada=null
+
 console.log($scope.discrepancias); 
  $scope.discrepancia = {
     folio:undefined,
@@ -23,6 +26,8 @@ console.log($scope.discrepancias);
     accion:""
     
   }
+
+
   $scope.foliarrastrado =foliarrastrado;
    $scope.alta_discrepancia=function() {
     console.log($scope.foliarrastrado);

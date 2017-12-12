@@ -110,6 +110,9 @@
         <form>
           <div class="row">
             <div class="col-xs-4">
+              <select ng-model="miProvinciaSeleccionada" ng-options="provincia as provincia.nombre for provincia in provincias track by provincia.idProvincia" >
+  <option value="">--Elige opcion--</option>
+</select>
            <label for="con_nombre">Selecione Taller:</label>
               <br>
            <select ng-model="discrepancia.taller" class="form-control">

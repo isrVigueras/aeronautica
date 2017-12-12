@@ -4,7 +4,7 @@ var app = angular.module('app', ['ngRoute']);
 app.service('actualizaRequiServicio', [ '$http', '$q', function($http, $q) {
   this.actualizar_requisicion = function(requisicion) {
     var d = $q.defer();
-    $http.post("/componente/upExistencias/",requisicion).then(function(response) {
+    $http.post("/componente/upExistencias/"+requisicion).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -232,6 +232,9 @@ app.config(['$routeProvider',function($routeProvider) {
       }],
       foliarrastrado:['remoteResource','$route',function(remoteResource,$route) {
         return ($route.current.params.folio);
+      }],
+      inv_consultas:['remoteResource',function(remoteResource) {
+        return remoteResource.listado_inv();
       }]
     }
 
@@ -332,12 +335,13 @@ app.controller("RequisicionesController", ['$scope','requisiciones','actualizaRe
  $scope.requisicionescomponente =requisiciones;
   console.log($scope.requisicionescomponente);
    
-   $scope.actualizar=function(requisicion) {
-      alert("variable comprobada: "+requisicion.folio);
-      actualizaRequiServicio.actualizar_requisicion(requisicion).then(
+   $scope.actualizar=function(rd) {
+    console.log(rd);
+      alert("variable comprobada: "+rd);
+      actualizaRequiServicio.actualizar_requisicion(rd).then(
         function(data) {
           console.log(data);
-          location.href="#/Inventario/requisicion/"+requisicion.folio;
+          location.href="#/Inventario/requisicion/"+rd;
         })         
   }
 
