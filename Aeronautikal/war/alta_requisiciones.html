@@ -1,0 +1,19 @@
+
+
+<div class="contenedor">
+	<form>
+	<center><h3 style="color:#EEE6E6">Requisicion para discrepancia con clave:</h3></center>
+	 <label for="d_componente" style="color:#EEE6E6">Seleciona componenete de almacen:</label>
+        <br>
+      <select multiple class="form-control" ng-model="discrepancia.folio_componente" >
+          <option value="{{p.id}}" ng-repeat="p in provincias"  >{{p.d_componente}}</option>
+        </select>
+
+	<label for="d_componente" style="color:#EEE6E6">Numero de piezas requeridas:</label><input class="form-control" placeholder="Escriba el No. piezas que se requieren" id="r_cantidad" name="r_cantidad" type="number" ng-model="req.r_cantidad"/>
+	<center><button type="button" class="btn btn-primary" ng-click="alta_requisicion()" ng-disabled="form.$invalid">
+  <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Generar
+  </button></center>
+	</form>
+	<br><br><br><br><br><br><br><br><br><br><br>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br>
