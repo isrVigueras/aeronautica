@@ -1,5 +1,16 @@
 var app = angular.module('app', ['ngRoute']);
-
+//servicio alta requisicion
+app.service('altaRequiServicio', [ '$http', '$q', function($http, $q) {
+  this.alta_requisicion = function(rd) {
+    var d = $q.defer();
+    $http.post("/requisicion/add/",rd).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
 //servicio update requisicion
 app.service('actualizaRequiServicio', [ '$http', '$q', function($http, $q) {
   this.actualizar_requisicion = function(rd) {
@@ -261,6 +272,18 @@ app.config(['$routeProvider',function($routeProvider) {
       }]
     }
   });
+        $routeProvider.when('/Discrepancias/requisicion/:folio', {
+    templateUrl: "alta_requisiciones.html",
+    controller: "Requisiciones_altaController",
+     resolve: {
+      foliarrastrad:['remoteResource','$route',function(remoteResource,$route) {
+        return ($route.current.params.folio);
+      }],
+       inv_consultas:['remoteResource',function(remoteResource) {
+        return remoteResource.listado_inv();
+      }]
+    }
+  });
   $routeProvider.otherwise({
         redirectTo: '/'
   });   
@@ -334,18 +357,40 @@ app.controller("InventarioconsultaController", ['$scope','inv_consultas',functio
 app.controller("RequisicionesController", ['$scope','requisiciones','actualizaRequiServicio',function($scope,requisiciones,actualizaRequiServicio) {
  $scope.requisicionescomponente =requisiciones;
   console.log($scope.requisicionescomponente);
-   
+
    $scope.actualizar=function(rd) {
     console.log(rd);
       alert("variable comprobada: "+rd);
       actualizaRequiServicio.actualizar_requisicion(rd).then(
         function(data) {
           console.log(data);
-          location.reload();
+          location.href="#/Inventario/colsulta";
         })         
   }
 
 }]);
+app.controller("Requisiciones_altaController", ['$scope','inv_consultas','foliarrastrad','altaRequiServicio',function($scope,inv_consultas,foliarrastrad,altaRequiServicio) {
+  $scope.provincias=inv_consultas;
+
+   $scope.altarequisicion = {
+    folio_discrepancia:foliarrastrad,
+    fechaApertura:new Date(),
+    folio_componente:undefined,
+    numero_piezas:undefined
+  }
+console.log($scope.altarequisicion);
+
+   $scope.alta_requisicion=function(altarequisicion) {
+    console.log(altarequisicion);
+      alert("variable comprobada: "+altarequisicion);
+      altaRequiServicio.alta_requisicion(altarequisicion).then(
+        function(data) {
+          console.log(data);
+          location.href="#/Orden/discrepancia/"+altarequisicion.folio_discrepancia;
+        })         
+  }
+}]);
+
 
 app.controller("MainController", ['$scope',function($scope) {
 

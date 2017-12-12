@@ -16,21 +16,22 @@ $scope.discrepancias =discrepancias;
  $scope.provincias=inv_consultas; 
   $scope.miProvinciaSeleccionada=null
 
-console.log($scope.discrepancias); 
+console.log($scope.provincias); 
  $scope.discrepancia = {
     folio:undefined,
     fechaApertura:new Date(),
     taller:"",
     seccion:"",
     descripcion:"",
-    accion:""
-    
+    accion:"",
+    folio_componente:undefined,
+    numero_piezas:undefined
   }
 
 
   $scope.foliarrastrado =foliarrastrado;
    $scope.alta_discrepancia=function() {
-    console.log($scope.foliarrastrado);
+    console.log($scope.foliarrastrado+","+$scope.discrepancia.numero_piezas+","+$scope.discrepancia.folio_componente);
       alert("variable comprobada folio arrastrado: "+$scope.foliarrastrado);
       DiscrepanciaServicio.genera_discrepancia($scope.foliarrastrado,$scope.discrepancia).then(
         function(data) {
