@@ -183,12 +183,12 @@ public class ComponenteController {
 		   System.out.println("si entra a actualizar existencias con este id de requisicion"+ idRequisicion);
 		  // AsignadorDeCharset.asignar(request, response);
 		   RequisicionEntity req = requisicionDao.consult(idRequisicion);
-		   System.out.println("el  id del componente, segun la req es: "+req.getIdComponente());
+		   System.out.println("el  id del componente, segun la req es: "+req.getFolio_componente());
 		   
-		   ComponenteEntity old = componenteDao.consult(req.getIdComponente());
+		   ComponenteEntity old = componenteDao.consult(req.getFolio_componente());
 		
-		   Integer existencias = (old.getD_cantidad()==0)? old.getD_cantidad():old.getD_cantidad()-req.getCantidad();
-		   Integer pendientes = (old.getD_pendientes()==0)? old.getD_pendientes():old.getD_pendientes()-req.getCantidad();
+		   Integer existencias = (old.getD_cantidad()==0)? old.getD_cantidad():old.getD_cantidad()-req.getNumero_piezas();
+		   Integer pendientes = (old.getD_pendientes()==0)? old.getD_pendientes():old.getD_pendientes()-req.getNumero_piezas();
 		   System.out.println("EXISTENCIAS:"+existencias);
 		   System.out.println("PENDIENTES:"+pendientes);
 		   old.setD_cantidad(existencias);

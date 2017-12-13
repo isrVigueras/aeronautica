@@ -71,7 +71,7 @@ public class RequisicionDaoImpl implements RequisicionDao {
 		Integer suma=0;
 		List<RequisicionEntity> reqs = ofy().load().type(RequisicionEntity.class).filter("idComponente", idComponente).filter("estatus","ABIERTA").list();		
 		for(RequisicionEntity r : reqs) {
-            suma= suma+r.getCantidad();
+            suma= suma+r.getNumero_piezas();
         }
 		return suma;
 		

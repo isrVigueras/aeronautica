@@ -50,16 +50,16 @@ public class RequisicionController {
 	 
 	 ////////////////////////////////////////////////*****************************************************************
 	 
-	 @RequestMapping(value = "/add", method = RequestMethod.GET)
+	 @RequestMapping(value = "/add_", method = RequestMethod.GET)
 	    public String addReqGet(@ModelAttribute("entry") RequisicionEntity entry) {
 		   System.out.println("si entra a Requisicion controller");   
 		   	try {
 		   		
 		   		entry.setFolio(Long.parseLong("1000"));
-		   		entry.setD_componente("ORING/SELLO");
+		   		
 		   		entry.setFechaApertura("01/12/2017");
-		   		entry.setCantidad(5);
-		   		entry.setIdComponente(Long.parseLong("6333186975989760"));
+		   		entry.setNumero_piezas(5);
+		   		entry.setFolio_componente(Long.parseLong("6333186975989760"));
 		   		entry.setEstatus("ABIERTA");
 	            System.out.println("si asign/ valor"+entry);
 	        } catch (RuntimeException ignored) {
@@ -73,8 +73,9 @@ public class RequisicionController {
 	 /////////////////////////////////////////////////////********************************************************
 
 	 
-	 @RequestMapping(value = {"/add"}, method = RequestMethod.POST,  consumes = "application/json") 
-	   public void addRequisicion(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
+	 @RequestMapping(value = {"/add "}, method = RequestMethod.POST, consumes = "application/json") 
+	   public void addRequisicion(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) 
+			   throws IOException{
 	    	  System.out.println("si entra al add por POST"+json);
 	        try {
 	        	AsignadorDeCharset.asignar(request, response);

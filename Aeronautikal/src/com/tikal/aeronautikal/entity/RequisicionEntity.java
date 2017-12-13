@@ -7,51 +7,35 @@ import com.googlecode.objectify.annotation.Index;
 public class RequisicionEntity {
 		
 		@Id Long folio;
-		@Index Long idComponente;
-		Long idDiscrepancia;
-		Integer cantidad;
-		String d_componente;
+		@Index Long folio_componente;
+		Long folio_discrepancia;
+		Integer numero_piezas;
+		//String d_componente;
 		String fechaApertura;
 		@Index String estatus;
-		
-		
-		
-		
-		public Long getIdDiscrepancia() {
-			return idDiscrepancia;
-		}
-		public void setIdDiscrepancia(Long idDiscrepancia) {
-			this.idDiscrepancia = idDiscrepancia;
-		}
-		public String getEstatus() {
-			return estatus;
-		}
-		public void setEstatus(String estatus) {
-			this.estatus = estatus;
-		}
 		public Long getFolio() {
 			return folio;
 		}
 		public void setFolio(Long folio) {
 			this.folio = folio;
 		}
-		public Long getIdComponente() {
-			return idComponente;
+		public Long getFolio_componente() {
+			return folio_componente;
 		}
-		public void setIdComponente(Long idComponente) {
-			this.idComponente = idComponente;
+		public void setFolio_componente(Long folio_componente) {
+			this.folio_componente = folio_componente;
 		}
-		public Integer getCantidad() {
-			return cantidad;
+		public Long getFolio_discrepancia() {
+			return folio_discrepancia;
 		}
-		public void setCantidad(Integer cantidad) {
-			this.cantidad = cantidad;
+		public void setFolio_discrepancia(Long folio_discrepancia) {
+			this.folio_discrepancia = folio_discrepancia;
 		}
-		public String getD_componente() {
-			return d_componente;
+		public Integer getNumero_piezas() {
+			return numero_piezas;
 		}
-		public void setD_componente(String d_componente) {
-			this.d_componente = d_componente;
+		public void setNumero_piezas(Integer numero_piezas) {
+			this.numero_piezas = numero_piezas;
 		}
 		public String getFechaApertura() {
 			return fechaApertura;
@@ -59,6 +43,13 @@ public class RequisicionEntity {
 		public void setFechaApertura(String fechaApertura) {
 			this.fechaApertura = fechaApertura;
 		}
+		public String getEstatus() {
+			return estatus;
+		}
+		public void setEstatus(String estatus) {
+			this.estatus = estatus;
+		}
+		
 		
 		
 		
