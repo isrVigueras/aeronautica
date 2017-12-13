@@ -62,14 +62,14 @@ public class RequisicionDaoImpl implements RequisicionDao {
 	@Override
 	public List<RequisicionEntity> getByComponente(Long id) {
 		// TODO Auto-generated method stub
-		List<RequisicionEntity> reqs = ofy().load().type(RequisicionEntity.class).filter("idComponente", id).filter("estatus", "ABIERTA").list();
+		List<RequisicionEntity> reqs = ofy().load().type(RequisicionEntity.class).filter("folio_componente", id).filter("estatus", "ABIERTA").list();
 		return reqs;
 	}
 	@Override
 	public Integer getPendientes(Long idComponente) {
 		// TODO Auto-generated method stub
 		Integer suma=0;
-		List<RequisicionEntity> reqs = ofy().load().type(RequisicionEntity.class).filter("idComponente", idComponente).filter("estatus","ABIERTA").list();		
+		List<RequisicionEntity> reqs = ofy().load().type(RequisicionEntity.class).filter("folio_componente", idComponente).filter("estatus","ABIERTA").list();		
 		for(RequisicionEntity r : reqs) {
             suma= suma+r.getNumero_piezas();
         }
