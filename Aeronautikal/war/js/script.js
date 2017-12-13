@@ -1,9 +1,9 @@
 var app = angular.module('app', ['ngRoute']);
 //servicio alta requisicion
 app.service('altaRequiServicio', [ '$http', '$q', function($http, $q) {
-  this.alta_requisicion = function(rd) {
+  this.alta_requisicion = function(altarequisicion) {
     var d = $q.defer();
-    $http.post("/requisicion/add/",rd).then(function(response) {
+    $http.post("/requisicion/add",altarequisicion).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -380,13 +380,13 @@ app.controller("Requisiciones_altaController", ['$scope','inv_consultas','foliar
   }
 console.log($scope.altarequisicion);
 
-   $scope.alta_requisicion=function(altarequisicion) {
-    console.log(altarequisicion);
-      alert("variable comprobada: "+altarequisicion);
-      altaRequiServicio.alta_requisicion(altarequisicion).then(
+   $scope.alta_requisicion=function() {
+    //console.log(altarequisicion);
+      alert("variable comprobada: "+$scope.altarequisicion.folio_discrepancia+$scope.altarequisicion.folio_componente);
+      altaRequiServicio.alta_requisicion($scope.altarequisicion).then(
         function(data) {
           console.log(data);
-          location.href="#/Orden/discrepancia/"+altarequisicion.folio_discrepancia;
+          location.href="#/Orden/discrepancia/"+$scope.altarequisicion.folio_discrepancia;
         })         
   }
 }]);

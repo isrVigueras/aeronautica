@@ -164,8 +164,6 @@
             </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success">
-          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>Personal</button>
           <a ng-href="#/Discrepancias/requisicion/{{foliarrastrado}}">
            <button type="button" class="btn btn-primary" aria-label="Left Align">
   <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>Has una requisicion
@@ -176,61 +174,7 @@
     </div>
   </div>
 </div>
-<!--************************ Modalcomponente********************************* -->
-<div class="modal fade" id="mycompo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">Componente</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      </div>
-      <div class="modal-body">
-                 <form>
-        <label for="d_componente">Seleciona componenete de almacen:</label>
-        <br>
-        <select multiple class="form-control" ng-model="miProvinciaSeleccionada" >
-  <option value="" ng-repeat="p in provincias">{{p.d_componente}} Cantidad:{{p.d_cantidad}}</option>
-</select>
-        <br><br>
-        <label for="d_componente">Numero de piezas requeridas:</label><input class="form-control" placeholder="Escriba el No. piezas que se requieren" id="d_componente" name="d_componente" type="number"/>
-        <!-- <label for="d_componente">Quien las requiere:</label><input class="form-control" placeholder="Niombre de la persona responsable" id="d_componente" name="d_componente" type="number"/>
-          <label for="d_componente">Folio de la O/T:</label><input class="form-control" placeholder="Escriba el folio de la orden de trabajo" id="d_componente" name="d_componente" type="text"/>-->
-          </form>
-      </div>
-      <div class="modal-footer">
-         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myrequis">
-          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>Has una requisicion</button>
-        <button type="button" class="btn btn-primary">Agregar componete</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!--*************************Modalrequisisiones*********************************-->
-<div class="modal fade" id="myrequis" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">Complete los campos de la requisicion</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      </div>
-      <div class="modal-body">
-                 <form>
-        <!--<br>
-        <label for="d_componente">Nombre de la pieza que se requiere:</label><input class="form-control" placeholder="Escriba el nombre completo de la pieza" id="r_nombre" name="r_nombre" type="text" ng-model="req.r_nombre"/>-->
-        <br>
-        <label for="d_componente">Numero de piezas requeridas:</label><input class="form-control" placeholder="Escriba el No. piezas que se requieren" id="r_cantidad" name="r_cantidad" type="number" ng-model="req.r_cantidad"/>
-        <!-- <label for="d_componente">Quien las requiere:</label><input class="form-control" placeholder="Niombre de la persona responsable" id="d_componente" name="d_componente" type="number"/>
-          <label for="d_componente">Folio de la O/T:</label><input class="form-control" placeholder="Escriba el folio de la orden de trabajo" id="d_componente" name="d_componente" type="text"/>-->
-          </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" ng-click="alta_requisicion()">Generar</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 <!--************************ Modalseundavista********************************* -->
 <div class="modal fade" id="segundav" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document" id="mdialTamanio">
