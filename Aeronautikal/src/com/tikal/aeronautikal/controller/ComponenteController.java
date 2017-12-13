@@ -187,7 +187,7 @@ public class ComponenteController {
 		   
 		   ComponenteEntity old = componenteDao.consult(req.getFolio_componente());
 		
-		   Integer existencias = (old.getD_cantidad()==0)? old.getD_cantidad():old.getD_cantidad()-req.getNumero_piezas();
+		   Integer existencias = (old.getD_cantidad()==0)? old.getD_cantidad():old.getD_cantidad()+req.getNumero_piezas();
 		   Integer pendientes = (old.getD_pendientes()==0)? old.getD_pendientes():old.getD_pendientes()-req.getNumero_piezas();
 		   System.out.println("EXISTENCIAS:"+existencias);
 		   System.out.println("PENDIENTES:"+pendientes);
