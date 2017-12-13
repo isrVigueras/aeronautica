@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
+import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.DiscrepanciaDao;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
+import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.service.DiscrepanciaService;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
@@ -34,7 +35,9 @@ public class DiscrepanciaController {
 		 @Qualifier("discrepanciaDao")
 		 DiscrepanciaDao discrepanciaDao;
 		 
-		 
+		 @Autowired
+		 @Qualifier("componenteDao")
+		 ComponenteDao componenteDao;
 		 
 		 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 		   
@@ -87,6 +90,12 @@ public class DiscrepanciaController {
 		        	d.setFolioOrden(folio);
 		        	d.setFolio(Long.valueOf((d.getTaller()+d.getSeccion()+Long.toString(folio))).longValue());
 		        	 System.out.println("el nuevo folio de discrepancia: "+ Long.valueOf((Long.toString(folio)+d.getTaller()+d.getSeccion())).longValue());
+		        	 ComponenteEntity c = new ComponenteEntity();
+		        	 
+		        	 c= componenteDao.consult(d.getFolio_componente());
+		        	 Integer ex= c.getD_cantidad()-d.getNumero_piezas();
+		        	 c.setD_cantidad(ex);
+		        	 componenteDao.save(c);
 		        	discrepanciaDao.save(d);
 		        	 response.getWriter().println(JsonConvertidor.toJson(d));
 		        } catch (RuntimeException ignored) {

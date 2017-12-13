@@ -25,7 +25,7 @@ public class DiscrepanciaEntity implements BaseEntity{
 	@Index private String accion;	
 	private String fechaApertura;
 	private Long folio_componente;
-	private String numero_piezas;
+	private Integer numero_piezas;
 	//private List<Componente> losComponentes;
 	private Empleado removidoPor;
 	private Empleado instaladoPor;
@@ -94,10 +94,10 @@ public class DiscrepanciaEntity implements BaseEntity{
 	public void setFolio_componente(Long folio_componente) {
 		this.folio_componente = folio_componente;
 	}
-	public String getNumero_piezas() {
+	public Integer getNumero_piezas() {
 		return numero_piezas;
 	}
-	public void setNumero_piezas(String numero_piezas) {
+	public void setNumero_piezas(Integer numero_piezas) {
 		this.numero_piezas = numero_piezas;
 	}
 	public void setRemovidoPor(Empleado removidoPor) {
