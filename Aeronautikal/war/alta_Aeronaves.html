@@ -1,0 +1,30 @@
+<div class="contenedor" style="color:#EEE6E6">
+ <center><h1>Registro de Aeronaves</h1></center>
+<form name="form" novalidate>
+  <div class="row" style="margin: 1% 13%;">
+  
+  <h3>Aeronave</h3>
+  <label for="matricula">Matricula:</label><input class="form-control" placeholder="Escriba la Matricula" id="matricula" name="matricula" type="text" ng-model="aeronaveform.matricula" required/>
+  <label for="modelo">Modelo:</label><input class="form-control" placeholder="Escriba el Modelo" id="modelo" name="modelo" type="text" ng-model="aeronaveform.modelo" required/>
+  <label for="numeroSerie">Numero de serie:</label><input class="form-control" placeholder="Escriba el Numero de serie" id="numeroSerie" name="numeroSerie" type="text" ng-model="aeronaveform.numeroSerie" required/>
+  <div class="radio">
+  <label>
+    <input ng-model="aeronaveform.nacionalidad" type="radio" name="nacionalidad" id="nacionalidad" value="Nacional">
+    Nacional
+    <br>
+    <input ng-model="aeronaveform.nacionalidad"  type="radio" name="nacionalidad" id="nacionalidad" value="Norteamericana">
+    Norteamericana
+  </label>
+</div>
+  <label for="tiempovuelo">Tiempo de Vuelo:</label><input class="form-control" placeholder="Escriba el Tiempo de Vuelo" id="tiempovuelo" name="tiempovuelo" type="number" ng-model="aeronaveform.tiempovuelo" required/>
+  <label for="aterrizaje">Aterrizaje:</label><input class="form-control" placeholder="Escriba el Aterrizaje" id="aterrizaje" name="aterrizaje" type="text" ng-model="aeronaveform.aterrizaje" required/>
+  
+  </div>
+   <br>
+  <center><button type="button" class="btn btn-primary" ng-click="guarda_aero()" ng-disabled="form.$invalid">
+  <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>Guardar
+  </button></center>
+</form>
+</div>
+
+<br><br><br><br><br><br><br><br><br><br> 

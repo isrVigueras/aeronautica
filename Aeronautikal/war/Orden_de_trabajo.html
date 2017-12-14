@@ -14,18 +14,6 @@
   <div class="row" style="margin: 1% 1%;">
   <div class="col-xs-4">
   <h3>Contacto</h3>
-	<label for="con_nombre">Contacto:</label><input class="form-control" placeholder="Escriba nombre" id="con_nombre" name="con_nombre" type="text" ng-model="fo.con_nombre" required/>
-  <div class="alert alert-danger" ng-show="form.con_nombre.$error.required && form.con_nombre.$dirty">
-          <span>El nombre del Contacto es requerido</span>
-          </div>
-  <label for="con_telefono">Telefono:</label><input class="form-control" placeholder="Escriba Telefono" id="con_telefono" name="con_telefono" type="number" ng-model="fo.con_telefono" required/>
-   <div class="alert alert-danger" ng-show="form.con_telefono.$error.required && form.con_telefono.$dirty">
-    <span>El numero telefonico es requerido</span>
-          </div>
-  <label for="con_correo">Correo:</label><input class="form-control" placeholder="Escriba un Correo" id="con_correo" name="con_correo" type="email" ng-model="fo.con_correo" required/>
-  <div class="alert alert-danger" ng-show="form.con_correo.$error.required && form.con_correo.$dirty">
-    <span>El correo es requerido</span>
-          </div>
   <label for="empresa">Empresa:</label><select class="form-control" ng-model="fo.empresa" id="empresa" name="empresa" type="checkbox">
   <option value="0">Elige un empresa</option>
   <option value="SACSA">SACSA</option>
@@ -35,15 +23,14 @@
   </div>
   <div class="col-xs-4">
   <h3>Aeronave</h3>
-  <label for="a_matricula">Matricula:</label><input class="form-control" placeholder="Escriba la Matricula" id="a_matricula" name="a_matricula" type="text" ng-model="fo.a_matricula" required/>
-  <label for="a_modelo">Modelo:</label><input class="form-control" placeholder="Escriba el Modelo" id="a_modelo" name="a_modelo" type="text" ng-model="fo.a_modelo" required/>
-  <label for="n_serie">Numero de serie:</label><input class="form-control" placeholder="Escriba el Numero de serie" id="n_serie" name="n_serie" type="text" ng-model="fo.n_serie" required/>
-  <label for="a_t_vuelo">Tiempo de Vuelo:</label><input class="form-control" placeholder="Escriba el Tiempo de Vuelo" id="a_t_vuelo" name="a_t_vuelo" type="number" ng-model="fo.a_t_vuelo" required/>
+  <label for="empresa">Empresa:</label><select class="form-control" ng-model="fo.empresa" id="empresa" name="empresa" type="checkbox">
+  <option value="0">Elige un empresa</option>
+  <option value="SACSA">SACSA</option>
+  <option value="IroBus">IroBus</option>
+  <option value="Volaris">Volaris</option>
+  </select>
   </div>
-  <div class="col-xs-4">
-    <br><br><br>
-    <label for="a_t_aterrizaje">Aterrizaje:</label><input class="form-control" placeholder="Escriba el Aterrizaje" id="a_t_aterrizaje" name="a_t_aterrizaje" type="text" ng-model="fo.a_t_aterrizaje" required/>
-  </div>
+  
   </div>
    <br>
   <center><button type="button" class="btn btn-primary" ng-click="guardar()" ng-disabled="form.$invalid">
