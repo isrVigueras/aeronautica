@@ -45,14 +45,7 @@ package com.tikal.aeronautikal.dao.impl;
 		@Override
 		public void update(EmpresaEntity e) {
 			// TODO Auto-generated method stub
-			EmpresaEntity old = this.consult(e.getId());
-			if (old != null) {
-//				//old.setDireccion(e.getDireccion());
-				old.setNickName(e.getNickName());				
-				ofy().save().entity(old);
-			
-			}
-
+				ofy().save().entity(e).now();
 			
 		}
 

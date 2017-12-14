@@ -16,9 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.dao.AeronaveDao;
 //import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
+import com.tikal.aeronautikal.entity.Contador;
 //import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.exception.ObjectNotFoundException;
 import com.tikal.aeronautikal.model.Aeronave;
@@ -50,27 +52,7 @@ public class AeronaveController  {
     AeronaveDao aeronaveDao;
 
  
-//    @RequestMapping(value = "/add", method = RequestMethod.GET)
-//    public String addAeronaveGet(@ModelAttribute("entry") AeronaveEntity entry) {
-//	   System.out.println("si entra aqui 1");
-//	   try {
-//        
-//            entry.setMatricula("MAT-44477");
-//            entry.setModelo("Super");
-//            entry.setNumeroSerie("22221");
-//            entry.setTiempovuelo(1620);
-//            System.out.println("si asigna valores de aeronave : "+entry);
-//          
-//        } catch (RuntimeException ignored) {
-//            // getUniqueEntity should throw exception
-//        }
-//	   System.out.println("yaaaaa estoy en add con get");	    
-//	   aeronaveService.save(entry);   //implementa el dao
-//        return "addAeronave";
-//	   
-//    }
-//    //// EJEMPLO DE FUNCION CONSUMIENDO EL WEB SERVICE
- 
+
    
    @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
    
@@ -79,19 +61,52 @@ public class AeronaveController  {
 
     }
     
-    @RequestMapping(value="/add_", method = RequestMethod.POST)
-	public ModelAndView add(HttpServletRequest request, ModelMap model) {
-
-	      
-                Entity nave = new Entity("Aeronave", "123");     
-
-                DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-                datastore.put(nave);
-
-                return new ModelAndView("redirect:list");
-
-	}
-    
+    @RequestMapping(value="/add_", method = RequestMethod.GET)
+    public String addAeroGet(@ModelAttribute("entry") AeronaveEntity entry) {
+		   System.out.println("si entra a Aeronave controller");   
+		   	try {
+		   		entry.setNumeroAeronave("1");
+		   		entry.setMatricula("AAW-21-37");
+		   		entry.setNumeroSerie("23432587Z");
+				entry.setModelo("A-4000");
+				entry.setTiempovuelo(4590);
+				entry.setAterrizaje("23 en toluca ...");
+				entry.setNacionalidad("MEXICANA");
+				//Contador.reinicia();
+				
+	            System.out.println("si asign/ valor"+entry);
+	        } catch (RuntimeException ignored) {
+	            // getUniqueEntity should throw exception
+	        }
+		   System.out.println("ya");	    
+	        aeronaveService.save(entry);   //implementa el dao 
+	        System.out.println("ya guardo la entity de aeronave");
+	    	Contador.incremeta();
+	        return "Orden_de_trabajo"; ///poner el html de aeronave alta
+		}
+    @RequestMapping(value="/add__", method = RequestMethod.GET)
+    public String addAeroGet_(@ModelAttribute("entry") AeronaveEntity entry) {
+		   System.out.println("si entra a Aeronave controller");   
+		   	try {
+		   		entry.setNumeroAeronave("2");
+		   		entry.setMatricula("XSX-98-789");
+		   		entry.setNumeroSerie("C-2389AX");
+				entry.setModelo("F-2550");
+				entry.setTiempovuelo(1200);
+				entry.setAterrizaje("CIUDAD DE MEXICO ...");
+				entry.setNacionalidad("NORTEAMERICANA");
+				//Contador.reinicia();
+				
+	            System.out.println("si asign/ valor"+entry);
+	        } catch (RuntimeException ignored) {
+	            // getUniqueEntity should throw exception
+	        }
+		   System.out.println("ya");	    
+	        aeronaveService.save(entry);   //implementa el dao 
+	        System.out.println("ya guardo la entity de aeronave");
+	    	Contador.incremeta();
+	        return "Orden_de_trabajo"; ///poner el html de aeronave alta
+		}
     
     @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
 	   public void addComponente(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
@@ -99,6 +114,11 @@ public class AeronaveController  {
 	        try {
 	        	AsignadorDeCharset.asignar(request, response);
 	        	AeronaveEntity a =(AeronaveEntity) JsonConvertidor.fromJson(json, AeronaveEntity.class);
+	        	if (a.getNacionalidad()=="NORTEAMERICANO"){
+					a.setNumeroAeronave(String.valueOf(Contador.getFolio())+"N");
+				}else{
+					a.setNumeroAeronave(String.valueOf(Contador.getFolio()));
+				}
 	        	aeronaveDao.save(a);	            
 	        } catch (RuntimeException ignored) {
 	        	ignored.printStackTrace();

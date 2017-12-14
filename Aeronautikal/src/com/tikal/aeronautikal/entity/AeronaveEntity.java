@@ -9,17 +9,27 @@ import  com.googlecode.objectify.annotation.Index ;
 
 @Entity 
 public  class  AeronaveEntity {
-    @Index  private String matricula;
-    @Index private String modelo;
-    @Id private String numeroSerie;
-    private int aterrizaje;
+    @Id String numeroAeronave;
+	private String matricula;
+    private String modelo;
+    private String numeroSerie;
+    private String aterrizaje;
     private int tiempovuelo;
+    private String nacionalidad;
     
-	@Container OrdenEntity orden;
+	//@Container OrdenEntity orden;
     
     
+	
+	
 	public String getMatricula() {
 		return matricula;
+	}
+	public String getNumeroAeronave() {
+		return numeroAeronave;
+	}
+	public void setNumeroAeronave(String numeroAeronave) {
+		this.numeroAeronave = numeroAeronave;
 	}
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
@@ -37,10 +47,10 @@ public  class  AeronaveEntity {
 		this.modelo = modelo;
 	}
 	
-	public int getAterrizaje() {
+	public String getAterrizaje() {
 		return aterrizaje;
 	}
-	public void setAterrizaje(int aterrizaje) {
+	public void setAterrizaje(String aterrizaje) {
 		this.aterrizaje = aterrizaje;
 	}
 	public int getTiempovuelo() {
@@ -49,6 +59,14 @@ public  class  AeronaveEntity {
 	public void setTiempovuelo(int tiempovuelo) {
 		this.tiempovuelo = tiempovuelo;
 	}
+	public String getNacionalidad() {
+		return nacionalidad;
+	}
+	public void setNacionalidad(String nacionalidad) {
+		this.nacionalidad = nacionalidad;
+	}
+	
+	
 }
 
 

@@ -17,7 +17,7 @@ public class Contador {
 		this.id = id;
 	}
 	public static Long getFolio() {
-		if (folio == null)
+		if (folio == null || folio==0)
 			folio=Long.parseLong("1");
 		return folio;
 	}
@@ -37,5 +37,7 @@ public class Contador {
 		return folio;
 	}
 	
-	
+	public static void  reinicia(){
+		Contador.setFolio(Long.parseLong("0"));
+	}
 }

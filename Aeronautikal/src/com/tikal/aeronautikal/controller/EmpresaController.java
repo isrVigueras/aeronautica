@@ -37,17 +37,23 @@ package com.tikal.aeronautikal.controller;
 		    public String addEmpresaGet(@ModelAttribute("entry") EmpresaEntity entry) {
 			   System.out.println("si entra aqui 1");
 			   try {
-				   	entry.setId(1);
-		            entry.setNickName("SACSA"); 
-		      
-		            System.out.println("si asigna valor a contactos : "+entry);
+				   	entry.setIdEmpresa(Long.parseLong("1"));
+		            entry.setNombreEmpresa("SACSA"); 
+		            entry.setRazonSocial("SACSA S.A DE C.V.");
+		            entry.setRfc("PAPD770309LV3");
+		            entry.setPais("MEXICO");
+		            entry.setNombreContacto("Juan Perez");
+		            entry.setTelefono(Long.parseLong("7223232323"));
+		            entry.setEmail("sacsa@sacsa");
+		            System.out.println("si asigna valor a empresa : "+entry);
 		          
 		        } catch (RuntimeException ignored) {
 		            // getUniqueEntity should throw exception
 		        }
-			   System.out.println("yaaaaa");	    
+			  	    
 		        empresaService.save(entry);   //implementa el dao
-		        return "addEmpresa";
+		        System.out.println("ya guardo entidad de emresa");	
+		        return "addEmpresa";  
 			   
 		    }
 		   

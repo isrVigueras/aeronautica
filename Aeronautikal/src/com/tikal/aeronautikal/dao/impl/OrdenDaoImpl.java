@@ -55,25 +55,10 @@ public class OrdenDaoImpl implements OrdenDao{
 	@Override
 	public void update(OrdenVo o) {
 		// TODO Auto-generated method stub
-		OrdenVo old = this.consult(o.getFolio());
-		if (old != null) {
-//			//old.setDireccion(e.getDireccion());
-			old.setA_matricula(o.getA_matricula());
-			old.setA_t_aterrizaje(o.getA_t_aterrizaje());
-			old.setA_t_vuelo(o.getA_t_vuelo());
-			old.setCon_correo(o.getCon_correo());
-			old.setCon_nombre(o.getCon_correo());
-			old.setCon_telefono(o.getCon_telefono());
-			old.setEmpresa(o.getEmpresa());
-			old.setFechaApertura(o.getFechaApertura());
-			old.setModelo(o.getModelo());
-			old.setN_serie(o.getN_serie());
-			ofy().save().entity(old);
+	
+			ofy().save().entity(o).now();
 		
 		}
-
-		
-	}
 
 
 	@Override
