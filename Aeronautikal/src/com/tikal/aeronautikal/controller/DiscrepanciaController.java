@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.DiscrepanciaDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
@@ -73,7 +74,7 @@ public class DiscrepanciaController {
 		        } catch (RuntimeException ignored) {
 		            // getUniqueEntity should throw exception 
 		        }
-			   System.out.println("yaaaaa");	    
+			   System.out.println("yaaaaa");	     
 		         discrepanciaService.save(entry);   //implementa el dao  
 		        return "Orden_de_trabajo";
 			}
@@ -155,6 +156,15 @@ public class DiscrepanciaController {
 			   
 			   response.getWriter().println(JsonConvertidor.toJson(discrepanciaDao.consult(d.getId())));
 		   }
+		   
+		   @RequestMapping(value = { "/find/{id}" }, method = RequestMethod.GET, produces = "application/json")
+			public void findFolio(HttpServletResponse response, HttpServletRequest request,
+					@PathVariable Long id) throws IOException {
+				AsignadorDeCharset.asignar(request, response);
+				DiscrepanciaEntity d=discrepanciaDao.consult(id);
+				response.getWriter().println(JsonConvertidor.toJson(d));
+			
+			}
 		   
 		   
 }
