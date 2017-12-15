@@ -12,7 +12,7 @@ public interface OrdenService {
 	 	
 	  public void save(OrdenVo o);
 	  
-	  public OrdenVo consult(String folio);
+	  public OrdenVo consult(Long id);
 	  
 	  public List<OrdenVo> getAll();
 	  

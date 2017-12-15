@@ -137,11 +137,11 @@ public class OrdenController {
 
 		}
 	   
-	   @RequestMapping(value = {"/delete/{folio}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+	   @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
 	   public void deleteOrden(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
-		@PathVariable String folio) throws IOException {
+		@PathVariable Long id) throws IOException {
 		   System.out.println("ya entro a delete");
-		   ordenDao.delete(ordenDao.consult(folio));
+		   ordenDao.delete(ordenDao.consult(id));
 	   }
 	   
 	   @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
@@ -151,11 +151,11 @@ public class OrdenController {
 	    }
 	   
 	 
-	   @RequestMapping(value = { "/find/{folio}" }, method = RequestMethod.GET, produces = "application/json")
+	   @RequestMapping(value = { "/find/{id}" }, method = RequestMethod.GET, produces = "application/json")
 		public void findFolio(HttpServletResponse response, HttpServletRequest request,
-				@PathVariable String folio) throws IOException {
+				@PathVariable Long id) throws IOException {
 			AsignadorDeCharset.asignar(request, response);
-			OrdenVo o=ordenDao.consult(folio);
+			OrdenVo o=ordenDao.consult(id);
 			response.getWriter().println(JsonConvertidor.toJson(o));
 		
 		}
@@ -168,8 +168,9 @@ public class OrdenController {
 				lista = new ArrayList<OrdenVo>();
 			}
 			response.getWriter().println(JsonConvertidor.toJson(lista));
-
 		}
+	   
+	   
 	   
 	  public String getFolio(String aeronave){		  
 		  Calendar c = Calendar.getInstance();		  

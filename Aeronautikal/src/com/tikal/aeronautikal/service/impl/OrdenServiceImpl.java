@@ -36,8 +36,8 @@ public class OrdenServiceImpl implements OrdenService {
 	    }
 
 		
-		public  OrdenVo consult(String folio) {
-			return ordenDao.consult(folio);
+		public  OrdenVo consult(Long id) {
+			return ordenDao.consult(id);
 					
 			// TODO Auto-generated method stub
 			// ofy().load().type(OrdenVo.class).id(numeroSerie).now();

@@ -84,9 +84,9 @@ public class OrdenDaoImpl implements OrdenDao{
 
 
 	@Override
-	public OrdenVo consult(String folio) {
+	public OrdenVo consult(Long id) {
 		
-       return ofy().load().type(OrdenVo.class).id(folio).now();
+       return ofy().load().type(OrdenVo.class).id(id).now();
 		
 	}
 

@@ -14,7 +14,7 @@ public interface OrdenDao {
 	
 	public void update(OrdenVo o);
 	
-	public OrdenVo consult(String folio);
+	public OrdenVo consult(Long id);
 	
 	public List<OrdenVo> getAll();
 	
