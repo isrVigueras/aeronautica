@@ -28,11 +28,12 @@ app.controller('ordenController', ['$scope','OrdenesService','new_folio','empres
  //$scope.fo = {}; alamcenar los datos en mi objeto para vidarlos
  $scope.empresas = empresas;
  $scope.aeronaves=aeronaves;
+ $scope.new_folio = new_folio;
   console.log($scope.empresas);
     console.log($scope.aeronaves);
  $scope.fo = {
 
-    folio:"",
+    folio: $scope.new_folio,
     fechaApertura:new Date(),
     empresa:"",
     aeronave:""
