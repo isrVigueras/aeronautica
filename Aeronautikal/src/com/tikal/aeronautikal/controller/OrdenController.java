@@ -63,7 +63,7 @@ public class OrdenController {
 		   		entry.setEmpresa(Long.parseLong("1"));
 				entry.setFechaApertura("01-12-2017");
 				entry.setEmpresa(Long.parseLong("1"));
-				entry.setAveronave(Long.parseLong("1"));
+				entry.setAeronave("1");
 				//entry.setDate(Calendar.getInstance().getTime());
 	            System.out.println("si asign/ valor"+entry);
 	        } catch (RuntimeException ignored) {
@@ -87,8 +87,9 @@ public class OrdenController {
 	        	//pegar el valor de empresa, aeronave y contacato
 	        	//orden.setFolio(Long.parseLong("1111"));
 	        	//crearListaIdsOT();
-	        	
-	        	orden.setFolio(orden.getFolio()+orden.getAveronave());
+	        	 System.out.println("folio orden:"+orden.getFolio());
+	        	 System.out.println("folio aeronave:"+orden.getAeronave());
+	        	orden.setFolio(orden.getFolio()+orden.getAeronave());
 	        	ordenDao.save(orden);	 
 	        	Contador.incremeta();
 	        } catch (RuntimeException ignored) {
@@ -105,8 +106,9 @@ public class OrdenController {
 		  // response.getWriter().println("Prueba del mètodo PROBAR en Orden de trabajo");
 		   Calendar c = Calendar.getInstance();		  
 		   String folio =  Integer.toString(c.get(Calendar.YEAR))+"-"+Integer.toString(c.get(Calendar.MONTH))+"-";
-		   //return folio;
-		   response.getWriter().println(JsonConvertidor.toJson(folio));
+		   System.out.println("folio :"+folio);
+		  // return folio;
+		  response.getWriter().println((folio));
 
 	    }
 	   
@@ -137,7 +139,7 @@ public class OrdenController {
 	   
 	   @RequestMapping(value = {"/delete/{folio}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
 	   public void deleteOrden(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
-		@PathVariable Long folio) throws IOException {
+		@PathVariable String folio) throws IOException {
 		   System.out.println("ya entro a delete");
 		   ordenDao.delete(ordenDao.consult(folio));
 	   }
@@ -151,11 +153,22 @@ public class OrdenController {
 	 
 	   @RequestMapping(value = { "/find/{folio}" }, method = RequestMethod.GET, produces = "application/json")
 		public void findFolio(HttpServletResponse response, HttpServletRequest request,
-				@PathVariable Long folio) throws IOException {
+				@PathVariable String folio) throws IOException {
 			AsignadorDeCharset.asignar(request, response);
 			OrdenVo o=ordenDao.consult(folio);
 			response.getWriter().println(JsonConvertidor.toJson(o));
 		
+		}
+	   
+	   @RequestMapping(value = { "/findAllN" }, method = RequestMethod.GET, produces = "application/json")
+		public void findAllOrdenesN(HttpServletResponse response, HttpServletRequest request) throws IOException {
+			AsignadorDeCharset.asignar(request, response);
+			List<OrdenVo> lista = ordenDao.getAllN();
+			if (lista == null) {
+				lista = new ArrayList<OrdenVo>();
+			}
+			response.getWriter().println(JsonConvertidor.toJson(lista));
+
 		}
 	   
 	  public String getFolio(String aeronave){		  
@@ -165,6 +178,8 @@ public class OrdenController {
 		  
 	  }
 	   
+	  
+	  
 }
 
 	    

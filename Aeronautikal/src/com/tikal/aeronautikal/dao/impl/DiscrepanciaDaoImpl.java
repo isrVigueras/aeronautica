@@ -43,21 +43,18 @@ public class DiscrepanciaDaoImpl implements DiscrepanciaDao {
 	@Override
 	public void update(DiscrepanciaEntity d) {
 		// TODO Auto-generated method stub
-		DiscrepanciaEntity old = this.consult(d.getFolio());
-		if (old != null) {
-//			//old.setDireccion(e.getDireccion());
-		    old.setAccion(d.getAccion());
-		    old.setDescripcion(d.getDescripcion());
-			old.setFechaApertura(d.getFechaApertura());
-			old.setInstaladoPor(d.getInstaladoPor());
-			old.setOriginadoPor(d.getOriginadoPor());
-			old.setRemovidoPor(d.getRemovidoPor());
-			old.setSeccion(d.getSeccion());
-			old.setTaller(d.getTaller());			
-			ofy().save().entity(old);
-		
-		}
-
+		//DiscrepanciaEntity old = this.consult(d.getFolio());
+//		if (old != null) {
+////			//old.setDireccion(e.getDireccion());
+//		    old.setAccion(d.getAccion());
+//		    old.setDescripcion(d.getDescripcion());
+//			old.setFechaApertura(d.getFechaApertura());
+//			old.setInstaladoPor(d.getInstaladoPor());
+//			old.setOriginadoPor(d.getOriginadoPor());
+//			old.setRemovidoPor(d.getRemovidoPor());
+//			old.setSeccion(d.getSeccion());
+//			old.setTaller(d.getTaller());			
+			ofy().save().entity(d).now();
 		 
 	}
 

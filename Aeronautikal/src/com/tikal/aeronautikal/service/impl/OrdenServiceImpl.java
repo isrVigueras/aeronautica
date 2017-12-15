@@ -36,7 +36,7 @@ public class OrdenServiceImpl implements OrdenService {
 	    }
 
 		
-		public  OrdenVo consult(Long folio) {
+		public  OrdenVo consult(String folio) {
 			return ordenDao.consult(folio);
 					
 			// TODO Auto-generated method stub
@@ -52,6 +52,12 @@ public class OrdenServiceImpl implements OrdenService {
 	    		
 	    	
 		}
+
+		@Override
+		public List<OrdenVo> getAllN(){
+			return ordenDao.getAllN();
+		}
+
 		
 		
 }

@@ -12,9 +12,11 @@ public interface OrdenService {
 	 	
 	  public void save(OrdenVo o);
 	  
-	  public OrdenVo consult(Long folio);
+	  public OrdenVo consult(String folio);
 	  
 	  public List<OrdenVo> getAll();
+	  
+	  public List<OrdenVo> getAllN();
 	  
 	  public void delete(OrdenVo o);
 	  

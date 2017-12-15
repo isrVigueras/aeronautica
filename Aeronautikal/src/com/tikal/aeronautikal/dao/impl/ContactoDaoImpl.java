@@ -48,18 +48,18 @@ public class ContactoDaoImpl implements ContactoDao {
 	public void update(ContactoEntity c) {
 		// TODO Auto-generated method stub
 		ContactoEntity old = this.consult(c.getId());
-		if (old != null) {
-//			//old.setDireccion(e.getDireccion());
-			old.setNombre(c.getNombre());
-			old.setTelefono(c.getTelefono());
-			old.setCorreoElectronico(c.getCorreoElectronico());
+//		if (old != null) {
+////			//old.setDireccion(e.getDireccion());
+//			old.setNombre(c.getNombre());
+//			old.setTelefono(c.getTelefono());
+//			old.setCorreoElectronico(c.getCorreoElectronico());
 			
-			ofy().save().entity(old);
-		
-		}
-
+			ofy().save().entity(c);
 		
 	}
+
+		
+	
 
 
 	@Override

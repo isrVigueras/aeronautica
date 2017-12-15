@@ -60,6 +60,7 @@ public class DiscrepanciaController {
 			   		entry.setFechaApertura("12/12/2017");
 			   		entry.setSeccion("03");
 			   		entry.setTaller("03");
+			   		//entry.setEventos
 			   		////entry.setInstaladoPor();
 			   		//entry.setOriginadoPor();
 			   		//entry.setFechaApertura("01/12/2017");
@@ -96,7 +97,7 @@ public class DiscrepanciaController {
 		        	 Integer ex= c.getD_cantidad()-d.getNumero_piezas();
 		        	 c.setD_cantidad(ex);
 		        	 componenteDao.save(c);
-		        	discrepanciaDao.save(d);
+		        	 discrepanciaDao.save(d);
 		        	 response.getWriter().println(JsonConvertidor.toJson(d));
 		        } catch (RuntimeException ignored) {
 		        	ignored.printStackTrace();

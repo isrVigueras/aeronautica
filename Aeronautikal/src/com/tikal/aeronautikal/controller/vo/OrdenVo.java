@@ -13,18 +13,26 @@ import com.tikal.aeronautikal.model.Empresa;
 
 @Entity
 public class OrdenVo {
-	
-	@Id String folio;
+	@Id Long id;
+    String folio;
 	String fechaApertura;	
 	Long empresa;          
-	Long averonave;
+	String aeronave;
 	
 	//@Ignore private Empresa laEmpresa;
 	
 	//@Index @Load Ref<Empresa> refEmpresa;
 	
+	
+	
 	public String getFolio() {
 		return folio;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public void setFolio(String folio) {
 		this.folio = folio;
@@ -41,12 +49,13 @@ public class OrdenVo {
 	public void setEmpresa(Long empresa) {
 		this.empresa = empresa;
 	}
-	public Long getAveronave() {
-		return averonave;
+	public String getAeronave() {
+		return aeronave;
 	}
-	public void setAveronave(Long averonave) {
-		this.averonave = averonave;
-	}		
+	public void setAeronave(String aeronave) {
+		this.aeronave = aeronave;
+	}
+		
 	
 	
 	

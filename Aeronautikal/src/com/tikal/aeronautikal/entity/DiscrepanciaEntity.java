@@ -1,16 +1,20 @@
 package com.tikal.aeronautikal.entity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Container;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Load;
 import com.tikal.aeronautikal.model.Empleado;
 import com.tikal.aeronautikal.model.otBody.Componente;
 import com.tikal.aeronautikal.model.otBody.Seccion;
 import com.tikal.aeronautikal.model.otBody.Taller;
+
  
 @Entity
 
@@ -30,7 +34,16 @@ public class DiscrepanciaEntity implements BaseEntity{
 	private Empleado removidoPor;
 	private Empleado instaladoPor;
 	private Empleado originadoPor;
+	
+	@Load
+	private List<Ref<EventoEntity>> eventos;
+	
 //	@Container OrdenEntity orden;
+	
+	
+	public DiscrepanciaEntity() {
+		this.eventos = new ArrayList<Ref<EventoEntity>>();
+	}
 	
 	public Long getFolio() {
 		return folio;
@@ -115,6 +128,15 @@ public class DiscrepanciaEntity implements BaseEntity{
 	public void setOriginadoPor(Empleado originadoPor) {
 		this.originadoPor = originadoPor;
 	}
+
+	public List<Ref<EventoEntity>> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(List<Ref<EventoEntity>> eventos) {
+		this.eventos = eventos;
+	}
+	
     
 	
     
