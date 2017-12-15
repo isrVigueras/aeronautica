@@ -3,7 +3,7 @@
  <center><h1>Orden de Trabajo</h1></center>
 <form name="form" novalidate>
   <div class="row" style="margin: 1% 1%;">
-  <div class="col-xs-1">
+  <div class="col-xs-3">
 	<label for="folio" >Folio:</label>
   <p><span id ="folio">{{new_folio}}</span></p>
   </div>
@@ -14,21 +14,17 @@
   <div class="row" style="margin: 1% 1%;">
   <div class="col-xs-4">
   <h3>Contacto</h3>
-  <label for="empresa">Empresa:</label><select class="form-control" ng-model="fo.empresa" id="empresa" name="empresa" type="checkbox">
-  <option value="0">Elige un empresa</option>
-  <option value="SACSA">SACSA</option>
-  <option value="IroBus">IroBus</option>
-  <option value="Volaris">Volaris</option>
-  </select>
+  <label for="empresa">Seleccione Empresa:</label> <select class="form-control" ng-model="fo.empresa" >
+    <option value="">--Elige empresa--</option>
+          <option value="{{empresa.idEmpresa}}" ng-repeat="empresa in empresas"  >{{empresa.nombreEmpresa}}</option>
+        </select>
   </div>
   <div class="col-xs-4">
   <h3>Aeronave</h3>
-  <label for="empresa">Empresa:</label><select class="form-control" ng-model="fo.empresa" id="empresa" name="empresa" type="checkbox">
-  <option value="0">Elige un empresa</option>
-  <option value="SACSA">SACSA</option>
-  <option value="IroBus">IroBus</option>
-  <option value="Volaris">Volaris</option>
-  </select>
+  <label for="aeronave">Seleccione Aeronave:</label><select class="form-control" ng-model="fo.aeronave" >
+    <option value="">--Elige aeronave--</option>
+          <option value="{{aeronave.numeroAeronave}}" ng-repeat="aeronave in aeronaves"  >{{aeronave.matricula}}</option>
+        </select>
   </div>
   
   </div>

@@ -24,25 +24,23 @@ app.service('OrdenesService', [ '$http', '$q', function($http, $q) {
   }
 } ]);
 //Controlador de orden
-app.controller('ordenController', ['$scope','OrdenesService','new_folio',function($scope,OrdenesService,new_folio) {
+app.controller('ordenController', ['$scope','OrdenesService','new_folio','empresas','aeronaves',function($scope,OrdenesService,new_folio,empresas,aeronaves) {
  //$scope.fo = {}; alamcenar los datos en mi objeto para vidarlos
+ $scope.empresas = empresas;
+ $scope.aeronaves=aeronaves;
+  console.log($scope.empresas);
+    console.log($scope.aeronaves);
  $scope.fo = {
 
-    folio:undefined,
+    folio:"",
     fechaApertura:new Date(),
-    con_nombre:"",    
-    con_telefono:undefined,
-    con_correo:"",
     empresa:"",
-    a_matricula:"",
-    a_modelo:"",
-    n_serie:"",
-    a_t_vuelo:"",
-    a_t_aterrizaje:""
+    aeronave:""
   }
 
   //$scope.CurrentDate = new Date();
 $scope.new_folio = new_folio;
+ console.log($scope.new_folio);
  $scope.guardar=function() {
     if ($scope.form.$valid) {
       //alert("variable comprobada: "+$scope.fo.con_nombre+" y la fecha "+ $scope.fo.fechaApertura+"folio: "+ $scope.new_folio );
