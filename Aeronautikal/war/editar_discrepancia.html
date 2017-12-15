@@ -55,35 +55,32 @@
         </select>
         <br><br>
         <label for="numero_piezas">Numero de piezas requeridas:</label><input class="form-control" ng-model="discrepancia.numero_piezas" placeholder="Escriba el No. piezas que se requieren" id="numero_piezas" name="numero_piezas" type="number"/>
-            </div>
-            </form>
 
   
   <h3>Eventos</h3>
   <label for="matricula">Nombre del evento:</label><input class="form-control" placeholder="Escriba la Matricula" id="matricula" name="matricula" type="text" ng-model="aeronaveform.matricula" required/>
   <label for="modelo">Duracion:</label><input class="form-control" placeholder="Escriba el Modelo" id="modelo" name="modelo" type="text" ng-model="aeronaveform.modelo" required/>
   <label for="numeroSerie">Costo:</label><input class="form-control" placeholder="Escriba el Numero de serie" id="numeroSerie" name="numeroSerie" type="number" ng-model="aeronaveform.numeroSerie" required/>
+  <button type="button" class="btn btn-primary" ng-click="Agregar()" ng-disabled="form.$invalid">
+  <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Agregar
+  </button>
+  <br>
    <table class="tito">>
     <thead>
       <tr style="background-color: #201b17c9;">
-        <th>Folio</th>
-        <th>Compañia</th>
-        <th>Fecha</th>
-        <th>Accion</th>
+        <th>Nombre del evento</th>
+        <th>Duracion</th>
+        <th>Costo</th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="generada in generadas">
-        <td>{{gea.folio}}</td>
-        <td>{{ge.empresa}}</td>
-        <td>{{generada.fechaApertura}}</td>
-        <td><a ng-href="#/Orden/detalle/{{generada.id}}">
-           <button type="button" class="btn btn-default" aria-label="Left Align">
-  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<button type="button" class="btn btn-default" aria-label="Left Align">
-  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-</button>
+      <tr ng-repeat="evento in eventos">
+        <td>{{evento.nombreEvento}}</td>
+        <td>{{evento.duracion}}</td>
+        <td>{{evento.cosoto}}</td>
+        <td><button type="button" class="btn btn-primary" ng-click="Quitar()" ng-disabled="form.$invalid">
+  <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Quitar
+  </button>
 <!--<input type ='button' value = 'texto boton' onclick="window.open('http://localhost/aeronau/Detalle_discrepancias.html', 'width=800,height=600');"/>--> 
 
 </td>

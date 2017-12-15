@@ -44,11 +44,7 @@ console.log($scope.provincias);
    
   }
 
- $scope.req = {
-    fechaApertura:new Date(),
-    r_nombre:"",
-    r_cantidad:undefined
-  }
+
       $scope.alta_requisicion=function() {
       alert("variable comprobada: ");
       insertaRequiServicio.inserta_requisicion($scope.req).then(
@@ -57,4 +53,26 @@ console.log($scope.provincias);
          location.reload();
         })         
   }
+}]);
+app.controller("EditarDiscrepanciaController", ['$scope','discrepancia',function($scope,discrepancia) {
+$scope.discrepancia =discrepancia;
+ //$scope para rellenar los campos y poder editarlos
+ $scope.discrepancia = {
+    folio:undefined,
+    fechaApertura:new Date(),
+    taller:"",
+    seccion:"",
+    descripcion:"",
+    accion:"",
+    folio_componente:undefined,
+    numero_piezas:undefined
+  }
+ //$scope para retener la informacion en el front
+ $scope.evento_tabla = {
+    fechaApertura:new Date(),
+    nombreEvento:"",
+    duracion:undefined,
+    cosoto:undefined
+  }
+
 }]);

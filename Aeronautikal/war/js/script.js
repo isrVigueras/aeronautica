@@ -163,6 +163,23 @@ function RemoteResource($http,$q, baseUrl) {
     return promise;
     
   }
+  
+   this.discrepancia = function(folio) {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/discrepancia/find/'+folio
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
 
 }
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
@@ -289,7 +306,16 @@ app.config(['$routeProvider',function($routeProvider) {
     templateUrl: "alta_Clientes.html",
     controller: "empresaController"
   });  
-       
+   
+   $routeProvider.when('/Discrepancia/editar/:folio', {
+    templateUrl: "editar_discrepancia.html",
+    controller: "EditarDiscrepanciaController",
+     resolve: {
+      discrepancia:['remoteResource','$route',function(remoteResource,$route) {
+        return remoteResource.discrepancia($route.current.params.folio);
+      }]
+    }
+  });     
 
   $routeProvider.otherwise({
         redirectTo: '/'
