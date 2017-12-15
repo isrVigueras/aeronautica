@@ -18,6 +18,8 @@ public interface OrdenService {
 	  
 	  public List<OrdenVo> getAllN();
 	  
+	  public List<OrdenVo> getAllNac();
+	  
 	  public void delete(OrdenVo o);
 	  
 	 

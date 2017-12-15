@@ -19,6 +19,8 @@ public interface OrdenDao {
 	public List<OrdenVo> getAll();
 	
 	public List<OrdenVo> getAllN();
+	
+	public List<OrdenVo> getAllNac();
 
 	void findAll();
 

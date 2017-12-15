@@ -170,6 +170,15 @@ public class OrdenController {
 			response.getWriter().println(JsonConvertidor.toJson(lista));
 		}
 	   
+	   @RequestMapping(value = { "/findAllNac" }, method = RequestMethod.GET, produces = "application/json")
+		public void findAllOrdenesNac(HttpServletResponse response, HttpServletRequest request) throws IOException {
+			AsignadorDeCharset.asignar(request, response);
+			List<OrdenVo> lista = ordenDao.getAllNac();
+			if (lista == null) {
+				lista = new ArrayList<OrdenVo>();
+			}
+			response.getWriter().println(JsonConvertidor.toJson(lista));
+		}
 	   
 	   
 	  public String getFolio(String aeronave){		  

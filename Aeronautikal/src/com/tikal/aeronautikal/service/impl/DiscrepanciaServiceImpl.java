@@ -33,9 +33,9 @@ public class DiscrepanciaServiceImpl implements DiscrepanciaService{
 		}
 
 		@Override
-		public DiscrepanciaEntity consult(Long folio) {
+		public DiscrepanciaEntity consult(Long id) {
 			// TODO Auto-generated method stub
-			return ofy().load().type(DiscrepanciaEntity.class).id(folio).now();
+			return ofy().load().type(DiscrepanciaEntity.class).id(id).now();
 			
 		}
 

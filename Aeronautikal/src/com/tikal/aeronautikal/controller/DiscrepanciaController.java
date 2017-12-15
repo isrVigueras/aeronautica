@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.DiscrepanciaDao;
+import com.tikal.aeronautikal.dao.OrdenDao;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.service.DiscrepanciaService;
@@ -39,6 +40,10 @@ public class DiscrepanciaController {
 		 @Qualifier("componenteDao")
 		 ComponenteDao componenteDao;
 		 
+		 @Autowired
+		 @Qualifier("ordenDao")
+		 OrdenDao ordenDao;
+		 
 		 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 		   
 		   public void prueba(HttpServletResponse response, HttpServletRequest request) throws IOException {
@@ -53,7 +58,7 @@ public class DiscrepanciaController {
 			   System.out.println("si entra a Discrepancia controller");   
 			   	try {
 			   	
-			   		entry.setFolio(Long.parseLong("070712"));
+			   		entry.setFolio("0707-2017-12-5_prueba");
 			   		entry.setAccion("reparar electricidad de....");
 			   		entry.setDescripcion("123_descripcion del componente");
 			   		entry.setFolioOrden(Long.parseLong("2"));
@@ -75,7 +80,7 @@ public class DiscrepanciaController {
 		
 		 /////////////////////////////////////////////////////********************************************************
 
-		 
+		                            // id de la orden
 		 @RequestMapping(value = {"/add/{folio}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
 		   public void addDiscrepancia(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
 				   @PathVariable Long folio) throws IOException{
@@ -86,11 +91,13 @@ public class DiscrepanciaController {
 		        	 System.out.println("request......."+request);
 		        	 System.out.println("response......."+response);
 		        	DiscrepanciaEntity d =(DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
-		        	 System.out.println("el nuevo objeto: "+d );
+		        	 
+		        	 System.out.println("el folio de la discre: "+d.getFolio());
 		        	//pegar el valor de empresa, aeronave y contacato
 		        	d.setFolioOrden(folio);
-		        	d.setFolio(Long.valueOf((d.getTaller()+d.getSeccion()+Long.toString(folio))).longValue());
-		        	 System.out.println("el nuevo folio de discrepancia: "+ Long.valueOf((Long.toString(folio)+d.getTaller()+d.getSeccion())).longValue());
+		        	System.out.println("el folio de la orden es--.: "+d.getFolioOrden() );
+		        	d.setFolio((d.getTaller()+d.getSeccion()+"-"+ordenDao.consult(folio).getFolio()));
+		        	 System.out.println("el nuevo folio de discrepancia: "+ d.getFolio());
 		        	 ComponenteEntity c = new ComponenteEntity();
 		        	 
 		        	 c= componenteDao.consult(d.getFolio_componente());
@@ -126,11 +133,11 @@ public class DiscrepanciaController {
 		   }
 		   
 		   
-		   @RequestMapping(value = { "/getByOrden/{folio}" }, method = RequestMethod.GET, produces = "application/json")
+		   @RequestMapping(value = { "/getByOrden/{folioOrden}" }, method = RequestMethod.GET, produces = "application/json")
 			public void findByOrden(HttpServletResponse response, HttpServletRequest request,
-					@PathVariable Long folio) throws IOException {
+					@PathVariable Long folioOrden) throws IOException {
 				AsignadorDeCharset.asignar(request, response);
-				List<DiscrepanciaEntity> dis= discrepanciaDao.getByOrden(folio);
+				List<DiscrepanciaEntity> dis= discrepanciaDao.getByOrden(folioOrden);
 				if (dis==null){
 					dis= new ArrayList<DiscrepanciaEntity>();
 				}
@@ -146,7 +153,7 @@ public class DiscrepanciaController {
 			   DiscrepanciaEntity d = (DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
 			   discrepanciaDao.update(d);
 			   
-			   response.getWriter().println(JsonConvertidor.toJson(discrepanciaDao.consult(d.getFolio())));
+			   response.getWriter().println(JsonConvertidor.toJson(discrepanciaDao.consult(d.getId())));
 		   }
 		   
 		   

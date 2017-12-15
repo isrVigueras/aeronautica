@@ -57,6 +57,19 @@ public class OrdenDaoImpl implements OrdenDao{
         }
 		return ns;
 	}
+	
+	public List<OrdenVo> getAllNac() {
+		
+		List<OrdenVo> all= ofy().load().type(OrdenVo.class).list();
+		List<OrdenVo> nacs= new ArrayList<OrdenVo>();
+		for(OrdenVo o : all) {
+            aeronaveDao.consult(o.getAeronave());
+            if (aeronaveDao.consult(o.getAeronave()).equals("NACIONAL")){
+            	nacs.add(o);
+            }
+        }
+		return nacs;
+	}
 
 	public void findAll() {
 	// TODO Auto-generated method stub

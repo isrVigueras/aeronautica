@@ -58,6 +58,9 @@ public class OrdenServiceImpl implements OrdenService {
 			return ordenDao.getAllN();
 		}
 
-		
+		@Override
+		public List<OrdenVo> getAllNac(){
+			return ordenDao.getAllNac();
+		}
 		
 }

@@ -60,16 +60,16 @@ public class DiscrepanciaDaoImpl implements DiscrepanciaDao {
 
 
 	@Override
-	public DiscrepanciaEntity consult(Long folio) {
+	public DiscrepanciaEntity consult(Long id) {
 		System.out.println("aqui esta consultando la entidad que va a borrar" );
-       return ofy().load().type(DiscrepanciaEntity.class).id(folio).now();
+       return ofy().load().type(DiscrepanciaEntity.class).id(id).now();
 		
 	}
 	
 	@Override
-	public List<DiscrepanciaEntity> getByOrden(Long folio) {
+	public List<DiscrepanciaEntity> getByOrden(Long folioOrden) {
 		// TODO Auto-generated method stub
-		List<DiscrepanciaEntity> dis = ofy().load().type(DiscrepanciaEntity.class).filter("folioOrden", folio).list();
+		List<DiscrepanciaEntity> dis = ofy().load().type(DiscrepanciaEntity.class).filter("folioOrden", folioOrden).list();
 		return dis;
 	}
 

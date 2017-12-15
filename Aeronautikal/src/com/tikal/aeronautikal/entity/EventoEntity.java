@@ -10,16 +10,16 @@ public class EventoEntity {
 	private String nombreEvento;
 	private Integer duracion;
 	private Integer costo;
-	private String idDiscrepancia;
+//	private String idDiscrepancia;
 	
 	
-	
-	public String getIdDiscrepancia() {
-		return idDiscrepancia;
-	}
-	public void setIdDiscrepancia(String idDiscrepancia) {
-		this.idDiscrepancia = idDiscrepancia;
-	}
+//	
+//	public String getIdDiscrepancia() {
+//		return idDiscrepancia;
+//	}
+//	public void setIdDiscrepancia(String idDiscrepancia) {
+//		this.idDiscrepancia = idDiscrepancia;
+//	}
 	public Long getIdEvento() {
 		return idEvento;
 	}

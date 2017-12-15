@@ -18,10 +18,11 @@ import com.tikal.aeronautikal.model.otBody.Taller;
  
 @Entity
 
-public class DiscrepanciaEntity implements BaseEntity{
+public class DiscrepanciaEntity {
 
     
-    @Id private Long folio;
+    @Id Long id;
+    private String folio;
     @Index private Long folioOrden;
     @Index private String taller;
 	@Index private String seccion;
@@ -45,13 +46,31 @@ public class DiscrepanciaEntity implements BaseEntity{
 		this.eventos = new ArrayList<Ref<EventoEntity>>();
 	}
 	
-	public Long getFolio() {
+	
+	
+	public Long getId() {
+		return id;
+	}
+
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	
+	public String getFolio() {
 		return folio;
 	}
-	public void setFolio(Long folio) {
+
+
+
+	public void setFolio(String folio) {
 		this.folio = folio;
 	}
-	
+
+
+
 	public Long getFolioOrden() {
 		return folioOrden;
 	}

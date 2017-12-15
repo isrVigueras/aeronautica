@@ -13,7 +13,7 @@ public interface DiscrepanciaDao {
 	
 	public void update(DiscrepanciaEntity d); 
 	
-	public DiscrepanciaEntity consult(Long folio);
+	public DiscrepanciaEntity consult(Long id);
 	
 	public List<DiscrepanciaEntity> getAll();
 	
