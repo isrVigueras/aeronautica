@@ -1,0 +1,107 @@
+<div class="contenedor" style="color:#EEE6E6">
+ <center><h1>Editar Discrepancia</h1></center>
+<form name="form" novalidate>
+  <div class="row" style="margin: 1% 13%;">
+     <form>
+          <div class="row">
+            <div class="col-xs-4">
+           <label for="con_nombre">Selecione Taller:</label>
+              <br>
+           <select ng-model="discrepancia.taller" class="form-control">
+              <option value="01">01 MANTENIMIENTO</option>
+              <option value="02">02</option>
+              <option value="03">03 ELECTRICO</option>
+              <option value="04">04 LAMINISTERIA</option>
+              <option value="05">05 AVIONIC´S</option>
+              <option value="06">06 PINTURA</option>
+              <option value="07">07 CARPINTERIA</option>
+              <option value="07">08 VESTIDURAS</option>
+            </select>
+            </div>
+            <div class="col-xs-4">
+             <label for="con_nombre">Selecione Seccion:</label>
+              <br>
+           <select ng-model="discrepancia.seccion"  class="form-control">
+              <option value="01">01 TRABAJOS DE ELECTRICO</option>
+              <option value="02">02 PROGRAMADO</option>
+              <option value="03">03 TRABAJOS DE INSPECCION</option>
+              <option value="04">04 INCORPORACION DE DIRECTIVAS</option>
+              <option value="05">05 TRABAJOS DE AVIONICS</option>
+            </select>
+          </div>
+          </div>
+           <div class="row">
+            <br>
+          <label for="con_nombre">&nbsp;&nbsp;Descripcion/description:</label>
+          <br>
+          <div class="col-xs-11">
+          <center><textarea class="form-control" rows="4" cols="30" placeholder="Escriba la Descripcion." ng-model="discrepancia.descripcion">
+        </textarea></center>
+      </div>
+        <br>
+        <div class="col-xs-11">
+          <br>
+        <label for="con_nombre">Acion Tomada:</label>
+        <br>
+        <center><textarea class="form-control"  rows="4" cols="30" placeholder="Escriba la accion Tomada." ng-model="discrepancia.accion">
+        </textarea></center>
+            </div>
+            </div>
+            <div class="row">
+              <label for="d_componente">Seleciona componenete de almacen:</label>
+        <br>
+          <select ng-model="discrepancia.folio_componente" >
+          <option value="{{p.id}}" ng-repeat="p in provincias"  >{{p.d_componente}} Cantidad:{{p.d_cantidad}}</option>
+        </select>
+        <br><br>
+        <label for="numero_piezas">Numero de piezas requeridas:</label><input class="form-control" ng-model="discrepancia.numero_piezas" placeholder="Escriba el No. piezas que se requieren" id="numero_piezas" name="numero_piezas" type="number"/>
+            </div>
+            </form>
+
+  
+  <h3>Eventos</h3>
+  <label for="matricula">Nombre del evento:</label><input class="form-control" placeholder="Escriba la Matricula" id="matricula" name="matricula" type="text" ng-model="aeronaveform.matricula" required/>
+  <label for="modelo">Duracion:</label><input class="form-control" placeholder="Escriba el Modelo" id="modelo" name="modelo" type="text" ng-model="aeronaveform.modelo" required/>
+  <label for="numeroSerie">Costo:</label><input class="form-control" placeholder="Escriba el Numero de serie" id="numeroSerie" name="numeroSerie" type="number" ng-model="aeronaveform.numeroSerie" required/>
+   <table class="tito">>
+    <thead>
+      <tr style="background-color: #201b17c9;">
+        <th>Folio</th>
+        <th>Compañia</th>
+        <th>Fecha</th>
+        <th>Accion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="generada in generadas">
+        <td>{{generada.folio}}</td>
+        <td>{{generada.empresa}}</td>
+        <td>{{generada.fechaApertura}}</td>
+        <td><a ng-href="#/Orden/detalle/{{generada.id}}">
+           <button type="button" class="btn btn-default" aria-label="Left Align">
+  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button type="button" class="btn btn-default" aria-label="Left Align">
+  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+</button>
+<!--<input type ='button' value = 'texto boton' onclick="window.open('http://localhost/aeronau/Detalle_discrepancias.html', 'width=800,height=600');"/>--> 
+
+</td>
+      </tr>
+    </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="3">El Numero de ordenes Generadas es:</td>
+        <td ng-bind="generadas.length"></td>
+      </tr>
+    </tfoot>
+  </table>
+  </div>
+   <br>
+  <center><button type="button" class="btn btn-primary" ng-click="guarda_aero()" ng-disabled="form.$invalid">
+  <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>Guardar
+  </button></center>
+</form>
+</div>
+
+<br><br><br><br><br><br><br><br><br><br> 
