@@ -50,34 +50,37 @@
             <div class="row">
               <label for="d_componente">Seleciona componenete de almacen:</label>
         <br>
-          <select ng-model="discrepancia.folio_componente" >
-          <option value="{{p.id}}" ng-repeat="p in provincias"  >{{p.d_componente}} Cantidad:{{p.d_cantidad}}</option>
-        </select>
         <br><br>
-        <label for="numero_piezas">Numero de piezas requeridas:</label><input class="form-control" ng-model="discrepancia.numero_piezas" placeholder="Escriba el No. piezas que se requieren" id="numero_piezas" name="numero_piezas" type="number"/>
-
   
   <h3>Eventos</h3>
-  <label for="matricula">Nombre del evento:</label><input class="form-control" placeholder="Escriba la Matricula" id="matricula" name="matricula" type="text" ng-model="aeronaveform.matricula" required/>
-  <label for="modelo">Duracion:</label><input class="form-control" placeholder="Escriba el Modelo" id="modelo" name="modelo" type="text" ng-model="aeronaveform.modelo" required/>
-  <label for="numeroSerie">Costo:</label><input class="form-control" placeholder="Escriba el Numero de serie" id="numeroSerie" name="numeroSerie" type="number" ng-model="aeronaveform.numeroSerie" required/>
+  <label for="matricula">Nombre del evento:</label><input class="form-control" placeholder="Escriba el nombre del evento" id="nombreEvento" name="nombreEvento" type="text" ng-model="evento_tabla.nombreEvento" required/>
+
+  <label for="modelo">Duracion:</label><input class="form-control" placeholder="Escriba la duracion en horas" id="duracion" name="duracion" type="number" ng-model="evento_tabla.duracion" required/>
+  <label for="numeroSerie">Costo:</label><input class="form-control" placeholder="Escriba el Numero de serie" id="numeroSerie" name="numeroSerie" type="number" ng-model="evento_tabla.costo" required/>
+  <br>
   <button type="button" class="btn btn-primary" ng-click="Agregar()" ng-disabled="form.$invalid">
   <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Agregar
   </button>
   <br>
-   <table class="tito">>
+  <br>
+  <br>
+  <br>
+   <table class="table table-striped">
     <thead>
       <tr style="background-color: #201b17c9;">
         <th>Nombre del evento</th>
         <th>Duracion</th>
         <th>Costo</th>
+        <th>Fecha</th>
+        <th>Accion</th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="evento in eventos">
+      <tr style="background-color: #201b17c9;" ng-repeat="evento in eventos">
         <td>{{evento.nombreEvento}}</td>
         <td>{{evento.duracion}}</td>
-        <td>{{evento.cosoto}}</td>
+        <td>{{evento.costo}}</td>
+        <td>{{evento.fechaApertura}}</td>
         <td><button type="button" class="btn btn-primary" ng-click="Quitar()" ng-disabled="form.$invalid">
   <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Quitar
   </button>
@@ -88,14 +91,14 @@
     </tbody>
       <tfoot>
       <tr>
-        <td colspan="3">El Numero de ordenes Generadas es:</td>
+        <td colspan="3">Numero de eventos:</td>
         <td ng-bind="generadas.length"></td>
       </tr>
     </tfoot>
   </table>
   </div>
    <br>
-  <center><button type="button" class="btn btn-primary" ng-click="guarda_aero()" ng-disabled="form.$invalid">
+  <center><button type="button" class="btn btn-primary" ng-click="guardar_edit()" ng-disabled="form.$invalid">
   <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>Guardar
   </button></center>
 </form>
