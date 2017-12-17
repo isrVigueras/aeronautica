@@ -1,6 +1,7 @@
 package com.tikal.aeronautikal.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import com.tikal.aeronautikal.formatos.*;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ import com.tikal.aeronautikal.service.OrdenService;
 import com.tikal.aeronautikal.util.JsonConvertidor;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -188,6 +190,25 @@ public class OrdenController {
 		  
 	  }
 	   
+	  @RequestMapping(value = { "/generaOrdenXls" }, method = RequestMethod.GET)
+		public void generaOrden(HttpServletResponse response, HttpServletRequest request) throws IOException {
+		  EditaOrdenXls eox = new EditaOrdenXls();
+	        //File excelFile = new File("C:/Users/Lenovo/Desktop/OTs/OrdenDeTrabajo.xls");
+	        File newExcelFile = new File("C:/Users/Lenovo/Desktop/OTs/OT__.xls");
+		  
+		 
+	        if (!newExcelFile.exists()){
+	            try {
+	                newExcelFile.createNewFile();
+	            } catch (IOException ioe) {
+	                System.out.println("(Error al crear el fichero nuevo mmmmmmm)" + ioe);
+	            }
+	        }
+	        String origen ="C:/Users/Lenovo/Desktop/OTs/OrdenDeTrabajo.xls";
+	        String destino ="C:/Users/Lenovo/Desktop/OTs/OT__.xls";
+	        eox.FileCopy(origen, destino);  
+			//EditaOrdenXls.readWriteExcelFile();
+		}
 	  
 	  
 }
