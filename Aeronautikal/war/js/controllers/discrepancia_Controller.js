@@ -73,7 +73,7 @@ $scope.eventos=[];
  $scope.discrepancia_fo = {
     folio:undefined,
     fechaApertura:new Date(),
-    taller:"",
+    taller:$scope.discrepancia.taller,
     seccion:"",
     descripcion:"",
     accion:"",
@@ -99,7 +99,8 @@ $scope.Agregar=function(){
           }
           console.log(lista);
       $scope.eventos.push(lista);
-
+      $scope.discrepancia.entos=$scope.eventos;
+      console.log($scope.discrepancia.entos);
       }    
 
 $scope.guardar_edit=function(){
