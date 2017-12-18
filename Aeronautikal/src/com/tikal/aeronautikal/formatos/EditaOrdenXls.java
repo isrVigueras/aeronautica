@@ -1,13 +1,19 @@
 package com.tikal.aeronautikal.formatos;
 
 import java.io.*;
+import java.util.Iterator;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook; 
  
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.WorkbookUtil;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.googlecode.objectify.annotation.Entity; 
  
@@ -138,27 +144,77 @@ public class EditaOrdenXls {
 	    		}
 	    	}
 	    
-	    /**     
-	     * Main method for the tests for the methods of the class <strong>Java
-	     * read excel</strong> and <strong>Java create excel</strong> 
-	     * with <a href="https://poi.apache.org/">Apache POI</a>. 
-	     * 
-	     * Método main para las pruebas para los método de la clase,
-	     * pruebas de <strong>Java leer excel</strong> y  <strong>Java crear excel</strong>
-	     * con <a href="https://poi.apache.org/">Apache POI</a>.     
-	     * @param args 
-	     */
-//	    public static void main(String[] args){        
-//	        EditaOrdenXls eox = new EditaOrdenXls();
-//	        File excelFile = new File("../Users/Lenovo/Desktop/OTs/OrdenDeTrabajo.xls");
-//	        File newExcelFile = new File("../Users/Lenovo/Desktop/OTs/OT__");
-//	        if (!newExcelFile.exists()){
-//	            try {
-//	                newExcelFile.createNewFile();
-//	            } catch (IOException ioe) {
-//	                System.out.println("(Error al crear el fichero nuevo ssss)" + ioe);
-//	            }
-//	        }
-//	        eox.readWriteExcelFile(excelFile, newExcelFile);       
-//	    }    
+	    	
+	    	public void SendInfo( String destinationFile) {
+	    	
+	    	}
+	    	
+	    	 public void WriteXls(String archivo) throws IOException{
+	    		 	FileInputStream file = new FileInputStream(new File(archivo));
+	    		 	// Crear el objeto que tendra el libro de Excel
+	    		 	HSSFWorkbook workbook = new HSSFWorkbook(file);
+	    		   	/*
+	    		  	 * Obtenemos la primera pestaña a la que se quiera procesar indicando el indice.
+	    		  	 * Una vez obtenida la hoja excel con las filas que se quieren leer obtenemos el iterator
+	    		  	 * que nos permite recorrer cada una de las filas que contiene.
+	    		  	 */
+	    		  	HSSFSheet sheet = workbook.getSheetAt(0);
+	    		 
+	    		  	//sheet.setSheetName("ddd");
+	    		  	System.out.println("nombre de hoja:"+ 	sheet.getSheetName());
+	    		  	Iterator<Row> rowIterator = sheet.iterator();
+	    		 	Row row;
+	    		  // Recorremos todas las filas para mostrar el contenido de cada celda
+	    		 	//Integer renglon, columna=0;
+	    		  	while (rowIterator.hasNext()){
+	    		  		//renglon = renglon ++;
+	    		  	//	System.out.println("renglon:"+renglon);
+	    		 	    row = rowIterator.next();	
+	    		  	    // Obtenemos el iterator que permite recorres todas las celdas de una fila
+	    		 	  
+	    		  	    Iterator<Cell> cellIterator = row.cellIterator();
+	    		  	    
+	    		  	 // celda = cellIterator.next();
+	    		  	    while (cellIterator.hasNext()){
+	    		  	    	System.out.println("7:"+cellIterator.hasNext());	
+	    		  	      
+		    		 	    if (cellIterator.equals(3)){
+		    		 	    	System.out.println("8");	
+		    		 	    	//System.out.println("celda:" + celda);
+		    		 	    	if (rowIterator.equals(11)){
+		    		 	    		Cell celda;
+		    		 	    		Row fila;
+		    		 	    		fila = sheet.createRow(10);
+		    		 	    		//
+		    		 	    		celda= fila.createCell(2);
+		    		 	    		celda.setCellValue("wwwwwwwwwww");
+		    		 	    		//cellNew = hssfRowNew.createCell(0);
+		    		 	    		//celda.setCellValue("17 de Diciembre");
+		    		 	    	}
+		    		 	    }
+		    		
+		    		 	   Cell celda;
+		    		 	  celda = cellIterator.next();
+	    		 	 		// Dependiendo del formato de la celda el valor se debe mostrar como String, Fecha, boolean, entero...
+	    		 	 		switch(celda.getCellType()) {
+		    		 	 		case Cell.CELL_TYPE_NUMERIC:
+		    		 	 			if( HSSFDateUtil.isCellDateFormatted(celda) ){
+		    		 		 		       System.out.println(celda.getDateCellValue());
+		    		 	 		    }else{
+		    		 		 		       System.out.println(celda.getNumericCellValue());
+		    		 	 		    }
+		    		 	 		    System.out.println(celda.getNumericCellValue());
+		    		 			    break;
+		    		 	 		case Cell.CELL_TYPE_STRING:
+		    		 	 		    System.out.println(celda.getStringCellValue());
+		    		 	 		    break;
+		    		 	 		case Cell.CELL_TYPE_BOOLEAN:
+		    		 	 		    System.out.println(celda.getBooleanCellValue());
+		    		 	 		    break;
+	    		 	 		}
+	    		 	    }
+	    		 	}
+	    		 		// cerramos el libro excel
+	    		 	file.close();
+	    		}
 	}

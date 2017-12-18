@@ -208,6 +208,9 @@ public class OrdenController {
 	        String destino ="C:/Users/Lenovo/Desktop/OTs/OT__.xls";
 	        eox.FileCopy(origen, destino);  
 			//EditaOrdenXls.readWriteExcelFile();
+	        System.out.println("Empezando a ecribir en el Xls..." );
+	        eox.WriteXls("C:/Users/Lenovo/Desktop/OTs/OT__.xls");
+	        System.out.println("regrese de escribir en el Xls..." );
 		}
 	  
 	  
