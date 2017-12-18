@@ -7,7 +7,7 @@
             <div class="col-xs-4">
            <label for="con_nombre">Selecione Taller:</label>
               <br>
-           <select ng-model="discrepancia.taller" class="form-control">
+           <select ng-model="discrepancia_fo.taller" class="form-control">
               <option value="01">01 MANTENIMIENTO</option>
               <option value="02">02</option>
               <option value="03">03 ELECTRICO</option>
@@ -15,13 +15,13 @@
               <option value="05">05 AVIONIC´S</option>
               <option value="06">06 PINTURA</option>
               <option value="07">07 CARPINTERIA</option>
-              <option value="07">08 VESTIDURAS</option>
+              <option value="08">08 VESTIDURAS</option>
             </select>
             </div>
             <div class="col-xs-4">
              <label for="con_nombre">Selecione Seccion:</label>
               <br>
-           <select ng-model="discrepancia.seccion"  class="form-control">
+           <select ng-model="discrepancia_fo.seccion"  class="form-control">
               <option value="01">01 TRABAJOS DE ELECTRICO</option>
               <option value="02">02 PROGRAMADO</option>
               <option value="03">03 TRABAJOS DE INSPECCION</option>
@@ -35,7 +35,7 @@
           <label for="con_nombre">&nbsp;&nbsp;Descripcion/description:</label>
           <br>
           <div class="col-xs-11">
-          <center><textarea class="form-control" rows="4" cols="30" placeholder="Escriba la Descripcion." ng-model="discrepancia.descripcion">
+          <center><textarea class="form-control" rows="4" cols="30" placeholder="Escriba la Descripcion." ng-model="discrepancia_fo.descripcion">
         </textarea></center>
       </div>
         <br>
@@ -43,7 +43,7 @@
           <br>
         <label for="con_nombre">Acion Tomada:</label>
         <br>
-        <center><textarea class="form-control"  rows="4" cols="30" placeholder="Escriba la accion Tomada." ng-model="discrepancia.accion">
+        <center><textarea class="form-control"  rows="4" cols="30" placeholder="Escriba la accion Tomada." ng-model="discrepancia_fo.accion">
         </textarea></center>
             </div>
             </div>
@@ -56,7 +56,7 @@
   <label for="matricula">Nombre del evento:</label><input class="form-control" placeholder="Escriba el nombre del evento" id="nombreEvento" name="nombreEvento" type="text" ng-model="evento_tabla.nombreEvento" required/>
 
   <label for="modelo">Duracion:</label><input class="form-control" placeholder="Escriba la duracion en horas" id="duracion" name="duracion" type="number" ng-model="evento_tabla.duracion" required/>
-  <label for="numeroSerie">Costo:</label><input class="form-control" placeholder="Escriba el Numero de serie" id="numeroSerie" name="numeroSerie" type="number" ng-model="evento_tabla.costo" required/>
+  <label for="numeroSerie">Costo:</label><input class="form-control" placeholder="Escriba el costo" id="numeroSerie" name="numeroSerie" type="number" ng-model="evento_tabla.costo" required/>
   <br>
   <button type="button" class="btn btn-primary" ng-click="Agregar()" ng-disabled="form.$invalid">
   <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Agregar

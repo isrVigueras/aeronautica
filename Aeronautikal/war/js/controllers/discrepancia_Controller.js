@@ -69,18 +69,6 @@ console.log($scope.provincias);
 app.controller("EditarDiscrepanciaController", ['$scope','discrepancia','UpdateDiscrepanciaServicio',function($scope,discrepancia,UpdateDiscrepanciaServicio) {
 $scope.discrepancia =discrepancia;
 $scope.eventos=[];
- //$scope para rellenar los campos y poder editarlos
- $scope.discrepancia_fo = {
-    folio:undefined,
-    fechaApertura:new Date(),
-    taller:$scope.discrepancia.taller,
-    seccion:"",
-    descripcion:"",
-    accion:"",
-    folio_componente:undefined,
-    numero_piezas:undefined,
-    entos:$scope.eventos
-  }
  //$scope para retener la informacion en el front
  $scope.evento_tabla = {
     nombreEvento:"",
@@ -103,9 +91,22 @@ $scope.Agregar=function(){
       console.log($scope.discrepancia.entos);
       }    
 
+ //$scope para rellenar los campos y poder editarlos
+ $scope.discrepancia_fo = {
+    id:$scope.discrepancia.id,
+    folio:$scope.discrepancia.folio,
+    folioOrden:$scope.discrepancia.folioOrden,
+    taller:$scope.discrepancia.taller,
+    seccion:$scope.discrepancia.seccion,
+    descripcion:$scope.discrepancia.descripcion,
+    accion:$scope.discrepancia.accion,
+    fechaApertura:new Date(),
+    eventos:$scope.discrepancia.entos
+  }
 $scope.guardar_edit=function(){
-  
+      $scope.discrepancia_fo.eventos = $scope.discrepancia.entos;
       console.log($scope.discrepancia_fo);
+      console.log($scope.discrepancia.entos);
       UpdateDiscrepanciaServicio.update_discrepancia($scope.discrepancia_fo).then(
         function(data) {
           console.log(data);
