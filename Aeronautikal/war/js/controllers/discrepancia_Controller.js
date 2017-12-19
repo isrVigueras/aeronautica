@@ -80,7 +80,6 @@ $scope.Agregar=function(){
   
       
       lista={
-          fechaApertura:new Date(),
           nombreEvento:$scope.evento_tabla.nombreEvento,
           duracion:$scope.evento_tabla.duracion,
           costo:$scope.evento_tabla.costo

@@ -10,7 +10,8 @@ app.service('altaAeronaveServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
-app.controller('aeronaveController', ['$scope', 'altaAeronaveServicio',function($scope, altaAeronaveServicio) {
+app.controller('aeronaveController', ['$scope', 'altaAeronaveServicio','aeronaves_consultas',function($scope, altaAeronaveServicio,aeronaves_consultas) {
+  $scope.aeronaves_consultas = aeronaves_consultas;
    $scope.aeronaveform = {
     numeroAeronave: undefined,
     matricula:"",

@@ -180,7 +180,23 @@ function RemoteResource($http,$q, baseUrl) {
     return promise;
     
   }
-
+  
+    this.listado_aeronaves = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/aeronave/findAll'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
 }
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
 function RemoteResourceProvider() {
@@ -316,6 +332,16 @@ app.config(['$routeProvider',function($routeProvider) {
       }]
     }
   });     
+
+     $routeProvider.when('/Aeronaves/consulta', {
+    templateUrl: "consulta_Aeronave.html",
+    controller: "aeronaveController",
+     resolve: {
+      aeronaves_consultas:['remoteResource',function(remoteResource) {
+        return remoteResource.listado_aeronaves();
+      }]
+    }
+  }); 
 
   $routeProvider.otherwise({
         redirectTo: '/'
