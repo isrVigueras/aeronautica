@@ -31,7 +31,9 @@ public class AeronaveDaoImpl implements AeronaveDao {
 
     
     public void delete(AeronaveEntity a) {
+    	 System.out.println("si esta en daoimpl eliminando"+a);
         ofy().delete().entity(a).now();
+        System.out.println("eliminando...");
     }
 
    @Override
@@ -47,9 +49,9 @@ public class AeronaveDaoImpl implements AeronaveDao {
 
     
    @Override
-	public AeronaveEntity consult(String folio) {
-		
-      return ofy().load().type(AeronaveEntity.class).id(folio).now();
+	public AeronaveEntity consult(String numeroAeronave) {
+	   System.out.println("si esta en daoimpl consultando la nave que borrara"+numeroAeronave);
+      return ofy().load().type(AeronaveEntity.class).id(numeroAeronave).now();
 		
 	}
 

@@ -35,9 +35,9 @@ public class EmpresaServiceImpl implements EmpresaService {
 		}
 
 		@Override
-		public EmpresaEntity consult(Long id) {
+		public EmpresaEntity consult(Long idEmpresa) {
 			// TODO Auto-generated method stub
-			return ofy().load().type(EmpresaEntity.class).id(id).now();
+			return ofy().load().type(EmpresaEntity.class).id(idEmpresa).now();
 			
 		}
 

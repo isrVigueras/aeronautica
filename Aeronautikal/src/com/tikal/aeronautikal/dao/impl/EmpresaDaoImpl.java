@@ -33,10 +33,11 @@ package com.tikal.aeronautikal.dao.impl;
 
 		@Override
 		public void delete(EmpresaEntity e) {
-			// TODO Auto-generated method stub@Override
-			
+			 System.out.println("si esta en daoimpl eliminando"+e);
+		        ofy().delete().entity(e).now();
+		        System.out.println("eliminando...");
 				//object.setActivo(false);
-				update(e);
+				//update(e);
 			
 			
 		}
@@ -51,9 +52,9 @@ package com.tikal.aeronautikal.dao.impl;
 
 
 		@Override
-		public EmpresaEntity consult(Long id) {
+		public EmpresaEntity consult(Long idEmpresa) {
 			
-	       return ofy().load().type(EmpresaEntity.class).id(id).now();
+	       return ofy().load().type(EmpresaEntity.class).id(idEmpresa).now();
 			
 		}
 	    

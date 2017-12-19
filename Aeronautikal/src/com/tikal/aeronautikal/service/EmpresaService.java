@@ -9,7 +9,7 @@ public interface EmpresaService {
 	  
 	  public void save(EmpresaEntity e);
 	  
-	  public EmpresaEntity consult(Long id);
+	  public EmpresaEntity consult(Long idEmpresa);
 		  
 	  public List<EmpresaEntity> getAll();
 	  
