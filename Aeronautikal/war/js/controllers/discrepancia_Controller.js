@@ -109,8 +109,8 @@ $scope.guardar_edit=function(){
       UpdateDiscrepanciaServicio.update_discrepancia($scope.discrepancia_fo).then(
         function(data) {
           console.log(data);
-          alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
-  
+          alert("Discrepeancia Modificada");
+          location.reload();
         })
 
       }   

@@ -46,13 +46,14 @@ app.controller('empresaController', ['$scope', 'altaEmpresaServicio',function($s
 app.controller('empresaMuestraController', ['$scope','eliminaEmpresaServicio','empresas_consultas',function($scope,eliminaEmpresaServicio,empresas_consultas) {
   $scope.empresas_consultas = empresas_consultas;
       console.log(empresas_consultas);
-       $scope.elimina_empresa=function(folio) {
+      
+       $scope.elimina_empres=function(folio) {
     //console.log(altarequisicion);
     console.log(folio);
       eliminaEmpresaServicio.elimina_empresa(folio).then(
         function(data) {
           console.log(data);
-          alert("Aeronave Eliminada");
+          alert("Empresa Eliminada");
           location.reload();
         })         
   }

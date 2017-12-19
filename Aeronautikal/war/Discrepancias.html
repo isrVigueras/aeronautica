@@ -156,7 +156,7 @@
             <div class="row">
               <label for="d_componente">Seleciona componenete de almacen:</label>
         <br>
-          <select ng-model="discrepancia.folio_componente" >
+          <select class="form-control" ng-model="discrepancia.folio_componente" >
           <option value="{{p.id}}" ng-repeat="p in provincias"  >{{p.d_componente}} Cantidad:{{p.d_cantidad}}</option>
         </select>
         <br><br>

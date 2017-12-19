@@ -2,7 +2,7 @@
 app.service('altaAeronaveServicio', [ '$http', '$q', function($http, $q) {
   this.alta_aeronave = function(aeronave) {
     var d = $q.defer();
-    $http.post("/aeronave/add",aeronave).then(function(response) {
+    $http.post('')("/aeronave/add",aeronave).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
