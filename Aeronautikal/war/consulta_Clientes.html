@@ -1,30 +1,32 @@
 
 <link href="css/tabla.css" rel="stylesheet" type="text/css" />
 <div class="contenedor">
- <center><h1 style="color:#EEE6E6">Consulta de Aeronaves</h1></center>
+ <center><h1 style="color:#EEE6E6">Consulta de Empresas</h1></center>
  <br>
 <table class="tito">
     <thead>
       <tr style="background-color: #201b17c9;">
-        <th>N. Serie</th>
-        <th>Matricula</th>
-        <th>Modelo</th>
-        <th>Nacionalidad</th>
-        <th>tiempo Vuelo</th>
-        <th>Aterrizaje</th>
+        <th>Nombre Empresa</th>
+        <th>Razon Social</th>
+        <th>RFC</th>
+        <th>Pais</th>
+        <th>Nombre del Contacto</th>
+        <th>Telefono</th>
+        <th>Correo</th>
         <th>Accion</th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="aeron in aeronaves_consultas">
-        <td>{{aeron.numeroSerie}}</td>
-        <td>{{aeron.matricula}}</td>
-        <td>{{aeron.modelo}}</td>
-        <td>{{aeron.nacionalidad}}</td>
-        <td>{{aeron.tiempovuelo}}</td>
-        <td>{{aeron.aterrizaje}}</td>
+      <tr ng-repeat="empre in empresas_consultas">
+        <td>{{empre.nombreEmpresa}}</td>
+        <td>{{empre.razonSocial}}</td>
+        <td>{{empre.rfc}}</td>
+        <td>{{empre.pais}}</td>
+        <td>{{empre.nombreContacto}}</td>
+        <td>{{empre.telefono}}</td>
+        <td>{{empre.email}}</td>
         <td>
-           <button type="button" class="btn btn-default" ng-click="elimina_aero(aeron.numeroAeronave)">
+           <button type="button" class="btn btn-default" ng-click="elimina_aero(empre.idEmpresa)">
   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 </button>
 <!--<input type ='button' value = 'texto boton' onclick="window.open('http://localhost/aeronau/Detalle_discrepancias.html', 'width=800,height=600');"/>--> 
@@ -35,7 +37,7 @@
       <tfoot>
       <tr>
         <td colspan="3">El Numero de ordenes Generadas es:</td>
-        <td ng-bind="aeronaves_consultas.length"></td>
+        <td ng-bind="empresas_consultas.length"></td>
       </tr>
     </tfoot>
   </table>

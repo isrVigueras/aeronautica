@@ -10,8 +10,19 @@ app.service('altaAeronaveServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
-app.controller('aeronaveController', ['$scope', 'altaAeronaveServicio','aeronaves_consultas',function($scope, altaAeronaveServicio,aeronaves_consultas) {
-  $scope.aeronaves_consultas = aeronaves_consultas;
+//servicio elmina Aeronave
+app.service('eliminaAeronaveServicio', [ '$http', '$q', function($http, $q) {
+  this.elimina_aeronave = function(id) {
+    var d = $q.defer();
+    $http.post("/aeronave/delete/"+id).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
+app.controller('aeronaveController', ['$scope','altaAeronaveServicio',function($scope,altaAeronaveServicio) {
    $scope.aeronaveform = {
     numeroAeronave: undefined,
     matricula:"",
@@ -29,6 +40,20 @@ app.controller('aeronaveController', ['$scope', 'altaAeronaveServicio','aeronave
         function(data) {
           console.log(data);
           alert("Aeronave Guardada");
+        })         
+  }
+}]);
+app.controller('aeronaveMuestraController', ['$scope','eliminaAeronaveServicio','aeronaves_consultas',function($scope,eliminaAeronaveServicio,aeronaves_consultas) {
+  $scope.aeronaves_consultas = aeronaves_consultas;
+      console.log(aeronaves_consultas);
+       $scope.elimina_aero=function(folio) {
+    //console.log(altarequisicion);
+    console.log(folio);
+      eliminaAeronaveServicio.elimina_aeronave(folio).then(
+        function(data) {
+          console.log(data);
+          alert("Aeronave Eliminada");
+          location.reload();
         })         
   }
 }]);

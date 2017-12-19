@@ -197,6 +197,23 @@ function RemoteResource($http,$q, baseUrl) {
     return promise;
     
   }
+  
+  this.listado_empresas = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/empresa/findAll'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
 }
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
 function RemoteResourceProvider() {
@@ -335,14 +352,22 @@ app.config(['$routeProvider',function($routeProvider) {
 
      $routeProvider.when('/Aeronaves/consulta', {
     templateUrl: "consulta_Aeronave.html",
-    controller: "aeronaveController",
+    controller: "aeronaveMuestraController",
      resolve: {
       aeronaves_consultas:['remoteResource',function(remoteResource) {
         return remoteResource.listado_aeronaves();
       }]
     }
   }); 
-
+$routeProvider.when('/Clientes/colsulta', {
+    templateUrl: "consulta_Clientes.html",
+    controller: "empresaMuestraController",
+     resolve: {
+      empresas_consultas:['remoteResource',function(remoteResource) {
+        return remoteResource.listado_empresas();
+      }]
+    }
+  }); 
   $routeProvider.otherwise({
         redirectTo: '/'
   });   

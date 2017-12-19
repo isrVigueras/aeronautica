@@ -10,6 +10,18 @@ app.service('altaEmpresaServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+//servicio elmina empresa
+app.service('eliminaEmpresaServicio', [ '$http', '$q', function($http, $q) {
+  this.elimina_empresa = function(id) {
+    var d = $q.defer();
+    $http.post("/empresa/delete/"+id).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
 app.controller('empresaController', ['$scope', 'altaEmpresaServicio',function($scope, altaEmpresaServicio) {
    $scope.empresaform = {
     idEmpresa: undefined,
@@ -28,6 +40,20 @@ app.controller('empresaController', ['$scope', 'altaEmpresaServicio',function($s
           console.log(data);
           location.reload();
           alert("Empresa Guardada");
+        })         
+  }
+}]);
+app.controller('empresaMuestraController', ['$scope','eliminaEmpresaServicio','empresas_consultas',function($scope,eliminaEmpresaServicio,empresas_consultas) {
+  $scope.empresas_consultas = empresas_consultas;
+      console.log(empresas_consultas);
+       $scope.elimina_empresa=function(folio) {
+    //console.log(altarequisicion);
+    console.log(folio);
+      eliminaEmpresaServicio.elimina_empresa(folio).then(
+        function(data) {
+          console.log(data);
+          alert("Aeronave Eliminada");
+          location.reload();
         })         
   }
 }]);
