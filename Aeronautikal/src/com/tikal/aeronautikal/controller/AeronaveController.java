@@ -139,7 +139,7 @@ public class AeronaveController  {
 		}
 	   
 	   
-	   @RequestMapping(value = {"/delete/{numeroAeronave}" }, method = RequestMethod.GET)
+	   @RequestMapping(value = {"/delete/{numeroAeronave}" }, method = RequestMethod.POST)
 	   public void deleteAeronave(@PathVariable String numeroAeronave) throws IOException {
 		   ////////////ojo cuando borra aeronave, checr muy bien lo de Static en el dao y el @override de daoimpl
 		   System.out.println("si esta en delete"+numeroAeronave);
