@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.googlecode.objectify.ObjectifyService;
 import com.tikal.aeronautikal.controller.vo.OrdenVo;
+import com.tikal.aeronautikal.controller.vo.OrdenXlsVo;
 import com.tikal.aeronautikal.controller.vo.RequisicionesComponenteVo;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.ContactoEntity;
@@ -12,6 +13,7 @@ import com.tikal.aeronautikal.entity.DatosFacturacionEntity;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.EmpleadoEntity;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
+//import com.tikal.aeronautikal.entity.EventoEntity;
 import com.tikal.aeronautikal.entity.OrdenEntity;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
@@ -34,7 +36,8 @@ public class StartupEntities {
 		ObjectifyService.register(Contador.class);
 		ObjectifyService.register(RequisicionEntity.class);
 		ObjectifyService.register(RequisicionesComponenteVo.class);
-		
+	//	ObjectifyService.register(EventoEntity.class);
+		ObjectifyService.register(OrdenXlsVo.class);
 		
 	}
 	

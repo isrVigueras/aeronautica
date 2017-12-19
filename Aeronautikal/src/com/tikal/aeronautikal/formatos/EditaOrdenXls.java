@@ -35,7 +35,8 @@ import com.googlecode.objectify.annotation.Entity;
 
 
 public class EditaOrdenXls {
-	 
+	int renglon=0;
+  	int columna=0;
 	 
 	    /**
 	     * Explanation of the method by which we read the excel file we pass as
@@ -151,70 +152,40 @@ public class EditaOrdenXls {
 	    	
 	    	 public void WriteXls(String archivo) throws IOException{
 	    		 	FileInputStream file = new FileInputStream(new File(archivo));
-	    		 	// Crear el objeto que tendra el libro de Excel
 	    		 	HSSFWorkbook workbook = new HSSFWorkbook(file);
-	    		   	/*
-	    		  	 * Obtenemos la primera pestaña a la que se quiera procesar indicando el indice.
-	    		  	 * Una vez obtenida la hoja excel con las filas que se quieren leer obtenemos el iterator
-	    		  	 * que nos permite recorrer cada una de las filas que contiene.
-	    		  	 */
 	    		  	HSSFSheet sheet = workbook.getSheetAt(0);
-	    		 
-	    		  	//sheet.setSheetName("ddd");
 	    		  	System.out.println("nombre de hoja:"+ 	sheet.getSheetName());
 	    		  	Iterator<Row> rowIterator = sheet.iterator();
 	    		 	Row row;
-	    		  // Recorremos todas las filas para mostrar el contenido de cada celda
-	    		 	//Integer renglon, columna=0;
 	    		  	while (rowIterator.hasNext()){
-	    		  		//renglon = renglon ++;
-	    		  	//	System.out.println("renglon:"+renglon);
-	    		 	    row = rowIterator.next();	
-	    		  	    // Obtenemos el iterator que permite recorres todas las celdas de una fila
-	    		 	  
-	    		  	    Iterator<Cell> cellIterator = row.cellIterator();
-	    		  	    
-	    		  	 // celda = cellIterator.next();
+	    		  		row = rowIterator.next();	
+	    		  		 Iterator<Cell> cellIterator = row.cellIterator();
+  	    		 	     renglon = renglon +1;
+
 	    		  	    while (cellIterator.hasNext()){
-	    		  	    	System.out.println("7:"+cellIterator.hasNext());	
-	    		  	      
-		    		 	    if (cellIterator.equals(3)){
-		    		 	    	System.out.println("8");	
-		    		 	    	//System.out.println("celda:" + celda);
-		    		 	    	if (rowIterator.equals(11)){
-		    		 	    		Cell celda;
-		    		 	    		Row fila;
-		    		 	    		fila = sheet.createRow(10);
-		    		 	    		//
-		    		 	    		celda= fila.createCell(2);
-		    		 	    		celda.setCellValue("wwwwwwwwwww");
-		    		 	    		//cellNew = hssfRowNew.createCell(0);
-		    		 	    		//celda.setCellValue("17 de Diciembre");
-		    		 	    	}
-		    		 	    }
-		    		
-		    		 	   Cell celda;
-		    		 	  celda = cellIterator.next();
-	    		 	 		// Dependiendo del formato de la celda el valor se debe mostrar como String, Fecha, boolean, entero...
+	    		  	    	columna=columna+1;
+	    		  	    	Cell celda;
+	    		  	    	celda = cellIterator.next();
+//	    		 	 		// Dependiendo del formato de la celda el valor se debe mostrar como String, Fecha, boolean, entero...
 	    		 	 		switch(celda.getCellType()) {
-		    		 	 		case Cell.CELL_TYPE_NUMERIC:
-		    		 	 			if( HSSFDateUtil.isCellDateFormatted(celda) ){
-		    		 		 		       System.out.println(celda.getDateCellValue());
-		    		 	 		    }else{
-		    		 		 		       System.out.println(celda.getNumericCellValue());
-		    		 	 		    }
-		    		 	 		    System.out.println(celda.getNumericCellValue());
-		    		 			    break;
+		    		 	 		
 		    		 	 		case Cell.CELL_TYPE_STRING:
 		    		 	 		    System.out.println(celda.getStringCellValue());
+		    		 	 		    if (celda.getStringCellValue().equals("fecha")){
+		    		 	 		    	celda.setCellType(Cell.CELL_TYPE_STRING);
+		    		 	 		    	celda.setCellValue("Fabian Montoya");
+		    		 	 		    }
 		    		 	 		    break;
-		    		 	 		case Cell.CELL_TYPE_BOOLEAN:
-		    		 	 		    System.out.println(celda.getBooleanCellValue());
-		    		 	 		    break;
+		    		 	 		
 	    		 	 		}
 	    		 	    }
 	    		 	}
 	    		 		// cerramos el libro excel
+	    		  	
 	    		 	file.close();
+	    		 		
+	    	            FileOutputStream fileOut = new FileOutputStream("C:/Users/Lenovo/Desktop/OTs/nueva_orden.xls"); //Doy la ruta y el nombre del archivo nuevo que se generará
+	    	            workbook.write(fileOut); //Escribo el nuevo archivo
+	    	            fileOut.close(); //Cierro el archivo
 	    		}
 	}

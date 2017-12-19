@@ -96,7 +96,7 @@ package com.tikal.aeronautikal.controller;
 
 			}
 		   
-		   @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+		   @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 		   public void deleteOrden(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
 			@PathVariable Long id) throws IOException {
 			   empresaDao.delete(empresaDao.consult(id));

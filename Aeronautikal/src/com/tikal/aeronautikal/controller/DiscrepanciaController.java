@@ -2,6 +2,7 @@ package com.tikal.aeronautikal.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.DiscrepanciaDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
+import com.tikal.aeronautikal.entity.EventoEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.service.DiscrepanciaService;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
@@ -58,7 +60,7 @@ public class DiscrepanciaController {
 		    public String addDiscrepanciaGet(@ModelAttribute("entry") DiscrepanciaEntity entry) {
 			   System.out.println("si entra a Discrepancia controller");   
 			   	try {
-			   	
+			   	    entry.setId(Long.parseLong("22222222222"));
 			   		entry.setFolio("0707-2017-12-5_prueba");
 			   		entry.setAccion("reparar electricidad de....");
 			   		entry.setDescripcion("123_descripcion del componente");
@@ -66,6 +68,16 @@ public class DiscrepanciaController {
 			   		entry.setFechaApertura("12/12/2017");
 			   		entry.setSeccion("03");
 			   		entry.setTaller("03");
+			   		EventoEntity evento1 = new EventoEntity();
+			   //		evento1.setIdEvento(("2121212121"));
+			   		evento1.setNombreEvento("evento1");
+			   		evento1.setDuracion(2);
+			   		evento1.setCosto(20);
+			   		
+			   		List<EventoEntity> eventos = new ArrayList<EventoEntity>();
+			   		eventos.add(evento1);
+			   		entry.setEventos(eventos);
+			   	  System.out.println("eventos:"+eventos);   
 			   		//entry.setEventos
 			   		////entry.setInstaladoPor();
 			   		//entry.setOriginadoPor();
@@ -92,7 +104,8 @@ public class DiscrepanciaController {
 		        	 System.out.println("request......."+request);
 		        	 System.out.println("response......."+response);
 		        	DiscrepanciaEntity d =(DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
-		        	 
+		        	List<EventoEntity> eventos = new ArrayList<EventoEntity>();
+		        	d.setEventos(eventos);
 		        	 System.out.println("el folio de la discre: "+d.getFolio());
 		        	//pegar el valor de empresa, aeronave y contacato
 		        	d.setFolioOrden(folio);
@@ -150,8 +163,11 @@ public class DiscrepanciaController {
 		   @RequestMapping(value = {"/update" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 		   public void updateEmpresa(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
 			throws IOException {
+			   System.out.println("si entra a actualizar discrepancia:");
 			   AsignadorDeCharset.asignar(request, response);
+			   System.out.println("discrepancia que manda edgar:"+json);
 			   DiscrepanciaEntity d = (DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
+			   ////////////////////////////ojo ver si es necesario hacer un controller para evento....
 			   discrepanciaDao.update(d);
 			   
 			   response.getWriter().println(JsonConvertidor.toJson(discrepanciaDao.consult(d.getId())));
@@ -166,5 +182,17 @@ public class DiscrepanciaController {
 			
 			}
 		   
+		   
+		   @RequestMapping(value={"/getFolioEvento/{idDiscrepancia}"},method = RequestMethod.GET)
+		   
+		   public void getFolioEvento(HttpServletResponse response, HttpServletRequest request,@PathVariable Long idDiscrepancia) throws IOException {
+			  // response.getWriter().println("Prueba del mètodo PROBAR en Orden de trabajo");
+			   Calendar c = Calendar.getInstance();		  
+			   String folio =  (Integer.toString(c.get(Calendar.MILLISECOND))+"-"+"idDiscrepancia");
+			   System.out.println("folio :"+folio);
+			  // return folio;
+			  response.getWriter().println((folio));
+
+		    }
 		   
 }

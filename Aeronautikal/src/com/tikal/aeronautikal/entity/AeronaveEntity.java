@@ -15,7 +15,12 @@ public  class  AeronaveEntity {
     private String numeroSerie;
     private String aterrizaje;
     private int tiempovuelo;
+    private String planeador;
+    private String motor1;
+    private String motor2;
+    private String marcas;
     private String nacionalidad;
+    
     
 	//@Container OrdenEntity orden;
     
@@ -61,6 +66,32 @@ public  class  AeronaveEntity {
 	}
 	public String getNacionalidad() {
 		return nacionalidad;
+	}
+	
+	
+	public String getPlaneador() {
+		return planeador;
+	}
+	public void setPlaneador(String planeador) {
+		this.planeador = planeador;
+	}
+	public String getMotor1() {
+		return motor1;
+	}
+	public void setMotor1(String motor1) {
+		this.motor1 = motor1;
+	}
+	public String getMotor2() {
+		return motor2;
+	}
+	public void setMotor2(String motor2) {
+		this.motor2 = motor2;
+	}
+	public String getMarcas() {
+		return marcas;
+	}
+	public void setMarcas(String marcas) {
+		this.marcas = marcas;
 	}
 	public void setNacionalidad(String nacionalidad) {
 		this.nacionalidad = nacionalidad;

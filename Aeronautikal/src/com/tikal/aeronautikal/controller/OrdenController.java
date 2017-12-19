@@ -18,6 +18,7 @@ import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.dao.AeronaveDao;
 import com.tikal.aeronautikal.dao.EmpresaDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
+import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.Contador;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
 //import com.tikal.aeronautikal.entity.OrdenEntity;
@@ -44,6 +45,9 @@ import javax.servlet.http.HttpServletResponse;
 
 public class OrdenController {
 	
+	@Autowired
+	@Qualifier("aeronaveDao")
+	AeronaveDao aeronaveDao;
 	
 	@Autowired
 	@Qualifier("empresaDao")
@@ -190,13 +194,10 @@ public class OrdenController {
 		  
 	  }
 	   
-	  @RequestMapping(value = { "/generaOrdenXls" }, method = RequestMethod.GET)
-		public void generaOrden(HttpServletResponse response, HttpServletRequest request) throws IOException {
+	  @RequestMapping(value = { "/generaOrdenXls/{idOrden}" }, method = RequestMethod.GET)
+		public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idOrden) throws IOException {
 		  EditaOrdenXls eox = new EditaOrdenXls();
-	        //File excelFile = new File("C:/Users/Lenovo/Desktop/OTs/OrdenDeTrabajo.xls");
-	        File newExcelFile = new File("C:/Users/Lenovo/Desktop/OTs/OT__.xls");
-		  
-		 
+	        File newExcelFile = new File("C:/Users/Lenovo/Desktop/OTs/OT__.xls");		 
 	        if (!newExcelFile.exists()){
 	            try {
 	                newExcelFile.createNewFile();
@@ -204,9 +205,16 @@ public class OrdenController {
 	                System.out.println("(Error al crear el fichero nuevo mmmmmmm)" + ioe);
 	            }
 	        }
+	        ////sacando sopa
+	       OrdenVo orden =ordenDao.consult(idOrden);
+	        AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
+	     //   List<DiscrepanciaEntity> discrepancias= discrepanciaDao.
+	        
+	        ///
+	        
 	        String origen ="C:/Users/Lenovo/Desktop/OTs/OrdenDeTrabajo.xls";
-	        String destino ="C:/Users/Lenovo/Desktop/OTs/OT__.xls";
-	        eox.FileCopy(origen, destino);  
+	        String destino ="C:/Users/Lenovo/Desktop/OTs/O.T."+orden.getFolio()+" "+nave.getMatricula()+".xls";
+	       // eox.FileCopy(origen, destino);  
 			//EditaOrdenXls.readWriteExcelFile();
 	        System.out.println("Empezando a ecribir en el Xls..." );
 	        eox.WriteXls("C:/Users/Lenovo/Desktop/OTs/OT__.xls");

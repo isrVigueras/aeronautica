@@ -15,6 +15,7 @@ import com.tikal.aeronautikal.model.otBody.Componente;
 import com.tikal.aeronautikal.model.otBody.Seccion;
 import com.tikal.aeronautikal.model.otBody.Taller;
 
+
  
 @Entity
 
@@ -32,20 +33,20 @@ public class DiscrepanciaEntity {
 	private Long folio_componente;
 	private Integer numero_piezas;
 	//private List<Componente> losComponentes;
+	private List<EventoEntity> eventos;
 	private Empleado removidoPor;
 	private Empleado instaladoPor;
 	private Empleado originadoPor;
 	
-	@Load
-	private List<Ref<EventoEntity>> eventos;
+	////@Load
+	//private List<Ref<EventoEntity>> eventos;
 	
 //	@Container OrdenEntity orden;
 	
-	
-	public DiscrepanciaEntity() {
-		this.eventos = new ArrayList<Ref<EventoEntity>>();
+	public void Discrepancia() {
+		this.eventos = new ArrayList<EventoEntity>();
 	}
-	
+
 	
 	
 	public Long getId() {
@@ -148,13 +149,19 @@ public class DiscrepanciaEntity {
 		this.originadoPor = originadoPor;
 	}
 
-	public List<Ref<EventoEntity>> getEventos() {
+
+
+public List<EventoEntity> getEventos() {
 		return eventos;
 	}
 
-	public void setEventos(List<Ref<EventoEntity>> eventos) {
+
+
+	public void setEventos(List<EventoEntity> eventos) {
 		this.eventos = eventos;
 	}
+
+	
 	
     
 	
