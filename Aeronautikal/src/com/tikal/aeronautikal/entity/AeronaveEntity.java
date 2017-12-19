@@ -11,6 +11,7 @@ import  com.googlecode.objectify.annotation.Index ;
 public  class  AeronaveEntity {
     @Id String numeroAeronave;
 	private String matricula;
+	private String marca;
     private String modelo;
     private String numeroSerie;
     private String aterrizaje;
@@ -38,6 +39,14 @@ public  class  AeronaveEntity {
 	}
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
+	}
+	
+	
+	public String getMarca() {
+		return marca;
+	}
+	public void setMarca(String marca) {
+		this.marca = marca;
 	}
 	public String getModelo() {
 		return modelo;

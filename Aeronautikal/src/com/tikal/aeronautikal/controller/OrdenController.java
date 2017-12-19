@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.annotation.OnLoad;
 import com.tikal.aeronautikal.controller.vo.OrdenVo;
+import com.tikal.aeronautikal.controller.vo.OrdenXlsVo;
 import com.tikal.aeronautikal.dao.AeronaveDao;
+import com.tikal.aeronautikal.dao.DiscrepanciaDao;
 import com.tikal.aeronautikal.dao.EmpresaDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.Contador;
+import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
 //import com.tikal.aeronautikal.entity.OrdenEntity;
 import com.tikal.aeronautikal.model.Aeronave;
@@ -56,6 +59,10 @@ public class OrdenController {
 	@Autowired
 	@Qualifier("ordenDao")
 	OrdenDao ordenDao;
+	
+	@Autowired
+	@Qualifier("discrepanciaDao")
+	DiscrepanciaDao discrepanciaDao;
 
 	   @Autowired
 	   private OrdenService ordenService;
@@ -206,12 +213,17 @@ public class OrdenController {
 	            }
 	        }
 	        ////sacando sopa
-	       OrdenVo orden =ordenDao.consult(idOrden);
-	        AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
+	        
+	       getObjectXls(idOrden);
+	     
+	       
+	       
 	     //   List<DiscrepanciaEntity> discrepancias= discrepanciaDao.
 	        
 	        ///
-	        
+	       OrdenVo orden =ordenDao.consult(idOrden);
+	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
+	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
 	        String origen ="C:/Users/Lenovo/Desktop/OTs/OrdenDeTrabajo.xls";
 	        String destino ="C:/Users/Lenovo/Desktop/OTs/O.T."+orden.getFolio()+" "+nave.getMatricula()+".xls";
 	       // eox.FileCopy(origen, destino);  
@@ -222,6 +234,43 @@ public class OrdenController {
 		}
 	  
 	  
+	  public OrdenXlsVo getObjectXls(Long idOrden){
+		  
+		  OrdenXlsVo ox = new OrdenXlsVo();
+	       
+	       OrdenVo orden =ordenDao.consult(idOrden);
+	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
+	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
+	      
+	     //  ox.setAccionesDiscrepancia(acciones);
+	       ox.setFechaOrden(orden.getFechaApertura());
+	       ox.setNombreEmpresa(empresa.getNombreEmpresa());
+	       ox.setFolioOrden(orden.getFolio());
+	       ox.setMarcaAeronave(nave.getMarca());
+	       ox.setModeloAeronave(nave.getModelo());
+	       ox.setNumeroSerie(nave.getNumeroSerie());
+	       ox.setMatricula(nave.getMatricula());
+	       ox.setPlaneador(nave.getPlaneador());
+	       ox.setMotor1(nave.getMotor1());
+	       ox.setMotor2(nave.getMotor2());
+	       ox.setMarcas(nave.getMarcas());
+	       ox.setAccionesDiscrepancia(getAccionesDiscrepancia(idOrden));
+	              
+		return ox;	
+		  
+		  
+	  }
+	  
+	  public List<String> getAccionesDiscrepancia(Long idOrden){
+		  List<DiscrepanciaEntity> dis = discrepanciaDao.getByOrden(idOrden);
+		  List<String> acciones = new ArrayList<String>();
+	       for(DiscrepanciaEntity d : dis) {	    	 
+	    	   String accion =d.getAccion();
+	    	   acciones.add(accion);
+	       }		    
+		return acciones;
+		  
+	  }
 }
 
 	    
