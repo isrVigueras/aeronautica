@@ -171,6 +171,7 @@ public class DiscrepanciaController {
 		   @RequestMapping(value = { "/getByOrden/{folioOrden}" }, method = RequestMethod.GET, produces = "application/json")
 			public void findByOrden(HttpServletResponse response, HttpServletRequest request,
 					@PathVariable Long folioOrden) throws IOException {
+			   System.out.println("discrennnnnnn");
 				AsignadorDeCharset.asignar(request, response);
 				List<DiscrepanciaEntity> dis= discrepanciaDao.getByOrden(folioOrden);
 				if (dis==null){
@@ -209,8 +210,10 @@ public class DiscrepanciaController {
 		   @RequestMapping(value = { "/find/{id}" }, method = RequestMethod.GET, produces = "application/json")
 			public void findFolio(HttpServletResponse response, HttpServletRequest request,
 					@PathVariable Long id) throws IOException {
+			   System.out.println("xxxxxxxxx");
 				AsignadorDeCharset.asignar(request, response);
 				DetalleDiscrepanciaVo dd = getDetalleDiscrepancia(id);
+				System.out.println("find/id"+dd);
 				//DiscrepanciaEntity d=discrepanciaDao.consult(id);
 				response.getWriter().println(JsonConvertidor.toJson(dd));
 			
@@ -231,7 +234,7 @@ public class DiscrepanciaController {
 		   public DetalleDiscrepanciaVo getDetalleDiscrepancia(Long id){
 			   
 				DetalleDiscrepanciaVo det = new DetalleDiscrepanciaVo();
-			       
+			       System.out.println("estoy en getDetalleDiscrepancia");
 			       OrdenVo orden =ordenDao.consult(Long.parseLong(det.getFolioOrden()));
 			       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
 			       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());

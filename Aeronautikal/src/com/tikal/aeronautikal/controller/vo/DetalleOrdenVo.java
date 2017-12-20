@@ -6,6 +6,7 @@ import com.googlecode.objectify.annotation.Id;
 @Entity
 public class DetalleOrdenVo {
 	@Id private Long id;
+	private Long idOrden;
 	private String folioOrden;
 	private String fecha;
 	private String contacto;
@@ -17,6 +18,15 @@ public class DetalleOrdenVo {
 	private String noSerie;
 	private String tiempoVuelo;
 	private String aterrizaje;
+	
+	
+	
+	public Long getIdOrden() {
+		return idOrden;
+	}
+	public void setIdOrden(Long idOrden) {
+		this.idOrden = idOrden;
+	}
 	public Long getId() {
 		return id;
 	}

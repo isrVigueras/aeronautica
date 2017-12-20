@@ -102,10 +102,10 @@ public class OrdenController {
 	        	//orden.setFolio(Long.parseLong("1111"));
 	        	//crearListaIdsOT();
 	        	 System.out.println("folio orden:"+orden.getFolio());
-	        	 System.out.println("folio aeronave:"+orden.getAeronave());
+	        	 System.out.println("folio aeronave:"+aeronaveDao.consult(orden.getAeronave()).getNumeroAeronave());
 	        	 orden.setNombreEmpresa(empresaDao.consult(orden.getEmpresa()).getNombreEmpresa());
 	        	 
-	        	orden.setFolio(orden.getFolio()+orden.getAeronave());
+	        	orden.setFolio(orden.getFolio()+aeronaveDao.consult(orden.getAeronave()).getNumeroAeronave());
 	        	ordenDao.save(orden);	 
 	        	Contador.incremeta();
 	        } catch (RuntimeException ignored) {
@@ -174,7 +174,7 @@ public class OrdenController {
 		   System.out.println("esta en find / orden");
 			AsignadorDeCharset.asignar(request, response);
 			DetalleOrdenVo detO = getDetalleOrden(id);
-			//OrdenVo o=ordenDao.consult(id);
+			OrdenVo o=ordenDao.consult(id);
 			response.getWriter().println(JsonConvertidor.toJson(detO));
 		
 		}
@@ -268,11 +268,14 @@ public DetalleOrdenVo getDetalleOrden(Long idOrden){
 	       OrdenVo orden =ordenDao.consult(idOrden);
 	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
 	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
-	      
-	     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
+	   
 	       det.setFolioOrden(orden.getFolio());
+	       det.setIdOrden(orden.getId());
+	       
 	       det.setFecha(orden.getFechaApertura());
+	       
 	       det.setContacto(empresa.getNombreContacto());
+	       det.setTelefono(Long.toString(empresa.getTelefono()));
 	       det.setCorreo(empresa.getEmail());
 	       det.setNombreEmpresa(empresa.getNombreEmpresa());
 	       det.setMatricula(nave.getMatricula());
@@ -280,7 +283,7 @@ public DetalleOrdenVo getDetalleOrden(Long idOrden){
 	       det.setNoSerie(nave.getNumeroSerie());
 	       det.setTiempoVuelo(Integer.toString(nave.getTiempovuelo()));
 	       det.setAterrizaje(nave.getAterrizaje());
-	              
+	   
 		return det;	
 		  
 		  
