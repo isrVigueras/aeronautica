@@ -40,6 +40,7 @@ app.controller('empresaController', ['$scope', 'altaEmpresaServicio',function($s
           console.log(data);
           location.reload();
           alert("Empresa Guardada");
+          location.href="#/Clientes/colsulta";
         })         
   }
 }]);
