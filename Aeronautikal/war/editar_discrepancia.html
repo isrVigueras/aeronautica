@@ -104,7 +104,7 @@
         <td>{{evento.nombreEvento}}</td>
         <td>{{evento.duracion}}</td>
         <td>{{evento.costo}}</td>
-        <td><button type="button" class="btn btn-primary" ng-click="Quitar()" ng-disabled="form.$invalid">
+        <td><button type="button" class="btn btn-primary" ng-click="Quitar(evento.$$hashKey)" ng-disabled="form.$invalid">
   <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Quitar
   </button>
 <!--<input type ='button' value = 'texto boton' onclick="window.open('http://localhost/aeronau/Detalle_discrepancias.html', 'width=800,height=600');"/>--> 
