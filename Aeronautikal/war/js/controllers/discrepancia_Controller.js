@@ -68,6 +68,7 @@ console.log($scope.provincias);
 }]);
 app.controller("EditarDiscrepanciaController", ['$scope','discrepancia','UpdateDiscrepanciaServicio',function($scope,discrepancia,UpdateDiscrepanciaServicio) {
 $scope.discrepancia =discrepancia;
+console.log($scope.discrepancia);
 $scope.eventos=[];
  //$scope para retener la informacion en el front
  $scope.evento_tabla = {

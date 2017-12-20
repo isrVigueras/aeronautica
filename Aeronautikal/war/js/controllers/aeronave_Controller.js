@@ -12,9 +12,9 @@ app.service('altaAeronaveServicio', [ '$http', '$q', function($http, $q) {
 } ]);
 //servicio elmina Aeronave
 app.service('eliminaAeronaveServicio', [ '$http', '$q', function($http, $q) {
-  this.elimina_aeronave = function(id) {
+  this.elimina_aeronave = function(folio) {
     var d = $q.defer();
-    $http.post("/aeronave/delete/"+id).then(function(response) {
+    $http.post("/aeronave/delete/"+folio).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
