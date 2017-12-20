@@ -234,13 +234,18 @@ public class DiscrepanciaController {
 		   public DetalleDiscrepanciaVo getDetalleDiscrepancia(Long id){
 			   
 				DetalleDiscrepanciaVo det = new DetalleDiscrepanciaVo();
-			       System.out.println("estoy en getDetalleDiscrepancia");
-			       OrdenVo orden =ordenDao.consult(Long.parseLong(det.getFolioOrden()));
+			       System.out.println("estoy en getDetalleDiscrepancia.....idOrden"+det.getIdOrden());
+			      
+			     
+			       DiscrepanciaEntity dis = discrepanciaDao.consult(id);
+			       OrdenVo orden =ordenDao.consult(dis.getFolioOrden());
 			       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
 			       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
-			       DiscrepanciaEntity dis = discrepanciaDao.consult(id);
 			       
-			      
+			      System.out.println("orden"+orden);
+			      System.out.println("empresa"+empresa);
+			      System.out.println("nave"+nave);
+			      System.out.println("dis"+dis);
 			     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
 			       det.setIdOrden(orden.getId());
 			       det.setFolioOrden(orden.getFolio());
