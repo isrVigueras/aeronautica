@@ -61,53 +61,53 @@ public class AeronaveController  {
 
     }
     
-    @RequestMapping(value="/add_", method = RequestMethod.GET)
-    public String addAeroGet(@ModelAttribute("entry") AeronaveEntity entry) {
-		   System.out.println("si entra a Aeronave controller");   
-		   	try {
-		   		entry.setNumeroAeronave("1");
-		   		entry.setMatricula("AAW-21-37");
-		   		entry.setNumeroSerie("23432587Z");
-				entry.setModelo("A-4000");
-				entry.setTiempovuelo(4590);
-				entry.setAterrizaje("23 en toluca ...");
-				entry.setNacionalidad("MEXICANA");
-				//Contador.reinicia();
-				
-	            System.out.println("si asign/ valor"+entry);
-	        } catch (RuntimeException ignored) {
-	            // getUniqueEntity should throw exception
-	        }
-		   System.out.println("ya");	    
-	        aeronaveService.save(entry);   //implementa el dao 
-	        System.out.println("ya guardo la entity de aeronave");
-	    	Contador.incremeta();
-	        return "Orden_de_trabajo"; ///poner el html de aeronave alta
-		}
-    @RequestMapping(value="/add__", method = RequestMethod.GET)
-    public String addAeroGet_(@ModelAttribute("entry") AeronaveEntity entry) {
-		   System.out.println("si entra a Aeronave controller");   
-		   	try {
-		   		entry.setId("121213");
-		   		entry.setNumeroAeronave("2");
-		   		entry.setMatricula("XSX-98-789");
-		   		entry.setNumeroSerie("C-2389AX");
-				entry.setModelo("F-2550");
-				entry.setTiempovuelo(1200);
-				entry.setAterrizaje("CIUDAD DE MEXICO ...");
-				entry.setNacionalidad("NORTEAMERICANA");
-				//Contador.reinicia();
-				
-	            System.out.println("si asign/ valor"+entry);
-	        } catch (RuntimeException ignored) {
-	            // getUniqueEntity should throw exception
-	        }
-		   System.out.println("ya");	    
-	        aeronaveService.save(entry);   //implementa el dao 
-	        System.out.println("ya guardo la entity de aeronave");
-	    	Contador.incremeta();
-	        return "Orden_de_trabajo"; ///poner el html de aeronave alta
-		}
+//    @RequestMapping(value="/add_", method = RequestMethod.GET)
+//    public String addAeroGet(@ModelAttribute("entry") AeronaveEntity entry) {
+//		   System.out.println("si entra a Aeronave controller");   
+//		   	try {
+//		   		entry.setNumeroAeronave("1");
+//		   		entry.setMatricula("AAW-21-37");
+//		   		entry.setNumeroSerie("23432587Z");
+//				entry.setModelo("A-4000");
+//				entry.setTiempovuelo(4590);
+//				entry.setAterrizaje("23 en toluca ...");
+//				entry.setNacionalidad("MEXICANA");
+//				//Contador.reinicia();
+//				
+//	            System.out.println("si asign/ valor"+entry);
+//	        } catch (RuntimeException ignored) {
+//	            // getUniqueEntity should throw exception
+//	        }
+//		   System.out.println("ya");	    
+//	        aeronaveService.save(entry);   //implementa el dao 
+//	        System.out.println("ya guardo la entity de aeronave");
+//	    	Contador.incremeta();
+//	        return "Orden_de_trabajo"; ///poner el html de aeronave alta
+//		}
+//    @RequestMapping(value="/add__", method = RequestMethod.GET)
+//    public String addAeroGet_(@ModelAttribute("entry") AeronaveEntity entry) {
+//		   System.out.println("si entra a Aeronave controller");   
+//		   	try {
+//		   		//entry.setId("121213");
+//		   		entry.setNumeroAeronave("2");
+//		   		entry.setMatricula("XSX-98-789");
+//		   		entry.setNumeroSerie("C-2389AX");
+//				entry.setModelo("F-2550");
+//				entry.setTiempovuelo(1200);
+//				entry.setAterrizaje("CIUDAD DE MEXICO ...");
+//				entry.setNacionalidad("NORTEAMERICANA");
+//				//Contador.reinicia();
+//				
+//	            System.out.println("si asign/ valor"+entry);
+//	        } catch (RuntimeException ignored) {
+//	            // getUniqueEntity should throw exception
+//	        }
+//		   System.out.println("ya");	    
+//	        aeronaveService.save(entry);   //implementa el dao 
+//	        System.out.println("ya guardo la entity de aeronave");
+//	    	Contador.incremeta();
+//	        return "Orden_de_trabajo"; ///poner el html de aeronave alta
+//		}
     
     @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
 	   public void addComponente(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
@@ -142,7 +142,7 @@ public class AeronaveController  {
 	   
 	   
 	   @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.POST)
-	   public void deleteAeronave(HttpServletResponse response, HttpServletRequest request, @PathVariable String id) 
+	   public void deleteAeronave(HttpServletResponse response, HttpServletRequest request, @PathVariable Long id) 
 			   throws IOException {
 		   ////////////ojo cuando borra aeronave, checr muy bien lo de Static en el dao y el @override de daoimpl
 		   System.out.println("si esta en delete"+id);

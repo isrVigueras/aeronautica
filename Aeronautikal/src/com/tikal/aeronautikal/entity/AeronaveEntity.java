@@ -1,16 +1,16 @@
 package com.tikal.aeronautikal.entity;
 
-import com.googlecode.objectify.annotation.Container;
+
 import  com.googlecode.objectify.annotation.Entity ;
 import  com.googlecode.objectify.annotation.Id ;
-import  com.googlecode.objectify.annotation.Index ;
+
 
 
 
 @Entity 
 public  class  AeronaveEntity {
 	
-    @Id String id;
+    @Id Long id;
     private String numeroAeronave;
 	private String matricula;
 	private String marca;
@@ -34,10 +34,10 @@ public  class  AeronaveEntity {
 	public String getMatricula() {
 		return matricula;
 	}
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getNumeroAeronave() {

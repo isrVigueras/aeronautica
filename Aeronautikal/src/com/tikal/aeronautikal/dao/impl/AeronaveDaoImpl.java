@@ -49,7 +49,7 @@ public class AeronaveDaoImpl implements AeronaveDao {
 
     
    @Override
-	public AeronaveEntity consult(String id) {
+	public AeronaveEntity consult(Long id) {
 	   System.out.println("si esta en daoimpl consultando la nave.."+id);
       return ofy().load().type(AeronaveEntity.class).id(id).now();
 		

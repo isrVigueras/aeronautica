@@ -21,7 +21,7 @@ public interface AeronaveService {
     
     public void update(AeronaveEntity a);
     
-    public AeronaveEntity consult(String id);
+    public AeronaveEntity consult(Long id);
     
     public List<AeronaveEntity> getAll();
 
