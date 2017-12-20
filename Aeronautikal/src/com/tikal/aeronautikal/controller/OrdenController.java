@@ -174,7 +174,7 @@ public class OrdenController {
 		   System.out.println("esta en find / orden");
 			AsignadorDeCharset.asignar(request, response);
 			DetalleOrdenVo detO = getDetalleOrden(id);
-			OrdenVo o=ordenDao.consult(id);
+			//OrdenVo o=ordenDao.consult(id);
 			response.getWriter().println(JsonConvertidor.toJson(detO));
 		
 		}
