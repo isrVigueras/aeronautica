@@ -65,6 +65,11 @@ console.log($scope.provincias);
          location.reload();
         })         
   }
+
+  $scope.muestra_discrepancia=function(data) {
+    console.log(data);
+    $scope.detalle_discrepancia = data; 
+  }
 }]);
 app.controller("EditarDiscrepanciaController", ['$scope','discrepancia','UpdateDiscrepanciaServicio',function($scope,discrepancia,UpdateDiscrepanciaServicio) {
 $scope.discrepancia =discrepancia;
