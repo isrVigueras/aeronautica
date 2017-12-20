@@ -23,6 +23,18 @@ app.service('OrdenesService', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+//servicio para generar Xls
+app.service('OrdenenDocumentoService', [ '$http', '$q', function($http, $q) {
+  this.genera_Xls = function(idOrden) {
+    var d = $q.defer();
+    $http.post("/generaOrdenXls/"+idOrden).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
 //Controlador de orden
 app.controller('ordenController', ['$scope','OrdenesService','new_folio','empresas','aeronaves',function($scope,OrdenesService,new_folio,empresas,aeronaves) {
  //$scope.fo = {}; alamcenar los datos en mi objeto para vidarlos
@@ -58,4 +70,20 @@ $scope.new_folio = new_folio;
     }
   }
 
+}]);
+
+app.controller("OrdenesgeneradasController", ['$scope', 'generadas','OrdenenDocumentoService',function($scope,generadas,OrdenenDocumentoService) {
+$scope.generadas = generadas;
+
+ $scope.genera_Xls=function(id) {
+  console.log(id)
+      //alert("variable comprobada: "+$scope.fo.con_nombre+" y la fecha "+ $scope.fo.fechaApertura+"folio: "+ $scope.new_folio );
+      OrdenenDocumentoService.genera_Xls(id).then(
+        function(data) {
+          console.log(data);
+         // alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
+         alert("Solicitud realizada");
+        })
+              
+  }
 }]);

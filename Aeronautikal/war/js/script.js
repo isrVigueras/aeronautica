@@ -426,9 +426,6 @@ app.directive('caDatepicker', [function(dateFormat) {
 app.controller('detalledisController', ['$scope', 'detalle_dis',function($scope, detalle_dis) {
  $scope.detalle_dis = detalle_dis;
 }]);
-app.controller("OrdenesgeneradasController", ['$scope', 'generadas',function($scope,generadas) {
-$scope.generadas = generadas;
-}]);
 
 app.controller("InventarioconsultaController", ['$scope','inv_consultas',function($scope,inv_consultas) {
  $scope.inv_consultas =inv_consultas;
