@@ -239,6 +239,7 @@ public class DiscrepanciaController {
 			       
 			      
 			     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
+			       det.setIdOrden(orden.getId());
 			       det.setFolioOrden(orden.getFolio());
 			       det.setFechaOrden(orden.getFechaApertura());
 			       det.setNombreEmpresa(empresa.getNombreEmpresa());

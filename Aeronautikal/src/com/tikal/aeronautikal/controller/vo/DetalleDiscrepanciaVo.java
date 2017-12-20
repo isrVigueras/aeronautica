@@ -11,6 +11,7 @@ import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 @Entity
 public class DetalleDiscrepanciaVo {
 	@Id private Long id;
+	private Long idOrden;
 	private String folioOrden;
 	private String fechaOrden;
 	private String nombreEmpresa;
@@ -23,6 +24,15 @@ public class DetalleDiscrepanciaVo {
 	private String Accion;
 	private List<ComponenteEntity> componentes;
 	private List<EventoEntity> eventos;
+	
+	
+	
+	public Long getIdOrden() {
+		return idOrden;
+	}
+	public void setIdOrden(Long idOrden) {
+		this.idOrden = idOrden;
+	}
 	public Long getId() {
 		return id;
 	}
