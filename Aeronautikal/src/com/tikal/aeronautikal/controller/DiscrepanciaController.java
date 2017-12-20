@@ -251,7 +251,8 @@ public class DiscrepanciaController {
 			       det.setDescripcion(dis.getDescripcion());
 			       det.setAccion(dis.getAccion());
 			       det.setComponentes(getComponente(id));
-			       det.setEventos(dis.getEventos());		       
+			       det.setEventos(dis.getEventos());
+			       det.setTelefono(empresa.getTelefono());
 			              
 				return det;	
 			   

@@ -24,9 +24,16 @@ public class DetalleDiscrepanciaVo {
 	private String Accion;
 	private List<ComponenteEntity> componentes;
 	private List<EventoEntity> eventos;
+	private Long telefono;
 	
 	
 	
+	public Long getTelefono() {
+		return telefono;
+	}
+	public void setTelefono(Long telefono) {
+		this.telefono = telefono;
+	}
 	public Long getIdOrden() {
 		return idOrden;
 	}
