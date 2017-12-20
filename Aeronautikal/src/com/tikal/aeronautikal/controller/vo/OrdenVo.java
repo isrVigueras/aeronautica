@@ -18,21 +18,15 @@ public class OrdenVo {
 	String fechaApertura;	
 	Long empresa;          
 	String nombreEmpresa;
-	String aeronave;
-	Long idAeronave;
-	
+	Long aeronave;
+		
 	//@Ignore private Empresa laEmpresa;
 	
 	//@Index @Load Ref<Empresa> refEmpresa;
 	
 	
 	
-	public Long getIdAeronave() {
-		return idAeronave;
-	}
-	public void setIdAeronave(Long idAeronave) {
-		this.idAeronave = idAeronave;
-	}
+	
 	public String getFolio() {
 		return folio;
 	}
@@ -63,10 +57,10 @@ public class OrdenVo {
 	public void setEmpresa(Long empresa) {
 		this.empresa = empresa;
 	}
-	public String getAeronave() {
+	public Long getAeronave() {
 		return aeronave;
 	}
-	public void setAeronave(String aeronave) {
+	public void setAeronave(Long aeronave) {
 		this.aeronave = aeronave;
 	}
 		

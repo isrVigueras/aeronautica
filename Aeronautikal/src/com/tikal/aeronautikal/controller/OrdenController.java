@@ -77,7 +77,7 @@ public class OrdenController {
 		   		entry.setEmpresa(Long.parseLong("1"));
 				entry.setFechaApertura("01-12-2017");
 				entry.setEmpresa(Long.parseLong("1"));
-				entry.setAeronave("1");
+				entry.setAeronave(Long.parseLong("1"));
 				//entry.setDate(Calendar.getInstance().getTime());
 	            System.out.println("si asign/ valor"+entry);
 	        } catch (RuntimeException ignored) {
@@ -115,6 +115,7 @@ public class OrdenController {
 	       
 	    }
 
+	   
 
 	   @RequestMapping(value={"/getFolio"},method = RequestMethod.GET)
 	   
@@ -170,6 +171,7 @@ public class OrdenController {
 	   @RequestMapping(value = { "/find/{id}" }, method = RequestMethod.GET, produces = "application/json")
 		public void findFolio(HttpServletResponse response, HttpServletRequest request,
 				@PathVariable Long id) throws IOException {
+		   System.out.println("esta en find / orden");
 			AsignadorDeCharset.asignar(request, response);
 			DetalleOrdenVo detO = getDetalleOrden(id);
 			//OrdenVo o=ordenDao.consult(id);
@@ -236,7 +238,7 @@ public class OrdenController {
 	       
 	       OrdenVo orden =ordenDao.consult(idOrden);
 	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
-	       AeronaveEntity nave = aeronaveDao.consult(orden.getIdAeronave());
+	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
 	      
 	     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
 	       ox.setNombreArchivo("OT"+orden.getFolio()+"_"+nave.getMatricula()+".xls");
@@ -265,7 +267,7 @@ public DetalleOrdenVo getDetalleOrden(Long idOrden){
 	       
 	       OrdenVo orden =ordenDao.consult(idOrden);
 	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
-	       AeronaveEntity nave = aeronaveDao.consult(orden.getIdAeronave());
+	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
 	      
 	     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
 	       det.setFolioOrden(orden.getFolio());
