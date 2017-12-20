@@ -9,6 +9,7 @@ import com.googlecode.objectify.annotation.Id;
 public class OrdenXlsVo {
 	
 	@Id Long id;
+	private String nombreArchivo;
 	private String fechaOrden;
 	private String nombreEmpresa;
 	private String folioOrden;
@@ -23,6 +24,14 @@ public class OrdenXlsVo {
 	private List<String> accionesDiscrepancia;
 	
 	
+	
+	
+	public String getNombreArchivo() {
+		return nombreArchivo;
+	}
+	public void setNombreArchivo(String nombreArchivo) {
+		this.nombreArchivo = nombreArchivo;
+	}
 	public String getFechaOrden() {
 		return fechaOrden;
 	}

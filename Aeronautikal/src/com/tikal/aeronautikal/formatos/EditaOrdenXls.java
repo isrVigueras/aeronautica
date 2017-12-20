@@ -15,7 +15,8 @@ import org.apache.poi.ss.util.WorkbookUtil;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.googlecode.objectify.annotation.Entity; 
+import com.googlecode.objectify.annotation.Entity;
+import com.tikal.aeronautikal.controller.vo.OrdenXlsVo; 
  
 /** 
  * Utility class, where we will create methods for training read and write excel files,
@@ -35,8 +36,7 @@ import com.googlecode.objectify.annotation.Entity;
 
 
 public class EditaOrdenXls {
-	int renglon=0;
-  	int columna=0;
+
 	 
 	    /**
 	     * Explanation of the method by which we read the excel file we pass as
@@ -150,9 +150,15 @@ public class EditaOrdenXls {
 	    	
 	    	}
 	    	
-	    	 public void WriteXls(String archivo) throws IOException{
-	    		 	FileInputStream file = new FileInputStream(new File(archivo));
+	    	// @SuppressWarnings("deprecation")
+			public static void WriteXls(OrdenXlsVo ox) throws IOException{
+				int renglon=0;
+			  	int columna=0;
+				System.out.println("ya esta escribiendo..........:");
+	    		 	FileInputStream file = new FileInputStream(new File(ox.getNombreArchivo()));
+	    		 	System.out.println("1111111");
 	    		 	HSSFWorkbook workbook = new HSSFWorkbook(file);
+	    		 	System.out.println("222222");
 	    		  	HSSFSheet sheet = workbook.getSheetAt(0);
 	    		  	System.out.println("nombre de hoja:"+ 	sheet.getSheetName());
 	    		  	Iterator<Row> rowIterator = sheet.iterator();
@@ -173,7 +179,7 @@ public class EditaOrdenXls {
 		    		 	 		    System.out.println(celda.getStringCellValue());
 		    		 	 		    if (celda.getStringCellValue().equals("fecha")){
 		    		 	 		    	celda.setCellType(Cell.CELL_TYPE_STRING);
-		    		 	 		    	celda.setCellValue("Fabian Montoya");
+		    		 	 		    	celda.setCellValue(ox.getFechaOrden());
 		    		 	 		    }
 		    		 	 		    break;
 		    		 	 		

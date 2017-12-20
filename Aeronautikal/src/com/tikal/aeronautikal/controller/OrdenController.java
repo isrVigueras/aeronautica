@@ -214,22 +214,14 @@ public class OrdenController {
 	        }
 	        ////sacando sopa
 	        
-	       getObjectXls(idOrden);
-	     
+	       OrdenXlsVo ox = getObjectXls(idOrden);   
 	       
-	       
-	     //   List<DiscrepanciaEntity> discrepancias= discrepanciaDao.
-	        
-	        ///
-	       OrdenVo orden =ordenDao.consult(idOrden);
-	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
-	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
 	        String origen ="C:/Users/Lenovo/Desktop/OTs/OrdenDeTrabajo.xls";
-	        String destino ="C:/Users/Lenovo/Desktop/OTs/O.T."+orden.getFolio()+" "+nave.getMatricula()+".xls";
+	   //     String destino ="C:/Users/Lenovo/Desktop/OTs/O.T."+orden.getFolio()+" "+nave.getMatricula()+".xls";
 	       // eox.FileCopy(origen, destino);  
 			//EditaOrdenXls.readWriteExcelFile();
 	        System.out.println("Empezando a ecribir en el Xls..." );
-	        eox.WriteXls("C:/Users/Lenovo/Desktop/OTs/OT__.xls");
+	        EditaOrdenXls.WriteXls(ox);
 	        System.out.println("regrese de escribir en el Xls..." );
 		}
 	  
@@ -242,7 +234,9 @@ public class OrdenController {
 	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
 	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
 	      
-	     //  ox.setAccionesDiscrepancia(acciones);
+	     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
+	       ox.setNombreArchivo("OT"+orden.getFolio()+"_"+nave.getMatricula()+".xls");
+	       System.out.println("xls:."+orden.getFolio());
 	       ox.setFechaOrden(orden.getFechaApertura());
 	       ox.setNombreEmpresa(empresa.getNombreEmpresa());
 	       ox.setFolioOrden(orden.getFolio());
