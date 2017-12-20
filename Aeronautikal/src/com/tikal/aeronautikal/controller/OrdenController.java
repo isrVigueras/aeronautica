@@ -104,6 +104,7 @@ public class OrdenController {
 	        	 System.out.println("folio orden:"+orden.getFolio());
 	        	 System.out.println("folio aeronave:"+orden.getAeronave());
 	        	 orden.setNombreEmpresa(empresaDao.consult(orden.getEmpresa()).getNombreEmpresa());
+	        	 
 	        	orden.setFolio(orden.getFolio()+orden.getAeronave());
 	        	ordenDao.save(orden);	 
 	        	Contador.incremeta();
@@ -235,7 +236,7 @@ public class OrdenController {
 	       
 	       OrdenVo orden =ordenDao.consult(idOrden);
 	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
-	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
+	       AeronaveEntity nave = aeronaveDao.consult(orden.getIdAeronave());
 	      
 	     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
 	       ox.setNombreArchivo("OT"+orden.getFolio()+"_"+nave.getMatricula()+".xls");
@@ -264,7 +265,7 @@ public DetalleOrdenVo getDetalleOrden(Long idOrden){
 	       
 	       OrdenVo orden =ordenDao.consult(idOrden);
 	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
-	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
+	       AeronaveEntity nave = aeronaveDao.consult(orden.getIdAeronave());
 	      
 	     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
 	       det.setFolioOrden(orden.getFolio());

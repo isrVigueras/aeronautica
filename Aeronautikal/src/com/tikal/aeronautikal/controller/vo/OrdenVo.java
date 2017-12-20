@@ -19,6 +19,7 @@ public class OrdenVo {
 	Long empresa;          
 	String nombreEmpresa;
 	String aeronave;
+	Long idAeronave;
 	
 	//@Ignore private Empresa laEmpresa;
 	
@@ -26,6 +27,12 @@ public class OrdenVo {
 	
 	
 	
+	public Long getIdAeronave() {
+		return idAeronave;
+	}
+	public void setIdAeronave(Long idAeronave) {
+		this.idAeronave = idAeronave;
+	}
 	public String getFolio() {
 		return folio;
 	}

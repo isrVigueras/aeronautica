@@ -234,7 +234,7 @@ public class DiscrepanciaController {
 			       
 			       OrdenVo orden =ordenDao.consult(Long.parseLong(det.getFolioOrden()));
 			       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
-			       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
+			       AeronaveEntity nave = aeronaveDao.consult(orden.getIdAeronave());
 			       DiscrepanciaEntity dis = discrepanciaDao.consult(id);
 			       
 			      
