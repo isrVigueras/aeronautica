@@ -21,6 +21,7 @@ import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.DiscrepanciaDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
+import com.tikal.aeronautikal.entity.Contador;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.EventoEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
@@ -167,8 +168,20 @@ public class DiscrepanciaController {
 			   AsignadorDeCharset.asignar(request, response);
 			   System.out.println("discrepancia que manda edgar:"+json);
 			   DiscrepanciaEntity d = (DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
+			   List<EventoEntity> eventos = d.getEventos();
+			   List<OrdenVo> nacs= new ArrayList<OrdenVo>();
+			   Contador.reiniciaE();
+				for(EventoEntity e : eventos) {
+					e.setIdEvento(Long.toString(d.getId())+"-"+Contador.getFolioEvento());
+					Contador.incrementaE();
+					 System.out.println("el id de evento es:"+e.getIdEvento());
+					// System.out.println("miliegundo:"+Calendar.MILLISECOND);
+				}
 			   ////////////////////////////ojo ver si es necesario hacer un controller para evento....
 			   discrepanciaDao.update(d);
+			   
+			   
+			   
 			   
 			   response.getWriter().println(JsonConvertidor.toJson(discrepanciaDao.consult(d.getId())));
 		   }

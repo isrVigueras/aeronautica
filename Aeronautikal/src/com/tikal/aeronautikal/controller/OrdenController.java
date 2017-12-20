@@ -102,6 +102,7 @@ public class OrdenController {
 	        	//crearListaIdsOT();
 	        	 System.out.println("folio orden:"+orden.getFolio());
 	        	 System.out.println("folio aeronave:"+orden.getAeronave());
+	        	 orden.setNombreEmpresa(empresaDao.consult(orden.getEmpresa()).getNombreEmpresa());
 	        	orden.setFolio(orden.getFolio()+orden.getAeronave());
 	        	ordenDao.save(orden);	 
 	        	Contador.incremeta();

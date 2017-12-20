@@ -7,10 +7,12 @@ import com.googlecode.objectify.annotation.Id;
 public class EventoEntity {
 
 	//@Id private String idEvento;
+	private String idEvento;
 	private String nombreEvento;
 	private Integer duracion;
 	private Integer costo;
 //	private String idDiscrepancia;
+	
 	
 	
 //	
@@ -28,6 +30,12 @@ public class EventoEntity {
 //	}
 	public String getNombreEvento() {
 		return nombreEvento;
+	}
+	public String getIdEvento() {
+		return idEvento;
+	}
+	public void setIdEvento(String idEvento) {
+		this.idEvento = idEvento;
 	}
 	public void setNombreEvento(String nombreEvento) {
 		this.nombreEvento = nombreEvento;

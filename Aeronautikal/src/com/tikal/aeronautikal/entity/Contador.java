@@ -7,9 +7,16 @@ import com.googlecode.objectify.annotation.Id;
 public class Contador {
 	 @Id private Long id;
 	private static Long folio;
-	private static Long folioDiscrepancia;
+	private static Long folioEvento;
+	private static Long idDiscrepancia;
 	
 	
+	public static Long getIdDiscrepancia() {
+		return idDiscrepancia;
+	}
+	public static void setIdDiscrepancia(Long idDiscrepancia) {
+		Contador.idDiscrepancia = idDiscrepancia;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -25,11 +32,14 @@ public class Contador {
 		Contador.folio = folio;
 	}
 	
-	public static Long getFolioDiscrepancia() {
-		return folioDiscrepancia;
+	
+	public static Long getFolioEvento() {
+		if (folioEvento == null || folioEvento==0)
+			folioEvento=Long.parseLong("1");
+		return folioEvento;
 	}
-	public static void setFolioDiscrepancia(Long folioDiscrepancia) {
-		Contador.folioDiscrepancia = folioDiscrepancia;
+	public static void setFolioEvento(Long folioEvento) {
+		Contador.folioEvento = folioEvento;
 	}
 	public static Long incremeta(){
 		
@@ -39,5 +49,14 @@ public class Contador {
 	
 	public static void  reinicia(){
 		Contador.setFolio(Long.parseLong("0"));
+	}
+	
+	public static Long incrementaE(){
+		Contador.folioEvento=getFolioEvento()+1;
+		return folioEvento;
+	}
+	
+	public static void reiniciaE(){
+		Contador.setFolioEvento(Long.parseLong("0"));
 	}
 }

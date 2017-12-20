@@ -17,6 +17,7 @@ public class OrdenVo {
     String folio;
 	String fechaApertura;	
 	Long empresa;          
+	String nombreEmpresa;
 	String aeronave;
 	
 	//@Ignore private Empresa laEmpresa;
@@ -27,6 +28,12 @@ public class OrdenVo {
 	
 	public String getFolio() {
 		return folio;
+	}
+	public String getNombreEmpresa() {
+		return nombreEmpresa;
+	}
+	public void setNombreEmpresa(String nombreEmpresa) {
+		this.nombreEmpresa = nombreEmpresa;
 	}
 	public Long getId() {
 		return id;

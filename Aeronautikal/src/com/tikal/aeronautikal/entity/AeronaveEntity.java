@@ -9,6 +9,7 @@ import  com.googlecode.objectify.annotation.Index ;
 
 @Entity 
 public  class  AeronaveEntity {
+	
     @Id String numeroAeronave;
 	private String matricula;
 	private String marca;
