@@ -27,7 +27,7 @@ app.service('OrdenesService', [ '$http', '$q', function($http, $q) {
 app.service('OrdenenDocumentoService', [ '$http', '$q', function($http, $q) {
   this.genera_Xls = function(idOrden) {
     var d = $q.defer();
-    $http.post("/generaOrdenXls/"+idOrden).then(function(response) {
+    $http.post("/orden/generaOrdenXls/"+idOrden).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -87,3 +87,8 @@ $scope.generadas = generadas;
               
   }
 }]);
+app.controller('detalledisController', ['$scope', 'detalle_dis',function($scope, detalle_dis) {
+ $scope.detalle_dis = detalle_dis;
+ console.log(detalle_dis);
+}]);
+
