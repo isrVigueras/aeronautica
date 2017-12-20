@@ -181,17 +181,17 @@
   <div class="modal-dialog modal-lg" role="document" id="mdialTamanio">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">Orden de Trabajo</h4>
+        <h4 class="modal-title" id="myModalLabel">Detalle de Discrepancia</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
-  <h3>&nbsp;&nbsp;Detalle Discrepancia</h3>
+  <h3>&nbsp;&nbsp;Informacion General</h3>
 <div class="row" style="margin: 1% 1%;">
   <div class="col-xs-3">
-  <label for="folio">Folio:</label><p class="form-control-static" id="folio" name="folio" type="number">15000102</p>
+  <label for="folio">Folio:</label><p class="form-control-static" id="folio" name="folio" type="number">{{detalle_discrepancia.folio}}</p>
 </div>
 <div class="col-xs-3">
-  <label for="fechaCreacion">Fecha:</label><p class="form-control-static" id="folio" name="folio" type="number">11/10/2017</p>
+  <label for="fechaCreacion">Fecha:</label><p class="form-control-static" id="folio" name="folio" type="number">{{detalle_discrepancia.fechaApertura}}</p>
 </div>
 <div class="col-xs-3">
   <label for="empresa">Empresa:</label><p class="form-control-static" id="folio" name="folio" type="number">Airbus Industrie  </p>
@@ -200,7 +200,7 @@
   <label for="folio">Discrepancia/discrepancy:</label><p class="form-control-static" id="folio" name="folio" type="number">007</p>
 </div>-->
 </div>
-  <br> 
+ <!-- <br> 
   <h3>&nbsp;&nbsp;Aeronave</h3>
   <div class="row" style="margin: 1% 1%;">
     <div class="col-xs-3">
@@ -211,33 +211,33 @@
     </div>
     <div class="col-xs-3">
   <label for="n_serie">Numero de serie:</label><p class="form-control-static" id="folio" name="folio" type="number">FL45SE8R77896423E</p>
-    </div>
+    </div>-->
     <!--<div class="col-xs-3">
   <label for="a_t_vuelo">Tiempo de Vuelo:</label><p class="form-control-static" id="folio" name="folio" type="number">14 Horas</p>
     </div>-->
     <!--<div class="col-xs-3">
   <label for="a_t_aterrizaje">Aterrizaje:</label><p class="form-control-static" id="folio" name="folio" type="number">Toluca</p>
     </div>-->
-  </div>
+  <!--</div>-->
    
   <h3>&nbsp;&nbsp;Discrepancia</h3>
   <br>
   <div class="row" style="margin: 1% 1%;">
     <div class="col-xs-2">
-  <label for="a_matricula">Taller/shop:</label><p class="form-control-static" id="folio" name="folio" type="number">01 MANTENIMIENTO</p>
+  <label for="a_matricula">Taller/shop:</label><p class="form-control-static" id="folio" name="folio" type="number">{{detalle_discrepancia.taller}}</p>
   </div>
   <div class="col-xs-2">
-  <label for="a_modelo">Seccion/section:</label><p class="form-control-static" id="folio" name="folio" type="number">02 MANTENIMIENTO PROGRAMADO</p>
+  <label for="a_modelo">Seccion/section:</label><p class="form-control-static" id="folio" name="folio" type="number">{{detalle_discrepancia.seccion}}</p>
     </div>
       <div class="col-xs-3">
   <label for="con_nombre">Descripcion/description:</label>
   <br>
-  <p class="form-control-static" id="folio" name="folio" type="number">Ejecutar fases A1-A6 conforme al manual de mantenimiento.</p>
+  <p class="form-control-static" id="folio" name="folio" type="number">{{detalle_discrepancia.descripcion}}</p>
     </div>
     <div class="col-xs-4">
   <label for="con_nombre">Accion Tomada/action taken:</label>
   <br>
-  <p class="form-control-static" id="folio" name="folio" type="number">Se efectuaron fases A1,A2,A3,A4,A5 y A6 de acuerdo al MM 05-10-01 hasta 05-10-06.</p>
+  <p class="form-control-static" id="folio" name="folio" type="number">{{detalle_discrepancia.accion}}</p>
   </div>
     </div>
     <h3>&nbsp;&nbsp;Componentes</h3>
@@ -251,16 +251,6 @@
     <th>No.DeParte/p.n</th>
 
     <th>Cant./qty</th>
-
-    <th>C.Falt/pending</th>
-    
-    <th>No.Req/requisition</th>
-    
-    <th>No.Vale/tiket</th>
-  
-  <th>N.S.Removido/s.n.removed</th>
-
-  <th>N.S Instaldo/s.n.installed</th>
   </tr>
 
   <tr bgcolor="#CEECF5">
@@ -270,78 +260,6 @@
     <td>101244</td>
 
     <td>2.00</td>
-
-    <td>0.00</td>
-     <td></td>
-      <td>20029</td>
-       <td></td>
-        <td></td>
-  </tr>
-
-  <tr bgcolor="#CEECF5">
-
-    
-    <td>GASTEK</td>
-
-    <td>101246</td>
-
-    <td>2.00</td>
-
-    <td>0.00</td>
-     <td></td>
-      <td>20029</td>
-       <td></td>
-        <td></td>
-
-  </tr>
-
-  <tr bgcolor="#CEECF5">
-
-      
-    <td>FILTER ELEMENT</td>
-
-    <td>6600489-1</td>
-
-    <td>2.00</td>
-
-    <td>0.00</td>
-     <td></td>
-      <td>20029</td>
-       <td></td>
-        <td></td>
-
-  </tr>
-  <tr bgcolor="#CEECF5">
-
-      
-    <td>PACKING/EMPAQUE</td>
-
-    <td>MS29513-238</td>
-
-    <td>2.00</td>
-
-    <td>0.00</td>
-     <td></td>
-      <td>20029</td>
-       <td></td>
-        <td></td>
-
-  </tr>
-  <tr bgcolor="#CEECF5">
-
-      
-    <td>SCREW</td>
-
-    <td>MS35265-31</td>
-
-    <td>3.00</td>
-
-    <td>0.00</td>
-     <td></td>
-      <td>20029</td>
-       <td></td>
-        <td></td>
-
   </tr>
 </table>
     

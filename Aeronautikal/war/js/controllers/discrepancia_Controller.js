@@ -96,9 +96,10 @@ $scope.Agregar=function(){
       console.log($scope.discrepancia.entos);
       }    
 
-      $scope.Quitar=function(i){
+          $scope.Quitar=function(i){
         
       }  
+
 
  //$scope para rellenar los campos y poder editarlos
  $scope.discrepancia_fo = {
