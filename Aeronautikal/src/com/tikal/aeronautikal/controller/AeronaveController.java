@@ -88,6 +88,7 @@ public class AeronaveController  {
     public String addAeroGet_(@ModelAttribute("entry") AeronaveEntity entry) {
 		   System.out.println("si entra a Aeronave controller");   
 		   	try {
+		   		entry.setId("121213");
 		   		entry.setNumeroAeronave("2");
 		   		entry.setMatricula("XSX-98-789");
 		   		entry.setNumeroSerie("C-2389AX");
@@ -140,12 +141,12 @@ public class AeronaveController  {
 		}
 	   
 	   
-	   @RequestMapping(value = {"/delete/{numeroAeronave}" }, method = RequestMethod.POST)
-	   public void deleteAeronave(HttpServletResponse response, HttpServletRequest request, @PathVariable String numeroAeronave) 
+	   @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.POST)
+	   public void deleteAeronave(HttpServletResponse response, HttpServletRequest request, @PathVariable String id) 
 			   throws IOException {
 		   ////////////ojo cuando borra aeronave, checr muy bien lo de Static en el dao y el @override de daoimpl
-		   System.out.println("si esta en delete"+numeroAeronave);
-		   aeronaveDao.delete(aeronaveDao.consult(numeroAeronave));
+		   System.out.println("si esta en delete"+id);
+		   aeronaveDao.delete(aeronaveDao.consult(id));
 		   System.out.println("aeronave eliminada....");
 		   response.getWriter().println("ok");
 	   }

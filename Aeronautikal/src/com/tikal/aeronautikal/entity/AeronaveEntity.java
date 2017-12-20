@@ -10,7 +10,8 @@ import  com.googlecode.objectify.annotation.Index ;
 @Entity 
 public  class  AeronaveEntity {
 	
-    @Id String numeroAeronave;
+    @Id String id;
+    private String numeroAeronave;
 	private String matricula;
 	private String marca;
     private String modelo;
@@ -27,10 +28,17 @@ public  class  AeronaveEntity {
 	//@Container OrdenEntity orden;
     
     
+    
 	
 	
 	public String getMatricula() {
 		return matricula;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getNumeroAeronave() {
 		return numeroAeronave;

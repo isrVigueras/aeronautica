@@ -35,8 +35,8 @@ public class AeronaveServiceImpl implements AeronaveService {
     }
 
 	
-	public  AeronaveEntity consult(String numeroAeronave) {
-		return aeronaveDao.consult(numeroAeronave);
+	public  AeronaveEntity consult(String id) {
+		return aeronaveDao.consult(id);
 		//return ofy().load().type(AeronaveEntity.class).id(numeroSerie).now();
 		// TODO Auto-generated method stub		
 	}

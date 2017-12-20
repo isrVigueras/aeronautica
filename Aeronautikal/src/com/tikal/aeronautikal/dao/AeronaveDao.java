@@ -23,7 +23,7 @@ public interface AeronaveDao {
 
 	public void update(AeronaveEntity nave);
 	
-	public AeronaveEntity consult(String numeroAeronave);
+	public AeronaveEntity consult(String id);
 	
 	//public static AeronaveEntity consult(String numeroSerie);
 	
