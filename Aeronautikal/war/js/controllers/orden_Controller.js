@@ -48,7 +48,7 @@ app.controller('ordenController', ['$scope','OrdenesService','new_folio','empres
     folio: $scope.new_folio,
     fechaApertura:new Date(),
     empresa:"",
-    aeronave:""
+    aeronave:undefined
   }
 
   //$scope.CurrentDate = new Date();
@@ -56,6 +56,7 @@ $scope.new_folio = new_folio;
  console.log($scope.new_folio);
  $scope.guardar=function() {
     if ($scope.form.$valid) {
+      console.log($scope.fo)
       //alert("variable comprobada: "+$scope.fo.con_nombre+" y la fecha "+ $scope.fo.fechaApertura+"folio: "+ $scope.new_folio );
       OrdenesService.genera_orden($scope.fo).then(
         function(data) {
