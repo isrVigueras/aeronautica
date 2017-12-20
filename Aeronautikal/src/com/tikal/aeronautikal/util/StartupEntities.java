@@ -3,6 +3,8 @@ package com.tikal.aeronautikal.util;
 import org.springframework.stereotype.Component;
 
 import com.googlecode.objectify.ObjectifyService;
+import com.tikal.aeronautikal.controller.vo.DetalleDiscrepanciaVo;
+import com.tikal.aeronautikal.controller.vo.DetalleOrdenVo;
 import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.controller.vo.OrdenXlsVo;
 import com.tikal.aeronautikal.controller.vo.RequisicionesComponenteVo;
@@ -38,6 +40,8 @@ public class StartupEntities {
 		ObjectifyService.register(RequisicionesComponenteVo.class);
 	//	ObjectifyService.register(EventoEntity.class);
 		ObjectifyService.register(OrdenXlsVo.class);
+		ObjectifyService.register(DetalleOrdenVo.class);
+		ObjectifyService.register(DetalleDiscrepanciaVo.class);
 		
 	}
 	

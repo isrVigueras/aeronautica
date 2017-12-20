@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.annotation.OnLoad;
+import com.tikal.aeronautikal.controller.vo.DetalleOrdenVo;
 import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.controller.vo.OrdenXlsVo;
 import com.tikal.aeronautikal.dao.AeronaveDao;
@@ -169,8 +170,9 @@ public class OrdenController {
 		public void findFolio(HttpServletResponse response, HttpServletRequest request,
 				@PathVariable Long id) throws IOException {
 			AsignadorDeCharset.asignar(request, response);
-			OrdenVo o=ordenDao.consult(id);
-			response.getWriter().println(JsonConvertidor.toJson(o));
+			DetalleOrdenVo detO = getDetalleOrden(id);
+			//OrdenVo o=ordenDao.consult(id);
+			response.getWriter().println(JsonConvertidor.toJson(detO));
 		
 		}
 	   
@@ -252,6 +254,31 @@ public class OrdenController {
 	       ox.setAccionesDiscrepancia(getAccionesDiscrepancia(idOrden));
 	              
 		return ox;	
+		  
+		  
+	  }
+	  
+public DetalleOrdenVo getDetalleOrden(Long idOrden){
+		  
+			DetalleOrdenVo det = new DetalleOrdenVo();
+	       
+	       OrdenVo orden =ordenDao.consult(idOrden);
+	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
+	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
+	      
+	     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
+	       det.setFolioOrden(orden.getFolio());
+	       det.setFecha(orden.getFechaApertura());
+	       det.setContacto(empresa.getNombreContacto());
+	       det.setCorreo(empresa.getEmail());
+	       det.setNombreEmpresa(empresa.getNombreEmpresa());
+	       det.setMatricula(nave.getMatricula());
+	       det.setModelo(nave.getModelo());
+	       det.setNoSerie(nave.getNumeroSerie());
+	       det.setTiempoVuelo(Integer.toString(nave.getTiempovuelo()));
+	       det.setAterrizaje(nave.getAterrizaje());
+	              
+		return det;	
 		  
 		  
 	  }

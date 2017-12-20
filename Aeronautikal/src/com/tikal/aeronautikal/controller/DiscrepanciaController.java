@@ -17,12 +17,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.tikal.aeronautikal.controller.vo.DetalleDiscrepanciaVo;
+import com.tikal.aeronautikal.controller.vo.DetalleOrdenVo;
 import com.tikal.aeronautikal.controller.vo.OrdenVo;
+import com.tikal.aeronautikal.dao.AeronaveDao;
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.DiscrepanciaDao;
+import com.tikal.aeronautikal.dao.EmpresaDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
+import com.tikal.aeronautikal.dao.RequisicionDao;
+import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.Contador;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
+import com.tikal.aeronautikal.entity.EmpresaEntity;
 import com.tikal.aeronautikal.entity.EventoEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.service.DiscrepanciaService;
@@ -47,6 +54,19 @@ public class DiscrepanciaController {
 		 @Autowired
 		 @Qualifier("ordenDao")
 		 OrdenDao ordenDao;
+		 
+		 
+		 @Autowired
+		 @Qualifier("aeronaveDao")
+		 AeronaveDao aeronaveDao;
+			
+		 @Autowired
+		 @Qualifier("empresaDao")
+		 EmpresaDao empresaDao;
+			
+		 @Autowired
+		 @Qualifier("requisicionDao")
+		 RequisicionDao requisicionDao;
 		 
 		 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 		   
@@ -190,22 +210,66 @@ public class DiscrepanciaController {
 			public void findFolio(HttpServletResponse response, HttpServletRequest request,
 					@PathVariable Long id) throws IOException {
 				AsignadorDeCharset.asignar(request, response);
-				DiscrepanciaEntity d=discrepanciaDao.consult(id);
-				response.getWriter().println(JsonConvertidor.toJson(d));
+				DetalleDiscrepanciaVo dd = getDetalleDiscrepancia(id);
+				//DiscrepanciaEntity d=discrepanciaDao.consult(id);
+				response.getWriter().println(JsonConvertidor.toJson(dd));
 			
 			}
 		   
 		   
-		   @RequestMapping(value={"/getFolioEvento/{idDiscrepancia}"},method = RequestMethod.GET)
+//		   @RequestMapping(value={"/getFolioEvento/{idDiscrepancia}"},method = RequestMethod.GET)		   
+//		   public void getFolioEvento(HttpServletResponse response, HttpServletRequest request,@PathVariable Long idDiscrepancia) throws IOException {
+//			  // response.getWriter().println("Prueba del mètodo PROBAR en Orden de trabajo");
+//			   Calendar c = Calendar.getInstance();		  
+//			   String folio =  (Integer.toString(c.get(Calendar.MILLISECOND))+"-"+"idDiscrepancia");
+//			   System.out.println("folio :"+folio);
+//			  // return folio;
+//			  response.getWriter().println((folio));
+//
+//		    }
+//		   
+		   public DetalleDiscrepanciaVo getDetalleDiscrepancia(Long id){
+			   
+				DetalleDiscrepanciaVo det = new DetalleDiscrepanciaVo();
+			       
+			       OrdenVo orden =ordenDao.consult(Long.parseLong(det.getFolioOrden()));
+			       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
+			       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
+			       DiscrepanciaEntity dis = discrepanciaDao.consult(id);
+			       
+			      
+			     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
+			       det.setFolioOrden(orden.getFolio());
+			       det.setFechaOrden(orden.getFechaApertura());
+			       det.setNombreEmpresa(empresa.getNombreEmpresa());
+			       det.setMatricula(nave.getMatricula());
+			       det.setModelo(nave.getModelo());
+			       det.setNoSerie(nave.getNumeroSerie());
+			       det.setTaller(dis.getTaller());
+			       det.setSeccion(dis.getSeccion());
+			       det.setDescripcion(dis.getDescripcion());
+			       det.setAccion(dis.getAccion());
+			       det.setComponentes(getComponente(id));
+			       det.setEventos(dis.getEventos());		       
+			              
+				return det;	
+			   
+		   }
 		   
-		   public void getFolioEvento(HttpServletResponse response, HttpServletRequest request,@PathVariable Long idDiscrepancia) throws IOException {
-			  // response.getWriter().println("Prueba del mètodo PROBAR en Orden de trabajo");
-			   Calendar c = Calendar.getInstance();		  
-			   String folio =  (Integer.toString(c.get(Calendar.MILLISECOND))+"-"+"idDiscrepancia");
-			   System.out.println("folio :"+folio);
-			  // return folio;
-			  response.getWriter().println((folio));
-
-		    }
+		   public List<ComponenteEntity> getComponente(Long idDis){
+			   	ComponenteEntity comp = componenteDao.consult(discrepanciaDao.consult(idDis).getFolio_componente());
+			   	// faalta la busqueda de todos los componentes de una discrepancia y meterlos a comps
+				  List<ComponenteEntity> comps = new ArrayList<ComponenteEntity>();
+				  
+				  //hacer el for para mandarlos a la lista de comps
+			      comps.add(comp);
+			    	 	    
+				return comps;
+				  
+			  }
+		   
+		
+		   
+		   
 		   
 }

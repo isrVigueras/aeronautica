@@ -97,9 +97,10 @@ package com.tikal.aeronautikal.controller;
 			}
 		   
 		   @RequestMapping(value = {"/delete/{idEmpresa}" }, method = RequestMethod.POST)
-		   public void deleteOrden(@PathVariable Long idEmpresa) throws IOException {
+		   public String deleteOrden(@PathVariable Long idEmpresa) throws IOException {
 			   System.out.println("entra en metodo delete"+idEmpresa);
 			   empresaDao.delete(empresaDao.consult(idEmpresa));
+			   return ("ok");
 		   }
 		   
 		   //////////////////////////////////////////////////////////////////////////////////////////*******************
