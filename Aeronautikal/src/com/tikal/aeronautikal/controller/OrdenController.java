@@ -157,7 +157,7 @@ public class OrdenController {
 	   @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
 	   public void deleteOrden(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
 		@PathVariable Long id) throws IOException {
-		   System.out.println("ya entro a delete");
+		   System.out.println("ya entro a delete de   orden");
 		   ordenDao.delete(ordenDao.consult(id));
 	   }
 	   
