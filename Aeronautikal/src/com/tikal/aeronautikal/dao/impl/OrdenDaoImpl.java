@@ -50,8 +50,8 @@ public class OrdenDaoImpl implements OrdenDao{
 		List<OrdenVo> all= ofy().load().type(OrdenVo.class).list();
 		List<OrdenVo> ns= new ArrayList<OrdenVo>();
 		for(OrdenVo o : all) {
-            aeronaveDao.consult(o.getAeronave());
-            if (aeronaveDao.consult(o.getAeronave()).equals("NORTEAMERICANA")){
+            aeronaveDao.consult(o.getIdAeronave());
+            if (aeronaveDao.consult(o.getIdAeronave()).equals("NORTEAMERICANA")){
             	ns.add(o);
             }
         }
@@ -63,8 +63,8 @@ public class OrdenDaoImpl implements OrdenDao{
 		List<OrdenVo> all= ofy().load().type(OrdenVo.class).list();
 		List<OrdenVo> nacs= new ArrayList<OrdenVo>();
 		for(OrdenVo o : all) {
-            aeronaveDao.consult(o.getAeronave());
-            if (aeronaveDao.consult(o.getAeronave()).equals("NACIONAL")){
+            aeronaveDao.consult(o.getIdAeronave());
+            if (aeronaveDao.consult(o.getIdAeronave()).equals("NACIONAL")){
             	nacs.add(o);
             }
         }
