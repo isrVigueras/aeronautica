@@ -190,6 +190,7 @@ public class DiscrepanciaController {
 			   System.out.println("discrepancia que manda edgar:"+json);
 			   DiscrepanciaEntity d = (DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
 			   List<EventoEntity> eventos = d.getEventos();
+			   System.out.println("eventos"+eventos);
 			   List<OrdenVo> nacs= new ArrayList<OrdenVo>();
 			   Contador.reiniciaE();
 				for(EventoEntity e : eventos) {
@@ -199,10 +200,9 @@ public class DiscrepanciaController {
 					// System.out.println("miliegundo:"+Calendar.MILLISECOND);
 				}
 			   ////////////////////////////ojo ver si es necesario hacer un controller para evento....
+				System.out.println("objDisc:"+d);
 			   discrepanciaDao.update(d);
-			   
-			   
-			   
+			  // System.out.println("objDisc:"d);
 			   
 			   response.getWriter().println(JsonConvertidor.toJson(discrepanciaDao.consult(d.getId())));
 		   }
@@ -212,7 +212,21 @@ public class DiscrepanciaController {
 					@PathVariable Long id) throws IOException {
 			   System.out.println("xxxxxxxxx");
 				AsignadorDeCharset.asignar(request, response);
+				//DetalleDiscrepanciaVo dd = getDetalleDiscrepancia(id);
+				System.out.println("aaaaaaaaaa");
+				//System.out.println("find/id"+dd);
+				DiscrepanciaEntity d=discrepanciaDao.consult(id);
+				response.getWriter().println(JsonConvertidor.toJson(id));
+			
+			}
+		   
+		   @RequestMapping(value = { "/findDetalle/{id}" }, method = RequestMethod.GET, produces = "application/json")
+			public void findDetalle(HttpServletResponse response, HttpServletRequest request,
+					@PathVariable Long id) throws IOException {
+			   System.out.println("xxxxxxxxx");
+				AsignadorDeCharset.asignar(request, response);
 				DetalleDiscrepanciaVo dd = getDetalleDiscrepancia(id);
+				System.out.println("aaaaaaaaaa");
 				System.out.println("find/id"+dd);
 				//DiscrepanciaEntity d=discrepanciaDao.consult(id);
 				response.getWriter().println(JsonConvertidor.toJson(dd));
@@ -234,7 +248,8 @@ public class DiscrepanciaController {
 		   public DetalleDiscrepanciaVo getDetalleDiscrepancia(Long id){
 			   
 				DetalleDiscrepanciaVo det = new DetalleDiscrepanciaVo();
-			       System.out.println("estoy en getDetalleDiscrepancia.....idOrden"+det.getIdOrden());
+				//DiscrepanciaEntity dis = discrepanciaDao.consult(id);
+			       System.out.println("estoy en getDetalleDiscrepancia.....idOrden");
 			      
 			     
 			       DiscrepanciaEntity dis = discrepanciaDao.consult(id);
