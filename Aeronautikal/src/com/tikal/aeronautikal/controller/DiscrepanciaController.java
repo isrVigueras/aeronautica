@@ -192,13 +192,17 @@ public class DiscrepanciaController {
 			   List<EventoEntity> eventos = d.getEventos();
 			   System.out.println("eventos"+eventos);
 			   List<OrdenVo> nacs= new ArrayList<OrdenVo>();
-			   Contador.reiniciaE();
-				for(EventoEntity e : eventos) {
-					e.setIdEvento(Long.toString(d.getId())+"-"+Contador.getFolioEvento());
-					Contador.incrementaE();
-					 System.out.println("el id de evento es:"+e.getIdEvento());
-					// System.out.println("miliegundo:"+Calendar.MILLISECOND);
-				}
+			   if (eventos.isEmpty()){
+				   Contador.reiniciaE();
+					for(EventoEntity e : eventos) {
+						e.setIdEvento(Long.toString(d.getId())+"-"+Contador.getFolioEvento());
+						Contador.incrementaE();
+						 System.out.println("el id de evento es:"+e.getIdEvento());
+						// System.out.println("miliegundo:"+Calendar.MILLISECOND);
+					}
+			   }
+			   
+			   
 			   ////////////////////////////ojo ver si es necesario hacer un controller para evento....
 				System.out.println("objDisc:"+d);
 			   discrepanciaDao.update(d);
