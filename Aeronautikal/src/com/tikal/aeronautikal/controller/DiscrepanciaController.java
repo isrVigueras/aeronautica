@@ -216,7 +216,7 @@ public class DiscrepanciaController {
 				System.out.println("aaaaaaaaaa");
 				//System.out.println("find/id"+dd);
 				DiscrepanciaEntity d=discrepanciaDao.consult(id);
-				response.getWriter().println(JsonConvertidor.toJson(id));
+				response.getWriter().println(JsonConvertidor.toJson(d));
 			
 			}
 		   
