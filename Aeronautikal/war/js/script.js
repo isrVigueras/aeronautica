@@ -164,7 +164,7 @@ function RemoteResource($http,$q, baseUrl) {
     
   }
   
-   this.discrepancia = function(folio) {
+      this.discrepancia = function(folio) {
     var defered=$q.defer();
     var promise=defered.promise;
     

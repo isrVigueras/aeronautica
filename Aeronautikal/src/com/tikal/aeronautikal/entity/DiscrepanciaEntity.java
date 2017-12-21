@@ -152,6 +152,9 @@ public class DiscrepanciaEntity {
 
 
 public List<EventoEntity> getEventos() {
+	if(this.eventos==null) {
+		this.eventos= new ArrayList<EventoEntity>();
+	}
 		return eventos;
 	}
 
