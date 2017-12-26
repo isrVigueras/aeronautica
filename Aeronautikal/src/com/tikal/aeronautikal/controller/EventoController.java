@@ -108,7 +108,9 @@ public class EventoController {
 	   @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
 	   public void deleteEvento(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
 		@PathVariable Long id) throws IOException {
+		   System.out.println("hij");
 		   eventoDao.delete(eventoDao.consult(id));
+		   
 	   }
 	   
 		   
