@@ -22,6 +22,18 @@ app.service('UpdateDiscrepanciaServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+//servicio alta evento en discrepancia
+app.service('altaEventoServicio', [ '$http', '$q', function($http, $q) {
+  this.alta_evento = function(Objeto) {
+    var d = $q.defer();
+    $http.post("/evento/add/",Objeto).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
 
 app.controller("DiscrepanciamuestraController", ['$scope','inv_consultas','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio',function($scope,inv_consultas,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio) {
 $scope.discrepancias =discrepancias;
@@ -71,10 +83,12 @@ console.log($scope.provincias);
     $scope.detalle_discrepancia = data; 
   }
 }]);
-app.controller("EditarDiscrepanciaController", ['$scope','discrepancia','UpdateDiscrepanciaServicio',function($scope,discrepancia,UpdateDiscrepanciaServicio) {
+app.controller("EditarDiscrepanciaController", ['$scope','discrepancia','UpdateDiscrepanciaServicio','altaEventoServicio','eventos',function($scope,discrepancia,UpdateDiscrepanciaServicio,altaEventoServicio,eventos) {
 $scope.discrepancia =discrepancia;
+$scope.eventos =eventos;
 console.log($scope.discrepancia);
-$scope.eventos=[];
+console.log($scope.eventos);
+/*$scope.eventos=[];
  //$scope para retener la informacion en el front
  $scope.evento_tabla = {
     nombreEvento:"",
@@ -112,6 +126,34 @@ $scope.Agregar=function(){
     accion:$scope.discrepancia.accion,
     fechaApertura:new Date(),
     eventos:$scope.discrepancia.entos
+  } 
+  */
+  $scope.discrepancia_fo = {
+    id:$scope.discrepancia.id,
+    folio:$scope.discrepancia.folio,
+    folioOrden:$scope.discrepancia.folioOrden,
+    taller:$scope.discrepancia.taller,
+    seccion:$scope.discrepancia.seccion,
+    descripcion:$scope.discrepancia.descripcion,
+    accion:$scope.discrepancia.accion,
+    fechaApertura:new Date()
+  } 
+
+   $scope.evento_tabla={
+            idDiscrepancia:$scope.discrepancia.id,
+            nombreEvento:"",
+            duracion:undefined,
+            costo:undefined
+          }
+
+  $scope.Agregar=function(){
+    console.log($scope.evento);
+    altaEventoServicio.alta_evento($scope.evento_tabla).then(
+        function(data) {
+          console.log(data);
+          alert("Evento Agregado");
+          location.reload();
+        })
   }
 $scope.guardar_edit=function(){
       $scope.discrepancia_fo.eventos = $scope.discrepancia.entos;

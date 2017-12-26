@@ -214,6 +214,40 @@ function RemoteResource($http,$q, baseUrl) {
     return promise;
     
   }
+
+  this.eventos = function(folio) {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/evento/getByDiscrepancia/'+folio
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+    this.componentes = function(folio) {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/componente/findByDiscrepancia/'+folio
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+
 }
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
 function RemoteResourceProvider() {
@@ -346,7 +380,14 @@ app.config(['$routeProvider',function($routeProvider) {
      resolve: {
       discrepancia:['remoteResource','$route',function(remoteResource,$route) {
         return remoteResource.discrepancia($route.current.params.folio);
-      }]
+      }],
+      eventos:['remoteResource','$route',function(remoteResource,$route) {
+        return remoteResource.eventos($route.current.params.folio);
+      }],
+      componentes:['remoteResource','$route',function(remoteResource,$route) {
+        return remoteResource.componentes($route.current.params.folio);
+      }],
+
     }
   });     
 
