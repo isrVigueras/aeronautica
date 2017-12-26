@@ -55,7 +55,7 @@ public class EventoController {
 		   		entry.setCosto(345);
 		   		entry.setDuracion(21);
 		   		entry.setNombreEvento("renta de maquinaria especializada");
-		   		entry.setIdDiscrepancia(Long.parseLong("6632254138744832"));
+		   		entry.setIdDiscrepancia(Long.parseLong("5506354231902208"));
 		  
 	            System.out.println("si asign/ valor"+entry);
 	        } catch (RuntimeException ignored) {

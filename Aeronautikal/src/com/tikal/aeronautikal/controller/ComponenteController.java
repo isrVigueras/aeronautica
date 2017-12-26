@@ -109,6 +109,18 @@ public class ComponenteController {
 
 		}
 	   
+	   
+	   @RequestMapping(value = { "/findByDiscrepancia/{idDiscrepancia}" }, method = RequestMethod.GET, produces = "application/json")
+		public void findByDis(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idDiscrepancia) throws IOException {
+			AsignadorDeCharset.asignar(request, response);
+			List<ComponenteEntity> lista = componenteDao.getByDiscrepancia(idDiscrepancia);
+			if (lista == null) {
+				lista = new ArrayList<ComponenteEntity>();
+			}
+			response.getWriter().println(JsonConvertidor.toJson(lista));
+
+		}
+	   
 	   @RequestMapping(value = { "/findAll" }, method = RequestMethod.GET, produces = "application/json")
 		public void findAllComplete(HttpServletResponse response, HttpServletRequest request) throws IOException {
 			AsignadorDeCharset.asignar(request, response);

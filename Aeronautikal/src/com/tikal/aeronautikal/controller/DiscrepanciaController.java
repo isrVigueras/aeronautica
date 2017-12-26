@@ -130,6 +130,7 @@ public class DiscrepanciaController {
 		        	 System.out.println("request......."+request);
 		        	 System.out.println("response......."+response);
 		        	DiscrepanciaEntity d =(DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
+		        	
 //		        	List<EventoEntity> eventos = new ArrayList<EventoEntity>();
 //		        	d.setEventos(eventos);
 //		        	 System.out.println("el folio de la discre: "+d.getFolio());

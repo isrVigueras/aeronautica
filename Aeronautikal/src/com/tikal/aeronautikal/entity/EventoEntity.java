@@ -2,6 +2,7 @@ package com.tikal.aeronautikal.entity;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 @Entity
 public class EventoEntity {
@@ -11,7 +12,7 @@ public class EventoEntity {
 	private String nombreEvento;
 	private Integer duracion;
 	private Integer costo;
-	private Long idDiscrepancia;
+	@Index private Long idDiscrepancia;
 	
 	
 	

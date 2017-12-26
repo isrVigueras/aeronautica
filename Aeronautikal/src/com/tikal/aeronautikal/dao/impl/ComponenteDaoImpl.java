@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.entity.BaseEntity;
+import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 
 @Service("componenteDao")
@@ -74,5 +75,10 @@ public class ComponenteDaoImpl implements ComponenteDao{
 		//return null;
 	}
 
-
+	@Override
+	public List<ComponenteEntity> getByDiscrepancia(Long idDiscrepancia) {
+		// TODO Auto-generated method stub
+		//List<ComponenteEntity> comps = ofy().load().type(ComponenteEntity.class).filter("folioOrden", folioOrden).list();
+		return null;
+	}
 }
