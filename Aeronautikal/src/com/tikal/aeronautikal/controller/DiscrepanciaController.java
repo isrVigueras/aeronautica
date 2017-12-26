@@ -24,6 +24,7 @@ import com.tikal.aeronautikal.dao.AeronaveDao;
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.DiscrepanciaDao;
 import com.tikal.aeronautikal.dao.EmpresaDao;
+import com.tikal.aeronautikal.dao.EventoDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
 import com.tikal.aeronautikal.dao.RequisicionDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
@@ -50,6 +51,10 @@ public class DiscrepanciaController {
 		 @Autowired
 		 @Qualifier("componenteDao")
 		 ComponenteDao componenteDao;
+		 
+		 @Autowired
+		 @Qualifier("eventoDao")
+		 EventoDao eventoDao;
 		 
 		 @Autowired
 		 @Qualifier("ordenDao")
@@ -89,7 +94,7 @@ public class DiscrepanciaController {
 			   		entry.setFechaApertura("12/12/2017");
 			   		entry.setSeccion("03");
 			   		entry.setTaller("03");
-			   		EventoEntity evento1 = new EventoEntity();
+			   	/*	EventoEntity evento1 = new EventoEntity();
 			   //		evento1.setIdEvento(("2121212121"));
 			   		evento1.setNombreEvento("evento1");
 			   		evento1.setDuracion(2);
@@ -98,7 +103,7 @@ public class DiscrepanciaController {
 			   		List<EventoEntity> eventos = new ArrayList<EventoEntity>();
 			   		eventos.add(evento1);
 			   		entry.setEventos(eventos);
-			   	  System.out.println("eventos:"+eventos);   
+			   	  System.out.println("eventos:"+eventos);  */ 
 			   		//entry.setEventos
 			   		////entry.setInstaladoPor();
 			   		//entry.setOriginadoPor();
@@ -125,10 +130,10 @@ public class DiscrepanciaController {
 		        	 System.out.println("request......."+request);
 		        	 System.out.println("response......."+response);
 		        	DiscrepanciaEntity d =(DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
-		        	List<EventoEntity> eventos = new ArrayList<EventoEntity>();
-		        	d.setEventos(eventos);
-		        	 System.out.println("el folio de la discre: "+d.getFolio());
-		        	//pegar el valor de empresa, aeronave y contacato
+//		        	List<EventoEntity> eventos = new ArrayList<EventoEntity>();
+//		        	d.setEventos(eventos);
+//		        	 System.out.println("el folio de la discre: "+d.getFolio());
+//		        	//pegar el valor de empresa, aeronave y contacato
 		        	d.setFolioOrden(folio);
 		        	System.out.println("el folio de la orden es--.: "+d.getFolioOrden() );
 		        	d.setFolio((d.getTaller()+d.getSeccion()+"-"+ordenDao.consult(folio).getFolio()));
@@ -189,20 +194,15 @@ public class DiscrepanciaController {
 			   AsignadorDeCharset.asignar(request, response);
 			   System.out.println("discrepancia que manda edgar:"+json);
 			   DiscrepanciaEntity d = (DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
-			   List<EventoEntity> eventos = d.getEventos();
-			   System.out.println("eventos"+eventos);
-			   List<OrdenVo> nacs= new ArrayList<OrdenVo>();
-			   if (eventos.isEmpty()){
-				   Contador.reiniciaE();
-					for(EventoEntity e : eventos) {
-						e.setIdEvento(Long.toString(d.getId())+"-"+Contador.getFolioEvento());
-						Contador.incrementaE();
-						 System.out.println("el id de evento es:"+e.getIdEvento());
-						// System.out.println("miliegundo:"+Calendar.MILLISECOND);
-					}
-			   }
-			   
-			   
+//			   List<EventoEntity> eventos = d.getEventos();
+//			   System.out.println("eventos"+eventos);				   			  
+//			  Contador.reiniciaE();
+//				for(EventoEntity e : eventos) {
+//					e.setIdEvento(Long.toString(d.getId())+"-"+Contador.getFolioEvento());
+//					Contador.incrementaE();
+//				    System.out.println("el id de evento es:"+e.getIdEvento());
+//				}
+//			   
 			   ////////////////////////////ojo ver si es necesario hacer un controller para evento....
 				System.out.println("objDisc:"+d);
 			   discrepanciaDao.update(d);
@@ -260,11 +260,13 @@ public class DiscrepanciaController {
 			       OrdenVo orden =ordenDao.consult(dis.getFolioOrden());
 			       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
 			       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
+			       List<EventoEntity> evs= eventoDao.getByDiscrepancia(id);
 			       
 			      System.out.println("orden"+orden);
 			      System.out.println("empresa"+empresa);
 			      System.out.println("nave"+nave);
 			      System.out.println("dis"+dis);
+			      System.out.println("evs"+evs);
 			     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
 			       det.setIdOrden(orden.getId());
 			       det.setFolioOrden(orden.getFolio());
@@ -278,7 +280,7 @@ public class DiscrepanciaController {
 			       det.setDescripcion(dis.getDescripcion());
 			       det.setAccion(dis.getAccion());
 			       det.setComponentes(getComponente(id));
-			       det.setEventos(dis.getEventos());
+			       det.setEventos(evs);
 			       det.setTelefono(empresa.getTelefono());
 			              
 				return det;	

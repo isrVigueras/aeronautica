@@ -15,6 +15,7 @@ import com.tikal.aeronautikal.entity.DatosFacturacionEntity;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.EmpleadoEntity;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
+import com.tikal.aeronautikal.entity.EventoEntity;
 //import com.tikal.aeronautikal.entity.EventoEntity;
 import com.tikal.aeronautikal.entity.OrdenEntity;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
@@ -38,7 +39,7 @@ public class StartupEntities {
 		ObjectifyService.register(Contador.class);
 		ObjectifyService.register(RequisicionEntity.class);
 		ObjectifyService.register(RequisicionesComponenteVo.class);
-	//	ObjectifyService.register(EventoEntity.class);
+		ObjectifyService.register(EventoEntity.class);
 		ObjectifyService.register(OrdenXlsVo.class);
 		ObjectifyService.register(DetalleOrdenVo.class);
 		ObjectifyService.register(DetalleDiscrepanciaVo.class);

@@ -1,7 +1,9 @@
 package com.tikal.aeronautikal.formatos;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
@@ -16,7 +18,12 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.googlecode.objectify.annotation.Entity;
-import com.tikal.aeronautikal.controller.vo.OrdenXlsVo; 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.tikal.aeronautikal.controller.vo.OrdenXlsVo;
+import com.tikal.aeronautikal.entity.DiscrepanciaEntity; 
  
 /** 
  * Utility class, where we will create methods for training read and write excel files,
@@ -133,6 +140,8 @@ public class EditaOrdenXls {
 
 	    			FileInputStream in = new FileInputStream(inFile);
 	    			FileOutputStream out = new FileOutputStream(outFile);
+	    	//		PdfWriter.getInstance(document, file);
+
 
 	    			int c;
 	    			while( (c = in.read() ) != -1)
@@ -177,10 +186,89 @@ public class EditaOrdenXls {
 		    		 	 		
 		    		 	 		case Cell.CELL_TYPE_STRING:
 		    		 	 		    System.out.println(celda.getStringCellValue());
-		    		 	 		    if (celda.getStringCellValue().equals("fecha")){
-		    		 	 		    	celda.setCellType(Cell.CELL_TYPE_STRING);
-		    		 	 		    	celda.setCellValue(ox.getFechaOrden());
-		    		 	 		    }
+//		    		 	 		    if (celda.getStringCellValue().equals("fecha")){
+//		    		 	 		    	celda.setCellType(Cell.CELL_TYPE_STRING);
+//		    		 	 		    	celda.setCellValue(ox.getFechaOrden());
+//		    		 	 		    }
+//		    		 	 		if (celda.getStringCellValue().equals("empresa")) celda.setCellValue(ox.getNombreEmpresa());
+//		    		 	 		if (celda.getStringCellValue().equals("numero de orden")) celda.setCellValue(ox.getFolioOrden());
+//		    		 	 		if (celda.getStringCellValue().equals("marca")) celda.setCellValue(ox.getMarcaAeronave());
+//		    		 	 		if (celda.getStringCellValue().equals("modelo")) celda.setCellValue(ox.getModeloAeronave());
+//		    		 	 		if (celda.getStringCellValue().equals("numero de serie")) celda.setCellValue(ox.getNumeroSerie());
+//		    		 	 		if (celda.getStringCellValue().equals("matricula")) celda.setCellValue(ox.getMatricula());
+//		    		 	 		if (celda.getStringCellValue().equals("planeador")) celda.setCellValue(ox.getPlaneador());
+//		    		 	 		if (celda.getStringCellValue().equals("motor1")) celda.setCellValue(ox.getMotor1());
+//		    		 	 		if (celda.getStringCellValue().equals("motor2")) celda.setCellValue(ox.getMotor2());
+//		    		 	 		if (celda.getStringCellValue().equals("marca y modelo motores")) celda.setCellValue(ox.getMarcas());
+				    		 	 		String opc=celda.getStringCellValue();
+				    		 	 		switch( opc)  {
+						    		 	 		case "fecha":celda.setCellValue(ox.getFechaOrden());break;				    		 	 		  
+						    		 	 		case "empresa":celda.setCellValue(ox.getNombreEmpresa());break;
+						    		 	 		case "numero de orden":celda.setCellValue(ox.getFolioOrden());break;
+						    		 	 		case "marca":celda.setCellValue(ox.getMarcaAeronave());break;
+						    		 	 		case "modelo":celda.setCellValue(ox.getModeloAeronave());break;
+						    		 	 		case "numero de serie":celda.setCellValue(ox.getNumeroSerie());break;
+						    		 	 		case "matricula":celda.setCellValue(ox.getMatricula());break;
+						    		 	 		case "planeador":celda.setCellValue(ox.getPlaneador());break;
+						    		 	 		case "motor1":celda.setCellValue(ox.getMotor1());break;
+						    		 	 		case "motor2":celda.setCellValue(ox.getMotor2());break;
+						    		 	 		case "marca y modelo motores":celda.setCellValue(ox.getMarcas());break;
+						    		 	 		
+						    		 	 		case "D1":System.out.println("ox:"+ox.getAccionesDiscrepancia().get(0)+"----");
+						    		 	 			celda.setCellValue(ox.getAccionesDiscrepancia().get(0));break;
+						    		 	 		case "D2":celda.setCellValue(ox.getAccionesDiscrepancia().get(1));break;
+						    		 	 		case "D3":celda.setCellValue(ox.getAccionesDiscrepancia().get(2));break;
+						    		 	 		case "D4":celda.setCellValue(ox.getAccionesDiscrepancia().get(3));break;
+						    		 	 		case "D5":celda.setCellValue(ox.getAccionesDiscrepancia().get(4));break;
+						    		 	 		case "D6":celda.setCellValue(ox.getAccionesDiscrepancia().get(5));break;
+						    		 	 		case "D7":celda.setCellValue(ox.getAccionesDiscrepancia().get(6));break;
+						    		 	 		case "D8":celda.setCellValue(ox.getAccionesDiscrepancia().get(7));break;
+						    		 	 		case "D9":celda.setCellValue(ox.getAccionesDiscrepancia().get(8));break;
+						    		 	 		case "D10":celda.setCellValue(ox.getAccionesDiscrepancia().get(9));break;
+						    		 	 		case "D11":celda.setCellValue(ox.getAccionesDiscrepancia().get(10));break;
+						    		 	 		case "D12":celda.setCellValue(ox.getAccionesDiscrepancia().get(11));break;
+						    		 	 		case "D13":celda.setCellValue(ox.getAccionesDiscrepancia().get(12));break;
+						    		 	 		case "D14":celda.setCellValue(ox.getAccionesDiscrepancia().get(13));break;
+						    		 	 		case "D15":celda.setCellValue(ox.getAccionesDiscrepancia().get(14));break;
+						    		 	 		case "D16":celda.setCellValue(ox.getAccionesDiscrepancia().get(15));break;
+						    		 	 		case "D17":celda.setCellValue(ox.getAccionesDiscrepancia().get(16));break;
+						    		 	 		case "D18":celda.setCellValue(ox.getAccionesDiscrepancia().get(17));break;
+						    		 	 		case "D19":celda.setCellValue(ox.getAccionesDiscrepancia().get(18));break;
+						    		 	 		case "D20":celda.setCellValue(ox.getAccionesDiscrepancia().get(19));break;
+						    		 	 		case "D21":celda.setCellValue(ox.getAccionesDiscrepancia().get(20));break;
+						    		 	 		case "D22":celda.setCellValue(ox.getAccionesDiscrepancia().get(21));break;
+						    		 	 		case "D23":celda.setCellValue(ox.getAccionesDiscrepancia().get(22));break;
+						    		 	 		case "D24":celda.setCellValue(ox.getAccionesDiscrepancia().get(23));break;
+						    		 	 		case "D25":celda.setCellValue(ox.getAccionesDiscrepancia().get(24));break;
+						    		 	 		case "D26":celda.setCellValue(ox.getAccionesDiscrepancia().get(25));break;
+						    		 	 		case "D27":celda.setCellValue(ox.getAccionesDiscrepancia().get(26));break;
+						    		 	 		case "D28":celda.setCellValue(ox.getAccionesDiscrepancia().get(27));break;
+						    		 	 		case "D29":celda.setCellValue(ox.getAccionesDiscrepancia().get(28));break;
+						    		 	 		case "D30":celda.setCellValue(ox.getAccionesDiscrepancia().get(29));break;
+						    		 	 		case "D31":celda.setCellValue(ox.getAccionesDiscrepancia().get(30));break;
+						    		 	 		case "D32":celda.setCellValue(ox.getAccionesDiscrepancia().get(31));break;
+						    		 	 }
+		    		 	 	
+		    		 	 		
+		    		 	 		
+		    		 	 		////////ghacevr eto con todas las ds
+		    		 	 		//ox.getAccionesDiscrepancia().get(1);
+//		    		 	 		System.out.println("tamaño lista:"+ox.getAccionesDiscrepancia().size());
+//		    		 	 			for(int i=0; i<32; i++) {	    	 
+//		    		 	 				System.out.println("nombre columna: D"+(i+1));
+//		    		 	 				//System.out.println("tamaño de la lista: ");
+//		    		 	 			//	System.out.println("accion:"+ox.getAccionesDiscrepancia().get(i));
+//		    		 	 				if (celda.getStringCellValue().equals("D"+(i+1))) {
+//		    		 	 					System.out.println("i="+i);
+//		    		 	 					if (ox.getAccionesDiscrepancia().size() <=i) 
+//		    		 	 						celda.setCellValue(ox.getAccionesDiscrepancia().get(i));
+//		    		 	 					else
+//		    		 	 						celda.setCellValue("");
+//		    		 	 				}
+//		    		 	 			}	
+		    		 	 			    
+		    		 	 		    
+		    		 	 		    
 		    		 	 		    break;
 		    		 	 		
 	    		 	 		}
@@ -190,8 +278,35 @@ public class EditaOrdenXls {
 	    		  	
 	    		 	file.close();
 	    		 		
-	    	            FileOutputStream fileOut = new FileOutputStream("C:/Users/Lenovo/Desktop/OTs/nueva_orden.xls"); //Doy la ruta y el nombre del archivo nuevo que se generará
+	    	            FileOutputStream fileOut = new FileOutputStream(ox.getNombreArchivo()); //Doy la ruta y el nombre del archivo nuevo que se generará
 	    	            workbook.write(fileOut); //Escribo el nuevo archivo
 	    	            fileOut.close(); //Cierro el archivo
 	    		}
+			
+			public static void GeneratePDF(File archivoXls) {
+
+				
+					try {
+						OutputStream file = new FileOutputStream(new File("C:/Users/Lenovo/Desktop/OTs/nueva_orden.pdf"));
+						InputStream xls = new FileInputStream("C:/Users/Lenovo/Desktop/OTs/nueva_orden.xls");
+						PdfReader pdfReader = new PdfReader(xls);
+						
+						Document document = new Document();
+						PdfWriter writer = PdfWriter.getInstance(document, file);
+						//FileOutputStream fileOut= new FileOutputStream(archivoXls);
+						PdfWriter.getInstance(document, file);
+
+						document.open();
+						document.newPage();
+					//	page = writer.getImportedPage(pdfReader,
+						
+						document.close();
+						file.close();
+
+					} catch (Exception e) {
+
+						e.printStackTrace();
+					}
+				
+			}
 	}

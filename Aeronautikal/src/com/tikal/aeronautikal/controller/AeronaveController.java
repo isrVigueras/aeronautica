@@ -114,11 +114,15 @@ public class AeronaveController  {
 	    	  System.out.println("si entra al add por POST"+json);
 	        try {
 	        	AsignadorDeCharset.asignar(request, response);
-	        	AeronaveEntity a =(AeronaveEntity) JsonConvertidor.fromJson(json, AeronaveEntity.class);
+	        	AeronaveEntity a =(AeronaveEntity) JsonConvertidor.fromJson(json, AeronaveEntity.class);        	
+	        	
 	        	if (a.getNacionalidad().equals("NORTEAMERICANO")){
 					a.setNumeroAeronave(String.valueOf(Contador.getFolio())+"N");
-				}else{
+					Contador.incremeta();
+				}
+	        	if (a.getNacionalidad().equals("NACIONAL")){
 					a.setNumeroAeronave(String.valueOf(Contador.getFolio()));
+					Contador.incremeta();
 				}
 	        	//a.setNumeroAeronave(Contador.getFolio());
 	        	aeronaveDao.save(a);	            

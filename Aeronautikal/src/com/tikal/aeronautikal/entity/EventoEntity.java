@@ -3,38 +3,32 @@ package com.tikal.aeronautikal.entity;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
-//@Entity
+@Entity
 public class EventoEntity {
 
 	//@Id private String idEvento;
-	private String idEvento;
+	@Id private Long idEvento;
 	private String nombreEvento;
 	private Integer duracion;
 	private Integer costo;
-//	private String idDiscrepancia;
+	private Long idDiscrepancia;
 	
 	
 	
-//	
-//	public String getIdDiscrepancia() {
-//		return idDiscrepancia;
-//	}
-//	public void setIdDiscrepancia(String idDiscrepancia) {
-//		this.idDiscrepancia = idDiscrepancia;
-//	}
-//	public String getIdEvento() {
-//		return idEvento;
-//	}
-//	public void setIdEvento(String idEvento) {
-//		this.idEvento = idEvento;
-//	}
+
+	public Long getIdDiscrepancia() {
+		return idDiscrepancia;
+	}
+	public void setIdDiscrepancia(Long idDiscrepancia) {
+		this.idDiscrepancia = idDiscrepancia;
+	}
 	public String getNombreEvento() {
 		return nombreEvento;
 	}
-	public String getIdEvento() {
+	public Long getIdEvento() {
 		return idEvento;
 	}
-	public void setIdEvento(String idEvento) {
+	public void setIdEvento(Long idEvento) {
 		this.idEvento = idEvento;
 	}
 	public void setNombreEvento(String nombreEvento) {

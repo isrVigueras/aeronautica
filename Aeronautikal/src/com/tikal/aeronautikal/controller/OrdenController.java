@@ -104,7 +104,7 @@ public class OrdenController {
 	        	 System.out.println("folio orden:"+orden.getFolio());
 	        	 System.out.println("folio aeronave:"+aeronaveDao.consult(orden.getAeronave()).getNumeroAeronave());
 	        	 orden.setNombreEmpresa(empresaDao.consult(orden.getEmpresa()).getNombreEmpresa());
-	        	 
+	        	 String fol=(orden.getFolio()+aeronaveDao.consult(orden.getAeronave()).getNumeroAeronave()).replaceAll("[\n\r]","");
 	        	orden.setFolio(orden.getFolio()+aeronaveDao.consult(orden.getAeronave()).getNumeroAeronave());
 	        	ordenDao.save(orden);	 
 	        	Contador.incremeta();
@@ -207,24 +207,24 @@ public class OrdenController {
 		  
 	  }
 	   
-	  @RequestMapping(value = { "/generaOrdenXls/{idOrden}" }, method = RequestMethod.GET)
+	  @RequestMapping(value = { "/generaOrdenXls/{idOrden}" }, method = RequestMethod.POST)
 		public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idOrden) throws IOException {
 		  EditaOrdenXls eox = new EditaOrdenXls();
-	        File newExcelFile = new File("C:/Users/Lenovo/Desktop/OTs/OT__.xls");		 
+		  OrdenXlsVo ox = getObjectXls(idOrden);   
+	        File newExcelFile = new File(ox.getNombreArchivo());		 
 	        if (!newExcelFile.exists()){
 	            try {
 	                newExcelFile.createNewFile();
 	            } catch (IOException ioe) {
-	                System.out.println("(Error al crear el fichero nuevo mmmmmmm)" + ioe);
+	                System.out.println("(Error al crear el fichero nuevo ......)" + ioe);
 	            }
 	        }
-	        ////sacando sopa
-	        
-	       OrdenXlsVo ox = getObjectXls(idOrden);   
-	       
+       
 	        String origen ="C:/Users/Lenovo/Desktop/OTs/OrdenDeTrabajo.xls";
 	   //     String destino ="C:/Users/Lenovo/Desktop/OTs/O.T."+orden.getFolio()+" "+nave.getMatricula()+".xls";
-	       // eox.FileCopy(origen, destino);  
+	        System.out.println("copiando archivo orige a destino:"+ox.getNombreArchivo());
+	        eox.FileCopy(origen, ox.getNombreArchivo());  
+	        System.out.println("termino de copiar.....");
 			//EditaOrdenXls.readWriteExcelFile();
 	        System.out.println("Empezando a ecribir en el Xls..." );
 	        EditaOrdenXls.WriteXls(ox);
@@ -239,12 +239,14 @@ public class OrdenController {
 	       OrdenVo orden =ordenDao.consult(idOrden);
 	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
 	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
-	      
+	      String nombre="C:/Users/Lenovo/Desktop/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".xls";
 	     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
-	       ox.setNombreArchivo("OT"+orden.getFolio()+"_"+nave.getMatricula()+".xls");
-	       System.out.println("xls:."+orden.getFolio());
-	       ox.setFechaOrden(orden.getFechaApertura());
-	       ox.setNombreEmpresa(empresa.getNombreEmpresa());
+	       ox.setNombreArchivo(nombre.replaceAll("[\n\r]",""));
+	       System.out.println("fecha"+orden.getFechaApertura());
+	       System.out.println("nombre xls:"+ox.getNombreArchivo());
+	       ox.setFechaOrden((orden.getFechaApertura()).substring(0 , 10));
+	       System.out.println("fecha"+ox.getFechaOrden());
+	       ox.setNombreEmpresa(empresa.getRazonSocial());
 	       ox.setFolioOrden(orden.getFolio());
 	       ox.setMarcaAeronave(nave.getMarca());
 	       ox.setModeloAeronave(nave.getModelo());
@@ -290,12 +292,22 @@ public DetalleOrdenVo getDetalleOrden(Long idOrden){
 	  }
 	  
 	  public List<String> getAccionesDiscrepancia(Long idOrden){
+		  System.out.println("generando lista de accions de discrepancia"+idOrden);
 		  List<DiscrepanciaEntity> dis = discrepanciaDao.getByOrden(idOrden);
+		  System.out.println("lista de accions:"+dis);
+		  //List<String> acciones = new ArrayList<String>();
+		//  List<DiscrepanciaEntity> dis = discrepanciaDao.getByOrden(idOrden);
 		  List<String> acciones = new ArrayList<String>();
 	       for(DiscrepanciaEntity d : dis) {	    	 
 	    	   String accion =d.getAccion();
 	    	   acciones.add(accion);
-	       }		    
+	       }		
+	       for (int size=dis.size();size<=31; size++){
+			 
+			 acciones.add("");
+	       }
+		     	    
+	       System.out.println("lista de acciones:"+acciones);
 		return acciones;
 		  
 	  }

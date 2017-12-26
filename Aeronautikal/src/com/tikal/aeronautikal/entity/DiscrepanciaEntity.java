@@ -33,7 +33,7 @@ public class DiscrepanciaEntity {
 	private Long folio_componente;
 	private Integer numero_piezas;
 	//private List<Componente> losComponentes;
-	private List<EventoEntity> eventos;
+	//private List<EventoEntity> eventos;
 	private Empleado removidoPor;
 	private Empleado instaladoPor;
 	private Empleado originadoPor;
@@ -43,9 +43,7 @@ public class DiscrepanciaEntity {
 	
 //	@Container OrdenEntity orden;
 	
-	public void Discrepancia() {
-		this.eventos = new ArrayList<EventoEntity>();
-	}
+	
 
 	
 	
@@ -151,18 +149,18 @@ public class DiscrepanciaEntity {
 
 
 
-public List<EventoEntity> getEventos() {
-	if(this.eventos==null) {
-		this.eventos= new ArrayList<EventoEntity>();
-	}
-		return eventos;
-	}
-
-
-
-	public void setEventos(List<EventoEntity> eventos) {
-		this.eventos = eventos;
-	}
+//public List<EventoEntity> getEventos() {
+//	if(this.eventos==null) {
+//		this.eventos= new ArrayList<EventoEntity>();
+//	}
+//		return eventos;
+//	}
+//
+//
+//
+//	public void setEventos(List<EventoEntity> eventos) {
+//		this.eventos = eventos;
+//	}
 
 	
 	

@@ -4,13 +4,10 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
-import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.dao.DiscrepanciaDao;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
-import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
+
 
 
 @Service ("discrepanciaDao")
@@ -43,25 +40,26 @@ public class DiscrepanciaDaoImpl implements DiscrepanciaDao {
 	@Override
 	public void update(DiscrepanciaEntity d) {
 		// TODO Auto-generated method stub
-		//DiscrepanciaEntity old = this.consult(d.getFolio());
-//		if (old != null) {
-////			//old.setDireccion(e.getDireccion());
-//		    old.setAccion(d.getAccion());
-//		    old.setDescripcion(d.getDescripcion());
-//			old.setFechaApertura(d.getFechaApertura());
-//			old.setInstaladoPor(d.getInstaladoPor());
-//			old.setOriginadoPor(d.getOriginadoPor());
-//			old.setRemovidoPor(d.getRemovidoPor());
-//			old.setSeccion(d.getSeccion());
-//			old.setTaller(d.getTaller());			
-			ofy().save().entity(d).now();
+		DiscrepanciaEntity old = this.consult(d.getId());
+//		if (old.getEventos().isEmpty()) {
+//			old.setEventos(d.getEventos());
+//		}else{
+//		   for(EventoEntity e : d.getEventos()) {
+//				old.getEventos().add(e);
+//		   }
+//		   System.out.println("la lista de eventos nueva es:"+old.getEventos());
+//		   d.setEventos(old.getEventos());
+//		}
+		
+		
+		ofy().save().entity(d).now();
 		 
 	}
 
 
 	@Override
 	public DiscrepanciaEntity consult(Long id) {
-		System.out.println("aqui esta consultando la entidad que va a borrar" );
+		System.out.println("aqui esta consultando la discrepancia" );
        return ofy().load().type(DiscrepanciaEntity.class).id(id).now();
 		
 	}
