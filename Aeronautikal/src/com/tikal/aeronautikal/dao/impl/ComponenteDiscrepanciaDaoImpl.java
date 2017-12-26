@@ -2,9 +2,12 @@ package com.tikal.aeronautikal.dao.impl;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import org.springframework.stereotype.Service;
+
 import com.tikal.aeronautikal.dao.ComponenteDiscrepanciaDao;
 import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
 
+@Service ("componenteDiscrepanciaDao")
 public class ComponenteDiscrepanciaDaoImpl implements ComponenteDiscrepanciaDao {
 
 	

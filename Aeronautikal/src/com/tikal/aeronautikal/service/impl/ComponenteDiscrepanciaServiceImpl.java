@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tikal.aeronautikal.dao.ComponenteDiscrepanciaDao;
-import com.tikal.aeronautikal.dao.ContactoDao;
 import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
-import com.tikal.aeronautikal.entity.ContactoEntity;
 import com.tikal.aeronautikal.service.ComponenteDiscrepanciaService;
 
 
