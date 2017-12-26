@@ -9,6 +9,15 @@ public class ComponenteDiscrepancia {
 	@Id private Long id;
 	@Index private Long idComponente;
 	@Index private Long idDiscrepancia;
+	private Integer cantidad;
+	
+	
+	public Integer getCantidad() {
+		return cantidad;
+	}
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
+	}
 	public Long getId() {
 		return id;
 	}
