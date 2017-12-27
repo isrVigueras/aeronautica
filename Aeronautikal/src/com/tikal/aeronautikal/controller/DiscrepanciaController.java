@@ -139,12 +139,12 @@ public class DiscrepanciaController {
 		        	System.out.println("el folio de la orden es--.: "+d.getFolioOrden() );
 		        	d.setFolio((d.getTaller()+d.getSeccion()+"-"+ordenDao.consult(folio).getFolio()));
 		        	 System.out.println("el nuevo folio de discrepancia: "+ d.getFolio());
-		        	 ComponenteEntity c = new ComponenteEntity();
-		        	 
-		        	 c= componenteDao.consult(d.getFolio_componente());
-		        	 Integer ex= c.getD_cantidad()-d.getNumero_piezas();
-		        	 c.setD_cantidad(ex);
-		        	 componenteDao.save(c);
+		        	 //ComponenteEntity c = new ComponenteEntity();
+		        	// ACTUALIZABA LAS EXISTENCIAS 
+//		        	 c= componenteDao.consult(d.getFolio_componente());
+//		        	 Integer ex= c.getD_cantidad()-d.getNumero_piezas();
+//		        	 c.setD_cantidad(ex);
+//		        	 componenteDao.save(c);
 		        	 discrepanciaDao.save(d);
 		        	 response.getWriter().println(JsonConvertidor.toJson(d));
 		        } catch (RuntimeException ignored) {

@@ -82,7 +82,8 @@ public class CompDisController {
 		        	// System.out.println("el nuevo objeto: "+orden );
 		        	//pegar el valor de empresa, aeronave y contacato
 		        	//orden.setFolio(1111);
-		        	componenteDiscrepanciaDao.save(cd);	            
+		        	componenteDiscrepanciaDao.save(cd);	       
+		        	actualizaExistencias(cd.getIdComponente(),cd.getCantidad(),"add");
 		        } catch (RuntimeException ignored) {
 		        	ignored.printStackTrace();
 		            // getUniqueEntity should throw exception
@@ -115,9 +116,35 @@ public class CompDisController {
 		}
 	    
 		 
-	    @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
-		   public void deleteEvento(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
-			@PathVariable Long id) throws IOException {
+	    @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.POST)
+		   public void deleteEvento(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id) 
+				   throws IOException {
+	    	   System.out.println("si esta en delete"+id);
+			   actualizaExistencias(componenteDiscrepanciaDao.consult(id).getIdComponente(), componenteDiscrepanciaDao.consult(id).getCantidad(),"delete");
 			   componenteDiscrepanciaDao.delete(componenteDiscrepanciaDao.consult(id));
+			   System.out.println("aeronave eliminada....");
+			   response.getWriter().println("ok");
 		   }
+	    
+	    
+	    public void actualizaExistencias(Long idComponente, Integer cantidad, String oper){
+	    	 System.out.println("ACTUALIZANDO EXISTENCIAS CON ID COMPO:"+idComponente);
+	    	 System.out.println("ACTUALIZANDO EXISTENCIAS CON ID cant:"+cantidad);
+	    	 System.out.println("ACTUALIZANDO EXISTENCIAS CON ID oper:"+oper);
+	    	 
+	    	if (oper.equals("add")){
+	    		Integer existencias = componenteDao.consult(idComponente).getD_cantidad()-cantidad;
+	    		componenteDao.consult(idComponente).setD_cantidad(existencias);
+	    	}
+	    	if (oper.equals("delete")){
+	    		Integer existencias = componenteDao.consult(idComponente).getD_cantidad()+cantidad;
+	    		componenteDao.consult(idComponente).setD_cantidad(existencias);
+	    		
+	    	}
+	    }
+	    	
+	    	
+	    
+	    
+	   
 }
