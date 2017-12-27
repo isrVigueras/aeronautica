@@ -116,11 +116,12 @@ console.log($scope.provincias);
     $scope.detalle_discrepancia = data; 
   }
 }]);
-app.controller("EditarDiscrepanciaController", ['$scope','discrepancia','UpdateDiscrepanciaServicio','altaEventoServicio','eventos','listado_inv','altaComponenteServicio','componentes','deleteEventoServicio','deleteComponenteServicio',function($scope,discrepancia,UpdateDiscrepanciaServicio,altaEventoServicio,eventos,listado_inv,altaComponenteServicio,componentes,deleteEventoServicio,deleteComponenteServicio) {
+app.controller("EditarDiscrepanciaController", ['$scope','discrepancia','UpdateDiscrepanciaServicio','altaEventoServicio','eventos','listado_inv','altaComponenteServicio','componentes','deleteEventoServicio','deleteComponenteServicio','componentes_0',function($scope,discrepancia,UpdateDiscrepanciaServicio,altaEventoServicio,eventos,listado_inv,altaComponenteServicio,componentes,deleteEventoServicio,deleteComponenteServicio,componentes_0) {
 $scope.discrepancia =discrepancia;
 $scope.eventos =eventos;
 $scope.listado_inv =listado_inv;
 $scope.componentes =componentes;
+$scope.componentes_0 =componentes_0;
 console.log("datos discrepancia");
 console.log($scope.discrepancia);
 console.log("datos eventos");
@@ -129,7 +130,8 @@ console.log("datos inventario");
 console.log($scope.listado_inv);
 console.log("datos componentes");
 console.log($scope.componentes);
-
+console.log("datos componentes vacios");
+console.log($scope.componentes_0);
   $scope.discrepancia_fo = {
     id:$scope.discrepancia.id,
     folio:$scope.discrepancia.folio,

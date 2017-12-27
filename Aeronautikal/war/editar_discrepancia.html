@@ -1,4 +1,9 @@
 <script>
+  $('#requisicion').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+</script>
+<script>
   $('#registraevento').on('shown.bs.modal', function () {
   $('#myInput').focus()
 })
@@ -213,14 +218,36 @@
             </form>
       </div>
       <div class="modal-footer">
-        <a ng-href="#/Discrepancias/requisicion/{{discrepancia.id}}">
-           <button type="button" class="btn btn-default" aria-label="Left Align">
-  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-</button></a>
-          <a ng-href="#/Discrepancias/requisicion/{{discrepancia.id}}">
-           <button type="button" class="btn btn-primary" aria-label="Left Align">
-  <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>Has una requisicion
-</button></a>
+           <button type="button" class="btn btn-primary" ng-click="Agregar_componente()">Agregar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--********************************** Modal Requisicion ***********************************-->
+<div class="modal fade" id="requisicion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <center><h4 class="modal-title" id="myModalLabel">Registra</h4></center>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <h4 style="color:#000000">Coponente</h4>
+        <form>
+            <div class="row" style="margin: 1% 1%;">
+              <label for="d_componente" style="color:#000000">Seleciona componenete de almacen:</label>
+        <br>
+          <select class="form-control" ng-model="componente.idComponente" >
+            <option value="">--Seleccione un Componente--</option>
+          <option value="{{p.id}}" ng-repeat="p in listado_inv"  >{{p.d_componente}} Cantidad:{{p.d_cantidad}}</option>
+        </select>
+        <br><br>
+        <label for="numero_piezas" style="color:#000000">Numero de piezas requeridas:</label><input class="form-control" ng-model="componente.cantidad" placeholder="Escriba el No. piezas que se requieren" id="numero_piezas" name="numero_piezas" type="number"/>
+            </div>
+            </form>
+      </div>
+      <div class="modal-footer">
            <button type="button" class="btn btn-primary" ng-click="Agregar_componente()">Agregar</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       </div>

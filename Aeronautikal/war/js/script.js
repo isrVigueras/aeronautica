@@ -247,6 +247,22 @@ function RemoteResource($http,$q, baseUrl) {
     return promise;
     
   }
+      this.componentes_0 = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/componente/findAllFilter'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
 
 }
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
@@ -389,8 +405,10 @@ app.config(['$routeProvider',function($routeProvider) {
       }],
       listado_inv:['remoteResource',function(remoteResource) {
         return remoteResource.listado_inv();
+      }],
+      componentes_0:['remoteResource',function(remoteResource) {
+        return remoteResource.componentes_0();
       }]
-
     }
   });     
 
