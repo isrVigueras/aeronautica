@@ -74,8 +74,8 @@ public class EventoController {
 	    	  System.out.println("si entra al add evento por POST"+json);
 	        try {
 	        	AsignadorDeCharset.asignar(request, response);
-	        	// System.out.println("request......."+request);
-	        	// System.out.println("request......."+response);
+	        	 System.out.println("request......."+request);
+	        	 System.out.println("request......."+response);
 	        	EventoEntity e =(EventoEntity) JsonConvertidor.fromJson(json, EventoEntity.class);
 	        	// System.out.println("el nuevo objeto: "+orden );
 	        	//pegar el valor de empresa, aeronave y contacato
