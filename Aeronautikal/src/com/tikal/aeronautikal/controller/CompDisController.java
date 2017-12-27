@@ -124,7 +124,7 @@ public class CompDisController {
 	    	   System.out.println("si esta en delete"+id);
 			   actualizaExistencias(componenteDiscrepanciaDao.consult(id).getIdComponente(), componenteDiscrepanciaDao.consult(id).getCantidad(),"delete");
 			   componenteDiscrepanciaDao.delete(componenteDiscrepanciaDao.consult(id));
-			   System.out.println("aeronave eliminada....");
+			   System.out.println("Componente eliminado de la discrepancia....");
 			   response.getWriter().println("ok");
 		   }
 	    
@@ -135,11 +135,16 @@ public class CompDisController {
 	    	 System.out.println("ACTUALIZANDO EXISTENCIAS CON ID oper:"+oper);
 	    	 
 	    	if (oper.equals("add")){
+	    		System.out.println("Adddddddddddddddddddd");
 	    		Integer existencias = componenteDao.consult(idComponente).getD_cantidad()-cantidad;
+	    		System.out.println("Adddddddddddddddddddd"+existencias);
 	    		componenteDao.consult(idComponente).setD_cantidad(existencias);
+	    		//componenteDao.save(c);
 	    	}
 	    	if (oper.equals("delete")){
+	    		
 	    		Integer existencias = componenteDao.consult(idComponente).getD_cantidad()+cantidad;
+	    		System.out.println("DELETEeeeeeeeeeeeeeee"+existencias);
 	    		componenteDao.consult(idComponente).setD_cantidad(existencias);
 	    		
 	    	}
