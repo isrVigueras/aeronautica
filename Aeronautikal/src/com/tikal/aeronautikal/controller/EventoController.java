@@ -102,14 +102,15 @@ public class EventoController {
 		}
 	   
 	     
-	
 	   
 	   
-	   @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
-	   public void deleteEvento(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
-		@PathVariable Long id) throws IOException {
-		   System.out.println("hij");
+	   @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.POST)
+	   public void deleteEvento(HttpServletResponse response, HttpServletRequest request, @PathVariable Long id)
+			   throws IOException {
+		   System.out.println("si esta en delete"+id);
 		   eventoDao.delete(eventoDao.consult(id));
+		   System.out.println("evento eliminado....");
+		   response.getWriter().println("ok");
 		   
 	   }
 	   
