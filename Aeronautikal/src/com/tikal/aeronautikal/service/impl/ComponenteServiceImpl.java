@@ -46,6 +46,15 @@ public class ComponenteServiceImpl implements ComponenteService{
 	    		
 	    	
 		}
+		
+		@Override
+		public List<ComponenteEntity> getAll0(){
+			// TODO Auto-generated method stub
+	    		return ofy().load().type(ComponenteEntity.class).filter("d_cantidad", 0).list();
+	    		// TODO Auto-generated method stub
+	    		
+	    	
+		}
 
 		@Override
 		public ComponenteEntity consult(Long folio) {

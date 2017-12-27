@@ -28,6 +28,11 @@ public class ComponenteDaoImpl implements ComponenteDao{
 		return ofy().load().type(ComponenteEntity.class).filter("d_cantidad >", 0).list();
 		
 	}
+	
+	public List<ComponenteEntity> getAll0() {                   
+		return ofy().load().type(ComponenteEntity.class).filter("d_cantidad", 0).list();
+		
+	}
 
 	public void findAll() {
 	// TODO Auto-generated method stub

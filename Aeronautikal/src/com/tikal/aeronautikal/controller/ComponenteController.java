@@ -120,7 +120,7 @@ public class ComponenteController {
 			response.getWriter().println(JsonConvertidor.toJson(lista));
 
 		}
-	   /// trae los componentes con existencias mayor a cero ojooooo
+	   /// trae TODOS los componentes
 	   @RequestMapping(value = { "/findAll" }, method = RequestMethod.GET, produces = "application/json")
 		public void findAllComplete(HttpServletResponse response, HttpServletRequest request) throws IOException {
 			AsignadorDeCharset.asignar(request, response);
@@ -147,6 +147,19 @@ public class ComponenteController {
 					}					
 			response.getWriter().println(JsonConvertidor.toJson(lista));
 		}
+	   
+	   @RequestMapping(value = { "/findAll0" }, method = RequestMethod.GET, produces = "application/json")
+	 		public void findAll0(HttpServletResponse response, HttpServletRequest request) throws IOException {
+	 			AsignadorDeCharset.asignar(request, response);
+	 			System.out.println("si entra ");
+	 			//List<ComponenteVo> cvos= new ArrayList<ComponenteVo>();
+	 			List<ComponenteEntity> lista = componenteDao.getAll0();			
+	 					for (ComponenteEntity c : lista){
+	 							c.setD_pendientes(requisicionDao.getPendientes(c.getId()));
+	 							componenteDao.update(c);						   
+	 					}					
+	 			response.getWriter().println(JsonConvertidor.toJson(lista));
+	 		}
 	   
 	
 	   

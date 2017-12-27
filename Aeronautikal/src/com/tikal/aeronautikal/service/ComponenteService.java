@@ -16,6 +16,8 @@ public interface ComponenteService {
 	 
 	 public List<ComponenteEntity> getAllF();
 	 
+	 public List<ComponenteEntity> getAll0();
+	 
 	 public void delete(ComponenteEntity c);
 	 
 	 public void updateExistencias(Long id, Integer d_cantidad, Integer d_pendientes);
