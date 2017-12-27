@@ -70,7 +70,7 @@ public class CompDisController {
 	    
 	    
 	    @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
-		   public void addCompDis(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,@PathVariable Long idDiscrepancia) 
+		   public void addCompDis(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) 
 				   throws IOException{
 		    	  System.out.println("si entra al add por POST"+json);
 		        try {
