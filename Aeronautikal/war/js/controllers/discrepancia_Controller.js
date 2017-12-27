@@ -46,7 +46,18 @@ app.service('altaComponenteServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
-
+//servicio borrar evento en discrepancia
+app.service('deleteEventoServicio', [ '$http', '$q', function($http, $q) {
+  this.delete_evento = function(id) {
+    var d = $q.defer();
+    $http.post("/evento/delete/"+id).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
 app.controller("DiscrepanciamuestraController", ['$scope','inv_consultas','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio',function($scope,inv_consultas,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio) {
 $scope.discrepancias =discrepancias;
  $scope.provincias=inv_consultas; 
@@ -59,9 +70,7 @@ console.log($scope.provincias);
     taller:"",
     seccion:"",
     descripcion:"",
-    accion:"",
-    folio_componente:undefined,
-    numero_piezas:undefined
+    accion:""
   }
 
 
@@ -95,13 +104,19 @@ console.log($scope.provincias);
     $scope.detalle_discrepancia = data; 
   }
 }]);
-app.controller("EditarDiscrepanciaController", ['$scope','discrepancia','UpdateDiscrepanciaServicio','altaEventoServicio','eventos','listado_inv','altaComponenteServicio',function($scope,discrepancia,UpdateDiscrepanciaServicio,altaEventoServicio,eventos,listado_inv,altaComponenteServicio) {
+app.controller("EditarDiscrepanciaController", ['$scope','discrepancia','UpdateDiscrepanciaServicio','altaEventoServicio','eventos','listado_inv','altaComponenteServicio','componentes','deleteEventoServicio',function($scope,discrepancia,UpdateDiscrepanciaServicio,altaEventoServicio,eventos,listado_inv,altaComponenteServicio,componentes,deleteEventoServicio) {
 $scope.discrepancia =discrepancia;
 $scope.eventos =eventos;
 $scope.listado_inv =listado_inv;
+$scope.componentes =componentes;
+console.log("datos discrepancia");
 console.log($scope.discrepancia);
+console.log("datos eventos");
 console.log($scope.eventos);
+console.log("datos inventario");
 console.log($scope.listado_inv);
+console.log("datos componentes");
+console.log($scope.componentes);
 
   $scope.discrepancia_fo = {
     id:$scope.discrepancia.id,
@@ -123,8 +138,8 @@ console.log($scope.listado_inv);
 
    $scope.componente = {
     idDiscrepancia:$scope.discrepancia.id,
-    folio_componente:undefined,
-    numero_piezas:undefined
+    idComponente:undefined,
+    cantidad:undefined
   }
 
   $scope.Agregar=function(){
@@ -141,16 +156,16 @@ console.log($scope.listado_inv);
     altaComponenteServicio.alta_componente($scope.componente).then(
         function(data) {
           console.log(data);
-          alert("componente Agregado");
+          alert("Componente Agregado");
           location.reload();
         })
   }
-      $scope.borrar_evento=function(){
-    console.log($scope.componente);
-    altaComponenteServicio.alta_componente($scope.componente).then(
+      $scope.borrar_evento=function(id){
+    console.log(id);
+    deleteEventoServicio.delete_evento(id).then(
         function(data) {
           console.log(data);
-          alert("componente Agregado");
+          alert("Componente Borrado");
           location.reload();
         })
   }
