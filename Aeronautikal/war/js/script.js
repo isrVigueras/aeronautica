@@ -387,6 +387,9 @@ app.config(['$routeProvider',function($routeProvider) {
       componentes:['remoteResource','$route',function(remoteResource,$route) {
         return remoteResource.componentes($route.current.params.folio);
       }],
+      listado_inv:['remoteResource',function(remoteResource) {
+        return remoteResource.listado_inv();
+      }]
 
     }
   });     

@@ -3,6 +3,11 @@
   $('#myInput').focus()
 })
 </script>
+<script>
+  $('#registracomponente').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+</script>
 <div class="contenedor" style="color:#EEE6E6">
  <center><h1>Editar Discrepancia</h1></center>
 <form name="form" novalidate>
@@ -53,12 +58,11 @@
             </div>
             </div>
             <div class="row">
-              <label for="d_componente">Seleciona componenete de almacen:</label>
         <br>
         <br><br>
          <h3>Componentes Registrados</h3>
     <table class="table table-striped">
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#registraevento">
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#registracomponente">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Agregar componente</button>
     <thead>
       <tr style="background-color: #201b17c9;">
@@ -69,10 +73,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr style="background-color: #201b17c9;" ng-repeat="eve in eventos">
-        <td>{{eve.nombreEvento}}</td>
-        <td>{{eve.duracion}}</td>
-        <td>{{eve.costo}}</td>
+      <tr style="background-color: #201b17c9;" ng-repeat="compo in componentes">
+        <td>{{compo.nombreEvento}}</td>
+        <td>{{compo.duracion}}</td>
+        <td>{{compo.costo}}</td>
         <td>
       <button type="button" class="btn btn-default" data-toggle="modal" ng-click="elima_evento(id)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                <a ng-href="#/Discrepancia/editar/{{discrepancia.id}}">
@@ -84,8 +88,8 @@
     </tbody>
       <tfoot>
       <tr>
-        <td colspan="3">Numero de eventos:</td>
-        <td ng-bind="discrepancia.eventos.length"></td>
+        <td colspan="3">Numero de componentes:</td>
+        <td ng-bind="componentes.length"></td>
       </tr>
     </tfoot>
   </table>
@@ -119,7 +123,7 @@
       <tfoot>
       <tr>
         <td colspan="3">Numero de eventos:</td>
-        <td ng-bind="discrepancia.eventos.length"></td>
+        <td ng-bind="eventos.length"></td>
       </tr>
     </tfoot>
   </table>
@@ -180,6 +184,40 @@
                  <button type="button" class="btn btn-primary" ng-click="Agregar()" ng-disabled="form.$invalid">
         <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Agregar
         </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--********************************** Modal Componenete ***********************************-->
+<div class="modal fade" id="registracomponente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <center><h4 class="modal-title" id="myModalLabel">Registra</h4></center>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <h4 style="color:#000000">Coponente</h4>
+        <form>
+            <div class="row" style="margin: 1% 1%;">
+              <label for="d_componente" style="color:#000000">Seleciona componenete de almacen:</label>
+        <br>
+          <select class="form-control" ng-model="componente.folio_componente" >
+            <option value="">--Seleccione un Componente--</option>
+          <option value="{{p.id}}" ng-repeat="p in listado_inv"  >{{p.d_componente}} Cantidad:{{p.d_cantidad}}</option>
+        </select>
+        <br><br>
+        <label for="numero_piezas" style="color:#000000">Numero de piezas requeridas:</label><input class="form-control" ng-model="componente.numero_piezas" placeholder="Escriba el No. piezas que se requieren" id="numero_piezas" name="numero_piezas" type="number"/>
+            </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+          <a ng-href="#/Discrepancias/requisicion/{{foliarrastrado}}">
+           <button type="button" class="btn btn-primary" aria-label="Left Align">
+  <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>Has una requisicion
+</button></a>
+           <button type="button" class="btn btn-primary" ng-click="Agregar_componente()">Agregar</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
