@@ -58,6 +58,18 @@ app.service('deleteEventoServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+//servicio borrar componente en discrepancia
+app.service('deleteComponenteServicio', [ '$http', '$q', function($http, $q) {
+  this.delete_componente = function(id) {
+    var d = $q.defer();
+    $http.post("/componenteDiscrepancia/delete/"+id).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
 app.controller("DiscrepanciamuestraController", ['$scope','inv_consultas','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio',function($scope,inv_consultas,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio) {
 $scope.discrepancias =discrepancias;
  $scope.provincias=inv_consultas; 
@@ -104,7 +116,7 @@ console.log($scope.provincias);
     $scope.detalle_discrepancia = data; 
   }
 }]);
-app.controller("EditarDiscrepanciaController", ['$scope','discrepancia','UpdateDiscrepanciaServicio','altaEventoServicio','eventos','listado_inv','altaComponenteServicio','componentes','deleteEventoServicio',function($scope,discrepancia,UpdateDiscrepanciaServicio,altaEventoServicio,eventos,listado_inv,altaComponenteServicio,componentes,deleteEventoServicio) {
+app.controller("EditarDiscrepanciaController", ['$scope','discrepancia','UpdateDiscrepanciaServicio','altaEventoServicio','eventos','listado_inv','altaComponenteServicio','componentes','deleteEventoServicio','deleteComponenteServicio',function($scope,discrepancia,UpdateDiscrepanciaServicio,altaEventoServicio,eventos,listado_inv,altaComponenteServicio,componentes,deleteEventoServicio,deleteComponenteServicio) {
 $scope.discrepancia =discrepancia;
 $scope.eventos =eventos;
 $scope.listado_inv =listado_inv;
@@ -154,6 +166,15 @@ console.log($scope.componentes);
     $scope.Agregar_componente=function(){
     console.log($scope.componente);
     altaComponenteServicio.alta_componente($scope.componente).then(
+        function(data) {
+          console.log(data);
+          alert("Componente Agregado");
+          location.reload();
+        })
+  }
+    $scope.borrar_componente=function(id){
+    console.log(id);
+    deleteComponenteServicio.delete_componente(id).then(
         function(data) {
           console.log(data);
           alert("Componente Agregado");
