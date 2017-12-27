@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.tikal.aeronautikal.controller.vo.ComDisVo;
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.ComponenteDiscrepanciaDao;
 import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
@@ -96,17 +97,20 @@ public class CompDisController {
 		   System.out.println("discrennnnnnn");
 			AsignadorDeCharset.asignar(request, response);
 			List<ComponenteDiscrepancia> cds= componenteDiscrepanciaDao.getByDiscrepancia(idDiscrepancia);
-			List<ComponenteEntity> cmps= new ArrayList<ComponenteEntity>();
+			List<ComDisVo> cvos= new ArrayList<ComDisVo>();
 			if (cds==null){
 				cds= new ArrayList<ComponenteDiscrepancia>();
 			}
 			
 			for (ComponenteDiscrepancia cd : cds){
-				componenteDao.consult(cd.getIdComponente());
-				cmps.add(componenteDao.consult(cd.getIdComponente()));
+				ComDisVo cdvo= new ComDisVo();
+				cdvo.setDescripcion(componenteDao.consult(cd.getIdComponente()).getD_descripcion());
+				cdvo.setNombre_componente(componenteDao.consult(cd.getIdComponente()).getD_componente());
+				cdvo.setCantidad(cd.getCantidad());
+				cvos.add(cdvo);
 			}
 			
-			response.getWriter().println(JsonConvertidor.toJson(cmps));
+			response.getWriter().println(JsonConvertidor.toJson(cvos));
 			
 		}
 	    
