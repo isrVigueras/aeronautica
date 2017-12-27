@@ -237,7 +237,7 @@ function RemoteResource($http,$q, baseUrl) {
     
     $http({
       method: 'GET',
-      url: baseUrl + '/componente/findByDiscrepancia/'+folio
+      url: baseUrl + '/componenteDiscrepancia/getByDiscrepancia/'+folio
     }).success(function(data, status, headers, config) {
       defered.resolve(data);
     }).error(function(data, status, headers, config) {
