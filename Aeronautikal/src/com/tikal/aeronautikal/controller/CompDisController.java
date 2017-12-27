@@ -95,7 +95,7 @@ public class CompDisController {
 	    @RequestMapping(value = { "/getByDiscrepancia/{idDiscrepancia}" }, method = RequestMethod.GET, produces = "application/json")
 		public void findByOrden(HttpServletResponse response, HttpServletRequest request,
 				@PathVariable Long idDiscrepancia) throws IOException {
-		   System.out.println("discrennnnnnn");
+		   System.out.println("esta en getByDiscrepancia cin idDiscrepancia:"+idDiscrepancia);
 			AsignadorDeCharset.asignar(request, response);
 			List<ComponenteDiscrepancia> cds= componenteDiscrepanciaDao.getByDiscrepancia(idDiscrepancia);
 			List<ComDisVo> cvos= new ArrayList<ComDisVo>();
@@ -105,12 +105,14 @@ public class CompDisController {
 			
 			for (ComponenteDiscrepancia cd : cds){
 				ComDisVo cdvo= new ComDisVo();
+				System.out.println("objeto:"+cd.getCantidad());
 				cdvo.setDescripcion(componenteDao.consult(cd.getIdComponente()).getD_descripcion());
 				cdvo.setNombre_componente(componenteDao.consult(cd.getIdComponente()).getD_componente());
 				cdvo.setCantidad(cd.getCantidad());
+				cdvo.setId(cd.getId());
 				cvos.add(cdvo);
 			}
-			
+		System.out.append("lista de CompDisVo:"+cvos);	
 			response.getWriter().println(JsonConvertidor.toJson(cvos));
 			
 		}
