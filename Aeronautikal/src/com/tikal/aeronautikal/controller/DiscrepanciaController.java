@@ -17,17 +17,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.tikal.aeronautikal.controller.vo.ComDisVo;
 import com.tikal.aeronautikal.controller.vo.DetalleDiscrepanciaVo;
 import com.tikal.aeronautikal.controller.vo.DetalleOrdenVo;
 import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.dao.AeronaveDao;
 import com.tikal.aeronautikal.dao.ComponenteDao;
+import com.tikal.aeronautikal.dao.ComponenteDiscrepanciaDao;
 import com.tikal.aeronautikal.dao.DiscrepanciaDao;
 import com.tikal.aeronautikal.dao.EmpresaDao;
 import com.tikal.aeronautikal.dao.EventoDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
 import com.tikal.aeronautikal.dao.RequisicionDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
+import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
 import com.tikal.aeronautikal.entity.Contador;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
@@ -51,6 +54,10 @@ public class DiscrepanciaController {
 		 @Autowired
 		 @Qualifier("componenteDao")
 		 ComponenteDao componenteDao;
+		 
+		 @Autowired
+		 @Qualifier("componenteDiscrepanciaDao")
+		 ComponenteDiscrepanciaDao componenteDiscrepanciaDao;
 		 
 		 @Autowired
 		 @Qualifier("eventoDao")
@@ -262,7 +269,17 @@ public class DiscrepanciaController {
 			       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
 			       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
 			       List<EventoEntity> evs= eventoDao.getByDiscrepancia(id);
-			       
+			       List<ComDisVo> cvos= new ArrayList<ComDisVo>();
+			       List<ComponenteDiscrepancia> cds = componenteDiscrepanciaDao.getByDiscrepancia(id);	
+			       for (ComponenteDiscrepancia cd : cds){
+						ComDisVo cdvo= new ComDisVo();
+						System.out.println("objeto:"+cd.getCantidad());
+						cdvo.setDescripcion(componenteDao.consult(cd.getIdComponente()).getD_descripcion());
+						cdvo.setNombre_componente(componenteDao.consult(cd.getIdComponente()).getD_componente());
+						cdvo.setCantidad(cd.getCantidad());
+						cdvo.setId(cd.getId());
+						cvos.add(cdvo);
+					}
 			      System.out.println("orden"+orden);
 			      System.out.println("empresa"+empresa);
 			      System.out.println("nave"+nave);
@@ -280,7 +297,7 @@ public class DiscrepanciaController {
 			       det.setSeccion(dis.getSeccion());
 			       det.setDescripcion(dis.getDescripcion());
 			       det.setAccion(dis.getAccion());
-			       det.setComponentes(getComponente(id));
+			       det.setComponentes(cvos);
 			       det.setEventos(evs);
 			       det.setTelefono(empresa.getTelefono());
 			              
@@ -288,17 +305,17 @@ public class DiscrepanciaController {
 			   
 		   }
 		   
-		   public List<ComponenteEntity> getComponente(Long idDis){
-			   	ComponenteEntity comp = componenteDao.consult(discrepanciaDao.consult(idDis).getFolio_componente());
-			   	// faalta la busqueda de todos los componentes de una discrepancia y meterlos a comps
-				  List<ComponenteEntity> comps = new ArrayList<ComponenteEntity>();
-				  
-				  //hacer el for para mandarlos a la lista de comps
-			      comps.add(comp);
-			    	 	    
-				return comps;
-				  
-			  }
+//		   public List<ComponenteEntity> getComponente(Long idDis){
+//			   	ComponenteEntity comp = componenteDao.consult(discrepanciaDao.consult(idDis).getFolio_componente());
+//			   	// faalta la busqueda de todos los componentes de una discrepancia y meterlos a comps
+//				  List<ComponenteEntity> comps = new ArrayList<ComponenteEntity>();
+//				  
+//				  //hacer el for para mandarlos a la lista de comps
+//			      comps.add(comp);
+//			    	 	    
+//				return comps;
+//				  
+//			  }
 		   
 		
 		   

@@ -19,6 +19,8 @@ import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 	
 	public List<ComponenteEntity> getAll();
 	
+	public List<ComponenteEntity> getAllF();
+	
 	public void updateExistencias(Long id, Integer existencias, Integer pendientes);
 
 	public List<ComponenteEntity> getByDiscrepancia(Long idDiscrepancia);

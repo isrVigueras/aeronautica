@@ -2,8 +2,8 @@ package com.tikal.aeronautikal.entity.otBody;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import com.tikal.aeronautikal.entity.BaseEntity;
-import com.tikal.aeronautikal.model.otBody.ComponenteStatus;
+import com.googlecode.objectify.annotation.Index;
+
 
 @Entity
 
@@ -13,7 +13,7 @@ public class ComponenteEntity{
 	private String d_componente;
 	private String d_descripcion;
 	private String d_parte;
-	private Integer d_cantidad;
+	@Index private Integer d_cantidad;
 	private Integer d_pendientes;
 	private String d_requisicion;
 	private String fechaApertura;

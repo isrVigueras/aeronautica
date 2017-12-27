@@ -136,18 +136,21 @@ public class CompDisController {
 	    	 
 	    	if (oper.equals("add")){
 	    		System.out.println("Adddddddddddddddddddd");
-	    		Integer existencias = componenteDao.consult(idComponente).getD_cantidad()-cantidad;
+	    		ComponenteEntity c =componenteDao.consult(idComponente);
+	    		Integer existencias = c.getD_cantidad()-cantidad;
 	    		System.out.println("Adddddddddddddddddddd"+existencias);
-	    		componenteDao.consult(idComponente).setD_cantidad(existencias);
-	    		//componenteDao.save(c);
+	    		c.setD_cantidad(existencias);
+	    		componenteDao.save(c);
 	    	}
 	    	if (oper.equals("delete")){
-	    		
-	    		Integer existencias = componenteDao.consult(idComponente).getD_cantidad()+cantidad;
+	    		ComponenteEntity c =componenteDao.consult(idComponente);
+	    		Integer existencias = c.getD_cantidad()+cantidad;
 	    		System.out.println("DELETEeeeeeeeeeeeeeee"+existencias);
-	    		componenteDao.consult(idComponente).setD_cantidad(existencias);
+	    		c.setD_cantidad(existencias);
+	    		componenteDao.save(c);
 	    		
 	    	}
+	    	
 	    }
 	    	
 	    	

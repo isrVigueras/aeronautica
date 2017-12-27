@@ -19,10 +19,15 @@ public class ComponenteDaoImpl implements ComponenteDao{
 		System.out.println("si lega aqui");
         ofy().save().entity(c).now();
     }
-	public List<ComponenteEntity> getAll() {
+	public List<ComponenteEntity> getAll() {                   
+
 		return ofy().load().type(ComponenteEntity.class).list();
 	}
 
+	public List<ComponenteEntity> getAllF() {                   
+		return ofy().load().type(ComponenteEntity.class).filter("d_cantidad >", 0).list();
+		
+	}
 
 	public void findAll() {
 	// TODO Auto-generated method stub

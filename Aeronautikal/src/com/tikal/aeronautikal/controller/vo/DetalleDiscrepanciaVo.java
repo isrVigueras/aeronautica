@@ -5,7 +5,7 @@ import java.util.List;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.tikal.aeronautikal.entity.EventoEntity;
-import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
+
 
 
 @Entity
@@ -22,7 +22,7 @@ public class DetalleDiscrepanciaVo {
 	private String seccion;
 	private String Descripcion;
 	private String Accion;
-	private List<ComponenteEntity> componentes;
+	private List<ComDisVo> componentes;
 	private List<EventoEntity> eventos;
 	private Long telefono;
 	
@@ -106,10 +106,10 @@ public class DetalleDiscrepanciaVo {
 	public void setAccion(String accion) {
 		Accion = accion;
 	}
-	public List<ComponenteEntity> getComponentes() {
+	public List<ComDisVo> getComponentes() {
 		return componentes;
 	}
-	public void setComponentes(List<ComponenteEntity> componentes) {
+	public void setComponentes(List<ComDisVo> componentes) {
 		this.componentes = componentes;
 	}
 	public List<EventoEntity> getEventos() {
