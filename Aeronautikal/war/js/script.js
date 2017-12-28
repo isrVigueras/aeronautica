@@ -253,6 +253,22 @@ function RemoteResource($http,$q, baseUrl) {
     
     $http({
       method: 'GET',
+      url: baseUrl + '/componente/findAll0'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+   this.componentes_exis = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
       url: baseUrl + '/componente/findAllFilter'
     }).success(function(data, status, headers, config) {
       defered.resolve(data);
@@ -404,7 +420,7 @@ app.config(['$routeProvider',function($routeProvider) {
         return remoteResource.componentes($route.current.params.folio);
       }],
       listado_inv:['remoteResource',function(remoteResource) {
-        return remoteResource.listado_inv();
+        return remoteResource.componentes_exis();
       }],
       componentes_0:['remoteResource',function(remoteResource) {
         return remoteResource.componentes_0();

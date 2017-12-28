@@ -122,6 +122,7 @@ $scope.eventos =eventos;
 $scope.listado_inv =listado_inv;
 $scope.componentes =componentes;
 $scope.componentes_0 =componentes_0;
+
 console.log("datos discrepancia");
 console.log($scope.discrepancia);
 console.log("datos eventos");
@@ -132,6 +133,7 @@ console.log("datos componentes");
 console.log($scope.componentes);
 console.log("datos componentes vacios");
 console.log($scope.componentes_0);
+
   $scope.discrepancia_fo = {
     id:$scope.discrepancia.id,
     folio:$scope.discrepancia.folio,
