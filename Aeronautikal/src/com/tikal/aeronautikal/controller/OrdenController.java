@@ -209,7 +209,7 @@ public class OrdenController {
 	   
 	  @RequestMapping(value = { "/generaOrdenXls/{idOrden}" }, method = RequestMethod.POST)
 		public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idOrden) throws IOException {
-		  EditaOrdenXls eox = new EditaOrdenXls();
+		/*  EditaOrdenXls eox = new EditaOrdenXls();
 		  OrdenXlsVo ox = getObjectXls(idOrden);   
 	        File newExcelFile = new File(ox.getNombreArchivo());		 
 	        if (!newExcelFile.exists()){
@@ -228,7 +228,9 @@ public class OrdenController {
 			//EditaOrdenXls.readWriteExcelFile();
 	        System.out.println("Empezando a ecribir en el Xls..." );
 	        EditaOrdenXls.WriteXls(ox);
-	        System.out.println("regrese de escribir en el Xls..." );
+	        System.out.println("regrese de escribir en el Xls..." );*/
+	    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf();
+	    	generaOrdenPdf.GeneraOrdenPdf(new File("C:/Users/Lenovo/Desktop/OTs/Orden de trabajo.pdf"));
 		}
 	  
 	  

@@ -47,7 +47,7 @@ public class EventoDaoImpl implements EventoDao {
 			// TODO Auto-generated method stub
 			
 				ofy().save().entity(c).now();
-				System.out.println("guarda los nuevos datos" );
+				System.out.println("guarda los nuevos datos del evento" );
 			}
 
 			

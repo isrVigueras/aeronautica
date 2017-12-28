@@ -21,6 +21,7 @@ import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.RequisicionDao;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
+import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.service.RequisicionService;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
@@ -86,7 +87,11 @@ public class RequisicionController {
 	        	//pegar el valor de empresa, aeronave y contacato
 	        	//orden.setFolio(1111);
 	        	req.setEstatus("ABIERTA");
-	        	requisicionDao.save(req);	            
+	        	requisicionDao.save(req);	
+	        	actualizaPendientes(req.getFolio());
+	        	
+	        	
+	        	
 	        } catch (RuntimeException ignored) {
 	        	ignored.printStackTrace();
 	            // getUniqueEntity should throw exception
@@ -125,6 +130,18 @@ public class RequisicionController {
 			reqComp.setDesComponente((componenteDao.consult(id)).getD_componente());
 			response.getWriter().println(JsonConvertidor.toJson(reqComp));
 		}
+	   
+	   public void actualizaPendientes(Long folioRequisicion){
+		   
+		   RequisicionEntity req = requisicionDao.consult(folioRequisicion);
+		   System.out.println("REQUISICION :"+req);
+		   ComponenteEntity com = componenteDao.consult(req.getFolio_componente());
+		   System.out.println("componente:"+com);
+		   Integer pendientes= com.getD_pendientes()+req.getNumero_piezas();
+		   System.out.println("pendientes:"+pendientes);
+		   com.setD_pendientes(pendientes);
+		   componenteDao.save(com);
+	   }
 	
 
 }

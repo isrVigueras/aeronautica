@@ -54,6 +54,7 @@ public class ComponenteEntity{
 		this.d_parte = d_parte;
 	}
 	public Integer getD_cantidad() {
+		// if (this.getD_cantidad() < 0) d_cantidad=0;
 		return d_cantidad;
 	}
 	public void setD_cantidad(Integer d_cantidad) {

@@ -4,9 +4,13 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import java.io.*; 
+import java.io.*;
+import java.util.Date; 
 public class GeneraOrdenPdf {
 	private static final Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 26, Font.BOLDITALIC);
     private static final Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
@@ -26,7 +30,7 @@ public class GeneraOrdenPdf {
      *      pdf File we are going to write. 
      *      Fichero pdf en el que vamos a escribir. 
      */
-    public static void GeneraOrdenPdf(File pdfNewFile) {
+    public void GeneraOrdenPdf(File pdfNewFile) {
         // Aquí introduciremos el código para crear el PDF.
     	try {
     	    Document document = new Document();
@@ -37,24 +41,38 @@ public class GeneraOrdenPdf {
     	                + "(No se encontró el fichero para generar el pdf)" + fileNotFoundException);
     	    }
     	    document.open();
-    	 
-    	    // AQUÍ COMPLETAREMOS NUESTRO CÓDIGO PARA GENERAR EL PDF
-    	    document.addTitle("Table export to PDF (Exportamos la tabla a PDF)");
-    	    document.addSubject("Using iText (usando iText)");
-    	    document.addKeywords("Java, PDF, iText");
-    	    document.addAuthor("Código Xules");
-    	    document.addCreator("Código Xules");
-    	    document.close();
+            
+            // Este codigo genera una tabla de 3 columnas
+            PdfPTable table = new PdfPTable(4);                
+             
+            // addCell() agrega una celda a la tabla, el cambio de fila
+            // ocurre automaticamente al llenar la fila
+           
+             
+            // Si desea crear una celda de mas de una columna
+            // Cree un objecto Cell y cambie su propiedad span
+             
+            PdfPCell celdaFinal = new PdfPCell(new Paragraph("Final de la tabla"));
+             
+            // Indicamos cuantas columnas ocupa la celda
+            celdaFinal.setColspan(4);
+            table.addCell(celdaFinal);
+            table.addCell("wwwwwwww");
+             
+            // Agregamos la tabla al documento            
+            document.add(table);
+             
+            document.close();
     	    System.out.println("Your PDF file has been generated!(¡Se ha generado tu hoja PDF!");
     	} catch (DocumentException documentException) {
     	    System.out.println("The file not exists (Se ha producido un error al generar un documento): " + documentException);
     	}
     }
-    public void main(String args[]) {
-    	@SuppressWarnings("unused")
-		GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf();
-    	GeneraOrdenPdf.GeneraOrdenPdf(new File("../Escritorio/Orden de trabajo.pdf"));
-    }
+//    public void main(String args[]) {
+//    	@SuppressWarnings("unused")
+//		GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf();
+//    	GeneraOrdenPdf.GeneraOrdenPdf(new File("../Escritorio/Orden de trabajo.pdf"));
+//    }
       
     
 }
