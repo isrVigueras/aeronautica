@@ -101,22 +101,15 @@ console.log($scope.provincias);
    
   }
 
-
-      $scope.alta_requisicion=function() {
-      alert("variable comprobada: ");
-      insertaRequiServicio.inserta_requisicion($scope.req).then(
-        function(data) {
-          console.log(data);
-         location.reload();
-        })         
-  }
-
   $scope.muestra_discrepancia=function(data) {
     console.log(data);
     $scope.detalle_discrepancia = data; 
   }
 }]);
-app.controller("EditarDiscrepanciaController", ['$scope','discrepancia','UpdateDiscrepanciaServicio','altaEventoServicio','eventos','listado_inv','altaComponenteServicio','componentes','deleteEventoServicio','deleteComponenteServicio','componentes_0',function($scope,discrepancia,UpdateDiscrepanciaServicio,altaEventoServicio,eventos,listado_inv,altaComponenteServicio,componentes,deleteEventoServicio,deleteComponenteServicio,componentes_0) {
+app.controller("EditarDiscrepanciaController",
+ ['$scope','discrepancia','UpdateDiscrepanciaServicio','altaEventoServicio','eventos','listado_inv','altaComponenteServicio','componentes','deleteEventoServicio','deleteComponenteServicio','componentes_0','insertaRequiServicio',
+ function($scope,discrepancia,UpdateDiscrepanciaServicio,altaEventoServicio,eventos,listado_inv,altaComponenteServicio,componentes,deleteEventoServicio,deleteComponenteServicio,componentes_0,insertaRequiServicio) 
+ {
 $scope.discrepancia =discrepancia;
 $scope.eventos =eventos;
 $scope.listado_inv =listado_inv;
@@ -158,6 +151,14 @@ console.log($scope.componentes_0);
     cantidad:undefined
   }
 
+   $scope.requisicion = {
+    fechaApertura:new Date(),
+    folio:$scope.discrepancia.folioOrden,
+    folio_componente:undefined,
+    folio_discrepancia:$scope.discrepancia.id,
+    numero_piezas:undefined,
+  }
+
   $scope.Agregar=function(){
     console.log($scope.evento);
     altaEventoServicio.alta_evento($scope.evento_tabla).then(
@@ -193,6 +194,15 @@ console.log($scope.componentes_0);
           alert("Componente Borrado");
           location.reload();
         })
+  }
+      $scope.alta_requisicion=function() {
+      console.log($scope.requisicion);
+      insertaRequiServicio.inserta_requisicion($scope.requisicion).then(
+        function(data) {
+          console.log(data);
+          location.href="#/Orden/discrepancia/"+$scope.requisicion.folio;
+          location.reload();
+        })         
   }
 $scope.guardar_edit=function(){
       $scope.discrepancia_fo.eventos = $scope.discrepancia.entos;
