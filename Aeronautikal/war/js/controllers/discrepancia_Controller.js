@@ -224,6 +224,7 @@ console.log($scope.componentes_0);
 
      $scope.evento_edi={
             idDiscrepancia:$scope.discrepancia.id,
+            idEvento:$scope.detalle_evento.idEvento,
             nombreEvento:$scope.detalle_evento.nombreEvento,
             duracion:$scope.detalle_evento.duracion,
             costo:$scope.detalle_evento.costo
