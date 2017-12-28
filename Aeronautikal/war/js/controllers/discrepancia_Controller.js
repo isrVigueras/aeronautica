@@ -70,6 +70,18 @@ app.service('deleteComponenteServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+//servicio update evento en la discrepancia
+app.service('UpdateEventoServicio', [ '$http', '$q', function($http, $q) {
+  this.update_Evento = function(Objeto) {
+    var d = $q.defer();
+    $http.post("/evento/update/",Objeto).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
 app.controller("DiscrepanciamuestraController", ['$scope','inv_consultas','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio',function($scope,inv_consultas,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio) {
 $scope.discrepancias =discrepancias;
  $scope.provincias=inv_consultas; 
@@ -107,8 +119,8 @@ console.log($scope.provincias);
   }
 }]);
 app.controller("EditarDiscrepanciaController",
- ['$scope','discrepancia','UpdateDiscrepanciaServicio','altaEventoServicio','eventos','listado_inv','altaComponenteServicio','componentes','deleteEventoServicio','deleteComponenteServicio','componentes_0','insertaRequiServicio',
- function($scope,discrepancia,UpdateDiscrepanciaServicio,altaEventoServicio,eventos,listado_inv,altaComponenteServicio,componentes,deleteEventoServicio,deleteComponenteServicio,componentes_0,insertaRequiServicio) 
+ ['$scope','discrepancia','UpdateDiscrepanciaServicio','altaEventoServicio','eventos','listado_inv','altaComponenteServicio','componentes','deleteEventoServicio','deleteComponenteServicio','componentes_0','insertaRequiServicio','UpdateEventoServicio',
+ function($scope,discrepancia,UpdateDiscrepanciaServicio,altaEventoServicio,eventos,listado_inv,altaComponenteServicio,componentes,deleteEventoServicio,deleteComponenteServicio,componentes_0,insertaRequiServicio,UpdateEventoServicio) 
  {
 $scope.discrepancia =discrepancia;
 $scope.eventos =eventos;
@@ -159,6 +171,7 @@ console.log($scope.componentes_0);
     numero_piezas:undefined,
   }
 
+
   $scope.Agregar=function(){
     console.log($scope.evento);
     altaEventoServicio.alta_evento($scope.evento_tabla).then(
@@ -202,8 +215,31 @@ console.log($scope.componentes_0);
           console.log(data);
           location.href="#/Orden/discrepancia/"+$scope.requisicion.folio;
           location.reload();
+          alert("Requisicion Agregada");
         })         
   }
+     $scope.muestra_evento=function(data) {
+    console.log(data);
+    $scope.detalle_evento = data;
+
+     $scope.evento_edi={
+            idDiscrepancia:$scope.discrepancia.id,
+            nombreEvento:$scope.detalle_evento.nombreEvento,
+            duracion:$scope.detalle_evento.duracion,
+            costo:$scope.detalle_evento.costo
+          } 
+  }
+
+   $scope.Actualizar_evento=function() {
+    console.log($scope.evento_edi);
+      UpdateEventoServicio.update_Evento($scope.evento_edi).then(
+        function(data) {
+          console.log(data);
+          alert("Evento Modificado");
+          location.reload();
+        })
+  }
+      
 $scope.guardar_edit=function(){
       $scope.discrepancia_fo.eventos = $scope.discrepancia.entos;
       console.log($scope.discrepancia_fo);
