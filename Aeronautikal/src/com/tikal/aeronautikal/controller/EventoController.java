@@ -117,12 +117,11 @@ public class EventoController {
 		   
 	   
 	   
-	   @RequestMapping(value = {"/update" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+	   @RequestMapping(value = {"/update" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 		public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
 				throws IOException {
 			AsignadorDeCharset.asignar(request, response);
 			EventoEntity c = (EventoEntity) JsonConvertidor.fromJson(json, EventoEntity.class);
-			//Empleado e= evo.getEmpleado();
 			eventoDao.update(c);
 			response.getWriter().println(JsonConvertidor.toJson(c));
 		}
@@ -131,7 +130,7 @@ public class EventoController {
 	   @RequestMapping(value = { "/getByDiscrepancia/{idDiscrepancia}" }, method = RequestMethod.GET, produces = "application/json")
 		public void findByDiscrepancia(HttpServletResponse response, HttpServletRequest request,
 				@PathVariable Long idDiscrepancia) throws IOException {
-		   System.out.println("ya entro a evento controller");
+		   System.out.println("ya entro a evento controller....");
 			AsignadorDeCharset.asignar(request, response);
 			List<EventoEntity> evs= eventoDao.getByDiscrepancia(idDiscrepancia);
 			if (evs==null){
