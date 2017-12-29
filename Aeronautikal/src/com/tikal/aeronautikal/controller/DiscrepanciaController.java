@@ -232,7 +232,7 @@ public class DiscrepanciaController {
 			
 			}
 		   
-		   @RequestMapping(value = { "/findDetalle/{id}" }, method = RequestMethod.GET, produces = "application/json")
+		   @RequestMapping(value = { "/findDetalle/{id}" }, method = RequestMethod.POST, produces = "application/json")
 			public void findDetalle(HttpServletResponse response, HttpServletRequest request,
 					@PathVariable Long id) throws IOException {
 			   System.out.println("xxxxxxxxx");
