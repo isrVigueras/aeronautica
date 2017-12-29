@@ -82,12 +82,25 @@ app.service('UpdateEventoServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
-app.controller("DiscrepanciamuestraController", ['$scope','inv_consultas','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio',function($scope,inv_consultas,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio) {
+//servicio que trae el detalle completo de la discrepancia
+app.service('DetalleDiscreServicio', [ '$http', '$q', function($http, $q) {
+  this.detalle_Discrepancia = function(id) {
+    var d = $q.defer();
+    $http.post("/discrepancia/findDetalle/"+id).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
+app.controller("DiscrepanciamuestraController", ['$scope','inv_consultas','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio','DetalleDiscreServicio',function($scope,inv_consultas,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio,DetalleDiscreServicio) {
 $scope.discrepancias =discrepancias;
  $scope.provincias=inv_consultas; 
   $scope.miProvinciaSeleccionada=null
 
 console.log($scope.provincias); 
+console.log($scope.discrepancias); 
  $scope.discrepancia = {
     folio:undefined,
     fechaApertura:new Date(),
@@ -113,9 +126,16 @@ console.log($scope.provincias);
    
   }
 
-  $scope.muestra_discrepancia=function(data) {
-    console.log(data);
-    $scope.detalle_discrepancia = data; 
+  $scope.muestra_discrepancia=function(objeto) {
+    console.log(objeto);
+    $scope.detalle_discrepancia = objeto;
+      DetalleDiscreServicio.detalle_Discrepancia($scope.detalle_discrepancia.id).then(
+        function(data) {
+          $scope.detalle_dis =data;
+           console.log("scope");
+          console.log($scope.detalle_dis);
+        })
+
   }
 }]);
 app.controller("EditarDiscrepanciaController",
