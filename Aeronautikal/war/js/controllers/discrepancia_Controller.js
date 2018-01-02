@@ -206,8 +206,15 @@ console.log($scope.componentes_0);
     altaComponenteServicio.alta_componente($scope.componente).then(
         function(data) {
           console.log(data);
+          if (data = null) {
           alert("Componente Agregado");
           location.reload();
+          }
+          else
+          {
+            console.log(data);
+            console.log("entro a la funcion requisicion")
+          }
         })
   }
     $scope.borrar_componente=function(id){

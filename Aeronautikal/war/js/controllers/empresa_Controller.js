@@ -58,4 +58,19 @@ app.controller('empresaMuestraController', ['$scope','eliminaEmpresaServicio','e
           location.reload();
         })         
   }
+    $scope.muestra_cliente=function(objeto) {
+    console.log(objeto);
+    $scope.detalle_cliente = objeto; 
+
+    $scope.empresaform = {
+    idEmpresa:$scope.detalle_cliente.idEmpresa,
+    nombreEmpresa:$scope.detalle_cliente.nombreEmpresa,
+    rfc:$scope.detalle_cliente.rfc,
+    razonSocial:$scope.detalle_cliente.razonSocial,
+    pais:$scope.detalle_cliente.pais,
+    nombreContacto:$scope.detalle_cliente.nombreContacto,
+    telefono:$scope.detalle_cliente.telefono,
+    email:$scope.detalle_cliente.email
+  }   
+  }
 }]);
