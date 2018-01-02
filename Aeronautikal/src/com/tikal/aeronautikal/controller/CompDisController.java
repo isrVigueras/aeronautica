@@ -85,21 +85,24 @@ public class CompDisController {
 		        	// System.out.println("request......."+request);
 		        	// System.out.println("request......."+response);
 		        	ComponenteDiscrepancia cd =(ComponenteDiscrepancia) JsonConvertidor.fromJson(json, ComponenteDiscrepancia.class);
-		        	
+		        	String r="";
+		        	///si la cantidad requerida es mayor a las existencias , se genera una requisicion
 		        	if (cd.getCantidad()> componenteDao.consult(cd.getIdComponente()).getD_cantidad()){
 		        		 System.out.println("cantidad requerida:"+cd.getCantidad());
 			        	 System.out.println("cantidad en almacen:"+componenteDao.consult(cd.getIdComponente()).getD_cantidad());
 			        	 Integer cantidad= cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad();
 		        		System.out.println("Se generará una requisicion con este numero de piezas:"+(cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad()));
-		        		addRequisicionAutomatica(cd.getIdComponente(),cd.getIdDiscrepancia(), cantidad);
-		        		String var="REQ";
+		        		Long idReq=addRequisicionAutomatica(cd.getIdComponente(),cd.getIdDiscrepancia(), cd.getId(),cantidad);
+		        		actualizaPendientes(idReq);
+		        		r=cantidad.toString();
+		        		
 		        	}
 		        	// System.out.println("el nuevo objeto: "+orden );
 		        	//pegar el valor de empresa, aeronave y contacato
 		        	//orden.setFolio(1111);
 		        	componenteDiscrepanciaDao.save(cd);	       
 		        	actualizaExistencias(cd.getIdComponente(),cd.getCantidad(),"add");
-		        	response.getWriter().println("2");
+		        	response.getWriter().println(r);
 		        } catch (RuntimeException ignored) {
 		        	ignored.printStackTrace();
 		            // getUniqueEntity should throw exception
@@ -140,6 +143,8 @@ public class CompDisController {
 	    	   System.out.println("si esta en delete"+id);
 			   actualizaExistencias(componenteDiscrepanciaDao.consult(id).getIdComponente(), componenteDiscrepanciaDao.consult(id).getCantidad(),"delete");
 			   componenteDiscrepanciaDao.delete(componenteDiscrepanciaDao.consult(id));
+			   
+			  //buscar req x componente y discrepancia para eliminar la req correcta
 			   System.out.println("Componente eliminado de la discrepancia....");
 			   response.getWriter().println("ok");
 		   }
@@ -154,6 +159,7 @@ public class CompDisController {
 	    		System.out.println("Adddddddddddddddddddd");
 	    		ComponenteEntity c =componenteDao.consult(idComponente);
 	    		Integer existencias = c.getD_cantidad()-cantidad;
+	    		if (existencias<=0 ) existencias=0;
 	    		System.out.println("Adddddddddddddddddddd"+existencias);
 	    		c.setD_cantidad(existencias);
 	    		componenteDao.save(c);
@@ -170,7 +176,7 @@ public class CompDisController {
 	    }
 	    	
 	    	
-	    public void addRequisicionAutomatica(Long idComponente, Long idDiscrepancia, Integer cantidad) { 
+	    public Long addRequisicionAutomatica(Long idComponente, Long idDiscrepancia, Long idComDis ,Integer cantidad) { 
 	    	  System.out.println("si entraa agregar requisicion automatica :");     	
 	        
 	        	RequisicionEntity r = new RequisicionEntity();
@@ -182,11 +188,23 @@ public class CompDisController {
 	        	r.setNumero_piezas(cantidad);
 	        	
 	        	requisicionDao.save(r);
+	        
 	        	System.out.println("Requisicion expedida..........");
 	        	
-	      
+	        	return r.getFolio();
 	    }
 	    
-	    
+	    public void actualizaPendientes(Long folioRequisicion){
+			   
+			   RequisicionEntity req = requisicionDao.consult(folioRequisicion);
+			   System.out.println("REQUISICION :"+req);
+			   ComponenteEntity com = componenteDao.consult(req.getFolio_componente());
+			   System.out.println("componente:"+com);
+			   Integer pendientes= com.getD_pendientes()+req.getNumero_piezas();
+			   System.out.println("pendientes:"+pendientes);
+			   com.setD_pendientes(pendientes);
+			   componenteDao.save(com);
+			 
+		   }
 	   
 }

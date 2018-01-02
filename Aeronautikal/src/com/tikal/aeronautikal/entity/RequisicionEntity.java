@@ -8,11 +8,23 @@ public class RequisicionEntity {
 		
 		@Id Long folio;
 		@Index Long folio_componente;
+		@Index Long idComDis;
 		Long folio_discrepancia;
 		Integer numero_piezas;
 		//String d_componente;
 		String fechaApertura;
 		@Index String estatus;
+		
+		
+		
+		
+		
+		public Long getIdComDis() {
+			return idComDis;
+		}
+		public void setIdComDis(Long idComDis) {
+			this.idComDis = idComDis;
+		}
 		public Long getFolio() {
 			return folio;
 		}
