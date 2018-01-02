@@ -21,6 +21,7 @@ import com.tikal.aeronautikal.dao.AeronaveDao;
 //import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.Contador;
+import com.tikal.aeronautikal.entity.EventoEntity;
 //import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.exception.ObjectNotFoundException;
 import com.tikal.aeronautikal.model.Aeronave;
@@ -154,6 +155,15 @@ public class AeronaveController  {
 		   System.out.println("aeronave eliminada....");
 		   response.getWriter().println("ok");
 	   }
+	   
+	   @RequestMapping(value = {"/update" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+		public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
+				throws IOException {
+			AsignadorDeCharset.asignar(request, response);
+			AeronaveEntity a = (AeronaveEntity) JsonConvertidor.fromJson(json, AeronaveEntity.class);
+			aeronaveDao.update(a);
+			response.getWriter().println(JsonConvertidor.toJson(a));
+		}
 	   
 	   //////////////////////////////////////////////////////////////////////////////////////////*******************
      

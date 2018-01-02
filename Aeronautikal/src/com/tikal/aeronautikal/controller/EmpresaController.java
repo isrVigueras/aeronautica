@@ -14,7 +14,8 @@ package com.tikal.aeronautikal.controller;
 	import org.springframework.web.bind.annotation.RequestMapping;
 	import org.springframework.web.bind.annotation.RequestMethod;
 	import com.tikal.aeronautikal.dao.EmpresaDao;
-	import com.tikal.aeronautikal.entity.EmpresaEntity;
+import com.tikal.aeronautikal.entity.AeronaveEntity;
+import com.tikal.aeronautikal.entity.EmpresaEntity;
 	import com.tikal.aeronautikal.service.EmpresaService;
 	import com.tikal.aeronautikal.util.AsignadorDeCharset;
 	import com.tikal.aeronautikal.util.JsonConvertidor;
@@ -106,6 +107,13 @@ package com.tikal.aeronautikal.controller;
 		   
 		   //////////////////////////////////////////////////////////////////////////////////////////*******************
 		   
-		   
+		   @RequestMapping(value = {"/update" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+			public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
+					throws IOException {
+				AsignadorDeCharset.asignar(request, response);
+				EmpresaEntity e = (EmpresaEntity) JsonConvertidor.fromJson(json, EmpresaEntity.class);
+				empresaDao.update(e);
+				response.getWriter().println(JsonConvertidor.toJson(e));
+			}
 		   
 	}
