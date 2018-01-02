@@ -65,7 +65,7 @@ app.controller('aeronaveMuestraController', ['$scope','eliminaAeronaveServicio',
       eliminaAeronaveServicio.elimina_aeronave(folio).then(
         function(data) {
           console.log(data);
-          alert("Aeronave Eliminada");
+          alert("Aeronave Eliminada....");
           location.reload();
         })         
   }
@@ -82,7 +82,7 @@ app.controller('aeronaveMuestraController', ['$scope','eliminaAeronaveServicio',
     nacionalidad:$scope.detalle_aeronave.nacionalidad,
     tiempovuelo:$scope.detalle_aeronave.tiempovuelo,
      aterrizaje:$scope.detalle_aeronave.aterrizaje
-  }       
+  }            
   }
 
     $scope.Actualiza_aeronave=function() {   
