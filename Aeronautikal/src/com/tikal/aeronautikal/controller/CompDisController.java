@@ -99,7 +99,7 @@ public class CompDisController {
 		        	//orden.setFolio(1111);
 		        	componenteDiscrepanciaDao.save(cd);	       
 		        	actualizaExistencias(cd.getIdComponente(),cd.getCantidad(),"add");
-		        	response.getWriter().println(2);
+		        	response.getWriter().println("2");
 		        } catch (RuntimeException ignored) {
 		        	ignored.printStackTrace();
 		            // getUniqueEntity should throw exception
