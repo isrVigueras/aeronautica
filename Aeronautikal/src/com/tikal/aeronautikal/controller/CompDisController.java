@@ -87,9 +87,15 @@ public class CompDisController {
 		        	ComponenteDiscrepancia cd =(ComponenteDiscrepancia) JsonConvertidor.fromJson(json, ComponenteDiscrepancia.class);
 		        	String r="";
 		        	///si la cantidad requerida es mayor a las existencias , se genera una requisicion
+		        	
+		        	// System.out.println("el nuevo objeto: "+orden );
+		        	//pegar el valor de empresa, aeronave y contacato
+		        	//orden.setFolio(1111);
+		        	componenteDiscrepanciaDao.save(cd);	       
 		        	if (cd.getCantidad()> componenteDao.consult(cd.getIdComponente()).getD_cantidad()){
 		        		 System.out.println("cantidad requerida:"+cd.getCantidad());
 			        	 System.out.println("cantidad en almacen:"+componenteDao.consult(cd.getIdComponente()).getD_cantidad());
+			        	 System.out.println("idComDis:"+cd.getId());
 			        	 Integer cantidad= cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad();
 		        		System.out.println("Se generará una requisicion con este numero de piezas:"+(cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad()));
 		        		Long idReq=addRequisicionAutomatica(cd.getIdComponente(),cd.getIdDiscrepancia(), cd.getId(),cantidad);
@@ -97,10 +103,6 @@ public class CompDisController {
 		        		r=cantidad.toString();
 		        		
 		        	}
-		        	// System.out.println("el nuevo objeto: "+orden );
-		        	//pegar el valor de empresa, aeronave y contacato
-		        	//orden.setFolio(1111);
-		        	componenteDiscrepanciaDao.save(cd);	       
 		        	actualizaExistencias(cd.getIdComponente(),cd.getCantidad(),"add");
 		        	response.getWriter().println(r);
 		        } catch (RuntimeException ignored) {
@@ -142,9 +144,15 @@ public class CompDisController {
 				   throws IOException {
 	    	   System.out.println("si esta en delete"+id);
 			   actualizaExistencias(componenteDiscrepanciaDao.consult(id).getIdComponente(), componenteDiscrepanciaDao.consult(id).getCantidad(),"delete");
+			   ///borrando las requisiciones hechas en esa discrepancia y de ese componente
+			  // requisicionDao.getByComDis(id);
+			   requisicionDao.delete(requisicionDao.getByComDis(id));
+			   System.out.println("Requisicion automatica eliminada ....");
+			   //////////////////////////////////////////////////////////////
 			   componenteDiscrepanciaDao.delete(componenteDiscrepanciaDao.consult(id));
 			   
 			  //buscar req x componente y discrepancia para eliminar la req correcta
+			   
 			   System.out.println("Componente eliminado de la discrepancia....");
 			   response.getWriter().println("ok");
 		   }
@@ -186,7 +194,7 @@ public class CompDisController {
 	        	r.setFolio_componente(idComponente);
 	        	r.setFolio_discrepancia(idDiscrepancia);
 	        	r.setNumero_piezas(cantidad);
-	        	
+	        	r.setIdComDis(idComDis);
 	        	requisicionDao.save(r);
 	        
 	        	System.out.println("Requisicion expedida..........");

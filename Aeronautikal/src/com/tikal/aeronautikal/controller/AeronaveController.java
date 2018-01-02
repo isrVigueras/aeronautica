@@ -161,6 +161,7 @@ public class AeronaveController  {
 				throws IOException {
 			AsignadorDeCharset.asignar(request, response);
 			AeronaveEntity a = (AeronaveEntity) JsonConvertidor.fromJson(json, AeronaveEntity.class);
+			System.out.println("obj de edgar:"+a);
 			aeronaveDao.update(a);
 			response.getWriter().println(JsonConvertidor.toJson(a));
 		}

@@ -59,6 +59,14 @@ public class RequisicionDaoImpl implements RequisicionDao {
 		
 	}
 	
+	
+	@Override
+	public RequisicionEntity getByComDis(Long idComDis) {
+		System.out.println("aqui esta consultando la requisicion por ComDis" );
+       return ofy().load().type(RequisicionEntity.class).id(idComDis).now();
+		
+	}
+	
 	@Override
 	public List<RequisicionEntity> getByComponente(Long id) {
 		// TODO Auto-generated method stub

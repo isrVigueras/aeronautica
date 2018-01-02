@@ -2,7 +2,8 @@ package com.tikal.aeronautikal.dao.impl;
 
 	
 	import com.tikal.aeronautikal.dao.EmpresaDao;
-	import com.tikal.aeronautikal.entity.EmpresaEntity;
+import com.tikal.aeronautikal.entity.AeronaveEntity;
+import com.tikal.aeronautikal.entity.EmpresaEntity;
     import org.springframework.stereotype.Service;
 	import java.util.List;	
 	import static com.googlecode.objectify.ObjectifyService.ofy;
@@ -46,7 +47,24 @@ package com.tikal.aeronautikal.dao.impl;
 		@Override
 		public void update(EmpresaEntity e) {
 			// TODO Auto-generated method stub
-				ofy().save().entity(e).now();
+			EmpresaEntity old = this.consult(e.getIdEmpresa());
+			if (old != null) {
+				
+				old.setNombreContacto(e.getNombreContacto());
+				old.setNombreEmpresa(e.getNombreEmpresa());
+				old.setRfc(e.getRfc());
+				old.setRazonSocial(e.getRazonSocial());
+				old.setPais(e.getPais());
+				old.setTelefono(e.getTelefono());
+				old.setEmail(e.getEmail());
+				
+			}
+//				old.setMatricula(nave.getMatricula());
+//				old.setModelo(nave.getModelo());
+//				old.setTiempovuelo(nave.getTiempovuelo());
+//				old.setAterrizaje(nave.getAterrizaje());
+				ofy().save().entity(old).now();
+				//ofy().save().entity(e).now();
 			
 		}
 

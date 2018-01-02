@@ -38,13 +38,26 @@ public class AeronaveDaoImpl implements AeronaveDao {
 
    @Override
 	public void update(AeronaveEntity nave) {
-//	AeronaveEntity old = this.consult(nave.getNumeroSerie());
-//		if (old != null) {
+	AeronaveEntity old = this.consult(nave.getId());
+		if (old != null) {
+			old.setMarca(nave.getMarca());
+			old.setMatricula(nave.getMatricula());
+			old.setModelo(nave.getModelo());
+			old.setNacionalidad(nave.getNacionalidad());
+			old.setNumeroSerie(nave.getNumeroSerie());
+			old.setTiempovuelo(nave.getTiempovuelo());
+			old.setAterrizaje(nave.getAterrizaje());
+			old.setPlaneador(nave.getPlaneador());
+			old.setMotor1(nave.getMotor1());
+			old.setMotor2(nave.getMotor2());
+			old.setMarcas(nave.getMarcas());
+			
+		}
 //			old.setMatricula(nave.getMatricula());
 //			old.setModelo(nave.getModelo());
 //			old.setTiempovuelo(nave.getTiempovuelo());
 //			old.setAterrizaje(nave.getAterrizaje());
-			ofy().save().entity(nave);
+			ofy().save().entity(old);
    }
 
     

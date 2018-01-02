@@ -10,7 +10,9 @@ public interface RequisicionService {
 	 public void save(RequisicionEntity r);
 	  
 	 public RequisicionEntity consult(Long folio);
-	  
+	 
+	 public RequisicionEntity getByComDis(Long idComDis);
+	 
 	 public List<RequisicionEntity> getAll();
 	 
 	 public void delete(RequisicionEntity r);

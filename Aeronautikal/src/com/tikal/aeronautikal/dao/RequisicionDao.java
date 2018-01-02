@@ -18,8 +18,12 @@ public interface RequisicionDao {
 		
 		public List<RequisicionEntity> getAll();
 		
+		public RequisicionEntity getByComDis(Long idComDis);
+		
 		public Integer getPendientes(Long idComponente);
 		
 		public List<RequisicionEntity> getByComponente(Long id);
+
+		
 
 }
