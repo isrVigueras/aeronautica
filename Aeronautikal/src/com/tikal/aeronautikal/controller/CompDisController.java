@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.tikal.aeronautikal.controller.vo.ComDisVo;
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.ComponenteDiscrepanciaDao;
+import com.tikal.aeronautikal.dao.RequisicionDao;
 import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
 import com.tikal.aeronautikal.entity.EventoEntity;
+import com.tikal.aeronautikal.entity.RequisicionEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.service.AeronaveService;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
@@ -42,6 +44,10 @@ public class CompDisController {
 	    @Autowired
 	    @Qualifier("componenteDao")
 	    ComponenteDao componenteDao;
+	    
+	    @Autowired
+	    @Qualifier("requisicionDao")
+	    RequisicionDao requisicionDao;
 	    
 	    @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 	    
@@ -79,11 +85,21 @@ public class CompDisController {
 		        	// System.out.println("request......."+request);
 		        	// System.out.println("request......."+response);
 		        	ComponenteDiscrepancia cd =(ComponenteDiscrepancia) JsonConvertidor.fromJson(json, ComponenteDiscrepancia.class);
+		        	
+		        	if (cd.getCantidad()> componenteDao.consult(cd.getIdComponente()).getD_cantidad()){
+		        		 System.out.println("cantidad requerida:"+cd.getCantidad());
+			        	 System.out.println("cantidad en almacen:"+componenteDao.consult(cd.getIdComponente()).getD_cantidad());
+			        	 Integer cantidad= cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad();
+		        		System.out.println("Se generará una requisicion con este numero de piezas:"+(cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad()));
+		        		addRequisicionAutomatica(cd.getIdComponente(),cd.getIdDiscrepancia(), cantidad);
+		        		String var="REQ";
+		        	}
 		        	// System.out.println("el nuevo objeto: "+orden );
 		        	//pegar el valor de empresa, aeronave y contacato
 		        	//orden.setFolio(1111);
 		        	componenteDiscrepanciaDao.save(cd);	       
 		        	actualizaExistencias(cd.getIdComponente(),cd.getCantidad(),"add");
+		        	response.getWriter().println("algo diferente a ok");
 		        } catch (RuntimeException ignored) {
 		        	ignored.printStackTrace();
 		            // getUniqueEntity should throw exception
@@ -154,6 +170,22 @@ public class CompDisController {
 	    }
 	    	
 	    	
+	    public void addRequisicionAutomatica(Long idComponente, Long idDiscrepancia, Integer cantidad) { 
+	    	  System.out.println("si entraa agregar requisicion automatica :");     	
+	        
+	        	RequisicionEntity r = new RequisicionEntity();
+	        	//cd.setId(Long.parseLong("12121212"));
+	        	r.setEstatus("ABIERTA");
+	        	r.setFechaApertura(" 999");
+	        	r.setFolio_componente(idComponente);
+	        	r.setFolio_discrepancia(idDiscrepancia);
+	        	r.setNumero_piezas(cantidad);
+	        	
+	        	requisicionDao.save(r);
+	        	System.out.println("Requisicion expedida..........");
+	        	
+	      
+	    }
 	    
 	    
 	   
