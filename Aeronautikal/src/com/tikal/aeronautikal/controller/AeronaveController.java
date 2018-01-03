@@ -159,9 +159,10 @@ public class AeronaveController  {
 	   @RequestMapping(value = {"/update" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 		public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
 				throws IOException {
+			System.out.println("obj de edgar:"+json);
 			AsignadorDeCharset.asignar(request, response);
 			AeronaveEntity a = (AeronaveEntity) JsonConvertidor.fromJson(json, AeronaveEntity.class);
-			System.out.println("obj de edgar:"+a);
+
 			aeronaveDao.update(a);
 			response.getWriter().println(JsonConvertidor.toJson(a));
 		}

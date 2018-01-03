@@ -4,12 +4,14 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.util.Date; 
 public class GeneraOrdenPdf {
 	private static final Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 26, Font.BOLDITALIC);
@@ -29,8 +31,10 @@ public class GeneraOrdenPdf {
      * @param pdfNewFile  <code>String</code> 
      *      pdf File we are going to write. 
      *      Fichero pdf en el que vamos a escribir. 
+     * @throws IOException 
+     * @throws MalformedURLException 
      */
-    public void GeneraOrdenPdf(File pdfNewFile) {
+    public void GeneraOrdenPdf(File pdfNewFile) throws MalformedURLException, IOException {
         // Aquí introduciremos el código para crear el PDF.
     	try {
     	    Document document = new Document();
@@ -57,9 +61,16 @@ public class GeneraOrdenPdf {
             // Indicamos cuantas columnas ocupa la celda
             celdaFinal.setColspan(4);
             table.addCell(celdaFinal);
-            table.addCell("wwwwwwww");
-             
-            // Agregamos la tabla al documento            
+         ////////////////////
+          //  PdfPTable table = new PdfPTable(2);
+         //   table.setWidthPercentage(100f);
+         //   PdfPCell cell;
+         //   Image image = Image.getInstance("LogoCross.jpg");
+        //    cell = new PdfPCell(image);
+        //    table.addCell(cell);
+           // cell = new PdfPCell(new Phrase("Mudvayne es una banda de metal alternativo formada en Peoria, Illinois en 1996. Consta de cuatro miembros, el cantante principal Chad Gray, Greg Tribbett en guitarras, Ryan Martinie en bajos y Matthew McDonough en batería."));
+           // table.addCell(cell);
+            ////////////////////
             document.add(table);
              
             document.close();

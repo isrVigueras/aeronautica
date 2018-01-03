@@ -38,7 +38,9 @@ public class AeronaveDaoImpl implements AeronaveDao {
 
    @Override
 	public void update(AeronaveEntity nave) {
+	   System.out.print("nave:"+nave.getId());
 	AeronaveEntity old = this.consult(nave.getId());
+	System.out.print("old:"+old);
 		if (old != null) {
 			old.setMarca(nave.getMarca());
 			old.setMatricula(nave.getMatricula());
