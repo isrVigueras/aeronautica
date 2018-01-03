@@ -22,6 +22,18 @@ app.service('eliminaEmpresaServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+ //servicio actualiza empresa
+app.service('ActualizaEmpresaServicio', [ '$http', '$q', function($http, $q) {
+  this.actualiza_empresa = function(objeto) {
+    var d = $q.defer();
+    $http.post("/empresa/update",objeto).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
 app.controller('empresaController', ['$scope', 'altaEmpresaServicio',function($scope, altaEmpresaServicio) {
    $scope.empresaform = {
     idEmpresa: undefined,
@@ -44,7 +56,7 @@ app.controller('empresaController', ['$scope', 'altaEmpresaServicio',function($s
         })         
   }
 }]);
-app.controller('empresaMuestraController', ['$scope','eliminaEmpresaServicio','empresas_consultas',function($scope,eliminaEmpresaServicio,empresas_consultas) {
+app.controller('empresaMuestraController', ['$scope','eliminaEmpresaServicio','empresas_consultas','ActualizaEmpresaServicio',function($scope,eliminaEmpresaServicio,empresas_consultas,ActualizaEmpresaServicio) {
   $scope.empresas_consultas = empresas_consultas;
       console.log(empresas_consultas);
       
@@ -62,7 +74,7 @@ app.controller('empresaMuestraController', ['$scope','eliminaEmpresaServicio','e
     console.log(objeto);
     $scope.detalle_cliente = objeto; 
 
-    $scope.empresaform = {
+    $scope.empresa_edi = {
     idEmpresa:$scope.detalle_cliente.idEmpresa,
     nombreEmpresa:$scope.detalle_cliente.nombreEmpresa,
     rfc:$scope.detalle_cliente.rfc,
@@ -72,5 +84,15 @@ app.controller('empresaMuestraController', ['$scope','eliminaEmpresaServicio','e
     telefono:$scope.detalle_cliente.telefono,
     email:$scope.detalle_cliente.email
   }   
+  }
+
+    $scope.Actualiza_Empresa=function() {   
+
+      ActualizaEmpresaServicio.actualiza_empresa($scope.empresa_edi).then(
+        function(data) {
+          console.log(data);
+          alert("Cliente Modificado");
+          location.reload();
+        })  
   }
 }]);
