@@ -75,6 +75,7 @@ app.controller('aeronaveMuestraController', ['$scope','eliminaAeronaveServicio',
     $scope.detalle_aeronave = objeto; 
 
     $scope.aeronave_edi = {
+    id:$scope.detalle_aeronave.id,
     numeroAeronave: $scope.detalle_aeronave.numeroAeronave,
     matricula:$scope.detalle_aeronave.matricula,
     modelo:$scope.detalle_aeronave.modelo,
