@@ -14,6 +14,10 @@
         <th>Matricula</th>
         <th>Modelo</th>
         <th>Nacionalidad</th>
+        <th>Marca</th>
+        <th>Marcas</th>
+        <th>Motor1</th>
+        <th>Motor2</th>
         <th>tiempo Vuelo</th>
         <th>Aterrizaje</th>
         <th>Accion</th>
@@ -25,6 +29,10 @@
         <td>{{aeron.matricula}}</td>
         <td>{{aeron.modelo}}</td>
         <td>{{aeron.nacionalidad}}</td>
+        <td>{{aeron.marca}}</td>
+        <td>{{aeron.marcas}}</td>
+        <td>{{aeron.motor1}}</td>
+        <td>{{aeron.motor2}}</td> 
         <td>{{aeron.tiempovuelo}}</td>
         <td>{{aeron.aterrizaje}}</td>
         <td>
@@ -74,6 +82,10 @@
     Norteamericana
   </label>
 </div>
+<label for="marca">Marca:</label><input class="form-control" placeholder="Escriba la Marca" id="marca" name="marca" type="text" ng-model="aeronave_edi.marca" required/>
+<label for="marcas">Marcas:</label><input class="form-control" placeholder="Escriba las marcas" id="marcas" name="marcas" type="text" ng-model="aeronave_edi.marcas" required/>
+<label for="motor1">Motor1:</label><input class="form-control" placeholder="Escriba detalles del Motor1" id="motor1" name="motor1" type="text" ng-model="aeronave_edi.motor1" required/>
+<label for="motor2">Motor2:</label><input class="form-control" placeholder="Escriba detalles del motor2" id="motor2" name="motor2" type="text" ng-model="aeronave_edi.motor2" required/>
   <label for="tiempovuelo">Tiempo de Vuelo:</label><input class="form-control" placeholder="Escriba el Tiempo de Vuelo" id="tiempovuelo" name="tiempovuelo" type="number" ng-model="aeronave_edi.tiempovuelo" required/>
   <label for="aterrizaje">Aterrizaje:</label><input class="form-control" placeholder="Escriba el Aterrizaje" id="aterrizaje" name="aterrizaje" type="text" ng-model="aeronave_edi.aterrizaje" required/>
   

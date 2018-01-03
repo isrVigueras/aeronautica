@@ -41,6 +41,10 @@ app.controller('aeronaveController', ['$scope','altaAeronaveServicio',function($
     modelo:"",
     numeroSerie:"",
     nacionalidad: "",
+    marca:"",
+    marcas:"",
+    motor1:"",
+    motor2:"",
     tiempovuelo:undefined,
      aterrizaje:""
     
@@ -81,6 +85,10 @@ app.controller('aeronaveMuestraController', ['$scope','eliminaAeronaveServicio',
     modelo:$scope.detalle_aeronave.modelo,
     numeroSerie:$scope.detalle_aeronave.numeroSerie,
     nacionalidad:$scope.detalle_aeronave.nacionalidad,
+    marca:$scope.detalle_aeronave.marca,
+    marcas:$scope.detalle_aeronave.marcas,
+    motor1:$scope.detalle_aeronave.motor1,
+    motor2:$scope.detalle_aeronave.motor2,
     tiempovuelo:$scope.detalle_aeronave.tiempovuelo,
      aterrizaje:$scope.detalle_aeronave.aterrizaje
   }            
