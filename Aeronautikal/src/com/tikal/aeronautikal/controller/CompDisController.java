@@ -85,7 +85,7 @@ public class CompDisController {
 		        	// System.out.println("request......."+request);
 		        	// System.out.println("request......."+response);
 		        	ComponenteDiscrepancia cd =(ComponenteDiscrepancia) JsonConvertidor.fromJson(json, ComponenteDiscrepancia.class);
-		        	String r="";
+		        	String r="0";
 		        	///si la cantidad requerida es mayor a las existencias , se genera una requisicion
 		        	
 		        	// System.out.println("el nuevo objeto: "+orden );
