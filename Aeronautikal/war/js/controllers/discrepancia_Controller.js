@@ -205,15 +205,19 @@ console.log($scope.componentes_0);
     console.log($scope.componente);
     altaComponenteServicio.alta_componente($scope.componente).then(
         function(data) {
-          console.log(data);
-          if (data = null) {
+         var d= data;
+         console.log(d);
+
+          if (d == 0) {
           alert("Componente Agregado");
           location.reload();
           }
           else
           {
-            console.log(data);
             console.log("entro a la funcion requisicion")
+            alert("Se realizo una requisicion. las piezas no son suficientes");
+            location.reload();
+          
           }
         })
   }
