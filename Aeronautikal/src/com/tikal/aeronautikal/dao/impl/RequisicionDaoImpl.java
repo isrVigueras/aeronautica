@@ -64,6 +64,7 @@ public class RequisicionDaoImpl implements RequisicionDao {
 	public RequisicionEntity getByComDis(Long idComDis) {
 		System.out.println("aqui esta consultando la requisicion por ComDis" );
 		RequisicionEntity r = ofy().load().type(RequisicionEntity.class).filter("idComDis", idComDis).first().now();
+		System.out.println("reqs para borrars" +r);
        return r;
 		
 	}

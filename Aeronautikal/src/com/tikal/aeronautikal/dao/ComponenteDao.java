@@ -7,7 +7,7 @@ import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 
-	public interface ComponenteDao {
+public interface ComponenteDao {
 	
 	public void save(ComponenteEntity c);
 	

@@ -1,14 +1,12 @@
 package com.tikal.aeronautikal.dao;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
+
 
 import java.util.List;
-import java.util.Map;
 
-import com.tikal.aeronautikal.controller.vo.OrdenVo;
+
 import com.tikal.aeronautikal.entity.AeronaveEntity;
-//import com.tikal.aeronautikal.entity.BaseEntity;
-import com.tikal.aeronautikal.entity.RequisicionEntity;
+
 
 
 

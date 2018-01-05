@@ -18,8 +18,7 @@ import com.tikal.aeronautikal.service.ContactoService;
 
 public class ContactoController {
 	
-		@Autowired
-	   
+		@Autowired	   
 	    private ContactoService contactoService;   
 	   
 	   

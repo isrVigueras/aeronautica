@@ -12,7 +12,9 @@
         http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
  	<context:component-scan base-package="com.tikal.aeronautikal.controller"/>
+ 	<context:component-scan base-package="com.tikal.aeronautikal.service"/> 
     <context:component-scan base-package="com.tikal.aeronautikal.service.impl"/>   
+     <context:component-scan base-package="com.tikal.aeronautikal.dao"/>
     <context:component-scan base-package="com.tikal.aeronautikal.dao.impl"/>
     <context:component-scan base-package="com.tikal.aeronautikal.util"/>
     

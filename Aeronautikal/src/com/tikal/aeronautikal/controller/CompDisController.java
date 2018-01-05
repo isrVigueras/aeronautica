@@ -146,9 +146,13 @@ public class CompDisController {
 			   actualizaExistencias(componenteDiscrepanciaDao.consult(id).getIdComponente(), componenteDiscrepanciaDao.consult(id).getCantidad(),"delete");
 			   ///borrando las requisiciones hechas en esa discrepancia y de ese componente
 			  // requisicionDao.getByComDis(id);
-			   requisicionDao.delete(requisicionDao.getByComDis(id));
-			   System.out.println("Requisicion automatica eliminada ....");
-			   //////////////////////////////////////////////////////////////
+		/*	   if (!requisicionDao.getByComDis(id).equals(null)){
+				   requisicionDao.delete(requisicionDao.getByComDis(id));
+				   System.out.println("Requisicion automatica eliminada ....");
+			   }else{
+			  // requisicionDao.delete(requisicionDao.getByComDis(id));
+			   System.out.println("salio de buscar las reqs");
+			   }*///////////////////////////////////////////////////////////////
 			   componenteDiscrepanciaDao.delete(componenteDiscrepanciaDao.consult(id));
 			   
 			  //buscar req x componente y discrepancia para eliminar la req correcta

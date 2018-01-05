@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.tikal.aeronautikal.controller.vo.RequisicionesComponenteVo;
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.RequisicionDao;
-import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
+
 import com.tikal.aeronautikal.entity.RequisicionEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.service.RequisicionService;

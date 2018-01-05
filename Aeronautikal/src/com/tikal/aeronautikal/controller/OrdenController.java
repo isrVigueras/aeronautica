@@ -122,7 +122,7 @@ public class OrdenController {
 	   public void getFolio(HttpServletResponse response, HttpServletRequest request) throws IOException {
 		  // response.getWriter().println("Prueba del mètodo PROBAR en Orden de trabajo");
 		   Calendar c = Calendar.getInstance();		  
-		   String folio =  Integer.toString(c.get(Calendar.YEAR))+"-"+Integer.toString(c.get(Calendar.MONTH))+"-";
+		   String folio =  Integer.toString(c.get(Calendar.YEAR))+"-"+Integer.toString(c.get(Calendar.MONTH)+1)+"-";
 		   System.out.println("folio :"+folio);
 		  // return folio;
 		  response.getWriter().println((folio));
@@ -220,17 +220,17 @@ public class OrdenController {
 	            }
 	        }
        
-	        String origen ="C:/Users/Lenovo/Desktop/OTs/OrdenDeTrabajo.xls";
+	     //   String origen ="C:/Users/Lenovo/Desktop/OTs/OrdenDeTrabajo.xls";
 	   //     String destino ="C:/Users/Lenovo/Desktop/OTs/O.T."+orden.getFolio()+" "+nave.getMatricula()+".xls";
-	        System.out.println("copiando archivo orige a destino:"+ox.getNombreArchivo());
-	        eox.FileCopy(origen, ox.getNombreArchivo());  
-	        System.out.println("termino de copiar.....");
+	   //     System.out.println("copiando archivo orige a destino:"+ox.getNombreArchivo());
+	  //      eox.FileCopy(origen, ox.getNombreArchivo());  
+	  //      System.out.println("termino de copiar.....");
 			//EditaOrdenXls.readWriteExcelFile();
-	        System.out.println("Empezando a ecribir en el Xls..." );
-	        EditaOrdenXls.WriteXls(ox);
-	        System.out.println("regrese de escribir en el Xls..." );
-	    	//GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf();
-	    	//generaOrdenPdf.GeneraOrdenPdf(new File("C:/Users/Lenovo/Desktop/OTs/Orden de trabajo.pdf"));
+	 //       System.out.println("Empezando a ecribir en el Xls..." );
+	  //      EditaOrdenXls.WriteXls(ox);
+	        System.out.println("empiezo a generar pdf..." );
+	    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf();
+	    	generaOrdenPdf.GeneraOrdenPdf(new File(ox.getNombreArchivo()));
 		}
 	  
 	  
@@ -241,7 +241,8 @@ public class OrdenController {
 	       OrdenVo orden =ordenDao.consult(idOrden);
 	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
 	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
-	      String nombre="C:/Users/Lenovo/Desktop/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".xls";
+	       //String nombre="C:/Users/Lenovo/Desktop/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".xls";
+	      String nombre="C:/Users/Lenovo/Desktop/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
 	     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
 	       ox.setNombreArchivo(nombre.replaceAll("[\n\r]",""));
 	       System.out.println("fecha"+orden.getFechaApertura());
