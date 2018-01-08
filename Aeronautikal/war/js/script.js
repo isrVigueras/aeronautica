@@ -279,6 +279,56 @@ function RemoteResource($http,$q, baseUrl) {
     return promise;
     
   }
+  
+   this.listado_categorias = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/categoria/findAll'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+     this.listado_unidades = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/unidad/findAll'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+   this.listado_condiciones = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/condicion/findAll'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+
 
 }
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
@@ -443,6 +493,45 @@ $routeProvider.when('/Clientes/colsulta', {
      resolve: {
       empresas_consultas:['remoteResource',function(remoteResource) {
         return remoteResource.listado_empresas();
+      }]
+    }
+  }); 
+$routeProvider.when('/Inventario/categoria', {
+    templateUrl: "alta_categorias.html",
+    controller: "categoriaController"
+  }); 
+$routeProvider.when('/Inventario/categoria/colsulta', {
+    templateUrl: "consulta_Categoria.html",
+    controller: "categoriaMuestraController",
+     resolve: {
+      categorias_consultas:['remoteResource',function(remoteResource) {
+        return remoteResource.listado_categorias();
+      }]
+    }
+  }); 
+$routeProvider.when('/Inventario/unidad', {
+    templateUrl: "alta_Unidades.html",
+    controller: "unidadController"
+  }); 
+$routeProvider.when('/Inventario/unidad/colsulta', {
+    templateUrl: "consulta_unidad.html",
+    controller: "unidadMuestraController",
+     resolve: {
+      unidades_consultas:['remoteResource',function(remoteResource) {
+        return remoteResource.listado_unidades();
+      }]
+    }
+  }); 
+$routeProvider.when('/Inventario/condicion', {
+    templateUrl: "alta_Condiciones.html",
+    controller: "condicionController"
+  }); 
+$routeProvider.when('/Inventario/condicion/colsulta', {
+    templateUrl: "consulta_Condicion.html",
+    controller: "condicionMuestraController",
+     resolve: {
+      condiciones_consultas:['remoteResource',function(remoteResource) {
+        return remoteResource.listado_condiciones();
       }]
     }
   }); 

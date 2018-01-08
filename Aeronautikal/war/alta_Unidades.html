@@ -1,0 +1,21 @@
+  <div class="contenedor" style="color:#EEE6E6">
+    <center><h1>Registro de Unidades de Medida</h1></center>
+    <div class="row" style="margin: 1% 13%;">
+      <form>
+  
+  <h3>Mediciones</h3>
+  <label for="descripcion">Nombre de la Medicion:</label><input class="form-control" placeholder="Escriba el nombre de la Unidad de Medida" ng-model="unidadform.descripcion" id="descripcion" name="descripcion" type="text"/>
+
+  <h3>Abreviaturas</h3>
+  <label for="sigla"> Letra de la Abreviatura:</label><input class="form-control" placeholder="Escriba la Abreviatura" ng-model="unidadform.sigla" id="sigla" name="sigla" type="text"/>
+  
+  <br>
+  <br>
+  <center><button type="button" class="btn btn-primary" ng-click="guarda_unidad()" ng-disabled="form.$invalid">
+  <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>Guardar
+  </button></center>
+  </form>
+</div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br>

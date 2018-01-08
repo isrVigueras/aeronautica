@@ -40,8 +40,17 @@
           <a data-toggle="dropdown" type="button" href="">Inventario
           <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/alta">Alta</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/colsulta">Consulta</a></li>
+            <li class="dropdown-header"><B>ALTAS</B></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/alta">Registro</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/categoria">Categoria</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/unidad">Unidad de Medida</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/condicion">Condicion</a></li>
+          <li class="divider"></li>
+          <li class="dropdown-header"><B>CONSULTAS</B></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/colsulta">Consulta Invetario</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/condicion/colsulta">Consulta Condicion</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/categoria/colsulta">Consulta Categorias</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/unidad/colsulta">Consulta Unidades de medida</a></li>
           <!--<li role="presentation" class="divider"></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>-->    
           </ul>
@@ -99,5 +108,8 @@
     <script src="js/controllers/empresa_Controller.js"></script>
     <script src="js/controllers/aeronave_Controller.js"></script>
     <script src="js/controllers/requisicion_Controller.js"></script>
+    <script src="js/controllers/categoria_Controller.js"></script>
+    <script src="js/controllers/unidad_Controller.js"></script>
+    <script src="js/controllers/condicion_Controller.js"></script>
     
 </html>
