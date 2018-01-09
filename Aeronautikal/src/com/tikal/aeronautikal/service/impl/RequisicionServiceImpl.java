@@ -64,7 +64,7 @@ public class RequisicionServiceImpl implements RequisicionService {
 		}
 
 		@Override
-		public RequisicionEntity getByComDis(Long idComDis) {
+		public Long getByComDis(Long idComDis) {
 			// TODO Auto-generated method stub
 			return requisicionDao.getByComDis(idComDis);
 		}

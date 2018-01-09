@@ -1,5 +1,6 @@
 package com.tikal.aeronautikal.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.tikal.aeronautikal.controller.vo.ComDisVo;
 import com.tikal.aeronautikal.controller.vo.DetalleDiscrepanciaVo;
 import com.tikal.aeronautikal.controller.vo.DetalleOrdenVo;
+import com.tikal.aeronautikal.controller.vo.DiscrepanciaPdfVo;
 import com.tikal.aeronautikal.controller.vo.OrdenVo;
+import com.tikal.aeronautikal.controller.vo.OrdenXlsVo;
 import com.tikal.aeronautikal.dao.AeronaveDao;
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.ComponenteDiscrepanciaDao;
@@ -36,6 +39,8 @@ import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
 import com.tikal.aeronautikal.entity.EventoEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
+import com.tikal.aeronautikal.formatos.EditaOrdenXls;
+import com.tikal.aeronautikal.formatos.GeneraOrdenPdf;
 import com.tikal.aeronautikal.service.DiscrepanciaService;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
@@ -319,6 +324,34 @@ public class DiscrepanciaController {
 		   
 		
 		   
+			  @RequestMapping(value = { "/generaDiscrepanciaPdf/{idDiscrepancia}" }, method = RequestMethod.POST)
+				public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idDiscrepancia) throws IOException {
+				
+				  DiscrepanciaPdfVo dp = getObjectDisPdf(idDiscrepancia);   
+			      /*  File newExcelFile = new File(ox.getNombreArchivo());		 
+			        if (!newExcelFile.exists()){
+			            try {
+			                newExcelFile.createNewFile();
+			            } catch (IOException ioe) {
+			                System.out.println("(Error al crear el fichero nuevo ......)" + ioe);
+			            }
+			        }
+		
+			        System.out.println("empiezo a generar pdf..." );
+			    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf(ox);
+			    */
+				}
 		   
 		   
+			  
+			  public DiscrepanciaPdfVo getObjectDisPdf(Long idOrden){
+				  
+				  DiscrepanciaPdfVo dp = new DiscrepanciaPdfVo();
+			       
+			       OrdenVo orden =ordenDao.consult(idOrden);
+			       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
+			       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
+			  
+			       return dp;
+			  }
 }

@@ -11,7 +11,7 @@ public interface RequisicionService {
 	  
 	 public RequisicionEntity consult(Long folio);
 	 
-	 public RequisicionEntity getByComDis(Long idComDis);
+	 public Long getByComDis(Long idComDis);
 	 
 	 public List<RequisicionEntity> getAll();
 	 

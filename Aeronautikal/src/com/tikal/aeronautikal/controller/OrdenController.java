@@ -229,8 +229,9 @@ public class OrdenController {
 	 //       System.out.println("Empezando a ecribir en el Xls..." );
 	  //      EditaOrdenXls.WriteXls(ox);
 	        System.out.println("empiezo a generar pdf..." );
-	    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf();
-	    	generaOrdenPdf.GeneraOrdenPdf(new File(ox.getNombreArchivo()));
+	    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf(ox);
+	    	//generaOrdenPdf.GeneraOrdenPdf(new File(ox.getNombreArchivo()));
+	    	//generaOrdenPdf.GeneraOrdenPdf(ox));
 		}
 	  
 	  
@@ -242,7 +243,8 @@ public class OrdenController {
 	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
 	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
 	       //String nombre="C:/Users/Lenovo/Desktop/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".xls";
-	      String nombre="C:/Users/Lenovo/Desktop/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
+	    //  String nombre="C:/Users/Lenovo/Desktop/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
+	      String nombre="C:/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
 	     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
 	       ox.setNombreArchivo(nombre.replaceAll("[\n\r]",""));
 	       System.out.println("fecha"+orden.getFechaApertura());
@@ -250,7 +252,9 @@ public class OrdenController {
 	       ox.setFechaOrden((orden.getFechaApertura()).substring(0 , 10));
 	       System.out.println("fecha"+ox.getFechaOrden());
 	       ox.setNombreEmpresa(empresa.getRazonSocial());
-	       ox.setFolioOrden(orden.getFolio());
+	      // ox.setFolioOrden(orden.getFolio()));
+	       String folio =(orden.getFolio());
+	       ox.setFolioOrden(folio.replaceAll("[\n\r]",""));
 	       ox.setMarcaAeronave(nave.getMarca());
 	       ox.setModeloAeronave(nave.getModelo());
 	       ox.setNumeroSerie(nave.getNumeroSerie());
@@ -302,7 +306,7 @@ public DetalleOrdenVo getDetalleOrden(Long idOrden){
 		//  List<DiscrepanciaEntity> dis = discrepanciaDao.getByOrden(idOrden);
 		  List<String> acciones = new ArrayList<String>();
 	       for(DiscrepanciaEntity d : dis) {	    	 
-	    	   String accion =d.getAccion();
+	    	   String accion =d.getDescripcion();
 	    	   acciones.add(accion);
 	       }		
 	       for (int size=dis.size();size<=31; size++){

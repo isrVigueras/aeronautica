@@ -101,9 +101,14 @@ public class CompDisController {
 		        		Long idReq=addRequisicionAutomatica(cd.getIdComponente(),cd.getIdDiscrepancia(), cd.getId(),cantidad);
 		        		actualizaPendientes(idReq);
 		        		r=cantidad.toString();
-		        		
-		        	}
+		        		// actualiza la cantidad de las piezas del componente menos las que se requisitaron
+		        		cd.setCantidad(cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad());
+		        		 System.out.println("cantidad nueva de componentes:"+cd.getCantidad());
+		        		 componenteDiscrepanciaDao.save(cd);
+		        		actualizaExistencias(cd.getIdComponente(),componenteDao.consult(cd.getIdComponente()).getD_cantidad(),"add");
+		        	}else{
 		        	actualizaExistencias(cd.getIdComponente(),cd.getCantidad(),"add");
+		        	}
 		        	response.getWriter().println(r);
 		        } catch (RuntimeException ignored) {
 		        	ignored.printStackTrace();
@@ -145,14 +150,17 @@ public class CompDisController {
 	    	   System.out.println("si esta en delete"+id);
 			   actualizaExistencias(componenteDiscrepanciaDao.consult(id).getIdComponente(), componenteDiscrepanciaDao.consult(id).getCantidad(),"delete");
 			   ///borrando las requisiciones hechas en esa discrepancia y de ese componente
-			  // requisicionDao.getByComDis(id);
-		/*	   if (!requisicionDao.getByComDis(id).equals(null)){
-				   requisicionDao.delete(requisicionDao.getByComDis(id));
-				   System.out.println("Requisicion automatica eliminada ....");
+			   Long idR =requisicionDao.getByComDis(id);
+			   System.out.println("idr="+idR);
+			   if (idR==  Long.parseLong("0000000000")){
+				   System.out.println("no hay requisiciones para ese componente ");
 			   }else{
-			  // requisicionDao.delete(requisicionDao.getByComDis(id));
-			   System.out.println("salio de buscar las reqs");
-			   }*///////////////////////////////////////////////////////////////
+				   RequisicionEntity  r = requisicionDao.consult(idR);
+				   requisicionDao.delete(r);
+				   System.out.println("Requisicion automatica eliminada ....");
+			  
+			   }
+			   //////////////////////////////////////////////////////////////
 			   componenteDiscrepanciaDao.delete(componenteDiscrepanciaDao.consult(id));
 			   
 			  //buscar req x componente y discrepancia para eliminar la req correcta

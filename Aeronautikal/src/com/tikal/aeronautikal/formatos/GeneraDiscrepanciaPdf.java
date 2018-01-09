@@ -15,7 +15,7 @@ import com.tikal.aeronautikal.controller.vo.OrdenXlsVo;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.util.Date; 
-public class GeneraOrdenPdf {
+public class GeneraDiscrepanciaPdf {
 	private static final Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 26, Font.BOLDITALIC);
     private static final Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
          
@@ -37,7 +37,7 @@ public class GeneraOrdenPdf {
      * @throws MalformedURLException 
      */
   //  public void GeneraOrdenPdf(File pdfNewFile) throws MalformedURLException, IOException {
-      public GeneraOrdenPdf(OrdenXlsVo ox) throws MalformedURLException, IOException {
+      public GeneraDiscrepanciaPdf(OrdenXlsVo ox) throws MalformedURLException, IOException {
         // Aquí introduciremos el código para crear el PDF.
     	  
     	  
@@ -225,4 +225,5 @@ public class GeneraOrdenPdf {
       
     
 }
+
 
