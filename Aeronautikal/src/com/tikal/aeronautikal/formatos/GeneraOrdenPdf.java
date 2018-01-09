@@ -379,44 +379,41 @@ public class GeneraOrdenPdf {
             c21.setColspan(2);
             table2.addCell(c21);
             
-            List<ComDisVo> cds = det.getComponentes();
-            if (cds !=null){
-            	
-           
-	            for (ComDisVo cd : cds){
-		            Paragraph p21=new Paragraph(cd.getNombre_componente(),f1); 
-		            PdfPCell c22=new PdfPCell(p21);
-		            c22.setHorizontalAlignment(Element.ALIGN_CENTER);             
-		            c22.setColspan(2);
-		            table2.addCell(c22);
-		            
-		            Paragraph p22=new Paragraph(cd.getNoParte(),f1); 
-		            PdfPCell c23=new PdfPCell(p22);
-		            c23.setHorizontalAlignment(Element.ALIGN_CENTER);             
-		            c23.setColspan(1);
-		            table2.addCell(c23);
-		            
-		            Paragraph p23=new Paragraph(cd.getCantidad().toString(),f1); 
-		            PdfPCell c24=new PdfPCell(p23);
-		            c24.setHorizontalAlignment(Element.ALIGN_CENTER);             
-		            c24.setColspan(1);
-		            table2.addCell(c24);
-		            
-		            Paragraph p24=new Paragraph("N/A",f1); 
-		            PdfPCell c25=new PdfPCell(p24);
-		            c25.setHorizontalAlignment(Element.ALIGN_CENTER);             
-		            c25.setColspan(1);
-		            table2.addCell(c25);
-		            table2.addCell(c25);
-		            
-		            Paragraph p25=new Paragraph("las observaciones de horas hombre",f1); 
-		            PdfPCell c26=new PdfPCell(p25);
-		            c26.setHorizontalAlignment(Element.ALIGN_CENTER);             
-		            c26.setColspan(2);
-		            table2.addCell(c26);
+          /*  List<ComDisVo> cds = det.getComponentes();
+            for (ComDisVo cd : cds){
+	            Paragraph p21=new Paragraph(cd.getNombre_componente(),f1); 
+	            PdfPCell c22=new PdfPCell(p21);
+	            c22.setHorizontalAlignment(Element.ALIGN_CENTER);             
+	            c22.setColspan(2);
+	            table2.addCell(c22);
 	            
-	            }
+	            Paragraph p22=new Paragraph(cd.getNoParte(),f1); 
+	            PdfPCell c23=new PdfPCell(p22);
+	            c23.setHorizontalAlignment(Element.ALIGN_CENTER);             
+	            c23.setColspan(1);
+	            table2.addCell(c23);
+	            
+	            Paragraph p23=new Paragraph(cd.getCantidad().toString(),f1); 
+	            PdfPCell c24=new PdfPCell(p23);
+	            c24.setHorizontalAlignment(Element.ALIGN_CENTER);             
+	            c24.setColspan(1);
+	            table2.addCell(c24);
+	            
+	            Paragraph p24=new Paragraph("N/A",f1); 
+	            PdfPCell c25=new PdfPCell(p24);
+	            c25.setHorizontalAlignment(Element.ALIGN_CENTER);             
+	            c25.setColspan(1);
+	            table2.addCell(c25);
+	            table2.addCell(c25);
+	            
+	            Paragraph p25=new Paragraph("las observaciones de horas hombre",f1); 
+	            PdfPCell c26=new PdfPCell(p25);
+	            c26.setHorizontalAlignment(Element.ALIGN_CENTER);             
+	            c26.setColspan(2);
+	            table2.addCell(c26);
+            
             }
+            */
             
             document.add(table2);
             
