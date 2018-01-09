@@ -535,6 +535,17 @@ $routeProvider.when('/Inventario/condicion/colsulta', {
       }]
     }
   }); 
+$routeProvider.when('/Consulta/PDF/:nombrepdf', {
+    templateUrl: "pdf.html",
+    controller: "ordenPDFController",
+     resolve: {
+      nombrepdf:['remoteResource','$route',function(remoteResource,$route) {
+        return ($route.current.params.nombrepdf);
+      }]
+    }
+  }); 
+
+
   $routeProvider.otherwise({
         redirectTo: '/'
   });   

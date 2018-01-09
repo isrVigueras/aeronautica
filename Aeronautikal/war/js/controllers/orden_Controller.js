@@ -83,7 +83,8 @@ $scope.generadas = generadas;
         function(data) {
           console.log(data);
          // alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
-         alert("Solicitud realizada");
+         alert("Se esta Generando el archivo ");
+         location.href="#/Consulta/PDF/"+data;
         })
               
   }
