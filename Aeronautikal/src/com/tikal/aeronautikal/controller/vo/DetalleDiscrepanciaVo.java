@@ -13,7 +13,7 @@ public class DetalleDiscrepanciaVo {
 	@Id private Long id;
 	private Long idOrden;
 	private String folioOrden;
-	private String fechaOrden;
+	private String fechaOrden; // esta es la fecha de apertura de la discrepancia
 	private String nombreEmpresa;
 	private String matricula;
 	private String modelo;

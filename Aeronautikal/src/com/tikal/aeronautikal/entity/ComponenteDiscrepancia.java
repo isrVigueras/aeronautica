@@ -10,8 +10,15 @@ public class ComponenteDiscrepancia {
 	@Index private Long idComponente;
 	@Index private Long idDiscrepancia;
 	private Integer cantidad;
+	private Integer cantOriginal;
 	
 	
+	public Integer getCantOriginal() {
+		return cantOriginal;
+	}
+	public void setCantOriginal(Integer cantOriginal) {
+		this.cantOriginal = cantOriginal;
+	}
 	public Integer getCantidad() {
 		return cantidad;
 	}

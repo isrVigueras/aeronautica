@@ -327,7 +327,7 @@ public class DiscrepanciaController {
 			  @RequestMapping(value = { "/generaDiscrepanciaPdf/{idDiscrepancia}" }, method = RequestMethod.POST)
 				public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idDiscrepancia) throws IOException {
 				
-				  DiscrepanciaPdfVo dp = getObjectDisPdf(idDiscrepancia);   
+				  DetalleDiscrepanciaVo dd = getDetalleDiscrepancia(idDiscrepancia);   
 			      /*  File newExcelFile = new File(ox.getNombreArchivo());		 
 			        if (!newExcelFile.exists()){
 			            try {
@@ -344,14 +344,5 @@ public class DiscrepanciaController {
 		   
 		   
 			  
-			  public DiscrepanciaPdfVo getObjectDisPdf(Long idOrden){
-				  
-				  DiscrepanciaPdfVo dp = new DiscrepanciaPdfVo();
-			       
-			       OrdenVo orden =ordenDao.consult(idOrden);
-			       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
-			       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
-			  
-			       return dp;
-			  }
+			 
 }

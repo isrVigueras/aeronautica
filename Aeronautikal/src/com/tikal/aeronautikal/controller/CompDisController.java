@@ -21,21 +21,14 @@ import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.ComponenteDiscrepanciaDao;
 import com.tikal.aeronautikal.dao.RequisicionDao;
 import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
-import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
-import com.tikal.aeronautikal.entity.EmpresaEntity;
-import com.tikal.aeronautikal.entity.EventoEntity;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
-import com.tikal.aeronautikal.service.AeronaveService;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
 
 @Controller
 @RequestMapping(value="/componenteDiscrepancia")
 public class CompDisController {
-
-	  @Autowired
-	    private AeronaveService componenteDiscrepanciaService;
 	   
 	    @Autowired
 	    @Qualifier("componenteDiscrepanciaDao")
@@ -101,7 +94,8 @@ public class CompDisController {
 		        		Long idReq=addRequisicionAutomatica(cd.getIdComponente(),cd.getIdDiscrepancia(), cd.getId(),cantidad);
 		        		actualizaPendientes(idReq);
 		        		r=cantidad.toString();
-		        		// actualiza la cantidad de las piezas del componente menos las que se requisitaron
+		        		// actualiza la cantidad de las piezas del componente menos las que se requisitaron, cantidad original es cantOriginal
+		        		cd.setCantOriginal(cd.getCantidad());
 		        		cd.setCantidad(cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad());
 		        		 System.out.println("cantidad nueva de componentes:"+cd.getCantidad());
 		        		 componenteDiscrepanciaDao.save(cd);

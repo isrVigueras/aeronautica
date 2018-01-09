@@ -14,17 +14,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.annotation.OnLoad;
+import com.tikal.aeronautikal.controller.vo.ComDisVo;
+import com.tikal.aeronautikal.controller.vo.DetalleDiscrepanciaVo;
 import com.tikal.aeronautikal.controller.vo.DetalleOrdenVo;
 import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.controller.vo.OrdenXlsVo;
 import com.tikal.aeronautikal.dao.AeronaveDao;
+import com.tikal.aeronautikal.dao.ComponenteDao;
+import com.tikal.aeronautikal.dao.ComponenteDiscrepanciaDao;
 import com.tikal.aeronautikal.dao.DiscrepanciaDao;
 import com.tikal.aeronautikal.dao.EmpresaDao;
+import com.tikal.aeronautikal.dao.EventoDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
+import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
 import com.tikal.aeronautikal.entity.Contador;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
+import com.tikal.aeronautikal.entity.EventoEntity;
 //import com.tikal.aeronautikal.entity.OrdenEntity;
 import com.tikal.aeronautikal.model.Aeronave;
 import com.tikal.aeronautikal.service.OrdenService;
@@ -64,6 +71,18 @@ public class OrdenController {
 	@Autowired
 	@Qualifier("discrepanciaDao")
 	DiscrepanciaDao discrepanciaDao;
+	
+	@Autowired
+	@Qualifier("eventoDao")
+	EventoDao eventoDao;
+	
+	@Autowired
+	@Qualifier("componenteDao")
+	ComponenteDao componenteDao;
+	
+	@Autowired
+	@Qualifier("componenteDiscrepanciaDao")
+	ComponenteDiscrepanciaDao comdisDao;
 
 	   @Autowired
 	   private OrdenService ordenService;
@@ -211,6 +230,19 @@ public class OrdenController {
 		public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idOrden) throws IOException {
 		  EditaOrdenXls eox = new EditaOrdenXls();
 		  OrdenXlsVo ox = getObjectXls(idOrden);   
+		  List<DiscrepanciaEntity> dis= discrepanciaDao.getByOrden(idOrden);
+		  List<DetalleDiscrepanciaVo> dets = new ArrayList<DetalleDiscrepanciaVo>();
+			if (dis==null){
+				dis= new ArrayList<DiscrepanciaEntity>();
+			}else{
+				
+				for (DiscrepanciaEntity d : dis ){
+					DetalleDiscrepanciaVo dd = getDetalleDiscrepancia(d.getId());
+					dets.add(dd);
+				}
+				
+			}
+		 // 
 	        File newExcelFile = new File(ox.getNombreArchivo());		 
 	        if (!newExcelFile.exists()){
 	            try {
@@ -229,13 +261,63 @@ public class OrdenController {
 	 //       System.out.println("Empezando a ecribir en el Xls..." );
 	  //      EditaOrdenXls.WriteXls(ox);
 	        System.out.println("empiezo a generar pdf..." );
-	    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf(ox);
+	    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf(ox, dets);
+	    	response.getWriter().println((ox.getNombreArchivo()));
 	    	//generaOrdenPdf.GeneraOrdenPdf(new File(ox.getNombreArchivo()));
 	    	//generaOrdenPdf.GeneraOrdenPdf(ox));
 		}
 	  
 	  
-	  public OrdenXlsVo getObjectXls(Long idOrden){
+	   public DetalleDiscrepanciaVo getDetalleDiscrepancia(Long id){
+			   
+				DetalleDiscrepanciaVo det = new DetalleDiscrepanciaVo();
+				//DiscrepanciaEntity dis = discrepanciaDao.consult(id);
+			       System.out.println("estoy en getDetalleDiscrepancia.....idOrden");
+			      
+			     
+			       DiscrepanciaEntity dis = discrepanciaDao.consult(id);
+			       OrdenVo orden =ordenDao.consult(dis.getFolioOrden());
+			       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
+			       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
+			       List<EventoEntity> evs= eventoDao.getByDiscrepancia(id);
+			       List<ComDisVo> cvos= new ArrayList<ComDisVo>();
+			       List<ComponenteDiscrepancia> cds = comdisDao.getByDiscrepancia(id);	
+			       for (ComponenteDiscrepancia cd : cds){
+						ComDisVo cdvo= new ComDisVo();
+						System.out.println("objeto:"+cd.getCantidad());
+						cdvo.setDescripcion(componenteDao.consult(cd.getIdComponente()).getD_descripcion());
+						cdvo.setNombre_componente(componenteDao.consult(cd.getIdComponente()).getD_componente());
+						cdvo.setNoParte(componenteDao.consult(cd.getIdComponente()).getD_parte());
+						cdvo.setCantidad(cd.getCantidad());
+						cdvo.setId(cd.getId());
+						cvos.add(cdvo);
+					}
+			      System.out.println("orden"+orden);
+			      System.out.println("empresa"+empresa);
+			      System.out.println("nave"+nave);
+			      System.out.println("dis"+dis);
+			      System.out.println("evs"+evs);
+			     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
+			       det.setIdOrden(orden.getId());
+			       det.setFolioOrden(orden.getFolio());
+			       det.setFechaOrden(orden.getFechaApertura());
+			       det.setNombreEmpresa(empresa.getNombreEmpresa());
+			       det.setMatricula(nave.getMatricula());
+			       det.setModelo(nave.getModelo());
+			       det.setNoSerie(nave.getNumeroSerie());
+			       det.setTaller(dis.getTaller());
+			       det.setSeccion(dis.getSeccion());
+			       det.setDescripcion(dis.getDescripcion());
+			       det.setAccion(dis.getAccion());
+			       det.setComponentes(cvos);
+			       det.setEventos(evs);
+			       det.setTelefono(empresa.getTelefono());
+			              
+				return det;	
+			   
+		   }
+
+	public OrdenXlsVo getObjectXls(Long idOrden){
 		  
 		  OrdenXlsVo ox = new OrdenXlsVo();
 	       

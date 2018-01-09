@@ -5,6 +5,7 @@ public class ComDisVo {
 	private String nombre_componente;
 	private String descripcion;
 	private Integer cantidad;
+	private String noParte;
 	
 	
 	
@@ -19,6 +20,13 @@ public class ComDisVo {
 	}
 	public void setNombre_componente(String nombre_componente) {
 		this.nombre_componente = nombre_componente;
+	}
+	
+	public String getNoParte() {
+		return noParte;
+	}
+	public void setNoParte(String noParte) {
+		this.noParte = noParte;
 	}
 	public String getDescripcion() {
 		return descripcion;
