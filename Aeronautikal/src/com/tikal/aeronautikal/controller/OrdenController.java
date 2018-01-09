@@ -262,7 +262,8 @@ public class OrdenController {
 	  //      EditaOrdenXls.WriteXls(ox);
 	        System.out.println("empiezo a generar pdf..." );
 	    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf(ox, dets);
-	    	response.getWriter().println((ox.getNombreArchivo()));
+	    	System.out.println("nombre de archivo para edgar:"+ox.getNombreArchivo().substring(7) );
+	    	response.getWriter().println((ox.getNombreArchivo().substring(7)));
 	    	//generaOrdenPdf.GeneraOrdenPdf(new File(ox.getNombreArchivo()));
 	    	//generaOrdenPdf.GeneraOrdenPdf(ox));
 		}
@@ -288,7 +289,8 @@ public class OrdenController {
 						cdvo.setDescripcion(componenteDao.consult(cd.getIdComponente()).getD_descripcion());
 						cdvo.setNombre_componente(componenteDao.consult(cd.getIdComponente()).getD_componente());
 						cdvo.setNoParte(componenteDao.consult(cd.getIdComponente()).getD_parte());
-						cdvo.setCantidad(cd.getCantidad());
+						//cdvo.setCantidad(cd.getCantidad());
+						cdvo.setCantidad(cd.getCantOriginal());
 						cdvo.setId(cd.getId());
 						cvos.add(cdvo);
 					}
