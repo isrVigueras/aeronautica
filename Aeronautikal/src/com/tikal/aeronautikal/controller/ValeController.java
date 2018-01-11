@@ -98,7 +98,7 @@ public class ValeController {
 	   @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.POST)
 	   public void deleteEvento(HttpServletResponse response, HttpServletRequest request, @PathVariable Long id)
 			   throws IOException {
-		   System.out.println("si esta en delete"+id);
+		   System.out.println("si esta en delete vale"+id);
 		   valeDao.delete(valeDao.consult(id));
 		   System.out.println("vale eliminado....");
 		   response.getWriter().println("ok");

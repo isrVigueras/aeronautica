@@ -164,7 +164,7 @@ public class ComponenteController {
 	 			response.getWriter().println(JsonConvertidor.toJson(lista));
 	 		}
 	   
-	   @RequestMapping(value = { "/getByCategoria/{idCategoria}" }, method = RequestMethod.GET, produces = "application/json")
+	   @RequestMapping(value = { "/getByCategoria/{idCategoria}" }, method = RequestMethod.POST, produces = "application/json")
 		public void getByCat(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idCategoria) throws IOException {
 			AsignadorDeCharset.asignar(request, response);
 			System.out.println("si entraxxxxxxx ");

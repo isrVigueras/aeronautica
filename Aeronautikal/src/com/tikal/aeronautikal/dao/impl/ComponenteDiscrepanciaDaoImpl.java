@@ -40,7 +40,7 @@ public class ComponenteDiscrepanciaDaoImpl implements ComponenteDiscrepanciaDao 
 	   
 		@Override
 		public ComponenteDiscrepancia consult(Long id) {
-			System.out.println("consultando el evento " );
+			System.out.println("consultando el comdis " );
 	       return ofy().load().type(ComponenteDiscrepancia.class).id(id).now();
 			
 		}

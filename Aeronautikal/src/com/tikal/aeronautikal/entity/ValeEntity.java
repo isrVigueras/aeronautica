@@ -15,7 +15,7 @@ public class ValeEntity {
 	private String fecha;
 	@Index private Long idDiscrepancia;
 	private List<ComponenteDiscrepancia> items;
-	private String estatus;
+	@Index private String estatus;
 	public Long getId() {
 		return id;
 	}

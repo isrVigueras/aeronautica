@@ -339,7 +339,8 @@ public class DiscrepanciaController {
 						//ComDisVo cdvo= new ComDisVo();
 						
 						System.out.println("----------idVale:"+cd.getIdVale());
-						if (cd.getIdVale()==null){						
+						if (cd.getIdVale()==null){	
+							System.out.println("---si-------");
 							//cdvo.setDescripcion(componenteDao.consult(cd.getIdComponente()).getD_descripcion());
 							//cdvo.setNombre_componente(componenteDao.consult(cd.getIdComponente()).getD_componente());
 							//cdvo.setCantidad(cd.getCantidad());
@@ -350,25 +351,31 @@ public class DiscrepanciaController {
 						}
 					}
 				///////////cvos es la lista de los componenteDiscrepancia que no tienen vale
-				System.out.println("********tamaño de lista de CompDisVo:"+cvos.size());	
+				System.out.println("********tamaño de lista de CompDisVo:"+comps.size());	
 				/////creando el objeto para el vale
-				if (cvos.size()>0){   //si hay componentes sin vale, se emite vale
+				if (comps.size()>0){   //si hay componentes sin vale, se emite vale
 					ValeEntity v= new ValeEntity();
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 					String fecha= sdf.format(new Date());
 					System.out.println("si va a emitir vale........");
 				    v.setFecha(fecha);
-				    v.setEstatus("ALGO");
+				    v.setEstatus("ABIERTO");
 				    v.setItems(comps);
 				    v.setIdDiscrepancia(idDiscrepancia);
 				    valeDao.save(v);
 				    System.out.println("VALE EMITIDO:"+v.getId());	
-				    v.getItems(); //ComDisVo
+				    //actualizando el idVale en la lista de componentes del vale
+				    List<ComponenteDiscrepancia> c = v.getItems(); //ComDisVo
+				    for (ComponenteDiscrepancia uno : c){
+						uno.setIdVale(v.getId());
+						valeDao.update(v);
+					}
 				    //// añadiendo el id del vale a cada comdis
 				    for (ComponenteDiscrepancia cd : comps){
 						cd.setIdVale(v.getId());
 						componenteDiscrepanciaDao.update(cd);
 					}
+				    
 				}else{
 				System.out.println("*******NO SE EMITIO VALE*********:");
 				}

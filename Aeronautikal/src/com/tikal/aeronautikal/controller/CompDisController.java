@@ -20,8 +20,10 @@ import com.tikal.aeronautikal.controller.vo.ComDisVo;
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.ComponenteDiscrepanciaDao;
 import com.tikal.aeronautikal.dao.RequisicionDao;
+import com.tikal.aeronautikal.dao.ValeDao;
 import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
+import com.tikal.aeronautikal.entity.ValeEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
@@ -41,6 +43,10 @@ public class CompDisController {
 	    @Autowired
 	    @Qualifier("requisicionDao")
 	    RequisicionDao requisicionDao;
+	    
+	    @Autowired
+	    @Qualifier("valeDao")
+	    ValeDao valeDao;
 	    
 	    @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 	    
@@ -155,6 +161,28 @@ public class CompDisController {
 				   System.out.println("Requisicion automatica eliminada ....");
 			  
 			   }
+			   //checando si hay vales de salida ya depachados
+			   List<ValeEntity> vales= valeDao.getByDiscrepancia(componenteDiscrepanciaDao.consult(id).getIdDiscrepancia());
+			   System.out.println("lista de vales por discrepancia:"+vales);
+				for (ValeEntity v : vales){  //vales x discrepancia
+					List<ComponenteDiscrepancia> comps= v.getItems(); //componentes x vale
+					System.out.println("lista de comps en el vale antes:"+comps);
+					System.out.println("componente buscado:"+id);
+					for (ComponenteDiscrepancia c: comps){
+						System.out.println("componente buscado:"+id);
+						System.out.println("componente:"+c.getId());
+						if (c.getId()==id.longValue()){
+							comps.remove(c);
+							System.out.println("se elimino componente"+c.getId());
+							System.out.println("lista de comps en el vale despues:"+comps);
+							v.setItems(comps);
+							valeDao.update(v);
+						}else{
+							System.out.println("no es el componente buscado");
+						}
+					}
+					
+				}
 			   //////////////////////////////////////////////////////////////
 			   componenteDiscrepanciaDao.delete(componenteDiscrepanciaDao.consult(id));
 			   

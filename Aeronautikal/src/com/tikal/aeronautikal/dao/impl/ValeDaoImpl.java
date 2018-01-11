@@ -28,8 +28,8 @@ public class ValeDaoImpl implements ValeDao{
 
 	   @Override
 		public void update(ValeEntity v) {
-		   System.out.print("vale:"+v.getId());
-		   ValeEntity old = this.consult(v.getId());
+		   System.out.print("consultando vale:"+v.getId());
+		   ValeEntity old =consult(v.getId());
 		System.out.print("old:"+old);
 			if (old != null) {
 				old.setFecha(v.getFecha());
