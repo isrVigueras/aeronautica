@@ -14,7 +14,7 @@ app.service('altaUnidadServicio', [ '$http', '$q', function($http, $q) {
 app.service('eliminaUnidadServicio', [ '$http', '$q', function($http, $q) {
   this.elimina_unidad = function(id) {
     var d = $q.defer();
-    $http.post("/empresa/delete/"+id).then(function(response) {
+    $http.post("/unidad/delete/"+id).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -26,7 +26,7 @@ app.service('eliminaUnidadServicio', [ '$http', '$q', function($http, $q) {
 app.service('ActualizaUnidadServicio', [ '$http', '$q', function($http, $q) {
   this.actualiza_unidad = function(objeto) {
     var d = $q.defer();
-    $http.post("/empresa/update",objeto).then(function(response) {
+    $http.post("/unidad/update",objeto).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -68,17 +68,13 @@ app.controller('unidadMuestraController', ['$scope','eliminaUnidadServicio','uni
   }
     $scope.muestra_unidad=function(objeto) {
     console.log(objeto);
-    $scope.detalle_cliente = objeto; 
+    $scope.detalle_unidad = objeto; 
 
     $scope.unidad_edi = {
-    idEmpresa:$scope.detalle_cliente.idEmpresa,
-    nombreEmpresa:$scope.detalle_cliente.nombreEmpresa,
-    rfc:$scope.detalle_cliente.rfc,
-    razonSocial:$scope.detalle_cliente.razonSocial,
-    pais:$scope.detalle_cliente.pais,
-    nombreContacto:$scope.detalle_cliente.nombreContacto,
-    telefono:$scope.detalle_cliente.telefono,
-    email:$scope.detalle_cliente.email
+    id:  $scope.detalle_unidad.id,
+    clave: $scope.detalle_unidad.clave,
+    sigla: $scope.detalle_unidad.sigla,
+    descripcion: $scope.detalle_unidad.descripcion
   }   
   }
 

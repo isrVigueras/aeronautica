@@ -11,7 +11,11 @@ app.service('InventarioService', [ '$http', '$q', function($http, $q) {
   }
 } ]);
 
-app.controller("InventarioController", ['$scope','InventarioService',function($scope,InventarioService) {
+app.controller("InventarioController", ['$scope','InventarioService','categoria','unidad','condicion',function($scope,InventarioService,categoria,unidad,condicion) {
+$scope.categoria =categoria;
+$scope.unidad =unidad;
+$scope.condicion =condicion;
+
   $scope.filtro = {
       d_componente: ""
     }
@@ -22,7 +26,20 @@ app.controller("InventarioController", ['$scope','InventarioService',function($s
     d_descripcion:"",
     d_parte:"",
     d_cantidad:undefined,
-    d_pendientes:undefined
+    d_pendientes:undefined,
+    idCategoria:undefined,
+    idCondicion:undefined,
+    idUnidad:undefined,
+    d_modelo:"",
+    d_marca:"",
+    d_observaciones:"",
+    maximo:undefined,
+    minimo:undefined,
+    anaquel:"",
+    repisa:"",
+    imagen:Date,
+    certificado8130:Boolean
+
   }
 
    $scope.alta_inventario=function() {
@@ -32,7 +49,7 @@ app.controller("InventarioController", ['$scope','InventarioService',function($s
         function(data) {
           console.log(data);
           //alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
-            location.href="#/Inventario/colsulta";
+            //location.href="#/Inventario/colsulta";
          alert("componente dado de alta");
         })
               

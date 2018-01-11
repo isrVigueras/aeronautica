@@ -14,7 +14,7 @@ app.service('altaCondicionServicio', [ '$http', '$q', function($http, $q) {
 app.service('eliminaCondicionServicio', [ '$http', '$q', function($http, $q) {
   this.elimina_condicion = function(id) {
     var d = $q.defer();
-    $http.post("/empresa/delete/"+id).then(function(response) {
+    $http.post("/condicion/delete/"+id).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -26,7 +26,7 @@ app.service('eliminaCondicionServicio', [ '$http', '$q', function($http, $q) {
 app.service('ActualizaCondicionServicio', [ '$http', '$q', function($http, $q) {
   this.actualiza_condicion = function(objeto) {
     var d = $q.defer();
-    $http.post("/empresa/update",objeto).then(function(response) {
+    $http.post("/condicion/update",objeto).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -67,17 +67,12 @@ app.controller('condicionMuestraController', ['$scope','eliminaCondicionServicio
   }
     $scope.muestra_condicion=function(objeto) {
     console.log(objeto);
-    $scope.detalle_cliente = objeto; 
+    $scope.detalle_condicion = objeto; 
 
     $scope.condicion_edi = {
-    idEmpresa:$scope.detalle_cliente.idEmpresa,
-    nombreEmpresa:$scope.detalle_cliente.nombreEmpresa,
-    rfc:$scope.detalle_cliente.rfc,
-    razonSocial:$scope.detalle_cliente.razonSocial,
-    pais:$scope.detalle_cliente.pais,
-    nombreContacto:$scope.detalle_cliente.nombreContacto,
-    telefono:$scope.detalle_cliente.telefono,
-    email:$scope.detalle_cliente.email
+    id: $scope.detalle_condicion.id,
+    clave: $scope.detalle_condicion.clave,
+    descripcion: $scope.detalle_condicion.descripcion  
   }   
   }
 

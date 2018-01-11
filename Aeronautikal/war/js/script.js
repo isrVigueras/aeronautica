@@ -329,6 +329,55 @@ function RemoteResource($http,$q, baseUrl) {
     
   }
 
+   this.categoria = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/categoria/findAll'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+  this.unidad = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/unidad/findAll'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+  this.condicion = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/condicion/findAll'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+
 
 }
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
@@ -414,7 +463,18 @@ app.config(['$routeProvider',function($routeProvider) {
   });      
         $routeProvider.when('/Inventario/alta', {
     templateUrl: "inventario.html",
-    controller: "InventarioController"
+    controller: "InventarioController",
+     resolve: {
+      categoria:['remoteResource','$route',function(remoteResource) {
+        return remoteResource.categoria();
+      }],
+      unidad:['remoteResource','$route',function(remoteResource) {
+        return remoteResource.unidad();
+      }],
+      condicion:['remoteResource','$route',function(remoteResource) {
+        return remoteResource.condicion();
+      }]
+    }
   });     
            $routeProvider.when('/Inventario/colsulta', {
     templateUrl: "consul_inventario.html",

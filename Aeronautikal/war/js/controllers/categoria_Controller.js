@@ -14,7 +14,7 @@ app.service('altaCategoriaServicio', [ '$http', '$q', function($http, $q) {
 app.service('eliminaCategoriaServicio', [ '$http', '$q', function($http, $q) {
   this.elimina_categoria = function(id) {
     var d = $q.defer();
-    $http.post("/empresa/delete/"+id).then(function(response) {
+    $http.post("/categoria/delete/"+id).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -26,7 +26,7 @@ app.service('eliminaCategoriaServicio', [ '$http', '$q', function($http, $q) {
 app.service('ActualizaCategoriaServicio', [ '$http', '$q', function($http, $q) {
   this.actualiza_categoria = function(objeto) {
     var d = $q.defer();
-    $http.post("/empresa/update",objeto).then(function(response) {
+    $http.post("/categoria/update",objeto).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -67,17 +67,12 @@ app.controller('categoriaMuestraController', ['$scope','eliminaCategoriaServicio
   }
     $scope.muestra_categoria=function(objeto) {
     console.log(objeto);
-    $scope.detalle_cliente = objeto; 
+    $scope.detalle_categoria = objeto; 
 
     $scope.categoria_edi = {
-    idEmpresa:$scope.detalle_cliente.idEmpresa,
-    nombreEmpresa:$scope.detalle_cliente.nombreEmpresa,
-    rfc:$scope.detalle_cliente.rfc,
-    razonSocial:$scope.detalle_cliente.razonSocial,
-    pais:$scope.detalle_cliente.pais,
-    nombreContacto:$scope.detalle_cliente.nombreContacto,
-    telefono:$scope.detalle_cliente.telefono,
-    email:$scope.detalle_cliente.email
+    id:$scope.detalle_categoria.id,
+    clave: $scope.detalle_categoria.clave,
+    descripcion:$scope.detalle_categoria.descripcion
   }   
   }
 
