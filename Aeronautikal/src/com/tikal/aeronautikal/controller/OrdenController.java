@@ -328,7 +328,7 @@ public class OrdenController {
 	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
 	       //String nombre="C:/Users/Lenovo/Desktop/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".xls";
 	    //  String nombre="C:/Users/Lenovo/Desktop/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
-	      String nombre="C:/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
+	       String nombre="C:/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
 	     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
 	       ox.setNombreArchivo(nombre.replaceAll("[\n\r]",""));
 	       System.out.println("fecha"+orden.getFechaApertura());

@@ -84,6 +84,7 @@ public class CompDisController {
 		        	// System.out.println("el nuevo objeto: "+orden );
 		        	//pegar el valor de empresa, aeronave y contacato
 		        	//orden.setFolio(1111);
+		        	cd.setCantOriginal(cd.getCantidad());
 		        	componenteDiscrepanciaDao.save(cd);	       
 		        	if (cd.getCantidad()> componenteDao.consult(cd.getIdComponente()).getD_cantidad()){
 		        		 System.out.println("cantidad requerida:"+cd.getCantidad());
@@ -95,7 +96,7 @@ public class CompDisController {
 		        		actualizaPendientes(idReq);
 		        		r=cantidad.toString();
 		        		// actualiza la cantidad de las piezas del componente menos las que se requisitaron, cantidad original es cantOriginal
-		        		cd.setCantOriginal(cd.getCantidad());
+		        		
 		        		cd.setCantidad(cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad());
 		        		 System.out.println("cantidad nueva de componentes:"+cd.getCantidad());
 		        		 componenteDiscrepanciaDao.save(cd);

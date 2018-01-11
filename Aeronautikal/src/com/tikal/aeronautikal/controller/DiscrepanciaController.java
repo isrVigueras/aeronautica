@@ -1,9 +1,11 @@
 package com.tikal.aeronautikal.controller;
 
-import java.io.File;
+
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,13 +19,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.tikal.aeronautikal.controller.vo.ComDisVo;
 import com.tikal.aeronautikal.controller.vo.DetalleDiscrepanciaVo;
-import com.tikal.aeronautikal.controller.vo.DetalleOrdenVo;
-import com.tikal.aeronautikal.controller.vo.DiscrepanciaPdfVo;
 import com.tikal.aeronautikal.controller.vo.OrdenVo;
-import com.tikal.aeronautikal.controller.vo.OrdenXlsVo;
 import com.tikal.aeronautikal.dao.AeronaveDao;
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.ComponenteDiscrepanciaDao;
@@ -32,15 +30,14 @@ import com.tikal.aeronautikal.dao.EmpresaDao;
 import com.tikal.aeronautikal.dao.EventoDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
 import com.tikal.aeronautikal.dao.RequisicionDao;
+import com.tikal.aeronautikal.dao.ValeDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
-import com.tikal.aeronautikal.entity.Contador;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
 import com.tikal.aeronautikal.entity.EventoEntity;
+import com.tikal.aeronautikal.entity.ValeEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
-import com.tikal.aeronautikal.formatos.EditaOrdenXls;
-import com.tikal.aeronautikal.formatos.GeneraOrdenPdf;
 import com.tikal.aeronautikal.service.DiscrepanciaService;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
@@ -84,6 +81,10 @@ public class DiscrepanciaController {
 		 @Autowired
 		 @Qualifier("requisicionDao")
 		 RequisicionDao requisicionDao;
+		 
+		 @Autowired
+		 @Qualifier("valeDao")
+		 ValeDao valeDao;
 		 
 		 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 		   
@@ -158,6 +159,7 @@ public class DiscrepanciaController {
 //		        	 c.setD_cantidad(ex);
 //		        	 componenteDao.save(c);
 		        	 discrepanciaDao.save(d);
+		        
 		        	 response.getWriter().println(JsonConvertidor.toJson(d));
 		        } catch (RuntimeException ignored) {
 		        	ignored.printStackTrace();
@@ -220,7 +222,8 @@ public class DiscrepanciaController {
 				System.out.println("objDisc:"+d);
 			   discrepanciaDao.update(d);
 			  // System.out.println("objDisc:"d);
-			   
+	        	 generarVales(d.getId());
+	        	
 			   response.getWriter().println(JsonConvertidor.toJson(discrepanciaDao.consult(d.getId())));
 		   }
 		   
@@ -251,17 +254,6 @@ public class DiscrepanciaController {
 			}
 		   
 		   
-//		   @RequestMapping(value={"/getFolioEvento/{idDiscrepancia}"},method = RequestMethod.GET)		   
-//		   public void getFolioEvento(HttpServletResponse response, HttpServletRequest request,@PathVariable Long idDiscrepancia) throws IOException {
-//			  // response.getWriter().println("Prueba del mètodo PROBAR en Orden de trabajo");
-//			   Calendar c = Calendar.getInstance();		  
-//			   String folio =  (Integer.toString(c.get(Calendar.MILLISECOND))+"-"+"idDiscrepancia");
-//			   System.out.println("folio :"+folio);
-//			  // return folio;
-//			  response.getWriter().println((folio));
-//
-//		    }
-//		   
 		   public DetalleDiscrepanciaVo getDetalleDiscrepancia(Long id){
 			   
 				DetalleDiscrepanciaVo det = new DetalleDiscrepanciaVo();
@@ -310,17 +302,6 @@ public class DiscrepanciaController {
 			   
 		   }
 		   
-//		   public List<ComponenteEntity> getComponente(Long idDis){
-//			   	ComponenteEntity comp = componenteDao.consult(discrepanciaDao.consult(idDis).getFolio_componente());
-//			   	// faalta la busqueda de todos los componentes de una discrepancia y meterlos a comps
-//				  List<ComponenteEntity> comps = new ArrayList<ComponenteEntity>();
-//				  
-//				  //hacer el for para mandarlos a la lista de comps
-//			      comps.add(comp);
-//			    	 	    
-//				return comps;
-//				  
-//			  }
 		   
 		
 		   
@@ -343,6 +324,54 @@ public class DiscrepanciaController {
 				}
 		   
 		   
-			  
+			  public void generarVales(Long idDiscrepancia){
+				  //consultar componentes de la discrepancia que no tengan vale
+				  System.out.println("************esta en generar vales con esta discrepancia:"+idDiscrepancia);	
+				  List<ComponenteDiscrepancia> cds= componenteDiscrepanciaDao.getByDiscrepancia(idDiscrepancia);
+					List<ComDisVo> cvos= new ArrayList<ComDisVo>();
+					//aqui se guardaran los comps que no tienen vale
+					List<ComponenteDiscrepancia> comps= new ArrayList<ComponenteDiscrepancia>();
+					if (cds==null){
+						cds= new ArrayList<ComponenteDiscrepancia>();
+					}
+					
+					for (ComponenteDiscrepancia cd : cds){
+						//ComDisVo cdvo= new ComDisVo();
+						
+						System.out.println("----------idVale:"+cd.getIdVale());
+						if (cd.getIdVale()==null){						
+							//cdvo.setDescripcion(componenteDao.consult(cd.getIdComponente()).getD_descripcion());
+							//cdvo.setNombre_componente(componenteDao.consult(cd.getIdComponente()).getD_componente());
+							//cdvo.setCantidad(cd.getCantidad());
+							//cdvo.setId(cd.getId());
+							//cvos.add(cdvo);
+							comps.add(cd);
+							
+						}
+					}
+				///////////cvos es la lista de los componenteDiscrepancia que no tienen vale
+				System.out.println("********tamaño de lista de CompDisVo:"+cvos.size());	
+				/////creando el objeto para el vale
+				if (cvos.size()>0){   //si hay componentes sin vale, se emite vale
+					ValeEntity v= new ValeEntity();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+					String fecha= sdf.format(new Date());
+					System.out.println("si va a emitir vale........");
+				    v.setFecha(fecha);
+				    v.setEstatus("ALGO");
+				    v.setItems(comps);
+				    v.setIdDiscrepancia(idDiscrepancia);
+				    valeDao.save(v);
+				    System.out.println("VALE EMITIDO:"+v.getId());	
+				    v.getItems(); //ComDisVo
+				    //// añadiendo el id del vale a cada comdis
+				    for (ComponenteDiscrepancia cd : comps){
+						cd.setIdVale(v.getId());
+						componenteDiscrepanciaDao.update(cd);
+					}
+				}else{
+				System.out.println("*******NO SE EMITIO VALE*********:");
+				}
+			  }
 			 
 }

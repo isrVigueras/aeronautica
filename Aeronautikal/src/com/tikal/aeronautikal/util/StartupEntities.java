@@ -24,6 +24,7 @@ import com.tikal.aeronautikal.entity.EventoEntity;
 import com.tikal.aeronautikal.entity.OrdenEntity;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
 import com.tikal.aeronautikal.entity.Unidad;
+import com.tikal.aeronautikal.entity.ValeEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 
 @Component
@@ -53,6 +54,7 @@ public class StartupEntities {
 		ObjectifyService.register(Categoria.class);
 		ObjectifyService.register(Condicion.class);
 		ObjectifyService.register(DiscrepanciaPdfVo.class);
+		ObjectifyService.register(ValeEntity.class);
 	}
 	
     

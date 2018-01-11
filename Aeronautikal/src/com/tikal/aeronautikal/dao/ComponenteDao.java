@@ -23,6 +23,8 @@ public interface ComponenteDao {
 	
 	public List<ComponenteEntity> getAll0();
 	
+	public List<ComponenteEntity> getByCategoria(Long idCategoria);
+	
 	public void updateExistencias(Long id, Integer existencias, Integer pendientes);
 
 	public List<ComponenteEntity> getByDiscrepancia(Long idDiscrepancia);

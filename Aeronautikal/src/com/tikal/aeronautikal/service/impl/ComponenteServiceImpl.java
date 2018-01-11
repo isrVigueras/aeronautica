@@ -76,4 +76,10 @@ public class ComponenteServiceImpl implements ComponenteService{
 			componenteDao.updateExistencias(id, d_cantidad, d_pendientes);
 		}
 
+		@Override
+		public List<ComponenteEntity> getByCategoria(Long idCategoria) {
+			// TODO Auto-generated method stub
+			return ofy().load().type(ComponenteEntity.class).filter("idCategoria", idCategoria).list();
+		}
+
 }

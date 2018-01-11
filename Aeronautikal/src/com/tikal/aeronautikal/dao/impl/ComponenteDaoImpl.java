@@ -91,4 +91,11 @@ public class ComponenteDaoImpl implements ComponenteDao{
 		//List<ComponenteEntity> comps = ofy().load().type(ComponenteEntity.class).filter("folioOrden", folioOrden).list();
 		return null;
 	}
+	@Override
+	public List<ComponenteEntity> getByCategoria(Long idCategoria) {
+		// TODO Auto-generated method stub
+		System.out.println("consultando componentes por categoria " );
+		return ofy().load().type(ComponenteEntity.class).filter("idCategoria", idCategoria).list();
+		
+	}
 }

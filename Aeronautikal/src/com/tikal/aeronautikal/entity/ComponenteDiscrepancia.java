@@ -11,8 +11,16 @@ public class ComponenteDiscrepancia {
 	@Index private Long idDiscrepancia;
 	private Integer cantidad;
 	private Integer cantOriginal;
+	private Long idVale;
 	
 	
+	
+	public Long getIdVale() {
+		return idVale;
+	}
+	public void setIdVale(Long idVale) {
+		this.idVale = idVale;
+	}
 	public Integer getCantOriginal() {
 		return cantOriginal;
 	}

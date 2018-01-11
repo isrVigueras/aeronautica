@@ -55,12 +55,15 @@ public class ComponenteController {
 		   System.out.println("si entra a Orden controller");   
 		   	try {
 		   		
-		   		entry.setId(Long.parseLong("1001"));
+		   		//entry.setId(Long.parseLong("1001"));
 		   		entry.setD_componente("GASKET");
 		   		entry.setD_descripcion("pieza que sirve para ...");
 		   		entry.setD_parte("PARTE_1");
 		   		//entry.setD_pendientes(3);
 		   		entry.setD_cantidad(100);
+		   		entry.setIdCategoria(Long.parseLong("4573968371548160"));
+		   		entry.setIdCondicion(Long.parseLong("4714705859903488"));
+		   		entry.setIdUnidad(Long.parseLong("4855443348258816"));
 		   		//entry.setD_requisicion("num de requisicion");
 		   		//entry.setD_vale("numero de vale");
 		   		entry.setFechaApertura("01/12/2017");
@@ -161,7 +164,18 @@ public class ComponenteController {
 	 			response.getWriter().println(JsonConvertidor.toJson(lista));
 	 		}
 	   
-	
+	   @RequestMapping(value = { "/getByCategoria/{idCategoria}" }, method = RequestMethod.GET, produces = "application/json")
+		public void getByCat(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idCategoria) throws IOException {
+			AsignadorDeCharset.asignar(request, response);
+			System.out.println("si entraxxxxxxx ");
+			//List<ComponenteVo> cvos= new ArrayList<ComponenteVo>();
+			List<ComponenteEntity> lista = componenteDao.getByCategoria(idCategoria);			
+//					for (ComponenteEntity c : lista){
+//							c.setD_pendientes(requisicionDao.getPendientes(c.getId()));
+//							componenteDao.update(c);						   
+//					}					
+			response.getWriter().println(JsonConvertidor.toJson(lista));
+		}
 	   
 	   
 	   @RequestMapping(value = {"/delete/{folio}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")

@@ -15,13 +15,83 @@ public class ComponenteEntity{
 	private String d_parte;
 	@Index private Integer d_cantidad;
 	private Integer d_pendientes;
-	private String d_requisicion;
 	private String fechaApertura;
-	private String d_vale;
+	@Index private Long idCategoria;
+	private Long idUnidad;
+	private Long idCondicion;
+	private Integer maximo;
+	private Integer minimo;
+	private String anaquel;
+	private String repisa;
+	private String imagen;
+	private Boolean certificado8130;
+	private String d_modelo;
+	private String d_marca;
+	private String d_observaciones;
 	
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	public String getD_modelo() {
+		return d_modelo;
+	}
+	public void setD_modelo(String d_modelo) {
+		this.d_modelo = d_modelo;
+	}
+	public String getD_marca() {
+		return d_marca;
+	}
+	public void setD_marca(String d_marca) {
+		this.d_marca = d_marca;
+	}
+	public String getD_observaciones() {
+		return d_observaciones;
+	}
+	public void setD_observaciones(String d_observaciones) {
+		this.d_observaciones = d_observaciones;
+	}
+	public Boolean getCertificado8130() {
+		return certificado8130;
+	}
+	public void setCertificado8130(Boolean certificado8130) {
+		this.certificado8130 = certificado8130;
+	}
+	public Integer getMaximo() {
+		return maximo;
+	}
+	public void setMaximo(Integer maximo) {
+		this.maximo = maximo;
+	}
+	public Integer getMinimo() {
+		return minimo;
+	}
+	public void setMinimo(Integer minimo) {
+		this.minimo = minimo;
+	}
+	public Long getIdUnidad() {
+		return idUnidad;
+	}
+	public void setIdUnidad(Long idUnidad) {
+		this.idUnidad = idUnidad;
+	}
+	public Long getIdCondicion() {
+		return idCondicion;
+	}
+	public void setIdCondicion(Long idCondicion) {
+		this.idCondicion = idCondicion;
+	}
+	public Long getIdCategoria() {
+		return idCategoria;
+	}
+	public void setIdCategoria(Long idCategoria) {
+		this.idCategoria = idCategoria;
+	}
 	public String getFechaApertura() {
 		return fechaApertura;
 	}
@@ -66,18 +136,25 @@ public class ComponenteEntity{
 	public void setD_pendientes(Integer d_pendientes) {
 		this.d_pendientes = d_pendientes;
 	}
-	public String getD_requisicion() {
-		return d_requisicion;
+	public String getAnaquel() {
+		return anaquel;
 	}
-	public void setD_requisicion(String d_requisicion) {
-		this.d_requisicion = d_requisicion;
+	public void setAnaquel(String anaquel) {
+		this.anaquel = anaquel;
 	}
-	public String getD_vale() {
-		return d_vale;
+	public String getRepisa() {
+		return repisa;
 	}
-	public void setD_vale(String d_vale) {
-		this.d_vale = d_vale;
+	public void setRepisa(String repisa) {
+		this.repisa = repisa;
 	}
+	public String getImagen() {
+		return imagen;
+	}
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+
 	
 	
 	
