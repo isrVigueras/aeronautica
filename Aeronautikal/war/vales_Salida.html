@@ -10,46 +10,30 @@
 })
 </script>
 	<div class="contenedor">
-<center><h3 style="color:#EEE6E6">Inventario Registrado</h3></center>
+<center><h3 style="color:#EEE6E6">Despachar Vales de Salida</h3></center>
   <br>
   <div class="row" style="margin: 1% 1%;">
  <div class="col-xs-4">
-  <label for="d_componente" style="color:#EEE6E6">Filtrar por componente:</label><input class="form-control" placeholder="Escriba el nombre del componente" ng-model="filtro.d_componente"/>
+  <label for="d_componente" style="color:#EEE6E6">Filtrar por Orden de Trabajo:</label><input class="form-control" placeholder="Escriba el Numero de la OT" ng-model="filtro.d_componente"/>
   </div>
   </div>
 <br>
  <table class="table table-striped">
     <thead>
       <tr bgcolor="#A9F5F2">
-        <th>ID</th>
+        <th>ID discrepancia</th>
         <th>Feha de ingreso</th>
-        <th>Componente</th>
-        <th>Modelo</th>
-        <th>Marca</th>
-        <th>Descripcipn</th>
-        <th>Observaciones</th>
-        <th>Existencia</th>
-        <th>Faltantes</th>
-        <th>Anaquel</th>
-        <th>Repisa</th>
-        <th>Imagen</th>
+        <th>Numero de Vale</th>
+        <th>Estatus</th>
         <th>Accion</th>
+        
       </tr>
   </thead>
     <tbody>
-      <tr ng-repeat="inv_consulta in inv_consultas | filteri18n:{d_componente:filtro.d_componente}">
-        <td>{{inv_consulta.id}}</td>
-        <td>{{inv_consulta.fechaApertura}}</td>
-        <td>{{inv_consulta.d_componente}}</td>
-        <td>{{inv_consulta.d_modelo}}</td>
-        <td>{{inv_consulta.d_marca}}</td>
-        <td>{{inv_consulta.d_descripcion}}</td>
-        <td>{{inv_consulta.d_observaciones}}</td>
-        <td>{{inv_consulta.d_cantidad}}</td>
-        <td>{{inv_consulta.d_pendientes}}</td>
-        <td>{{inv_consulta.anaquel}}</td>
-        <td>{{inv_consulta.repisa}}</td>
-        <td>{{inv_consulta.idCategoria}}</td> 
+      <tr ng-repeat="discrepancia_v in discrepancia_vale | filtrosalida:{d_componente:filtro.d_componente}">
+        <td>{{discrepancia_v.id}}</td>
+        <td>{{discrepancia_v.fechaApertura}}</td>
+        <td>{{discrepancia_v.idVale}}</td>
         <td>      <button type="button" class="btn btn-default" data-toggle="modal" ng-click="muestra(inv_consulta)" data-target="#mydetalle">
   <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -68,7 +52,7 @@
     </tbody>
       <tfoot>
       <tr>
-        <td colspan="3">El Numero piezas registradas es:</td>
+        <td colspan="3">Total de vales Registrados:</td>
         <td ng-bind="inv_consultas.length"></td>
       </tr>
     </tfoot>

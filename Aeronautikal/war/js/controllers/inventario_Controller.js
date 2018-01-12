@@ -37,19 +37,20 @@ $scope.condicion =condicion;
     minimo:undefined,
     anaquel:"",
     repisa:"",
-    imagen:Date,
+    imagen:"",
     certificado8130:Boolean
 
   }
 
    $scope.alta_inventario=function() {
+    console.log($scope.inventario);
     if ($scope.form.$valid) {
       //alert("variable comprobada: "+$scope.inventario.d_componente+" y la fecha "+ $scope.inventario.fechaApertura);
       InventarioService.genera_inventario($scope.inventario).then(
         function(data) {
           console.log(data);
           //alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
-            //location.href="#/Inventario/colsulta";
+            location.href="#/Inventario/colsulta";
          alert("componente dado de alta");
         })
               

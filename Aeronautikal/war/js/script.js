@@ -378,7 +378,22 @@ function RemoteResource($http,$q, baseUrl) {
     
   }
 
-
+  this.discrepancia_vale = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/vale/findAll'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
 }
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
 function RemoteResourceProvider() {
@@ -534,6 +549,9 @@ app.config(['$routeProvider',function($routeProvider) {
       }],
       componentes_0:['remoteResource',function(remoteResource) {
         return remoteResource.componentes_0();
+      }],
+      categoria:['remoteResource','$route',function(remoteResource) {
+        return remoteResource.categoria();
       }]
     }
   });     
@@ -604,7 +622,15 @@ $routeProvider.when('/Consulta/PDF/:nombrepdf', {
       }]
     }
   }); 
-
+$routeProvider.when('/Vales/consulta', {
+    templateUrl: "vales_Salida.html",
+    controller: "MuestraValesController",
+     resolve: {
+      discrepancia_vale:['remoteResource',function(remoteResource) {
+        return remoteResource.discrepancia_vale();
+      }]
+    }
+  }); 
 
   $routeProvider.otherwise({
         redirectTo: '/'
@@ -644,6 +670,41 @@ app.filter("filteri18n",["$filter",function($filter) {
   return filteri18n;
    
 }]);
+//filtro para los vales de salida
+app.filter("filtrosalida",["$filter",function($filter) {
+  var filterFn=$filter("filter");
+   
+  /** Transforma el texto quitando todos los acentos diéresis, etc. **/
+  function normalize(texto) {
+    texto = texto.replace(/[áàäâ]/g, "a");
+    texto = texto.replace(/[éèëê]/g, "e");
+    texto = texto.replace(/[íìïî]/g, "i");
+    texto = texto.replace(/[óòôö]/g, "o");
+    texto = texto.replace(/[úùüü]/g, "u");
+    texto = texto.toUpperCase();
+    return texto;
+  }
+    
+  /** Esta función es el comparator en el filter **/
+  function comparator(actual, expected) {
+      if (normalize(actual).indexOf(normalize(expected))>=0) {
+        return true;
+      } else {
+        return false;
+      }
+  }
+   
+  /** Este es realmente el filtro **/
+  function filtrosalida(array,expression) {
+    //Lo único que hace es llamar al filter original pero pasado
+    //la nueva función de comparator
+    return filterFn(array,expression,comparator)
+  }
+   
+  return filtrosalida;
+   
+}]);
+
 
 //directiva de angular para mostrar el calendario usando el plugin de Jquery
 app.directive('caDatepicker', [function(dateFormat) {

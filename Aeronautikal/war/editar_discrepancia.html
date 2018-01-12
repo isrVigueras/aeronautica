@@ -239,11 +239,17 @@
         <h4 style="color:#000000">Componente</h4>
         <form>
             <div class="row" style="margin: 1% 1%;">
+                 <label for="d_componente" style="color:#000000">Seleciona una Categoria:</label>
+        <br>
+          <select class="form-control" ng-change=segundocombo(categoria) ng-model="componente.idCategoria" >
+            <option value="">--Seleccione una Categoria--</option>
+          <option value="{{categori.id}}" ng-repeat="categori in categoria"  >{{categori.descripcion}}</option>
+        </select>
               <label for="d_componente" style="color:#000000">Seleciona componenete de almacen:</label>
         <br>
           <select class="form-control" ng-model="componente.idComponente" >
             <option value="">--Seleccione un Componente--</option>
-          <option value="{{p.id}}" ng-repeat="p in listado_inv"  >{{p.d_componente}} Cantidad:{{p.d_cantidad}}</option>
+          <option value="{{p.id}}" ng-repeat="p in segundo"  >{{p.d_componente}} Cantidad:{{p.d_cantidad}}</option>
         </select>
         <br><br>
         <label for="numero_piezas" style="color:#000000">Numero de piezas requeridas:</label><input class="form-control" ng-model="componente.cantidad" placeholder="Escriba el No. piezas que se requieren" id="numero_piezas" name="numero_piezas" type="number"/>

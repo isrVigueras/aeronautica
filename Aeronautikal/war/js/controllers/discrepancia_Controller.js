@@ -94,6 +94,18 @@ app.service('DetalleDiscreServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+//segundocomboServicio.segundo_servicio(data).
+app.service('segundocomboServicio', [ '$http', '$q', function($http, $q) {
+  this.segundo_servicio = function(id) {
+    var d = $q.defer();
+    $http.post("/componente/getByCategoria/"+id).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
 app.controller("DiscrepanciamuestraController", ['$scope','inv_consultas','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio','DetalleDiscreServicio',function($scope,inv_consultas,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio,DetalleDiscreServicio) {
 $scope.discrepancias =discrepancias;
  $scope.provincias=inv_consultas; 
@@ -139,14 +151,15 @@ console.log($scope.discrepancias);
   }
 }]);
 app.controller("EditarDiscrepanciaController",
- ['$scope','discrepancia','UpdateDiscrepanciaServicio','altaEventoServicio','eventos','listado_inv','altaComponenteServicio','componentes','deleteEventoServicio','deleteComponenteServicio','componentes_0','insertaRequiServicio','UpdateEventoServicio',
- function($scope,discrepancia,UpdateDiscrepanciaServicio,altaEventoServicio,eventos,listado_inv,altaComponenteServicio,componentes,deleteEventoServicio,deleteComponenteServicio,componentes_0,insertaRequiServicio,UpdateEventoServicio) 
+ ['$scope','discrepancia','UpdateDiscrepanciaServicio','altaEventoServicio','eventos','listado_inv','altaComponenteServicio','componentes','deleteEventoServicio','deleteComponenteServicio','componentes_0','insertaRequiServicio','UpdateEventoServicio','categoria','segundocomboServicio',
+ function($scope,discrepancia,UpdateDiscrepanciaServicio,altaEventoServicio,eventos,listado_inv,altaComponenteServicio,componentes,deleteEventoServicio,deleteComponenteServicio,componentes_0,insertaRequiServicio,UpdateEventoServicio,categoria,segundocomboServicio) 
  {
 $scope.discrepancia =discrepancia;
 $scope.eventos =eventos;
 $scope.listado_inv =listado_inv;
 $scope.componentes =componentes;
 $scope.componentes_0 =componentes_0;
+$scope.categoria = categoria;
 
 console.log("datos discrepancia");
 console.log($scope.discrepancia);
@@ -284,6 +297,16 @@ $scope.guardar_edit=function(){
         })
 
       }   
+$scope.segundocombo=function(data){
+      
+      segundocomboServicio.segundo_servicio($scope.componente.idCategoria).then(
+        function(data) {
+          console.log("segundocombo",data);
+          $scope.segundo=data;
+        })
+
+      }   
+
 /*$scope.eventos=[];
  //$scope para retener la informacion en el front
  $scope.evento_tabla = {
