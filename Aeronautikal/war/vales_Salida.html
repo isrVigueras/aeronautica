@@ -14,7 +14,7 @@
   <br>
   <div class="row" style="margin: 1% 1%;">
  <div class="col-xs-4">
-  <label for="d_componente" style="color:#EEE6E6">Filtrar por Orden de Trabajo:</label><input class="form-control" placeholder="Escriba el Numero de la OT" ng-model="filtro.d_componente"/>
+  <label for="d_componente" style="color:#EEE6E6">Filtrar por Discrepancia:</label><input class="form-control" placeholder="Escriba el Numero de la Discrepancia" ng-model="filtro.discrepancia" />
   </div>
   </div>
 <br>
@@ -30,16 +30,17 @@
       </tr>
   </thead>
     <tbody>
-      <tr ng-repeat="discrepancia_v in discrepancia_vale | filtrosalida:{d_componente:filtro.d_componente}">
+      <tr ng-repeat="discrepancia_v in discrepancia_vale | filtroV:{idDiscrepancia:filtro.discrepancia}">
+        <td>{{discrepancia_v.idDiscrepancia}}</td>
+        <td>{{discrepancia_v.fecha}}</td>
         <td>{{discrepancia_v.id}}</td>
-        <td>{{discrepancia_v.fechaApertura}}</td>
-        <td>{{discrepancia_v.idVale}}</td>
-        <td>      <button type="button" class="btn btn-default" data-toggle="modal" ng-click="muestra(inv_consulta)" data-target="#mydetalle">
-  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+        <td>{{discrepancia_v.estatus}}</td>
+        <td>      <button type="button" class="btn btn-default" data-toggle="modal" ng-click="muestraV(discrepancia_v)" data-target="#mydetalle">
+  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a ng-href="#/Inventario/requisicion/{{inv_consulta.id}}">
            <button type="button" class="btn btn-default" aria-label="Left Align">
-  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+  <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
 </button></a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <button type="button" class="btn btn-default" aria-label="Left Align">
@@ -65,28 +66,65 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <center><h4 class="modal-title" id="myModalLabel">Detalle componen</h4></center>
+        <center><h4 class="modal-title" id="myModalLabel">Detalle Vale</h4></center>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
         <form>
           <div class="row">
-            <div class="col-xs-4">
-           <label for="con_nombre">Datos:</label>
+             <h3>&nbsp;&nbsp;Datos:</h3>
+            <div class="col-xs-6">
               <br>
-                <label>ID:</label><span>{{detalle_componentes.id}}</span>
+                <label>Numero del Vale:</label><span>{{detalle_Vale.id}}</span>
                 <br>
-                <label>Nombre del componente:</label><span>{{detalle_componentes.d_componente}}</span>
+                <label>Generado el Dia:</label><span>{{detalle_Vale.fecha}}</span>
+                </div>
+                 <br>
+                 <div class="col-xs-6">
+                <label>Discrepancia:</label><span>{{detalle_Vale.idDiscrepancia}}</span>
                 <br>
-                <label>Cantidad:</label><span>{{detalle_componentes.d_cantidad}}</span>
-                <br>
-                <label>Descripcion:</label><span>{{detalle_componentes.d_descripcion}}</span>
+                <label>Estatus:</label><span>{{detalle_Vale.estatus}}</span>
             </div>
           </div>
+          <br>
+          <div class="row">
+            <h3>&nbsp;&nbsp;Componentes:</h3>
+          <div class="table-responsive">
+        <table class="table table-striped">
+
+  <tr bgcolor="#CEECF5">
+
+    <th>ID</th>
+
+    <th>Nombre del Componente</th>
+
+    <th>Cantidad</th>
+  </tr>
+
+  <tr bgcolor="#CEECF5" ng-repeat="detalle in detalle_Vale.items">
+
+    <td>{{detalle.id}}</td>
+
+    <td>{{detalle.nombreComponente}}</td>
+
+    <td>{{detalle.cantidad}}</td>
+  </tr>
+   <tfoot>
+      <tr>
+        <td colspan="2">Numero de componentes:</td>
+        <td ng-bind="detalle_Vale.items.length"></td>
+      </tr>
+    </tfoot>
+</table>
+    
+      </div>
+      <br>
+    
+    </div>
             </form>
       </div>
       <div class="modal-footer">
-           <button type="button" class="btn btn-primary" ng-click="alta_discrepancia()">Guardar</button>
+           <button type="button" class="btn btn-primary" ng-click="Despachar_Vale(detalle_Vale.id)">Despachar</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
