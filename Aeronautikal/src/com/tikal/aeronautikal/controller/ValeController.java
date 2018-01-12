@@ -224,7 +224,8 @@ public class ValeController {
 	       vpdf.setNombreArchivo("C:/Vales/vale_"+vale.getId()+".pdf");
 	       vpdf.setMatricula(nave.getMatricula());
 	       vpdf.setNoSerie(nave.getNumeroSerie());
-	       vpdf.setNoOrden(orden.getFolio());
+	       vpdf.setNoOrden((orden.getFolio()).replaceAll("[\n\r]",""));
+	       
 	       vpdf.setNoDiscrepancia(vale.getIdDiscrepancia());
 	       
 	       for (ComponenteDiscrepancia cd: cds){

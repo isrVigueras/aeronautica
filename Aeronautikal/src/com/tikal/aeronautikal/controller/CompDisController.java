@@ -91,7 +91,9 @@ public class CompDisController {
 		        	//pegar el valor de empresa, aeronave y contacato
 		        	//orden.setFolio(1111);
 		        	cd.setCantOriginal(cd.getCantidad());
-		        	componenteDiscrepanciaDao.save(cd);	       
+		        	cd.setNombreComponente((componenteDao.consult(cd.getIdComponente())).getD_componente());
+		        	componenteDiscrepanciaDao.save(cd);
+		        	////generando requisicion
 		        	if (cd.getCantidad()> componenteDao.consult(cd.getIdComponente()).getD_cantidad()){
 		        		 System.out.println("cantidad requerida:"+cd.getCantidad());
 			        	 System.out.println("cantidad en almacen:"+componenteDao.consult(cd.getIdComponente()).getD_cantidad());

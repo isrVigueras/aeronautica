@@ -8,6 +8,7 @@ import com.googlecode.objectify.annotation.Index;
 public class ComponenteDiscrepancia {
 	@Id private Long id;
 	@Index private Long idComponente;
+	private String nombreComponente;
 	@Index private Long idDiscrepancia;
 	private Integer cantidad;
 	private Integer cantOriginal;
@@ -15,6 +16,13 @@ public class ComponenteDiscrepancia {
 	
 	
 	
+	
+	public String getNombreComponente() {
+		return nombreComponente;
+	}
+	public void setNombreComponente(String nombreComponente) {
+		this.nombreComponente = nombreComponente;
+	}
 	public Long getIdVale() {
 		return idVale;
 	}

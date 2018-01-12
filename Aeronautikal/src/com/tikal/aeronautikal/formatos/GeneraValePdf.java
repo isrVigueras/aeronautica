@@ -7,6 +7,7 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -47,7 +48,8 @@ public class GeneraValePdf {
     	  
     	  
     	try {
-    	    Document document = new Document();
+    		Document document = new Document(PageSize.LETTER.rotate());
+    	  //  Document document = new Document();
     	    try {
     	        PdfWriter.getInstance(document, new FileOutputStream(vp.getNombreArchivo()));
     	    } catch (FileNotFoundException fileNotFoundException) {
@@ -57,6 +59,7 @@ public class GeneraValePdf {
     	    
     	    
     	    document.open();
+    	    
     	    Font fuente = new Font();
     	    fuente.setStyle(1);
     	    fuente.setStyle(Font.BOLD);
