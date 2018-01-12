@@ -146,7 +146,7 @@ public class CompDisController {
 	    
 		 
 	    @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.POST)
-		   public void deleteEvento(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id) 
+		   public void deleteComDis(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id) 
 				   throws IOException {
 	    	   System.out.println("si esta en delete"+id);
 			   actualizaExistencias(componenteDiscrepanciaDao.consult(id).getIdComponente(), componenteDiscrepanciaDao.consult(id).getCantidad(),"delete");
@@ -186,7 +186,7 @@ public class CompDisController {
 			   //////////////////////////////////////////////////////////////
 			   componenteDiscrepanciaDao.delete(componenteDiscrepanciaDao.consult(id));
 			   
-			  //buscar req x componente y discrepancia para eliminar la req correcta
+			  
 			   
 			   System.out.println("Componente eliminado de la discrepancia....");
 			   response.getWriter().println("ok");

@@ -9,6 +9,7 @@ import com.tikal.aeronautikal.controller.vo.DiscrepanciaPdfVo;
 import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.controller.vo.OrdenXlsVo;
 import com.tikal.aeronautikal.controller.vo.RequisicionesComponenteVo;
+import com.tikal.aeronautikal.controller.vo.ValePdfVo;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.Categoria;
 import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
@@ -55,6 +56,7 @@ public class StartupEntities {
 		ObjectifyService.register(Condicion.class);
 		ObjectifyService.register(DiscrepanciaPdfVo.class);
 		ObjectifyService.register(ValeEntity.class);
+		ObjectifyService.register(ValePdfVo.class);
 	}
 	
     

@@ -13,6 +13,7 @@ public class ComponenteEntity{
 	private String d_componente;
 	private String d_descripcion;
 	private String d_parte;
+	private String noSerie;
 	@Index private Integer d_cantidad;
 	private Integer d_pendientes;
 	private String fechaApertura;
@@ -38,6 +39,12 @@ public class ComponenteEntity{
 	
 	
 	
+	public String getNoSerie() {
+		return noSerie;
+	}
+	public void setNoSerie(String noSerie) {
+		this.noSerie = noSerie;
+	}
 	public String getD_modelo() {
 		return d_modelo;
 	}

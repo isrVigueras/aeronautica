@@ -1,5 +1,6 @@
 package com.tikal.aeronautikal.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +17,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
+import com.tikal.aeronautikal.controller.vo.DetalleDiscrepanciaVo;
+import com.tikal.aeronautikal.controller.vo.ItemVo;
+import com.tikal.aeronautikal.controller.vo.OrdenVo;
+import com.tikal.aeronautikal.controller.vo.OrdenXlsVo;
+import com.tikal.aeronautikal.controller.vo.ValePdfVo;
+import com.tikal.aeronautikal.dao.AeronaveDao;
+import com.tikal.aeronautikal.dao.ComponenteDao;
+import com.tikal.aeronautikal.dao.CondicionDao;
+import com.tikal.aeronautikal.dao.DiscrepanciaDao;
+import com.tikal.aeronautikal.dao.OrdenDao;
+import com.tikal.aeronautikal.dao.UnidadDao;
 import com.tikal.aeronautikal.dao.ValeDao;
-
+import com.tikal.aeronautikal.entity.AeronaveEntity;
+import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
+import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
+import com.tikal.aeronautikal.entity.EmpresaEntity;
 import com.tikal.aeronautikal.entity.ValeEntity;
+import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
+import com.tikal.aeronautikal.formatos.EditaOrdenXls;
+import com.tikal.aeronautikal.formatos.GeneraOrdenPdf;
+import com.tikal.aeronautikal.formatos.GeneraValePdf;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
 
@@ -33,6 +51,29 @@ public class ValeController {
 	 @Qualifier("valeDao")
 	 ValeDao valeDao;
 	 
+	 @Autowired
+	 @Qualifier("aeronaveDao")
+	 AeronaveDao aeronaveDao;
+	 
+	 @Autowired
+	 @Qualifier("discrepanciaDao")
+	 DiscrepanciaDao discrepanciaDao;
+	 
+	 @Autowired
+	 @Qualifier("componenteDao")
+	 ComponenteDao componenteDao;
+	 
+	 @Autowired
+	 @Qualifier("ordenDao")
+	 OrdenDao ordenDao;
+	 
+	 @Autowired
+	 @Qualifier("condicionDao")
+	 CondicionDao condicionDao;
+	 
+	 @Autowired
+	 @Qualifier("unidadDao")
+	 UnidadDao unidadDao;
 	 
 	 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 	   
@@ -132,4 +173,75 @@ public class ValeController {
 			
 		}
 
+	   
+	   @RequestMapping(value = { "/generaValePdf/{idVale}" }, method = RequestMethod.GET)
+	 		public void generaVale(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idVale) throws IOException {
+	 		
+	 		  ValePdfVo vpdf = getValePdf(idVale);   
+	 	        File newPdfFile = new File(vpdf.getNombreArchivo());		 
+	 	        if (!newPdfFile.exists()){
+	 	            try {
+	 	            	newPdfFile.createNewFile();
+	 	            } catch (IOException ioe) {
+	 	                System.out.println("(Error al crear el fichero nuevo ......)" + ioe);
+	 	            }
+	 	        }
+	        
+	 	  
+	 	        System.out.println("empiezo a generar pdf..." );
+	 	    	GeneraValePdf generaValePdf = new GeneraValePdf(vpdf);
+	 	    	System.out.println("nombre de archivo para edgar:"+vpdf.getNombreArchivo().substring(7) );
+	 	    	response.getWriter().println((vpdf.getNombreArchivo().substring(7)));
+	 	    	//generaOrdenPdf.GeneraOrdenPdf(new File(ox.getNombreArchivo()));
+	 	    	//generaOrdenPdf.GeneraOrdenPdf(ox));
+	 		}
+ 	  
+	   
+	   @RequestMapping(value = {"/cerrarVale/{idVale}" }, method = RequestMethod.POST)
+		public void update(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idVale)
+				throws IOException {
+			//System.out.println("obj de edgar:"+json);
+			AsignadorDeCharset.asignar(request, response);
+		//	AeronaveEntity a = (AeronaveEntity) JsonConvertidor.fromJson(json, AeronaveEntity.class);
+			ValeEntity v= valeDao.consult(idVale);
+			v.setEstatus("CERRADO");
+			valeDao.update(v);
+			response.getWriter().println("ok");
+		}
+       
+	  
+	     
+	   public ValePdfVo getValePdf(Long idVale){
+		   ValePdfVo vpdf= new ValePdfVo();
+		   
+		   ValeEntity vale = valeDao.consult(idVale);
+		   List<ItemVo> items= new ArrayList<ItemVo>();		   
+		   DiscrepanciaEntity dis = discrepanciaDao.consult(vale.getIdDiscrepancia());
+		   OrdenVo orden = ordenDao.consult(dis.getFolioOrden());
+		   List<ComponenteDiscrepancia> cds = vale.getItems();
+	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
+	       vpdf.setFechaVale(vale.getFecha());
+	       vpdf.setNombreArchivo("C:/Vales/vale_"+vale.getId()+".pdf");
+	       vpdf.setMatricula(nave.getMatricula());
+	       vpdf.setNoSerie(nave.getNumeroSerie());
+	       vpdf.setNoOrden(orden.getFolio());
+	       vpdf.setNoDiscrepancia(vale.getIdDiscrepancia());
+	       
+	       for (ComponenteDiscrepancia cd: cds){
+	    	   ItemVo item= new ItemVo();
+	    	   ComponenteEntity c= componenteDao.consult(cd.getIdComponente()) ;
+	    	   item.setNoParte(c.getD_parte());
+	    	   item.setNoSerie(c.getNoSerie());
+	    	   item.setDescripcion(c.getD_descripcion());
+	    	   item.setCondicion(condicionDao.consult(c.getIdCondicion()).getDescripcion());
+	    	   item.setCantidad(cd.getCantidad());
+	    	   item.setUnidad(unidadDao.consult(c.getIdUnidad()).getDescripcion());
+	    	   items.add(item);
+	       }
+		   vpdf.setItems(items);
+		   
+		   return vpdf;
+		      
+		   
+	   }
 }

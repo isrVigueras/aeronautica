@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.tikal.aeronautikal.dao.ValeDao;
-import com.tikal.aeronautikal.entity.EventoEntity;
+
 import com.tikal.aeronautikal.entity.ValeEntity;
 
 @Service("valeDao")
@@ -30,6 +30,7 @@ public class ValeDaoImpl implements ValeDao{
 		public void update(ValeEntity v) {
 		   System.out.print("consultando vale:"+v.getId());
 		   ValeEntity old =consult(v.getId());
+		   System.out.print("regresa");
 		System.out.print("old:"+old);
 			if (old != null) {
 				old.setFecha(v.getFecha());
