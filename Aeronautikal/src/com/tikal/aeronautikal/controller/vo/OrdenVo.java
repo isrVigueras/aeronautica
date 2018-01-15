@@ -19,6 +19,7 @@ public class OrdenVo {
 	Long empresa;          
 	String nombreEmpresa;
 	Long aeronave;
+	@Index String estatus;
 		
 	//@Ignore private Empresa laEmpresa;
 	
@@ -62,6 +63,12 @@ public class OrdenVo {
 	}
 	public void setAeronave(Long aeronave) {
 		this.aeronave = aeronave;
+	}
+	public String getEstatus() {
+		return estatus;
+	}
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
 	}
 		
 	

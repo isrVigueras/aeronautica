@@ -70,7 +70,14 @@ public class DiscrepanciaDaoImpl implements DiscrepanciaDao {
 		List<DiscrepanciaEntity> dis = ofy().load().type(DiscrepanciaEntity.class).filter("folioOrden", folioOrden).list();
 		return dis;
 	}
-
 	
+	@Override
+	public List<DiscrepanciaEntity> getAbiertasByOrden(Long idOrden){
+		// TODO Auto-generated method stub
+		List<DiscrepanciaEntity> dis = ofy().load().type(DiscrepanciaEntity.class).filter("folioOrden", idOrden).filter("estatus", "ABIERTA").list();
+		System.out.println("lista de discrepancias abiertas: "+dis );
+		return dis;
+		
+	}
 
 }

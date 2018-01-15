@@ -18,5 +18,7 @@ public interface DiscrepanciaDao {
 	public List<DiscrepanciaEntity> getAll();
 	
 	public List<DiscrepanciaEntity> getByOrden(Long folio);
+	
+	public List<DiscrepanciaEntity> getAbiertasByOrden(Long idOrden);
 
 }

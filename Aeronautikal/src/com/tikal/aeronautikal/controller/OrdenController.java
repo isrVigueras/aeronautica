@@ -122,6 +122,7 @@ public class OrdenController {
 	        	//crearListaIdsOT();
 	        	 System.out.println("folio orden:"+orden.getFolio());
 	        	 System.out.println("folio aeronave:"+aeronaveDao.consult(orden.getAeronave()).getNumeroAeronave());
+	        	 orden.setEstatus("ABIERTA");
 	        	 orden.setNombreEmpresa(empresaDao.consult(orden.getEmpresa()).getNombreEmpresa());
 	        	 String fol=(orden.getFolio()+aeronaveDao.consult(orden.getAeronave()).getNumeroAeronave()).replaceAll("[\n\r]","");
 	        	orden.setFolio(orden.getFolio()+aeronaveDao.consult(orden.getAeronave()).getNumeroAeronave());
@@ -225,6 +226,24 @@ public class OrdenController {
 		  return folio;
 		  
 	  }
+	  
+	  
+	  @RequestMapping(value = {"/cerrarOrden/{idOrden}" }, method = RequestMethod.POST)
+	   public void cerrarOrden(HttpServletResponse response, HttpServletRequest request,@PathVariable Long idOrden)
+		throws IOException {
+		   System.out.println("si entra a cerrar orden:"+idOrden);
+		   AsignadorDeCharset.asignar(request, response);
+		   OrdenVo o = ordenDao.consult(idOrden);
+		   //checar si hay discrepancias abiertas aun...
+		   List <DiscrepanciaEntity> abiertas = discrepanciaDao.getAbiertasByOrden(idOrden);
+		   if (abiertas.size() == 0){
+			   o.setEstatus("CERRADA");
+			   ordenDao.update(o);	       	
+			   response.getWriter().println("ok");
+		   }else{
+		   response.getWriter().println("error");
+		   }
+	   }
 	   
 	  @RequestMapping(value = { "/generaOrdenXls/{idOrden}" }, method = RequestMethod.POST)
 		public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idOrden) throws IOException {
@@ -328,7 +347,7 @@ public class OrdenController {
 	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
 	       //String nombre="C:/Users/Lenovo/Desktop/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".xls";
 	    //  String nombre="C:/Users/Lenovo/Desktop/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
-	       String nombre="C:/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
+	       String nombre="pdf\\OTs\\OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
 	     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
 	       ox.setNombreArchivo(nombre.replaceAll("[\n\r]",""));
 	       System.out.println("fecha"+orden.getFechaApertura());

@@ -30,18 +30,9 @@ public class DiscrepanciaEntity {
 	@Index private String descripcion;
 	@Index private String accion;	
 	private String fechaApertura;
-	//private Long folio_componente;
-//	private Integer numero_piezas;
-	//private List<Componente> losComponentes;
-	//private List<EventoEntity> eventos;
-	//private Empleado removidoPor;
-	//private Empleado instaladoPor;
-	//private Empleado originadoPor;
+	@Index private String estatus;
+
 	
-	////@Load
-	//private List<Ref<EventoEntity>> eventos;
-	
-//	@Container OrdenEntity orden;
 	
 	
 
@@ -108,46 +99,18 @@ public class DiscrepanciaEntity {
 	public void setFechaApertura(String fechaApertura) {
 		this.fechaApertura = fechaApertura;
 	}
-//	public List<Componente> getLosComponentes() {
-//		return losComponentes;
-//	}
-//	public void setLosComponentes(List<Componente> losComponentes) {
-//		this.losComponentes = losComponentes;
-//	}
-	
-//	public Empleado getRemovidoPor() {
-//		return removidoPor;
-//	}
-	
-//	public Long getFolio_componente() {
-//		return folio_componente;
-//	}
-//	public void setFolio_componente(Long folio_componente) {
-//		this.folio_componente = folio_componente;
-//	}
-//	public Integer getNumero_piezas() {
-//		return numero_piezas;
-//	}
-//	public void setNumero_piezas(Integer numero_piezas) {
-//		this.numero_piezas = numero_piezas;
-//	}
-//	public void setRemovidoPor(Empleado removidoPor) {
-//		this.removidoPor = removidoPor;
-//	}
-//	public Empleado getInstaladoPor() {
-//		return instaladoPor;
-//	}
-//	public void setInstaladoPor(Empleado instaladoPor) {
-//		this.instaladoPor = instaladoPor;
-//	}
-//	public Empleado getOriginadoPor() {
-//		return originadoPor;
-//	}
-//	public void setOriginadoPor(Empleado originadoPor) {
-//		this.originadoPor = originadoPor;
-//	}
 
 
+
+	public String getEstatus() {
+		return estatus;
+	}
+
+
+
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
+	}
 
 //public List<EventoEntity> getEventos() {
 //	if(this.eventos==null) {
@@ -155,13 +118,6 @@ public class DiscrepanciaEntity {
 //	}
 //		return eventos;
 //	}
-//
-//
-//
-//	public void setEventos(List<EventoEntity> eventos) {
-//		this.eventos = eventos;
-//	}
-
 	
 	
     

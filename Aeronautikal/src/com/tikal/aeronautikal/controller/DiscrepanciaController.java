@@ -152,6 +152,7 @@ public class DiscrepanciaController {
 		        	System.out.println("el folio de la orden es--.: "+d.getFolioOrden() );
 		        	d.setFolio((d.getTaller()+d.getSeccion()+"-"+ordenDao.consult(folio).getFolio()));
 		        	 System.out.println("el nuevo folio de discrepancia: "+ d.getFolio());
+		        	 d.setEstatus("ABIERTA");
 		        	 //ComponenteEntity c = new ComponenteEntity();
 		        	// ACTUALIZABA LAS EXISTENCIAS 
 //		        	 c= componenteDao.consult(d.getFolio_componente());
@@ -202,8 +203,22 @@ public class DiscrepanciaController {
 				
 			}
 		   
+		   @RequestMapping(value = { "/getAbiertasByOrden/{folioOrden}" }, method = RequestMethod.GET, produces = "application/json")
+			public void findAbiertasByOrden(HttpServletResponse response, HttpServletRequest request,
+					@PathVariable Long folioOrden) throws IOException {
+			   System.out.println("checando discrepancias abiertas");
+				AsignadorDeCharset.asignar(request, response);
+				List<DiscrepanciaEntity> dis= discrepanciaDao.getAbiertasByOrden(folioOrden);
+				if (dis==null){
+					dis= new ArrayList<DiscrepanciaEntity>();
+				}
+				
+				response.getWriter().println(JsonConvertidor.toJson(dis));
+				
+			}
+		   
 		   @RequestMapping(value = {"/update" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-		   public void updateEmpresa(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
+		   public void updateDis(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
 			throws IOException {
 			   System.out.println("si entra a actualizar discrepancia:");
 			   AsignadorDeCharset.asignar(request, response);
@@ -324,6 +339,20 @@ public class DiscrepanciaController {
 				}
 		   
 		   
+			  @RequestMapping(value = {"/cerrarDiscrepancia/{idDiscrepancia}" }, method = RequestMethod.POST)
+			   public void cerrarDis(HttpServletResponse response, HttpServletRequest request,@PathVariable Long idDiscrepancia)
+				throws IOException {
+				   System.out.println("si entra a actualizar discrepancia:");
+				   AsignadorDeCharset.asignar(request, response);
+				   System.out.println("idDiscrepancia que manda edgar:"+idDiscrepancia);
+				   DiscrepanciaEntity d = discrepanciaDao.consult(idDiscrepancia);
+				   d.setEstatus("CERRADA");
+				   discrepanciaDao.update(d);
+		        	
+				   response.getWriter().println("ok");
+			   }
+			  
+			  
 			  public void generarVales(Long idDiscrepancia){
 				  //consultar componentes de la discrepancia que no tengan vale
 				  System.out.println("************esta en generar vales con esta discrepancia:"+idDiscrepancia);	

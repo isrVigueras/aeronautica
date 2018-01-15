@@ -221,7 +221,7 @@ public class ValeController {
 		   List<ComponenteDiscrepancia> cds = vale.getItems();
 	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
 	       vpdf.setFechaVale(vale.getFecha());
-	       vpdf.setNombreArchivo("C:/Vales/vale_"+vale.getId()+".pdf");
+	       vpdf.setNombreArchivo("pdf\\Vales\\vale_"+vale.getId()+".pdf");
 	       vpdf.setMatricula(nave.getMatricula());
 	       vpdf.setNoSerie(nave.getNumeroSerie());
 	       vpdf.setNoOrden((orden.getFolio()).replaceAll("[\n\r]",""));
