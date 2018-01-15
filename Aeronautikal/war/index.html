@@ -16,6 +16,22 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-route.min.js"></script>
     <script src="//code.angularjs.org/1.2.19/i18n/angular-locale_es-es.js"></script>
+      <style>
+       #notification_count 
+{
+padding: 3px 7px 3px 7px;
+background: #cc0000;
+color: #ffffff;
+font-weight: bold;
+margin-left: 77px;
+border-radius: 9px;
+-moz-border-radius: 9px; 
+-webkit-border-radius: 9px;
+position: absolute;
+margin-top: 1px;
+font-size: 11px;
+}
+    </style>
 
 </head>
 <body  background="img/3.jpg" ng-controller="MainController">
@@ -82,6 +98,10 @@
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>-->    
           </ul>
       </li>
+     <li id="notification_li">
+<span id="notification_count">3</span>
+<a href="#/Notificaciones/Ver" id="notificationLink">Notificaciones</a>
+</li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <!--<li><a href=""><span class="glyphicon glyphicon-user"></span> Entrar</a></li>-->

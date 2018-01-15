@@ -631,7 +631,10 @@ $routeProvider.when('/Vales/consulta', {
       }]
     }
   }); 
-
+$routeProvider.when('/Notificaciones/Ver', {
+    templateUrl: "Notificaciones.html",
+    controller: "condicionController"
+  });
   $routeProvider.otherwise({
         redirectTo: '/'
   });   
