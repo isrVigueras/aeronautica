@@ -394,6 +394,23 @@ function RemoteResource($http,$q, baseUrl) {
     return promise;
     
   }
+  
+  this.alertas = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/alerta/findAlertas'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
 }
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
 function RemoteResourceProvider() {
@@ -635,6 +652,15 @@ $routeProvider.when('/Notificaciones/Ver', {
     templateUrl: "Notificaciones.html",
     controller: "condicionController"
   });
+$routeProvider.when('/Inicio/paginaPrincipal', {
+    templateUrl: "Bienvenida.html",
+    controller: "MainController",
+     resolve: {
+      alertas:['remoteResource',function(remoteResource) {
+        return remoteResource.alertas();
+      }]
+    }
+  });
   $routeProvider.otherwise({
         redirectTo: '/'
   });   
@@ -690,6 +716,7 @@ app.directive('caDatepicker', [function(dateFormat) {
 }]);
 
 
-app.controller("MainController", ['$scope',function($scope) {
+app.controller("MainController", ['$scope','alertas',function($scope,alertas) {
+  console.log("ss"+alertas);
 
 }]);
