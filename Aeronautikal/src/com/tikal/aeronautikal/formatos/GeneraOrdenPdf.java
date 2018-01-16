@@ -229,7 +229,7 @@ public class GeneraOrdenPdf {
             table.addCell(c23);
             ////////////////////
             document.add(table);
-            
+            System.out.println("ss");
             ////////////termina de la orden, empieza a generar las discrepancias
             for ( DetalleDiscrepanciaVo det : dets){
             	//PdfPTable table2 = new PdfPTable(6);
