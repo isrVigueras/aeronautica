@@ -2,6 +2,7 @@ package com.tikal.aeronautikal.dao.impl;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -97,5 +98,20 @@ public class ComponenteDaoImpl implements ComponenteDao{
 		System.out.println("consultando componentes por categoria " );
 		return ofy().load().type(ComponenteEntity.class).filter("idCategoria", idCategoria).list();
 		
+	}
+	@Override
+	public List<ComponenteEntity> getMaxMin() {
+		// TODO Auto-generated method stub
+		List<ComponenteEntity> min = new ArrayList<ComponenteEntity>();
+		List<ComponenteEntity> todos = ofy().load().type(ComponenteEntity.class).list();
+		for (ComponenteEntity c :todos){
+			if (c.getD_cantidad()<=c.getMinimo()){
+				System.out.println("El componente ya esta en alerta de mínimo" );
+				min.add(c);
+			}
+			
+		}
+		
+		return min;
 	}
 }

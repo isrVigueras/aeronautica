@@ -73,7 +73,7 @@ public class GeneraValePdf {
             PdfPTable table = new PdfPTable(8);              
             
             Image imagen = Image.getInstance("img\\LogoCross.png");
-            imagen.scaleAbsolute(150, 50);
+            imagen.scaleAbsolute(150, 45);
            
             //Alineamos la imagen al centro del documento.
            

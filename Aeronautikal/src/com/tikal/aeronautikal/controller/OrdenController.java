@@ -247,7 +247,7 @@ public class OrdenController {
 	   
 	  @RequestMapping(value = { "/generaOrdenXls/{idOrden}" }, method = RequestMethod.POST)
 		public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idOrden) throws IOException {
-		  EditaOrdenXls eox = new EditaOrdenXls();
+		 // EditaOrdenXls eox = new EditaOrdenXls();
 		  OrdenXlsVo ox = getObjectXls(idOrden);   
 		  List<DiscrepanciaEntity> dis= discrepanciaDao.getByOrden(idOrden);
 		  List<DetalleDiscrepanciaVo> dets = new ArrayList<DetalleDiscrepanciaVo>();
@@ -280,6 +280,7 @@ public class OrdenController {
 	 //       System.out.println("Empezando a ecribir en el Xls..." );
 	  //      EditaOrdenXls.WriteXls(ox);
 	        System.out.println("empiezo a generar pdf..." );
+	        /////igual puedo 
 	    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf(ox, dets);
 	    	System.out.println("nombre de archivo para edgar:"+ox.getNombreArchivo().substring(7) );
 	    	response.getWriter().println((ox.getNombreArchivo().substring(7)));
@@ -345,10 +346,7 @@ public class OrdenController {
 	       OrdenVo orden =ordenDao.consult(idOrden);
 	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
 	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
-	       //String nombre="C:/Users/Lenovo/Desktop/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".xls";
-	    //  String nombre="C:/Users/Lenovo/Desktop/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
 	       String nombre="pdf\\OTs\\OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
-	     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
 	       ox.setNombreArchivo(nombre.replaceAll("[\n\r]",""));
 	       System.out.println("fecha"+orden.getFechaApertura());
 	       System.out.println("nombre xls:"+ox.getNombreArchivo());

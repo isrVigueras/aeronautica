@@ -176,7 +176,7 @@ public class ValeController {
 	   
 	   @RequestMapping(value = { "/generaValePdf/{idVale}" }, method = RequestMethod.GET)
 	 		public void generaVale(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idVale) throws IOException {
-	 		
+		   System.out.println("wwwwwwwwwwww");
 	 		  ValePdfVo vpdf = getValePdf(idVale);   
 	 	        File newPdfFile = new File(vpdf.getNombreArchivo());		 
 	 	        if (!newPdfFile.exists()){
@@ -221,7 +221,7 @@ public class ValeController {
 		   List<ComponenteDiscrepancia> cds = vale.getItems();
 	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
 	       vpdf.setFechaVale(vale.getFecha());
-	       vpdf.setNombreArchivo("pdf\\Vales\\vale_"+vale.getId()+".pdf");
+	       vpdf.setNombreArchivo("C:\\Vales\\vale_"+vale.getId()+".pdf");
 	       vpdf.setMatricula(nave.getMatricula());
 	       vpdf.setNoSerie(nave.getNumeroSerie());
 	       vpdf.setNoOrden((orden.getFolio()).replaceAll("[\n\r]",""));

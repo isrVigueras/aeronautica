@@ -28,6 +28,8 @@ public interface ComponenteDao {
 	public void updateExistencias(Long id, Integer existencias, Integer pendientes);
 
 	public List<ComponenteEntity> getByDiscrepancia(Long idDiscrepancia);
+	
+	public List<ComponenteEntity> getMaxMin();
 
 	//void findAll();
 	

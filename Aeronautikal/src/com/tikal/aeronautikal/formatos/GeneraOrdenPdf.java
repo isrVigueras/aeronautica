@@ -6,6 +6,7 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -45,7 +46,7 @@ public class GeneraOrdenPdf {
     	  
     	  
     	try {
-    	    Document document = new Document();
+    	    Document document = new Document(PageSize.LETTER, 20,20,35,35);
     	    try {
     	        PdfWriter.getInstance(document, new FileOutputStream(ox.getNombreArchivo()));
     	    } catch (FileNotFoundException fileNotFoundException) {
@@ -65,11 +66,26 @@ public class GeneraOrdenPdf {
             // Este codigo genera una tabla de 3 columnas
             PdfPTable table = new PdfPTable(4);                
            
-            Paragraph d = new Paragraph("Logo");
-            PdfPCell c0 = new PdfPCell(d);
-            c0.setHorizontalAlignment(Element.ALIGN_LEFT);
+            
+            Image imagen = Image.getInstance("img\\LogoCross.png");
+            imagen.scaleAbsolute(190, 40);
+            imagen.setSpacingBefore(1);
+            imagen.setSpacingAfter(90);
+            imagen.setAbsolutePosition(50, 30);
+           
+            
+           
+            //Alineamos la imagen al centro del documento.         
+           // Paragraph p = new Paragraph(" \n",f1);
+            PdfPCell c0 = new PdfPCell(imagen);
+          //  c0.setHorizontalAlignment(3);
+            //c0.setVerticalAlignment(1);
+           // c0.setHorizontalAlignment(Element.ALIGN_LEFT);
+            //c0.setVerticalAlignment(Element.ALIGN_CENTER);
+            
             c0.setColspan(4);
             table.addCell(c0);
+            
             Paragraph a = new Paragraph("CROSS AIR SERVICES, S.A. DE C.V.",f1);
             PdfPCell celdaFinal = new PdfPCell(a);
             celdaFinal.setHorizontalAlignment(Element.ALIGN_CENTER);             
@@ -81,7 +97,7 @@ public class GeneraOrdenPdf {
             c2.setColspan(4);
             table.addCell(c2);
            
-            Paragraph d1 =new Paragraph("DATE / FECHA:\n"+ox.getFechaOrden(),f1);
+            Paragraph d1 =new Paragraph("DATE / FECHA:\n"+ox.getFechaOrden(),f2);
             PdfPCell c3 =new PdfPCell(d1);
             c3.setHorizontalAlignment(Element.ALIGN_CENTER);             
             c3.setColspan(1);
@@ -94,49 +110,49 @@ public class GeneraOrdenPdf {
             c4.setColspan(2);
             table.addCell(c4);
             
-            Paragraph d3 =new Paragraph("O.W. / O.T # :\n"+ox.getFolioOrden(),f1);
+            Paragraph d3 =new Paragraph("O.W. / O.T # :\n"+ox.getFolioOrden(),f2);
             PdfPCell c5 =new PdfPCell(d3);
             c5.setHorizontalAlignment(Element.ALIGN_CENTER);             
             c5.setColspan(1);
             table.addCell(c5);
             
-            Paragraph d4 =new Paragraph("MARK / MARCA:\n"+ox.getMarcaAeronave(),f1);
+            Paragraph d4 =new Paragraph("MARK / MARCA:\n"+ox.getMarcaAeronave(),f2);
             PdfPCell c6 =new PdfPCell(d4);
             c6.setHorizontalAlignment(Element.ALIGN_CENTER);             
             c6.setColspan(1);
             table.addCell(c6);
             
-            Paragraph d5 =new Paragraph("MODEL / MODELO:\n"+ox.getModeloAeronave(),f1);
+            Paragraph d5 =new Paragraph("MODEL / MODELO:\n"+ox.getModeloAeronave(),f2);
             PdfPCell c7 =new PdfPCell(d5);
             c7.setHorizontalAlignment(Element.ALIGN_CENTER);             
             c7.setColspan(1);
             table.addCell(c7);
             
-            Paragraph d6 =new Paragraph("N/S:\n"+ox.getNumeroSerie(),f1);
+            Paragraph d6 =new Paragraph("N/S:\n"+ox.getNumeroSerie(),f2);
             PdfPCell c8 =new PdfPCell(d6);
             c8.setHorizontalAlignment(Element.ALIGN_CENTER);             
             c8.setColspan(1);
             table.addCell(c8);
             
-            Paragraph d7 =new Paragraph("REG. / MATRICULA:\n"+ox.getMatricula(),f1);
+            Paragraph d7 =new Paragraph("REG. / MATRICULA:\n"+ox.getMatricula(),f2);
             PdfPCell c9 =new PdfPCell(d7);
             c9.setHorizontalAlignment(Element.ALIGN_CENTER);             
             c9.setColspan(1);
             table.addCell(c9);
             
-            Paragraph d8 =new Paragraph("TT FUSELAGE/ TTPLANEADOR:\n"+ox.getPlaneador(),f1);
+            Paragraph d8 =new Paragraph("TT FUSELAGE/ TTPLANEADOR:\n"+ox.getPlaneador(),f2);
             PdfPCell c10 =new PdfPCell(d8);
             c10.setHorizontalAlignment(Element.ALIGN_CENTER);             
             c10.setColspan(1);
             table.addCell(c10);
             
-            Paragraph d9 =new Paragraph("TT ENGINE #1/ TT MOTOR #1:\n"+ox.getMotor1(),f1);
+            Paragraph d9 =new Paragraph("TT ENGINE #1/ TT MOTOR #1:\n"+ox.getMotor1(),f2);
             PdfPCell c11 =new PdfPCell(d9);
             c11.setHorizontalAlignment(Element.ALIGN_CENTER);             
             c11.setColspan(1);
             table.addCell(c11);
             
-            Paragraph d10 =new Paragraph("TT ENGINE #2/ TT MOTOR #2:\n"+ox.getMotor2(),f1);
+            Paragraph d10 =new Paragraph("TT ENGINE #2/ TT MOTOR #2:\n"+ox.getMotor2(),f2);
             PdfPCell c12 =new PdfPCell(d10);
             c12.setHorizontalAlignment(Element.ALIGN_CENTER);             
             c12.setColspan(1);
@@ -156,7 +172,7 @@ public class GeneraOrdenPdf {
  
             
             for (int i=1; i<=32; i++){            	 
-            	 Paragraph d14 =new Paragraph(i+" "+ox.getAccionesDiscrepancia().get((i-1)),f1);
+            	 Paragraph d14 =new Paragraph(i+" "+ox.getAccionesDiscrepancia().get((i-1)),f2);
             	// System.out.println("variable i="+i);
                  PdfPCell c16 =new PdfPCell(d14);
                  c16.setHorizontalAlignment(Element.ALIGN_LEFT);             
@@ -216,8 +232,9 @@ public class GeneraOrdenPdf {
             
             ////////////termina de la orden, empieza a generar las discrepancias
             for ( DetalleDiscrepanciaVo det : dets){
-            	//PdfPTable table2 = new PdfPTable(6); 
-            	GeneraDiscrepanciaPdf(det, document);
+            	//PdfPTable table2 = new PdfPTable(6);
+            	
+            	GeneraDiscrepanciaPdf(det, document,dets.indexOf(det));
             	
                 
             }
@@ -235,7 +252,7 @@ public class GeneraOrdenPdf {
 //    	GeneraOrdenPdf.GeneraOrdenPdf(new File("../Escritorio/Orden de trabajo.pdf"));
 //    }
       
-      public void GeneraDiscrepanciaPdf(DetalleDiscrepanciaVo det, Document document) throws DocumentException {
+      public void GeneraDiscrepanciaPdf(DetalleDiscrepanciaVo det, Document document, Integer index) throws DocumentException, MalformedURLException, IOException {
           // Aquí introduciremos el código para crear el PDF.      	  
       
     	  	PdfPTable table2 = new PdfPTable(12);      
@@ -249,11 +266,25 @@ public class GeneraOrdenPdf {
 	  	    Font f2 = new Font();
 	  	    f2.setStyle(3);
 	  	    f2.setSize(8);
-            Paragraph d = new Paragraph("Logo");
-            PdfPCell c0 = new PdfPCell(d);
-            c0.setHorizontalAlignment(Element.ALIGN_LEFT);
-            c0.setColspan(12);
-            table2.addCell(c0);
+	  	    
+	  	  Image imagen = Image.getInstance("img\\LogoCross.png");
+          imagen.scaleAbsolute(190, 40);
+          imagen.setSpacingBefore(1);
+          imagen.setSpacingAfter(90);
+          imagen.setAbsolutePosition(50, 30);
+         
+          
+         
+          //Alineamos la imagen al centro del documento.         
+         // Paragraph p = new Paragraph(" \n",f1);
+          PdfPCell c0 = new PdfPCell(imagen);
+
+           // Paragraph d = new Paragraph("Logo");
+            PdfPCell c = new PdfPCell(imagen);
+            c.setHorizontalAlignment(Element.ALIGN_LEFT);
+            c.setColspan(12);
+            table2.addCell(c);
+            
             Paragraph a = new Paragraph("CROSS AIR SERVICES, S.A. DE C.V.",f1);
             PdfPCell celdaFinal = new PdfPCell(a);
             celdaFinal.setHorizontalAlignment(Element.ALIGN_CENTER);             
@@ -295,7 +326,7 @@ public class GeneraOrdenPdf {
             c7.setColspan(3);
             table2.addCell(c7);
             
-            Paragraph p7=new Paragraph("DISCREPANCIA No:"+d.lastIndexOf(det) ,f1);
+            Paragraph p7=new Paragraph("DISCREPANCIA No:"+index ,f1);
             PdfPCell c8 =new PdfPCell(p7);
             c8.setHorizontalAlignment(Element.ALIGN_LEFT);             
             c8.setColspan(6);
