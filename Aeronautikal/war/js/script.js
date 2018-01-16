@@ -654,12 +654,7 @@ $routeProvider.when('/Notificaciones/Ver', {
   });
 $routeProvider.when('/Inicio/paginaPrincipal', {
     templateUrl: "Bienvenida.html",
-    controller: "MainController",
-     resolve: {
-      alertas:['remoteResource',function(remoteResource) {
-        return remoteResource.alertas();
-      }]
-    }
+    controller: "MainController"
   });
   $routeProvider.otherwise({
         redirectTo: '/'
@@ -716,7 +711,12 @@ app.directive('caDatepicker', [function(dateFormat) {
 }]);
 
 
-app.controller("MainController", ['$scope','alertas',function($scope,alertas) {
-  console.log("ss"+alertas);
+app.controller("MainController", ['$scope','remoteResource',function($scope,remoteResource) {
+  
+
+  remoteResource.alertas().then(function(data){
+    $scope.alertas = data;
+  })
+  console.log($scope.alertas);
 
 }]);
