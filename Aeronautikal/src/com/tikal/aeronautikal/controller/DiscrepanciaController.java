@@ -1,6 +1,7 @@
 package com.tikal.aeronautikal.controller;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,6 +39,8 @@ import com.tikal.aeronautikal.entity.EmpresaEntity;
 import com.tikal.aeronautikal.entity.EventoEntity;
 import com.tikal.aeronautikal.entity.ValeEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
+import com.tikal.aeronautikal.formatos.GeneraDiscrepanciaPdf;
+import com.tikal.aeronautikal.formatos.GeneraOrdenPdf;
 import com.tikal.aeronautikal.service.DiscrepanciaService;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
@@ -290,6 +293,7 @@ public class DiscrepanciaController {
 						cdvo.setNombre_componente(componenteDao.consult(cd.getIdComponente()).getD_componente());
 						cdvo.setCantidad(cd.getCantidad());
 						cdvo.setId(cd.getId());
+						cdvo.setNoParte(componenteDao.consult(cd.getIdComponente()).getD_parte());
 						cvos.add(cdvo);
 					}
 			      System.out.println("orden"+orden);
@@ -298,9 +302,11 @@ public class DiscrepanciaController {
 			      System.out.println("dis"+dis);
 			      System.out.println("evs"+evs);
 			     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
+			      det.setId(id);
 			       det.setIdOrden(orden.getId());
 			       det.setFolioOrden(orden.getFolio());
-			       det.setFechaOrden(orden.getFechaApertura());
+			       det.setFechaOrden((orden.getFechaApertura()).substring(0, 10));
+			       System.out.println("fechaOrden:"+det.getFechaOrden());
 			       det.setNombreEmpresa(empresa.getNombreEmpresa());
 			       det.setMatricula(nave.getMatricula());
 			       det.setModelo(nave.getModelo());
@@ -312,7 +318,8 @@ public class DiscrepanciaController {
 			       det.setComponentes(cvos);
 			       det.setEventos(evs);
 			       det.setTelefono(empresa.getTelefono());
-			              
+			       String nombre="pdf\\Discrepancias\\DIS_"+det.getId()+".pdf";
+			       det.setNombreArchivo(nombre.replaceAll("[\n\r]",""));
 				return det;	
 			   
 		   }
@@ -320,11 +327,12 @@ public class DiscrepanciaController {
 		   
 		
 		   
-			  @RequestMapping(value = { "/generaDiscrepanciaPdf/{idDiscrepancia}" }, method = RequestMethod.POST)
+			  @RequestMapping(value = { "/generaDiscrepanciaPdf/{idDiscrepancia}" }, method = RequestMethod.GET)
 				public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idDiscrepancia) throws IOException {
 				
 				  DetalleDiscrepanciaVo dd = getDetalleDiscrepancia(idDiscrepancia);   
-			      /*  File newExcelFile = new File(ox.getNombreArchivo());		 
+				  
+			        File newExcelFile = new File(dd.getNombreArchivo());		 
 			        if (!newExcelFile.exists()){
 			            try {
 			                newExcelFile.createNewFile();
@@ -334,8 +342,9 @@ public class DiscrepanciaController {
 			        }
 		
 			        System.out.println("empiezo a generar pdf..." );
-			    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf(ox);
-			    */
+			    	GeneraDiscrepanciaPdf generaDiscrepanciaPdf = new GeneraDiscrepanciaPdf(dd);
+				    	System.out.println("nombre de archivo para edgar:"+dd.getNombreArchivo().substring(8) );
+				    	response.getWriter().println((dd.getNombreArchivo().substring(8)));
 				}
 		   
 		   
@@ -348,6 +357,17 @@ public class DiscrepanciaController {
 				   DiscrepanciaEntity d = discrepanciaDao.consult(idDiscrepancia);
 				   d.setEstatus("CERRADA");
 				   discrepanciaDao.update(d);
+				   
+				   OrdenVo o = ordenDao.consult(d.getFolioOrden());
+				   //checar si hay discrepancias abiertas aun...
+				   List <DiscrepanciaEntity> abiertas = discrepanciaDao.getAbiertasByOrden(d.getFolioOrden());
+				   if (abiertas.size() == 0){
+					   o.setEstatus("CERRADA");
+					   ordenDao.update(o);	       	
+					   System.out.println("ORDEN CERRADA:"+o.getId());
+				   }else{
+					   System.out.println("NO se cerro la orden:"+o.getId());
+				   }
 		        	
 				   response.getWriter().println("ok");
 			   }
@@ -410,4 +430,7 @@ public class DiscrepanciaController {
 				}
 			  }
 			 
+			  
+			  
+			  
 }

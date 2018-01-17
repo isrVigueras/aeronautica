@@ -5,11 +5,22 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 
 @Entity
-public class EmpleadoEntity implements BaseEntity{
-	@Index private String apellidoPaterno;
-	@Index private String apellidoMaterno;
-	@Id private String nombre;
+public class EmpleadoEntity{
+	@Id Long id;
+	private String apellidoPaterno;
+	private String apellidoMaterno;
+	private String nombre;
+	private String nombreCompleto;
+	@Index private String puesto;
 	
+	
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getApellidoPaterno() {
 		return apellidoPaterno;
 	}
@@ -25,6 +36,7 @@ public class EmpleadoEntity implements BaseEntity{
 	public String getNombre() {
 		return nombre;
 	}
+	
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
@@ -34,6 +46,19 @@ public class EmpleadoEntity implements BaseEntity{
 	public void setPuesto(String puesto) {
 		this.puesto = puesto;
 	}
-	@Index private String puesto;
 
-}
+	public void setNombreCompleto(String nombreCompleto) {
+		this.nombreCompleto = nombreCompleto;
+	}
+	public String getNombreCompleto() {
+		nombreCompleto=this.nombre+" "+this.apellidoPaterno+" "+this.apellidoMaterno;
+		return nombreCompleto;
+	}
+	
+//	public NombreCompleto(String nombre, String apellidoPaterno, String apellidoMaterno) {
+//		this.nombre = nombre;
+//		this.apellidoPaterno = apellidoPaterno;
+//		this.apellidoMaterno = apellidoMaterno;
+//	}
+	
+} 

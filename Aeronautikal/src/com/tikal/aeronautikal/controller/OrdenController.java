@@ -322,7 +322,7 @@ public class OrdenController {
 			     //  ox.setAccionesDiscrepancia(acciones);C:/Users/Lenovo/Desktop/OTs/
 			       det.setIdOrden(orden.getId());
 			       det.setFolioOrden(orden.getFolio());
-			       det.setFechaOrden(orden.getFechaApertura());
+			       det.setFechaOrden((orden.getFechaApertura()).substring(0,10));
 			       det.setNombreEmpresa(empresa.getNombreEmpresa());
 			       det.setMatricula(nave.getMatricula());
 			       det.setModelo(nave.getModelo());

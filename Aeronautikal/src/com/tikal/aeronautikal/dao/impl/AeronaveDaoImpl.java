@@ -1,20 +1,11 @@
 package com.tikal.aeronautikal.dao.impl;
 
 
-import com.googlecode.objectify.cmd.Query;
-import com.tikal.aeronautikal.controller.vo.OrdenVo;
+
 import com.tikal.aeronautikal.dao.AeronaveDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
-import com.tikal.aeronautikal.entity.BaseEntity;
-import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
-import com.tikal.aeronautikal.exception.ObjectNotFoundException;
-
-
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
 import java.util.List;
-import java.util.Map;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 /**

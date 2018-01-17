@@ -1,4 +1,5 @@
 package com.tikal.aeronautikal.formatos;
+import com.google.appengine.repackaged.com.google.common.base.Defaults;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -63,6 +64,7 @@ public class GeneraOrdenPdf {
     	    Font f2 = new Font();
     	    f2.setStyle(3);
     	    f2.setSize(8);
+    	    
             // Este codigo genera una tabla de 3 columnas
             PdfPTable table = new PdfPTable(4);                
            
@@ -231,13 +233,13 @@ public class GeneraOrdenPdf {
             document.add(table);
             System.out.println("ss");
             ////////////termina de la orden, empieza a generar las discrepancias
-            for ( DetalleDiscrepanciaVo det : dets){
-            	//PdfPTable table2 = new PdfPTable(6);
-            	
-            	GeneraDiscrepanciaPdf(det, document,dets.indexOf(det));
-            	
-                
-            }
+//            for ( DetalleDiscrepanciaVo det : dets){
+//            	//PdfPTable table2 = new PdfPTable(6);
+//            	
+//            	GeneraDiscrepanciaPdf(det, document,dets.indexOf(det));
+//            	
+//                
+//            }
            
             
             document.close();
@@ -268,7 +270,7 @@ public class GeneraOrdenPdf {
 	  	    f2.setSize(8);
 	  	    
 	  	  Image imagen = Image.getInstance("img\\LogoCross.png");
-          imagen.scaleAbsolute(190, 40);
+          imagen.scaleAbsolute(200, 50);
           imagen.setSpacingBefore(1);
           imagen.setSpacingAfter(90);
           imagen.setAbsolutePosition(50, 30);
@@ -283,6 +285,7 @@ public class GeneraOrdenPdf {
             PdfPCell c = new PdfPCell(imagen);
             c.setHorizontalAlignment(Element.ALIGN_LEFT);
             c.setColspan(12);
+            c.setRowspan(4);
             table2.addCell(c);
             
             Paragraph a = new Paragraph("CROSS AIR SERVICES, S.A. DE C.V.",f1);
@@ -290,19 +293,20 @@ public class GeneraOrdenPdf {
             celdaFinal.setHorizontalAlignment(Element.ALIGN_CENTER);             
             celdaFinal.setColspan(12);
             table2.addCell(celdaFinal);
-            Paragraph b =new Paragraph("DISCREPANCY REPORT / REPORTE DE DISCREPANCIAS: \n",fuente);
+            Paragraph b =new Paragraph("\nDISCREPANCY REPORT / REPORTE DE DISCREPANCIAS: \n",fuente);
             PdfPCell c2 =new PdfPCell(b);
-            c2.setHorizontalAlignment(Element.ALIGN_CENTER);             
+            c2.setHorizontalAlignment(Element.ALIGN_CENTER);     
+            c2.setVerticalAlignment(Element.ALIGN_CENTER);
             c2.setColspan(12);
             table2.addCell(c2);
           
             Paragraph p2=new Paragraph("CUSTOMER / CLIENTE:"+det.getNombreEmpresa() ,f1);
             PdfPCell c3 =new PdfPCell(p2);
-            c3.setHorizontalAlignment(Element.ALIGN_CENTER);             
+            c3.setHorizontalAlignment(Element.ALIGN_LEFT);             
             c3.setColspan(12);
             table2.addCell(c3);
             
-            Paragraph p3=new Paragraph("MARK/MODEL - MARCA/MODELO:\n\n"+det.getModelo() ,f1);
+            Paragraph p3=new Paragraph("MARK/MODEL - MARCA/MODELO:\n"+det.getModelo() ,f1);
             PdfPCell c4 =new PdfPCell(p3);
             c4.setHorizontalAlignment(Element.ALIGN_CENTER);             
             c4.setColspan(3);
@@ -326,7 +330,7 @@ public class GeneraOrdenPdf {
             c7.setColspan(3);
             table2.addCell(c7);
             
-            Paragraph p7=new Paragraph("DISCREPANCIA No:"+index ,f1);
+            Paragraph p7=new Paragraph("DISCREPANCIA No:"+det.getId(),f1);
             PdfPCell c8 =new PdfPCell(p7);
             c8.setHorizontalAlignment(Element.ALIGN_LEFT);             
             c8.setColspan(6);
@@ -350,23 +354,26 @@ public class GeneraOrdenPdf {
             c11.setColspan(6);
             table2.addCell(c11);
             
-            Paragraph p11=new Paragraph("\n"+det.getDescripcion()+"\n",fuente);
+            Paragraph p11=new Paragraph("\n"+det.getDescripcion()+"\n\n",fuente);
             PdfPCell c12 =new PdfPCell(p11);
             c12.setHorizontalAlignment(Element.ALIGN_CENTER);             
             c12.setColspan(6);
+            c12.setRowspan(10);
             table2.addCell(c12);
             
-            Paragraph p12=new Paragraph("\n"+det.getAccion()+"\n",fuente);
+            Paragraph p12=new Paragraph("\n"+det.getAccion()+"\n\n",fuente);
             PdfPCell c13 =new PdfPCell(p12);
             c13.setHorizontalAlignment(Element.ALIGN_CENTER);             
             c13.setColspan(6);
+            c13.setRowspan(9);
             table2.addCell(c13);
             
-            Paragraph p13=new Paragraph("\n",f1); ////celda invisible
-            PdfPCell c14 =new PdfPCell(p13);
-            c14.setHorizontalAlignment(Element.ALIGN_CENTER);             
-            c14.setColspan(6);
-            table2.addCell(c14);
+//            Paragraph p13=new Paragraph("\n",f1); ////celda invisible
+//            PdfPCell c14 =new PdfPCell(p13);
+//            c14.setHorizontalAlignment(Element.ALIGN_CENTER);             
+//            c14.setColspan(6);
+//            c14.setRowspan(1);
+//            table2.addCell(c14);
             
             Paragraph p14=new Paragraph("MAN TIME HOURS / TIEMPO HORAS HOMBRE:",f1); 
             PdfPCell c15 =new PdfPCell(p14);
@@ -412,17 +419,17 @@ public class GeneraOrdenPdf {
             
             List<ComDisVo> cds = det.getComponentes();
             System.out.println("cds:"+cds);
-            if (cds.isEmpty()){
-            	
-	            Paragraph pp=new Paragraph("\n",f1); 
-	            PdfPCell cp=new PdfPCell(pp);
-	            cp.setHorizontalAlignment(Element.ALIGN_CENTER);             
-	            cp.setColspan(2);
-	            table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);
-	            table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);
-	            table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);
-	            table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);
-            }
+//            if (cds.isEmpty()){
+//            	
+//	            Paragraph pp=new Paragraph("\n",f1); 
+//	            PdfPCell cp=new PdfPCell(pp);
+//	            cp.setHorizontalAlignment(Element.ALIGN_CENTER);             
+//	            cp.setColspan(2);
+//	            table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);
+//	            table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);
+//	            table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);
+//	            table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);
+//            }
             for (ComDisVo cd : cds){
             	
             	System.out.println("cds. nombre:"+cd.getNombre_componente());
@@ -459,19 +466,33 @@ public class GeneraOrdenPdf {
 	            table2.addCell(c26);
 	            
 	            
-            
+	            
+            }
+           
+            System.out.println("indice de cds"+cds.size());
+            if (cds.size()<4){
+            	Integer faltan=cds.size();
+            	for (int i=faltan; i<4; i++){
+            		 Paragraph pp=new Paragraph("\n\n\n",f1); 
+     	            PdfPCell cp=new PdfPCell(pp);
+     	            cp.setHorizontalAlignment(Element.ALIGN_CENTER);             
+     	            cp.setColspan(2);
+     	            cp.setRowspan(2);
+     	            table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);table2.addCell(cp);
+            		
+            	}
             }
             /////////////////////////validar cuantos comps vienen para poner los demas celdas vacias
            // for (){
             	
           //  }
-            Paragraph p26=new Paragraph("REMOVIBLE BY/ REMOVIDO POR:\n",f1); 
+            Paragraph p26=new Paragraph("REMOVIBLE BY/ REMOVIDO POR:\n\n",f1); 
             PdfPCell c27=new PdfPCell(p26);
             c27.setHorizontalAlignment(Element.ALIGN_LEFT);             
             c27.setColspan(6);
             table2.addCell(c27);
             
-            Paragraph p27=new Paragraph("INSTALL BY/ INSTALADA POR:\n",f1); 
+            Paragraph p27=new Paragraph("INSTALL BY/ INSTALADA POR:\n\n",f1); 
             PdfPCell c28=new PdfPCell(p27);
             c28.setHorizontalAlignment(Element.ALIGN_LEFT);             
             c28.setColspan(6);
@@ -484,14 +505,14 @@ public class GeneraOrdenPdf {
             table2.addCell(c29);
             table2.addCell(c29);
             
-            Paragraph p29=new Paragraph("PERMISSION / LICENCIA:\n",f1); 
+            Paragraph p29=new Paragraph("PERMISSION / LICENCIA:\n\n",f1); 
             PdfPCell c30=new PdfPCell(p29);
             c30.setHorizontalAlignment(Element.ALIGN_LEFT);             
             c30.setColspan(6);
             table2.addCell(c30);
             table2.addCell(c30);
             
-            Paragraph p30=new Paragraph("DATE / FECHA:\n",f1); 
+            Paragraph p30=new Paragraph("DATE / FECHA:\n\n",f1); 
             PdfPCell c31=new PdfPCell(p30);
             c31.setHorizontalAlignment(Element.ALIGN_LEFT);             
             c31.setColspan(6);

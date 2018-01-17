@@ -25,9 +25,18 @@ public class DetalleDiscrepanciaVo {
 	private List<ComDisVo> componentes;
 	private List<EventoEntity> eventos;
 	private Long telefono;
+	private String NombreArchivo;
 	
 	
 	
+	
+	
+	public String getNombreArchivo() {
+		return NombreArchivo;
+	}
+	public void setNombreArchivo(String nombreArchivo) {
+		NombreArchivo = nombreArchivo;
+	}
 	public Long getTelefono() {
 		return telefono;
 	}
