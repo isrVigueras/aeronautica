@@ -650,7 +650,12 @@ $routeProvider.when('/Vales/consulta', {
   }); 
 $routeProvider.when('/Notificaciones/Ver', {
     templateUrl: "Notificaciones.html",
-    controller: "condicionController"
+    controller: "NotificacionesController",
+    resolve: {
+      aalertas:['remoteResource',function(remoteResource) {
+        return remoteResource.alertas();
+      }]
+    }
   });
 $routeProvider.when('/Inicio/paginaPrincipal', {
     templateUrl: "Bienvenida.html",

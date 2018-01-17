@@ -106,7 +106,19 @@ app.service('segundocomboServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
-app.controller("DiscrepanciamuestraController", ['$scope','inv_consultas','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio','DetalleDiscreServicio',function($scope,inv_consultas,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio,DetalleDiscreServicio) {
+//Imprimir discrepancia.
+app.service('ImprimeDiscreServicio', [ '$http', '$q', function($http, $q) {
+  this.imprime_discrepancia = function(id) {
+    var d = $q.defer();
+    $http.post("/discrepancia/generaDiscrepanciaPdf/"+id).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
+app.controller("DiscrepanciamuestraController", ['$scope','inv_consultas','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio','DetalleDiscreServicio','ImprimeDiscreServicio',function($scope,inv_consultas,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio,DetalleDiscreServicio,ImprimeDiscreServicio) {
 $scope.discrepancias =discrepancias;
  $scope.provincias=inv_consultas; 
   $scope.miProvinciaSeleccionada=null
@@ -146,6 +158,15 @@ console.log($scope.discrepancias);
           $scope.detalle_dis =data;
            console.log("scope");
           console.log($scope.detalle_dis);
+        })
+
+  }
+   $scope.Imprime_discrepancia=function(id) {
+    console.log(id);
+    $scope.detalle_discrepancia = objeto;
+      ImprimeDiscreServicio.imprime_discrepancia(id).then(
+        function(data) {
+           console.log("PDF GENERADO");
         })
 
   }
