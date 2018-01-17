@@ -118,7 +118,19 @@ app.service('ImprimeDiscreServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
-app.controller("DiscrepanciamuestraController", ['$scope','inv_consultas','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio','DetalleDiscreServicio','ImprimeDiscreServicio',function($scope,inv_consultas,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio,DetalleDiscreServicio,ImprimeDiscreServicio) {
+//Cerrar discrepancia.
+app.service('CerrarDiscreServicio', [ '$http', '$q', function($http, $q) {
+  this.cerrar_discrepancia = function(id) {
+    var d = $q.defer();
+    $http.post("/discrepancia/cerrarDiscrepancia/"+id).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
+app.controller("DiscrepanciamuestraController", ['$scope','inv_consultas','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio','DetalleDiscreServicio','ImprimeDiscreServicio','CerrarDiscreServicio',function($scope,inv_consultas,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio,DetalleDiscreServicio,ImprimeDiscreServicio,CerrarDiscreServicio) {
 $scope.discrepancias =discrepancias;
  $scope.provincias=inv_consultas; 
   $scope.miProvinciaSeleccionada=null
@@ -163,10 +175,22 @@ console.log($scope.discrepancias);
   }
    $scope.Imprime_discrepancia=function(id) {
     console.log(id);
-    $scope.detalle_discrepancia = objeto;
+    
       ImprimeDiscreServicio.imprime_discrepancia(id).then(
         function(data) {
-           console.log("PDF GENERADO");
+          console.log(data)
+           console.log("El pdf se genero");
+            window.open('pdf/Discrepancia/'+data, "nombre de la ventana");
+        })
+
+  }
+    $scope.Cerrar_discrepancia=function(id) {
+    console.log(id);
+    
+      CerrarDiscreServicio.cerrar_discrepancia(id).then(
+        function(data) {
+           console.log("La discrepancia se cerro");
+           location.reload();
         })
 
   }
