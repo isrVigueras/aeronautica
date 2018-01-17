@@ -3,6 +3,7 @@ package com.tikal.aeronautikal.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -89,7 +90,7 @@ public class ValeController {
 		   		
 		   		//entry.setIdEvento(Long.parseLong("10023131"));
 		   		entry.setEstatus("ABIERTO");
-		   		entry.setFecha("10/01/2018");
+		   		//entry.setFecha((Calendar.DATE));
 		   		entry.setIdDiscrepancia(Long.parseLong("5348024557502464"));		  
 	            System.out.println("si asign/ valor"+entry);
 	        } catch (RuntimeException ignored) {

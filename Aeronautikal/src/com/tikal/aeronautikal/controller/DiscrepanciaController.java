@@ -343,8 +343,8 @@ public class DiscrepanciaController {
 		
 			        System.out.println("empiezo a generar Pdf..." );
 			    	GeneraDiscrepanciaPdf generaDiscrepanciaPdf = new GeneraDiscrepanciaPdf(dd);
-				    	System.out.println("nombre de archivo para edgar:"+dd.getNombreArchivo().substring(8) );
-				    	response.getWriter().println((dd.getNombreArchivo().substring(8)));
+				    	System.out.println("nombre de archivo para edgar:"+dd.getNombreArchivo().substring(20) );
+				    	response.getWriter().println((dd.getNombreArchivo().substring(20)));
 				}
 		   
 		   
