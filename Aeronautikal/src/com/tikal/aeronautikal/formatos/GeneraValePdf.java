@@ -131,19 +131,21 @@ public class GeneraValePdf {
             Paragraph p8 = new Paragraph("Discrepancia :"+vp.getNoDiscrepancia());
             PdfPCell c8 = new PdfPCell(p8);
             c8.setHorizontalAlignment(Element.ALIGN_LEFT);
-            c8.setColspan(2);
+            c8.setColspan(3);
             table.addCell(c8);
             table.addCell(c6);
-            
+            document.add(table);
             document.add(new Paragraph("\n\n\n"));
             
+            
+            PdfPTable table2 = new PdfPTable(16);           
             Paragraph p9 = new Paragraph("ITEM");
             PdfPCell c9 = new PdfPCell(p9);
             //c9.setBackgroundColor(  );
             c9.setHorizontalAlignment(Element.ALIGN_LEFT);
             c9.setColspan(2);
-            table.addCell(c9);
-            table.addCell(c9);
+            table2.addCell(c9);
+            table2.addCell(c9);
            /* for (int i=1; i<=12; i++){            	 
            	 Paragraph d14 =new Paragraph(i+" "+vp.getItems().get((i-1)),f1);
            	// System.out.println("variable i="+i);
@@ -154,7 +156,7 @@ public class GeneraValePdf {
            }*/
             
             ////////////////////
-            document.add(table);
+            document.add(table2);
             
             ////////////termina de la orden, empieza a generar las discrepancias            
             document.close();
