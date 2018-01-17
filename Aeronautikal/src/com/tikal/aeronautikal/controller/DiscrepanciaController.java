@@ -327,7 +327,7 @@ public class DiscrepanciaController {
 		   
 		
 		   
-			  @RequestMapping(value = { "/generaDiscrepanciaPdf/{idDiscrepancia}" }, method = RequestMethod.GET)
+			  @RequestMapping(value = { "/generaDiscrepanciaPdf/{idDiscrepancia}" }, method = RequestMethod.POST)
 				public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idDiscrepancia) throws IOException {
 				
 				  DetalleDiscrepanciaVo dd = getDetalleDiscrepancia(idDiscrepancia);   
