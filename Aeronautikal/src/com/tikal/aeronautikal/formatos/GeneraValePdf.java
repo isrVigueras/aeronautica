@@ -70,7 +70,7 @@ public class GeneraValePdf {
     	    f2.setStyle(3);
     	    f2.setSize(8);
             // Este codigo genera una tabla de 3 columnas
-            PdfPTable table = new PdfPTable(8);              
+            PdfPTable table = new PdfPTable(16);              
             
             Image imagen = Image.getInstance("img\\LogoCross.png");
             imagen.scaleAbsolute(150, 45);
@@ -82,70 +82,79 @@ public class GeneraValePdf {
             PdfPCell c1 = new PdfPCell(imagen);
             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
             c1.setVerticalAlignment(Element.ALIGN_CENTER);
-            c1.setColspan(3);
-            c1.setRowspan(3);
+            c1.setColspan(6);
+            c1.setRowspan(4);
             table.addCell(c1);
            
             Paragraph p2 = new Paragraph("\n");
             PdfPCell c2 = new PdfPCell(p2);
             c2.setHorizontalAlignment(Element.ALIGN_LEFT);
-            c2.setColspan(2);
+            c2.setColspan(6);
             table.addCell(c2);
             
-            Paragraph p2a = new Paragraph("\n");
-            PdfPCell c2a = new PdfPCell(p2a);
-            c2a.setHorizontalAlignment(Element.ALIGN_LEFT);
-            c2a.setColspan(1);
-            table.addCell(c2a);
+//            Paragraph p2a = new Paragraph("\n");
+//            PdfPCell c2a = new PdfPCell(p2a);
+//            c2a.setHorizontalAlignment(Element.ALIGN_LEFT);
+//            c2a.setColspan(1);
+//            table.addCell(c2a);
             
             Paragraph p3 = new Paragraph("fecha: "+vp.getFechaVale());
             PdfPCell c3 = new PdfPCell(p3);
             c3.setHorizontalAlignment(Element.ALIGN_LEFT);
-            c3.setColspan(2);
+            c3.setColspan(4);
             table.addCell(c3);
             
             Paragraph p4 = new Paragraph("matricula: "+vp.getMatricula());
             PdfPCell c4 = new PdfPCell(p4);
             c4.setHorizontalAlignment(Element.ALIGN_LEFT);
-            c4.setColspan(2);
+            c4.setColspan(4);
             table.addCell(c4);
             
             Paragraph p5 = new Paragraph("No Serie: "+vp.getNoSerie());
             PdfPCell c5 = new PdfPCell(p5);
             c5.setHorizontalAlignment(Element.ALIGN_LEFT);
-            c5.setColspan(2);
+            c5.setColspan(4);
             table.addCell(c5);
             
             Paragraph p6 = new Paragraph("\n");
             PdfPCell c6 = new PdfPCell(p6);
             c6.setHorizontalAlignment(Element.ALIGN_LEFT);
-            c6.setColspan(1);
+            c6.setColspan(2);
             table.addCell(c6);
             
             Paragraph p7 = new Paragraph("Orden :"+vp.getNoOrden());
             PdfPCell c7 = new PdfPCell(p7);
             c7.setHorizontalAlignment(Element.ALIGN_LEFT);
-            c7.setColspan(2);
+            c7.setColspan(4);
             table.addCell(c7);
             
             Paragraph p8 = new Paragraph("Discrepancia :"+vp.getNoDiscrepancia());
             PdfPCell c8 = new PdfPCell(p8);
             c8.setHorizontalAlignment(Element.ALIGN_LEFT);
-            c8.setColspan(3);
+            c8.setColspan(6);
             table.addCell(c8);
-            table.addCell(c6);
-            document.add(table);
-            document.add(new Paragraph("\n\n\n"));
+           // table.addCell(c6);
             
+            Paragraph px = new Paragraph("\n");
+            PdfPCell cx = new PdfPCell(px);
+            cx.setHorizontalAlignment(Element.ALIGN_LEFT);
+            cx.setColspan(10);
+            table.addCell(cx);
+    
+//            Paragraph pxx = new Paragraph("ss");
+//            PdfPCell cxx = new PdfPCell(pxx);
+//            cxx.setHorizontalAlignment(Element.ALIGN_LEFT);
+//            cxx.setColspan(12);
+//            table.addCell(cxx);
             
-            PdfPTable table2 = new PdfPTable(16);           
-            Paragraph p9 = new Paragraph("ITEM");
-            PdfPCell c9 = new PdfPCell(p9);
-            //c9.setBackgroundColor(  );
-            c9.setHorizontalAlignment(Element.ALIGN_LEFT);
-            c9.setColspan(2);
-            table2.addCell(c9);
-            table2.addCell(c9);
+//            Paragraph p9 = new Paragraph("ITEM");
+//            PdfPCell c9 = new PdfPCell(p9);
+//            //c9.setBackgroundColor(  );
+//            c9.setHorizontalAlignment(Element.ALIGN_LEFT);
+//            c9.setColspan(1);
+//            c9.setRowspan(1);
+//           // table.addCell(c9);
+//            table.addCell(c9);
            /* for (int i=1; i<=12; i++){            	 
            	 Paragraph d14 =new Paragraph(i+" "+vp.getItems().get((i-1)),f1);
            	// System.out.println("variable i="+i);
@@ -155,9 +164,28 @@ public class GeneraValePdf {
                 table.addCell(c16);            	
            }*/
             
-            ////////////////////
-            document.add(table2);
             
+            ////////////////////
+            document.add(table);
+            PdfPTable table2 = new PdfPTable(16);        
+            
+            Paragraph p9 = new Paragraph("ITEM");
+            PdfPCell c9 = new PdfPCell(p9);
+            //c9.setBackgroundColor(black);
+            c9.setHorizontalAlignment(Element.ALIGN_LEFT);
+            c9.setColspan(1);
+            c9.setRowspan(1);
+            table2.addCell(c9);
+            
+            Paragraph p1 = new Paragraph("No de Parte");
+            PdfPCell c11 = new PdfPCell(p1);
+            c11.setHorizontalAlignment(Element.ALIGN_LEFT);
+            c11.setColspan(15);
+            table2.addCell(c11);
+            
+            
+            
+            document.add(table2);
             ////////////termina de la orden, empieza a generar las discrepancias            
             document.close();
     	    System.out.println("Your PDF file has been generated!(¡Se ha generado tu hoja PDF!");
