@@ -10,6 +10,19 @@ app.service('CerrarValeService', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+//servicio Imprime Vale
+app.service('ImprimeValeService', [ '$http', '$q', function($http, $q) {
+  this.imprime_Vale = function(idVale) {
+    var d = $q.defer();
+    $http.post("/vale/GeneraValePdf/"+idVale).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
+
 
 //filtro de vales
 app.filter("filtroV",["$filter",function($filter) {
@@ -46,7 +59,7 @@ app.filter("filtroV",["$filter",function($filter) {
   return filtroV;
    
 }]);
-app.controller("MuestraValesController", ['$scope','discrepancia_vale','CerrarValeService',function($scope,discrepancia_vale,CerrarValeService) {
+app.controller("MuestraValesController", ['$scope','discrepancia_vale','CerrarValeService','ImprimeValeService',function($scope,discrepancia_vale,CerrarValeService,ImprimeValeService) {
  $scope.discrepancia_vale =discrepancia_vale;
  $scope.filtro = {
       discrepancia: ""
@@ -68,5 +81,16 @@ app.controller("MuestraValesController", ['$scope','discrepancia_vale','CerrarVa
           //alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
             location.href="#/Vales/consulta";
         }) 
+  }
+     $scope.Imprime_Vale=function(id) {
+    console.log(id);
+    
+      ImprimeValeService.imprime_Vale(id).then(
+        function(data) {
+          console.log(data)
+           console.log("El pdf se genero");
+            window.open('pdf/Vales/'+data, "nombre de la ventana");
+        })
+
   }
 }]);

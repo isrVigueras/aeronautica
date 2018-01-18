@@ -150,12 +150,11 @@ console.log($scope.discrepancias);
   $scope.foliarrastrado =foliarrastrado;
    $scope.alta_discrepancia=function() {
     console.log($scope.foliarrastrado+","+$scope.discrepancia.numero_piezas+","+$scope.discrepancia.folio_componente);
-      alert("variable comprobada folio arrastrado: "+$scope.foliarrastrado);
+      
       DiscrepanciaServicio.genera_discrepancia($scope.foliarrastrado,$scope.discrepancia).then(
         function(data) {
           console.log(data);
-          alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
-  
+          alert("Discrepancia Agregada");
           location.reload();
         })
               
@@ -180,7 +179,7 @@ console.log($scope.discrepancias);
         function(data) {
           console.log(data)
            console.log("El pdf se genero");
-            window.open('pdf/Discrepancia/'+data, "nombre de la ventana");
+            window.open('pdf/Discrepancias/'+data);
         })
 
   }
