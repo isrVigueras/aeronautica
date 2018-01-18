@@ -14,7 +14,7 @@ app.service('CerrarValeService', [ '$http', '$q', function($http, $q) {
 app.service('ImprimeValeService', [ '$http', '$q', function($http, $q) {
   this.imprime_Vale = function(idVale) {
     var d = $q.defer();
-    $http.post("/vale/GeneraValePdf/"+idVale).then(function(response) {
+    $http.post("/vale/generaValePdf/"+idVale).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
