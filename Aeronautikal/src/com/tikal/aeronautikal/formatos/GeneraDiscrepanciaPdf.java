@@ -8,6 +8,7 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -25,7 +26,7 @@ public class GeneraDiscrepanciaPdf {
  	   //public void GeneraDiscrepanciaPdf(DetalleDiscrepanciaVo det, Document document, Integer index) throws DocumentException, MalformedURLException, IOException {
  	  // Aquí introduciremos el código para crear el PDF.     
  	  try {
-   	    Document document = new Document(PageSize.LETTER, 35,35,35,35);
+   	    Document document = new Document(PageSize.LETTER, 30,30,30,30);
    	    try {
    	        PdfWriter.getInstance(document, new FileOutputStream(det.getNombreArchivo()));
    	    } catch (FileNotFoundException fileNotFoundException) {
@@ -88,19 +89,19 @@ public class GeneraDiscrepanciaPdf {
          
          Paragraph p3=new Paragraph("MARK/MODEL - MARCA/MODELO:\n\n"+det.getModelo() ,f1);
          PdfPCell c4 =new PdfPCell(p3);
-         c4.setHorizontalAlignment(Element.ALIGN_CENTER);             
+         c4.setHorizontalAlignment(Element.ALIGN_LEFT);             
          c4.setColspan(2);
          table2.addCell(c4);
          
          Paragraph p4=new Paragraph("\nN/S:\n\n"+det.getNoSerie() ,f1);
          PdfPCell c5 =new PdfPCell(p4);
-         c5.setHorizontalAlignment(Element.ALIGN_CENTER);             
+         c5.setHorizontalAlignment(Element.ALIGN_LEFT);             
          c5.setColspan(2);
          table2.addCell(c5);
          
          Paragraph p5=new Paragraph("\nREG. / MATRICULA:\n\n"+det.getMatricula() ,f1);
          PdfPCell c6 =new PdfPCell(p5);
-         c6.setHorizontalAlignment(Element.ALIGN_CENTER);             
+         c6.setHorizontalAlignment(Element.ALIGN_LEFT);             
          c6.setColspan(2);
          table2.addCell(c6);
          
@@ -134,7 +135,7 @@ public class GeneraDiscrepanciaPdf {
          c11.setColspan(4);//c11.setFixedHeight(20f);
          table2.addCell(c11);
          
-         Paragraph p11=new Paragraph("\n"+det.getDescripcion()+"\n",fuente);
+         Paragraph p11=new Paragraph("\n"+det.getDescripcion()+"\n\n",fuente);
          PdfPCell c12 =new PdfPCell(p11);
          c12.setHorizontalAlignment(Element.ALIGN_CENTER);             
          c12.setColspan(4);
@@ -167,7 +168,7 @@ public class GeneraDiscrepanciaPdf {
          c16.setColspan(2);
          table2.addCell(c16);
          
-         Paragraph p16=new Paragraph("PART NUMBER / NUMERO DE PARTE:",f2); 
+         Paragraph p16=new Paragraph("PART NUMBER\n / NUMERO DE PARTE:",f2); 
          PdfPCell c17=new PdfPCell(p16);
          c17.setHorizontalAlignment(Element.ALIGN_CENTER);             
          c17.setColspan(1);
@@ -179,7 +180,7 @@ public class GeneraDiscrepanciaPdf {
          c18.setColspan(1);
          table2.addCell(c18);
          
-         Paragraph p18=new Paragraph("N/S REMOVABLE / N/S REMOVIDA:",f2); 
+         Paragraph p18=new Paragraph("N/S REMOVABLE /\n N/S REMOVIDA:",f2); 
          PdfPCell c19=new PdfPCell(p18);
          c19.setHorizontalAlignment(Element.ALIGN_CENTER);             
          c19.setColspan(2);
@@ -333,6 +334,7 @@ public class GeneraDiscrepanciaPdf {
          PdfPCell c34=new PdfPCell(p33);
          c34.setHorizontalAlignment(Element.ALIGN_LEFT);             
          c34.setColspan(4);
+         c34.setBorder(Rectangle.NO_BORDER);
          table2.addCell(c34);
          
          Paragraph p34=new Paragraph("Vo Bo INSPECTOR\n\n",f1); 

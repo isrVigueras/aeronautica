@@ -212,7 +212,7 @@ public class GeneraOrdenPdf {
             c20.setColspan(4);
             table.addCell(c20);
             
-            Paragraph d20 =new Paragraph("\n",f1);
+            Paragraph d20 =new Paragraph("\n\n",f1);
             PdfPCell c21 =new PdfPCell(d20);
             c21.setHorizontalAlignment(Element.ALIGN_CENTER);             
             c21.setColspan(4);

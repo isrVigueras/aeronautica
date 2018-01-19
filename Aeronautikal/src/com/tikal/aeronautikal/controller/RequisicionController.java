@@ -128,6 +128,8 @@ public class RequisicionController {
 			reqComp.setRequisiciones(reqs);
 			reqComp.setIdComponente((componenteDao.consult(id)).getId());
 			reqComp.setDesComponente((componenteDao.consult(id)).getD_componente());
+			reqComp.setDescripcion((componenteDao.consult(id)).getD_descripcion());
+			reqComp.setNoParte((componenteDao.consult(id)).getD_parte());
 			response.getWriter().println(JsonConvertidor.toJson(reqComp));
 		}
 	   

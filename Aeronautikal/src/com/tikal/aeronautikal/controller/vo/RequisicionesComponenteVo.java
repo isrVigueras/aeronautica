@@ -11,6 +11,9 @@ public class RequisicionesComponenteVo {
 	
 	@Id private Long idComponente;
 	private String desComponente;
+	private String noParte;
+	private String descripcion;
+	
 	
 	private List<RequisicionEntity> requisiciones;
 	
@@ -39,6 +42,22 @@ public class RequisicionesComponenteVo {
 
 	public void setRequisiciones(List<RequisicionEntity> requisiciones) {
 		this.requisiciones = requisiciones;
+	}
+
+	public String getNoParte() {
+		return noParte;
+	}
+
+	public void setNoParte(String noParte) {
+		this.noParte = noParte;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 	
 	
