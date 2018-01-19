@@ -1,6 +1,11 @@
 
 <link href="css/estilos.css" rel="stylesheet" type="text/css" />
 <link href="css/tabla.css" rel="stylesheet" type="text/css" />
+<script>
+  $('#mydetalle').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+</script>
 <div class="contenedor">
   <center><h3 style="color:#EEE6E6">Requisiciones para la pieza: <samp>{{requisicionescomponente.desComponente}}</samp></h3></center>
   <br>
@@ -33,8 +38,9 @@
         <td>{{rq.numero_piezas}}</td>
         <td>{{rq.estatus}}</td>
         <td>
-<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="actualizar(rq.folio)">
-          <span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+          <button type="button" class="btn btn-default" data-toggle="modal" ng-click="muestra(rq)" data-target="#mydetalle">
+  <span class="glyphicon glyphicon-share" aria-hidden="true"></span>
+</button>
 <!--<input type ='button' value = 'texto boton' onclick="window.open('http://localhost/aeronau/Detalle_discrepancias.html', 'width=800,height=600');"/>--> 
 </td>
       </tr>
@@ -49,4 +55,33 @@
   <br><br><br><br><br>
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</div>
+<!--*****************************************MODAL DE REQUISICIONES**************************************-->
+<div class="modal fade" id="mydetalle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <center><h4 class="modal-title" id="myModalLabel">Detalle componente</h4></center>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-xs-4">
+           <label for="con_nombre">Datos:</label>
+              <br>
+                <label>ID:</label><span>{{detalle_requisicion.folio}}</span>
+                <br>
+                <label>Nombre del componente:</label><span>{{detalle_requisicion.folio_componente}}</span>
+                <br>
+            </div>
+          </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+           <button type="button" class="btn btn-primary" ng-click="actualizar(detalle_requisicion.folio)">Actualizar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
 </div>

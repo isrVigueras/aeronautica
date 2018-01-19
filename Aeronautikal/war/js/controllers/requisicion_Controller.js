@@ -33,8 +33,14 @@ app.controller("RequisicionesController", ['$scope','requisiciones','actualizaRe
         function(data) {
           console.log(data);
           location.href="#/Inventario/colsulta";
+          location.reload();
         })         
   }
+  $scope.muestra=function(data) {
+    console.log(data);
+    $scope.detalle_requisicion = data; 
+  }
+
 
 }]);
 app.controller("Requisiciones_altaController", ['$scope','inv_consultas','foliarrastrad','altaRequiServicio',function($scope,inv_consultas,foliarrastrad,altaRequiServicio) {
