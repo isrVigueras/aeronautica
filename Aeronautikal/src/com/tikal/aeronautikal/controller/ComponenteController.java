@@ -286,6 +286,7 @@ public class ComponenteController {
 				cd.setIdComponente(idComponente);
 				cd.setIdDiscrepancia(idDiscrepancia);
 				cd.setNombreComponente((componenteDao.consult(idComponente)).getD_componente());
+				cd.setCantidad(pzas);
 				
 			//	cvos.add(cd);
 				//aqui se guardaran los comps que no tienen vale
