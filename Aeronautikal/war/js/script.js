@@ -661,6 +661,10 @@ $routeProvider.when('/Inicio/paginaPrincipal', {
     templateUrl: "Bienvenida.html",
     controller: "MainController"
   });
+$routeProvider.when('/Admin/Horas_Hombre', {
+    templateUrl: "asigna_Horas.html",
+    controller: "MainController"
+  });
   $routeProvider.otherwise({
         redirectTo: '/'
   });   

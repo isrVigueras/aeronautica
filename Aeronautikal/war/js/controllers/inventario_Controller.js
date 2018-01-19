@@ -10,6 +10,19 @@ app.service('InventarioService', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+//servicio elimina Inventario
+app.service('EliminaInventarioService', [ '$http', '$q', function($http, $q) {
+  this.elimina_inventario = function(id) {
+    var d = $q.defer();
+    $http.post("/componente/delete/"+id).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
+
 
 app.controller("InventarioController", ['$scope','InventarioService','categoria','unidad','condicion',function($scope,InventarioService,categoria,unidad,condicion) {
 $scope.categoria =categoria;
@@ -59,7 +72,7 @@ $scope.condicion =condicion;
     }
   }
 }]);
-app.controller("InventarioconsultaController", ['$scope','inv_consultas',function($scope,inv_consultas) {
+app.controller("InventarioconsultaController", ['$scope','inv_consultas','EliminaInventarioService',function($scope,inv_consultas,EliminaInventarioService) {
  $scope.inv_consultas =inv_consultas;
   console.log($scope.inv_consultas);
    $scope.muestra=function(data) {

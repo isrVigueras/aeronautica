@@ -1,0 +1,64 @@
+<link href="css/estilos.css" rel="stylesheet" type="text/css" />
+<link href="css/tabla.css" rel="stylesheet" type="text/css" />
+<div class="contenedor" style="color:#EEE6E6">
+ <center><h1>Asignar Discrepancia</h1></center>
+  <div class="row" style="margin: 1% 13%;">
+  <div class="table-responsive">
+ <table class="table table-striped">
+    <thead>
+      <tr bgcolor="#A9F5F2">
+        <th>Orden de Trabajo</th>
+        <th>Discrepancia</th>
+        <th>Accion de la discrepancia</th>
+        <th>Asignar</th>
+        <th>Accion</th>
+      </tr>
+  </thead>
+    <tbody>
+      <tr>
+        <td>123</td>
+        <td>1200</td>
+        <td>Hacer cosas de accion</td>
+        <td><select class="form-control" ng-model="empresaform.pais" id="em-pais" name="em-pais" type="checkbox">
+  <option value="">Elige un Tecnico</option>
+  <option Value="Mexico">Rafael Perez</option>
+  <option Value="Mexico">Armando Nieto</option>
+  <option Value="Mexico">Edgar Acuña</option>
+  </select></td>
+        <td>      <button type="button" class="btn btn-default" data-toggle="modal" ng-click="muestra(inv_consulta)" data-target="#mydetalle">
+  <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+</button>
+<!--<input type ='button' value = 'texto boton' onclick="window.open('http://localhost/aeronau/Detalle_discrepancias.html', 'width=800,height=600');"/>--> 
+
+</td>
+      </tr>
+       <tr>
+        <td>123</td>
+        <td>1200</td>
+        <td>Hacer cosas de accion</td>
+        <td><select class="form-control" ng-model="empresaform.pais" id="em-pais" name="em-pais" type="checkbox">
+  <option value="">Elige un Tecnico</option>
+  <option Value="Mexico">Rafael Perez</option>
+  <option Value="Mexico">Armando Nieto</option>
+  <option Value="Mexico">Edgar Acuña</option>
+  </select></td>
+        <td>      <button type="button" class="btn btn-default" data-toggle="modal" ng-click="muestra(inv_consulta)" data-target="#mydetalle">
+  <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+</button>
+<!--<input type ='button' value = 'texto boton' onclick="window.open('http://localhost/aeronau/Detalle_discrepancias.html', 'width=800,height=600');"/>--> 
+
+</td>
+      </tr>
+    </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="3">El Numero de Asignaciones es:</td>
+        <td ng-bind="inv_consultas.length">2</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+  
+</div>
+
+<br><br><br><br><br><br><br><br><br><br> 
