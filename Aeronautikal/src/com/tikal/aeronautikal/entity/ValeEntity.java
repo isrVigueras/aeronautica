@@ -7,6 +7,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.tikal.aeronautikal.controller.vo.ComDisVo;
+import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 
 @Entity
 public class ValeEntity {
@@ -16,6 +17,10 @@ public class ValeEntity {
 	@Index private Long idDiscrepancia;
 	private List<ComponenteDiscrepancia> items;
 	@Index private String estatus;
+	private ComponenteEntity componente ;  /// solo aplica para emitir vale automatico cuando se despacha requisicion
+								/// solo es un componente
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -49,6 +54,13 @@ public class ValeEntity {
 	public void setEstatus(String estatus) {
 		this.estatus = estatus;
 	}
+	public ComponenteEntity getComponente() {
+		return componente;
+	}
+	public void setComponente(ComponenteEntity componente) {
+		this.componente = componente;
+	}
+	
 	
 	
 	

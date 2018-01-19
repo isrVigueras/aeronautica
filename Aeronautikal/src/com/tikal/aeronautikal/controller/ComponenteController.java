@@ -1,7 +1,9 @@
 package com.tikal.aeronautikal.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +17,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.tikal.aeronautikal.controller.vo.ComDisVo;
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.RequisicionDao;
+import com.tikal.aeronautikal.dao.ValeDao;
+import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
+import com.tikal.aeronautikal.entity.ValeEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.service.ComponenteService;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
@@ -40,6 +47,11 @@ public class ComponenteController {
 	 @Autowired
 	 @Qualifier("requisicionDao")
 	 RequisicionDao requisicionDao;
+	 
+	 @Autowired
+	 @Qualifier("valeDao")
+	 ValeDao valeDao;
+	 
 	 
 	 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 	   
@@ -243,7 +255,10 @@ public class ComponenteController {
 		   req.setEstatus("CERRADA");
 		   requisicionDao.update(req);
 		   componenteDao.update(old);
-		   System.out.println("termino de actualizar.........");
+		   System.out.println("termino de actualizar.......Ahora se Genera el vale..");
+		   //generar vale....
+		  // generaVale((requisicionDao.consult(idRequisicion)).getFolio_discrepancia(), req.getFolio_componente(),req.getNumero_piezas() );
+		   
 		  //// AsignadorDeCharset.asignar(request, response);
 		  // response.getWriter().println(JsonConvertidor.toJson(old)); 
 
@@ -261,6 +276,31 @@ public class ComponenteController {
 			response.getWriter().println(JsonConvertidor.toJson(c));
 		}
 	    
-	   
+	   public void generaVale(Long idDiscrepancia, Long idComponente,Integer pzas){
+			  //consultar componentes de la discrepancia que no tengan vale
+			  System.out.println("************esta en generar vales con esta discrepancia:"+idDiscrepancia);	
+			  ComponenteDiscrepancia cd= new ComponenteDiscrepancia();
+				List<ComDisVo> cvos= new ArrayList<ComDisVo>();
+				
+				cd.setCantidad(pzas);
+				cd.setIdComponente(idComponente);
+				cd.setIdDiscrepancia(idDiscrepancia);
+				cd.setNombreComponente((componenteDao.consult(idComponente)).getD_componente());
+				
+			//	cvos.add(cd);
+				//aqui se guardaran los comps que no tienen vale
+				ValeEntity v= new ValeEntity();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+				String fecha= sdf.format(new Date());
+			    v.setFecha(fecha);
+			    v.setEstatus("ABIERTO");
+			    v.setComponente(componenteDao.consult(idComponente));
+			    v.setIdDiscrepancia(idDiscrepancia);
+			    
+			    valeDao.save(v);
+			    System.out.println("VALE EMITIDO:"+v.getId());	
+			 
+		  }
+
 }
  
