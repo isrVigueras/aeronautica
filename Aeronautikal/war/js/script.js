@@ -609,7 +609,7 @@ $routeProvider.when('/Inventario/unidad', {
     controller: "unidadController"
   }); 
 $routeProvider.when('/Inventario/unidad/colsulta', {
-    templateUrl: "consulta_unidad.html",
+    templateUrl: "consulta_Unidad.html",
     controller: "unidadMuestraController",
      resolve: {
       unidades_consultas:['remoteResource',function(remoteResource) {
