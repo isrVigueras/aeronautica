@@ -665,6 +665,10 @@ $routeProvider.when('/Admin/Horas_Hombre', {
     templateUrl: "asigna_Horas.html",
     controller: "MainController"
   });
+$routeProvider.when('/Usuario/Horas_Hombre', {
+    templateUrl: "horas_hombre.html",
+    controller: "MainController"
+  });
   $routeProvider.otherwise({
         redirectTo: '/'
   });   
