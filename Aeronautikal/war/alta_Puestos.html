@@ -1,0 +1,18 @@
+<div class="contenedor" style="color:#EEE6E6">
+    <center><h1>Registro de Puestos</h1></center>
+    <div class="row" style="margin: 1% 13%;">
+      <form>
+  
+  <h3>Roles de la Empresa</h3>
+  <label for="Clave">Clave:</label><input class="form-control" placeholder="Escriba la Clave del Puesto" ng-model="puestoform.Clave" id="Clave" name="Clave" type="text"/>
+  <label for="Descripcion">Nombre del Puesto</label><input class="form-control" placeholder="Escriba el Nombre del Puesto" ng-model="puestoform.Descripcion" id="Descripcion" name="Descripcion" type="text"/>
+
+  <br>
+  <br>
+  <center><button type="button" class="btn btn-primary" ng-click="guarda_puesto()" ng-disabled="form.$invalid">
+  <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>Guardar
+  </button></center>
+  </form>
+</div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br>

@@ -1,0 +1,23 @@
+<div class="contenedor" style="color:#EEE6E6">
+    <center><h1>Registro de Trabajadores</h1></center>
+    <div class="row" style="margin: 1% 13%;">
+      <form>
+  
+  <h3>Datos Personales</h3>
+  <label for="apellidoPaterno">Apellido Paterno:</label><input class="form-control" placeholder="Escriba el Apellido Paterno" ng-model="empleadoform.apellidoPaterno" id="apellidoPaterno" name="apellidoPaterno" type="text"/>
+  <label for="apellidoMaterno">Apellido Materno</label><input class="form-control" placeholder="Escriba el Apellido Materno" ng-model="empleadoform.apellidoMaterno" id="apellidoMaterno" name="apellidoMaterno" type="text"/>
+  <label for="nombre">Nombres:</label><input class="form-control" placeholder="Escriba el Nombre" ng-model="empleadoform.nombre" id="nombre" name="nombre" type="text"/>
+  <label for="idPuesto">Puesto:</label><select class="form-control" ng-model="empleadoform.idPuesto" id="idPuesto" name="idPuesto" type="checkbox">
+  <option value="">Elige un puesto</option>
+  <option Value="Mexico">Gerente</option>
+  <option Value="Mexico">jefe de mecanicos</option>
+  </select>
+  <br>
+  <br>
+  <center><button type="button" class="btn btn-primary" ng-click="guarda_empleado()" ng-disabled="form.$invalid">
+  <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>Guardar
+  </button></center>
+  </form>
+</div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br>

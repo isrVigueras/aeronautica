@@ -411,6 +411,22 @@ function RemoteResource($http,$q, baseUrl) {
     return promise;
     
   }
+    this.puestos_lista = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/puesto/findAll'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
 }
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
 function RemoteResourceProvider() {
@@ -663,11 +679,24 @@ $routeProvider.when('/Inicio/paginaPrincipal', {
   });
 $routeProvider.when('/Admin/Horas_Hombre', {
     templateUrl: "asigna_Horas.html",
-    controller: "MainController"
+    controller: "AdminController"
   });
 $routeProvider.when('/Usuario/Horas_Hombre', {
     templateUrl: "horas_hombre.html",
     controller: "MainController"
+  });
+$routeProvider.when('/Admin/alta_empleados', {
+    templateUrl: "alta_Empleados.html",
+    controller: "Empleados_Controller",
+    resolve: {
+      puestos:['remoteResource',function(remoteResource) {
+        return remoteResource.puestos_lista();
+      }]
+    }
+  });
+$routeProvider.when('/Admin/Alta_Puestos', {
+    templateUrl: "alta_Puestos.html",
+    controller: "AdminController"
   });
   $routeProvider.otherwise({
         redirectTo: '/'
