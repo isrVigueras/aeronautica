@@ -47,6 +47,7 @@ app.controller('Empleados_Controller', ['$scope', 'altaEmpleadoServicio','puesto
   }
      $scope.guarda_empleado=function() {
     //console.log(altarequisicion);
+    console.log($scope.empleadoform);
       altaEmpleadoServicio.alta_empleado($scope.condicionform).then(
         function(data) {
           console.log(data);
