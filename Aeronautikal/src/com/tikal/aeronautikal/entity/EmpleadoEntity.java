@@ -11,7 +11,7 @@ public class EmpleadoEntity{
 	private String apellidoMaterno;
 	private String nombre;
 	private String nombreCompleto;
-	@Index private String puesto;
+	@Index private Long idPuesto;
 	
 	
 	
@@ -40,13 +40,14 @@ public class EmpleadoEntity{
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getPuesto() {
-		return puesto;
-	}
-	public void setPuesto(String puesto) {
-		this.puesto = puesto;
-	}
+	
 
+	public Long getIdPuesto() {
+		return idPuesto;
+	}
+	public void setIdPuesto(Long idPuesto) {
+		this.idPuesto = idPuesto;
+	}
 	public void setNombreCompleto(String nombreCompleto) {
 		this.nombreCompleto = nombreCompleto;
 	}

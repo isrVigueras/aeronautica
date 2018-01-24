@@ -34,7 +34,8 @@ public class ComponenteDiscrepanciaDaoImpl implements ComponenteDiscrepanciaDao 
 	   @Override
 		public List<ComponenteDiscrepancia> getByDiscrepancia(Long idDiscrepancia) {
 			// TODO Auto-generated method stub
-			List<ComponenteDiscrepancia> comps = ofy().load().type(ComponenteDiscrepancia.class).filter("idDiscrepancia", idDiscrepancia).list();
+			List<ComponenteDiscrepancia> comps = ofy().load().type(ComponenteDiscrepancia.class).filter("auto","NO")				
+					.filter("idDiscrepancia", idDiscrepancia).list(); //.filter("auto", Boolean.FALSE)
 			return comps;
 		}
 	   

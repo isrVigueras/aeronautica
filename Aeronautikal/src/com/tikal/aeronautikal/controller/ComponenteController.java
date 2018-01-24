@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tikal.aeronautikal.controller.vo.ComDisVo;
 import com.tikal.aeronautikal.dao.ComponenteDao;
+import com.tikal.aeronautikal.dao.ComponenteDiscrepanciaDao;
 import com.tikal.aeronautikal.dao.RequisicionDao;
 import com.tikal.aeronautikal.dao.ValeDao;
 import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
@@ -52,6 +53,9 @@ public class ComponenteController {
 	 @Qualifier("valeDao")
 	 ValeDao valeDao;
 	 
+	 @Autowired
+	 @Qualifier("componenteDiscrepanciaDao")
+	 ComponenteDiscrepanciaDao componenteDiscrepanciaDao;
 	 
 	 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 	   
@@ -257,7 +261,7 @@ public class ComponenteController {
 		   componenteDao.update(old);
 		   System.out.println("termino de actualizar.......Ahora se Genera el vale..");
 		   //generar vale....
-		  // generaVale((requisicionDao.consult(idRequisicion)).getFolio_discrepancia(), req.getFolio_componente(),req.getNumero_piezas() );
+		   generaVale((requisicionDao.consult(idRequisicion)).getFolio_discrepancia(), req.getFolio_componente(),req.getNumero_piezas() );
 		   
 		  //// AsignadorDeCharset.asignar(request, response);
 		  // response.getWriter().println(JsonConvertidor.toJson(old)); 
@@ -280,14 +284,17 @@ public class ComponenteController {
 			  //consultar componentes de la discrepancia que no tengan vale
 			  System.out.println("************esta en generar vales con esta discrepancia:"+idDiscrepancia);	
 			  ComponenteDiscrepancia cd= new ComponenteDiscrepancia();
-				List<ComDisVo> cvos= new ArrayList<ComDisVo>();
+				List<ComponenteDiscrepancia> cds= new ArrayList<ComponenteDiscrepancia>();
 				
 				cd.setCantidad(pzas);
 				cd.setIdComponente(idComponente);
 				cd.setIdDiscrepancia(idDiscrepancia);
 				cd.setNombreComponente((componenteDao.consult(idComponente)).getD_componente());
 				cd.setCantidad(pzas);
-				
+				cd.setCantOriginal(pzas);
+				cd.setAuto("SI");
+			    componenteDiscrepanciaDao.save(cd);
+				cds.add(cd);
 			//	cvos.add(cd);
 				//aqui se guardaran los comps que no tienen vale
 				ValeEntity v= new ValeEntity();
@@ -297,9 +304,12 @@ public class ComponenteController {
 			    v.setEstatus("ABIERTO");
 			    v.setComponente(componenteDao.consult(idComponente));
 			    v.setIdDiscrepancia(idDiscrepancia);
+			    v.setItems(cds);
 			    
 			    valeDao.save(v);
-			    System.out.println("VALE EMITIDO:"+v.getId());	
+			    System.out.println("VALE EMITIDO x componente:"+v.getId());	
+			    cd.setIdVale(v.getId()); //asigna el vale al comdis generado
+			    componenteDiscrepanciaDao.save(cd);
 			 
 		  }
 

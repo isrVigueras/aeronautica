@@ -1,7 +1,9 @@
 package com.tikal.aeronautikal.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -91,6 +93,7 @@ public class CompDisController {
 		        	//pegar el valor de empresa, aeronave y contacato
 		        	//orden.setFolio(1111);
 		        	cd.setCantOriginal(cd.getCantidad());
+		        	cd.setAuto("NO");
 		        	cd.setNombreComponente((componenteDao.consult(cd.getIdComponente())).getD_componente());
 		        	componenteDiscrepanciaDao.save(cd);
 		        	////generando requisicion
@@ -227,7 +230,9 @@ public class CompDisController {
 	        	RequisicionEntity r = new RequisicionEntity();
 	        	//cd.setId(Long.parseLong("12121212"));
 	        	r.setEstatus("ABIERTA");
-	        	r.setFechaApertura(" 999");
+	        	SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+				String fecha= sdf.format(new Date());
+	        	r.setFechaApertura(fecha);
 	        	r.setFolio_componente(idComponente);
 	        	r.setFolio_discrepancia(idDiscrepancia);
 	        	r.setNumero_piezas(cantidad);

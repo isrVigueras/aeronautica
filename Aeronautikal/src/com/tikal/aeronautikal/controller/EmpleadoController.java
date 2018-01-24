@@ -46,7 +46,7 @@ public class EmpleadoController {
 	        	e.setNombre("Erik");
 	        	e.setApellidoPaterno("Vazquez");
 	        	e.setApellidoMaterno("Alvarez");
-	        	e.setPuesto("Gerente");
+	        	e.setIdPuesto(Long.parseLong("7737373737"));
 	        	empleadoDao.save(e);	           
 	        	System.out.println("nombre completo"+e.getNombreCompleto());
 	        } catch (RuntimeException ignored) {

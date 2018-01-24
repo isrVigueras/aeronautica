@@ -13,6 +13,7 @@ public class ComponenteDiscrepancia {
 	private Integer cantidad;
 	private Integer cantOriginal;
 	private Long idVale;
+	@Index String auto;
 	
 	
 	
@@ -59,6 +60,13 @@ public class ComponenteDiscrepancia {
 	public void setIdDiscrepancia(Long idDiscrepancia) {
 		this.idDiscrepancia = idDiscrepancia;
 	}
+	public String getAuto() {
+		return auto;
+	}
+	public void setAuto(String auto) {
+		this.auto = auto;
+	}
+	
 	
 
 }
