@@ -63,10 +63,10 @@ font-size: 11px;
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/condicion">Condicion</a></li>
           <li class="divider"></li>
           <li class="dropdown-header"><B>CONSULTAS</B></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/colsulta">Consulta Invetario</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/condicion/colsulta">Consulta Condicion</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/categoria/colsulta">Consulta Categorias</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/unidad/colsulta">Consulta Unidades de medida</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/colsulta">Invetario</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/condicion/colsulta">Condicion</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/categoria/colsulta">Categorias</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Inventario/unidad/colsulta">Unidades de medida</a></li>
           <!--<li role="presentation" class="divider"></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>-->    
           </ul>
@@ -102,13 +102,19 @@ font-size: 11px;
 <span id="notification_count" ng-bind="alertas.length"></span>
 <a href="#/Notificaciones/Ver" id="notificationLink">Notificaciones</a>
 </li>
- <li>
+ <li>     
           <a data-toggle="dropdown" type="button" href="">Admin
           <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+          <li class="dropdown-header"><B>Altas</B></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Admin/Horas_Hombre">Horas hombre</a></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Admin/alta_empleados">Alta Empleados</a></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Admin/Alta_Puestos">Alta Puestos</a></li>
+          <li class="divider"></li>
+          <li class="dropdown-header"><B>CONSULTAS</B></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Admin/Empleados/Consulta">Empleados</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Admin/Puestos/Consulta">Puestos</a></li>
+
           <!--<li role="presentation" class="divider"></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>-->    
           </ul>

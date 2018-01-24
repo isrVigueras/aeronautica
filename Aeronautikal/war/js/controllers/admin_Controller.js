@@ -1,8 +1,8 @@
 //servicio alta empresa
 app.service('altaPuestoServicio', [ '$http', '$q', function($http, $q) {
-  this.alta_puesto = function(empresa) {
+  this.alta_puesto = function(objt) {
     var d = $q.defer();
-    $http.post("/puesto/add",empresa).then(function(response) {
+    $http.post("/puesto/add",objt).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -37,7 +37,7 @@ app.service('ActualizaCondicionServicio', [ '$http', '$q', function($http, $q) {
 app.controller('AdminController', ['$scope', 'altaPuestoServicio',function($scope, altaPuestoServicio) {
    $scope.puestoform = {
     id: undefined,
-    Clave: "",
+    Clave: undefined,
     Descripcion:""
   }
      $scope.guarda_puesto=function() {

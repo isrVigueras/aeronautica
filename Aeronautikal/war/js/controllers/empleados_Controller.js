@@ -1,8 +1,8 @@
 //servicio alta empresa
 app.service('altaEmpleadoServicio', [ '$http', '$q', function($http, $q) {
-  this.alta_empleado = function(empresa) {
+  this.alta_empleado = function(objeto) {
     var d = $q.defer();
-    $http.post("/empleado/add",empresa).then(function(response) {
+    $http.post("/empleado/add",objeto).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
