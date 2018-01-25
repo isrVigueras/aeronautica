@@ -41,7 +41,7 @@ app.controller('categoriaController', ['$scope', 'altaCategoriaServicio',functio
     descripcion:""
   }
      $scope.guarda_categoria=function() {
-    //console.log(altarequisicion);
+    console.log($scope.categoriaform);
       altaCategoriaServicio.alta_categoria($scope.categoriaform).then(
         function(data) {
           console.log(data);

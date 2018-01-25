@@ -43,7 +43,7 @@ app.controller('AdminController', ['$scope', 'altaPuestoServicio',function($scop
      $scope.guarda_puesto=function() {
     //console.log(altarequisicion);
     console.log($scope.puestoform);
-      altaPuestoServicio.alta_puesto($scope.condicionform).then(
+      altaPuestoServicio.alta_puesto($scope.puestoform).then(
         function(data) {
           console.log(data);
           location.reload();

@@ -698,6 +698,10 @@ $routeProvider.when('/Admin/Alta_Puestos', {
     templateUrl: "alta_Puestos.html",
     controller: "AdminController"
   });
+$routeProvider.when('/Admin/Empleados/Consulta', {
+    templateUrl: "consulta_Empleados.html",
+    controller: "AdminController"
+  });
   $routeProvider.otherwise({
         redirectTo: '/'
   });   
