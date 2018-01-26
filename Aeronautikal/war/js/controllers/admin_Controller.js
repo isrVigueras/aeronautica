@@ -52,9 +52,9 @@ app.controller('AdminController', ['$scope', 'altaPuestoServicio',function($scop
         })         
   }
 }]);
-app.controller('condicionMuestraController', ['$scope','eliminaCondicionServicio','condiciones_consultas','ActualizaCondicionServicio',function($scope,eliminaCondicionServicio,condiciones_consultas,ActualizaCondicionServicio) {
-  $scope.condiciones_consultas = condiciones_consultas;
-      console.log(condiciones_consultas);
+app.controller('PuestoMuestraController', ['$scope','eliminaCondicionServicio','ActualizaCondicionServicio','puestos_lista',function($scope,eliminaCondicionServicio,ActualizaCondicionServicio,puestos_lista) {
+  $scope.puestos_lista = puestos_lista;
+      console.log(puestos_lista);
       
        $scope.elimina_condicion=function(folio) {
     //console.log(altarequisicion);

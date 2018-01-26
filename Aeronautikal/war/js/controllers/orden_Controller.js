@@ -84,7 +84,7 @@ $scope.generadas = generadas;
           console.log(data);
          // alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
         console.log("El pdf se genero");
-      window.open('pdf/OTs'+data, "nombre de la ventana");
+      window.open('C:/pdf/OTs'+data, "nombre de la ventana");
 
          //window.open('pdf/OTs/'+data, "nombre de la ventana", "width=300, height=200")
          //location.href="pdf/OTs/"+data;

@@ -179,7 +179,7 @@ console.log($scope.discrepancias);
         function(data) {
           console.log(data)
            console.log("El pdf se genero");
-            window.open('pdf/Discrepancias/'+data);
+            window.open('C:/pdf/Discrepancias/'+data);
         })
 
   }
