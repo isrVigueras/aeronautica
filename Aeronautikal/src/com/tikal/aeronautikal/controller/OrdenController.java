@@ -304,7 +304,7 @@ public class OrdenController {
 	        System.out.println("empiezo a generar pdf..hsbd." );
 	        /////igual puedo 
 	    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf(ox, dets);
-	    	System.out.println("nombre de archivo para edgar:"+ox.getNombreArchivo().substring(8) );
+	    	System.out.println("nombre de archivo para edgar:"+ox.getNombreArchivo().substring(11) );
 	    	response.getWriter().println((ox.getNombreArchivo().substring(7)));
 	    	//generaOrdenPdf.GeneraOrdenPdf(new File(ox.getNombreArchivo()));
 	    	//generaOrdenPdf.GeneraOrdenPdf(ox));
