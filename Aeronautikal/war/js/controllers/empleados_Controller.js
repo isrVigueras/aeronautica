@@ -57,9 +57,9 @@ app.controller('Empleados_Controller', ['$scope', 'altaEmpleadoServicio','puesto
         })         
   }
 }]);
-app.controller('condicionMuestraController', ['$scope','eliminaCondicionServicio','condiciones_consultas','ActualizaCondicionServicio',function($scope,eliminaCondicionServicio,condiciones_consultas,ActualizaCondicionServicio) {
-  $scope.condiciones_consultas = condiciones_consultas;
-      console.log(condiciones_consultas);
+app.controller('EmpleadoMuestraController', ['$scope','eliminaCondicionServicio','ActualizaCondicionServicio','empleados_lista',function($scope,eliminaCondicionServicio,ActualizaCondicionServicio,empleados_lista) {
+  $scope.empleados_lista = empleados_lista;
+      console.log(empleados_lista);
       
        $scope.elimina_condicion=function(folio) {
     //console.log(altarequisicion);
