@@ -262,6 +262,26 @@ public class OrdenController {
 				
 			}
 		 // 
+			
+			File directorio = new File("C:/pdf"); 
+			if(!directorio.exists()){
+				directorio.mkdir(); 	
+			}
+			
+			
+			File directorio1= new File("C:/pdf/OTs"); 
+			if(!directorio1.exists()){
+				directorio1.mkdir(); 	
+			}
+			File directorio2 = new File("C:/pdf/Discrepancias"); 
+			if(!directorio2.exists()){
+				directorio2.mkdir(); 	
+			}
+			File directorio3 = new File("C:/pdf/Vales"); 
+			if(!directorio3.exists()){
+				directorio3.mkdir(); 	
+			} 
+			
 	        File newExcelFile = new File(ox.getNombreArchivo());		 
 	        if (!newExcelFile.exists()){
 	            try {
@@ -348,7 +368,7 @@ public class OrdenController {
 	       OrdenVo orden =ordenDao.consult(idOrden);
 	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
 	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
-	       String nombre="pdf\\OTs\\OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
+	       String nombre="C:\\pdf\\OTs\\OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
 	       //String nombre="https://aeronautikal.appspot.com/pdf/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
 	       ox.setNombreArchivo(nombre.replaceAll("[\n\r]",""));
 	       System.out.println("fecha"+orden.getFechaApertura());
