@@ -282,7 +282,7 @@ public class OrdenController {
 	        System.out.println("empiezo a generar pdf..." );
 	        /////igual puedo 
 	    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf(ox, dets);
-	    	System.out.println("nombre de archivo para edgar:"+ox.getNombreArchivo().substring(7) );
+	    	System.out.println("nombre de archivo para edgar:"+ox.getNombreArchivo().substring(8) );
 	    	response.getWriter().println((ox.getNombreArchivo().substring(7)));
 	    	//generaOrdenPdf.GeneraOrdenPdf(new File(ox.getNombreArchivo()));
 	    	//generaOrdenPdf.GeneraOrdenPdf(ox));

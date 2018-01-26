@@ -48,7 +48,7 @@ public class GeneraDiscrepanciaPdf {
 	  	    f2.setStyle(3);
 	  	    f2.setSize(7);
 	  	    
-	  	  Image imagen = Image.getInstance("img\\LogoCross.png");
+	  	  Image imagen = Image.getInstance("img/LogoCross.png");
        imagen.scaleAbsolute(200, 50);
        imagen.setSpacingBefore(1);
        imagen.setSpacingAfter(90);

@@ -56,9 +56,10 @@ public class EmpleadoController {
 	    }
 	 
 	  @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
-	   public void addComponente(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
-	    	  System.out.println("si entra al add por POST en empleado"+json);
-	        try {
+	   public void addEmpleado(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
+		  try {
+		  		System.out.println("si entra al add por POST en empleado"+json);
+	        
 	        	AsignadorDeCharset.asignar(request, response);
 	        	EmpleadoEntity e =(EmpleadoEntity) JsonConvertidor.fromJson(json, EmpleadoEntity.class);        	
 	        	

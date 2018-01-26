@@ -9,10 +9,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-
+import javax.management.timer.Timer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.Timer;
+//import javax.swing.Timer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -58,9 +58,9 @@ public class HorasHombreController {
 		   		entry.setIdOrden(Long.parseLong("0202020202"));
 		   		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd:hh:mm:ss");
 				String fecha= sdf.format(new Date());
-		   		entry.setHoraIncio(fecha);
-		   		entry.setFinParcial(fecha);
-		   		entry.setHoraFin(fecha);
+		   		//entry.setHoraIncio(fecha);
+		   	//	entry.setFinParcial(fecha);
+		   	//	entry.setHoraFin(fecha);
 		  
 	            System.out.println("si asign/ valor"+entry);
 	        } catch (RuntimeException ignored) {
@@ -108,7 +108,19 @@ public class HorasHombreController {
 
 		}
 	   
-	     
+	     @RequestMapping(value = { "/getByEmpleado/{idEmpleado}" }, method = RequestMethod.GET, produces = "application/json")
+		public void findByEmpleado(HttpServletResponse response, HttpServletRequest request,
+				@PathVariable Long idEmpleado) throws IOException {
+		   System.out.println("ya entro a buscar horas hombe por empleado");
+			AsignadorDeCharset.asignar(request, response);
+			List<HorasHombre> hrs= horasHombreDao.getByEmpleado(idEmpleado);
+			if (hrs==null){
+				hrs= new ArrayList<HorasHombre>();
+			}
+			
+			response.getWriter().println(JsonConvertidor.toJson(hrs));
+			
+		}
 	   
 	   
 	   @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.POST)
@@ -122,6 +134,14 @@ public class HorasHombreController {
 	   }
 	   
 		   
+	   @RequestMapping(value = {"/asignar" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+		public void asigna(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
+				throws IOException {
+			AsignadorDeCharset.asignar(request, response);
+			HorasHombre h = (HorasHombre) JsonConvertidor.fromJson(json, HorasHombre.class);
+			horasHombreDao.update(h);
+			response.getWriter().println(JsonConvertidor.toJson(h));
+		}
 	   
 	   
 	   @RequestMapping(value = {"/update" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
@@ -133,37 +153,47 @@ public class HorasHombreController {
 			response.getWriter().println(JsonConvertidor.toJson(h));
 		}
 	    
+	   
+	   
+	   
 	   @RequestMapping(value = {"/timer/{idHoras}/{estado}" }, method = RequestMethod.GET)
 		public void start(HttpServletResponse response, HttpServletRequest request,@PathVariable Long idHoras, @PathVariable String estado)
 				throws IOException {
 			AsignadorDeCharset.asignar(request, response);
 			HorasHombre h = horasHombreDao.consult(idHoras);
-			Integer tiempoEnMilisegundos=1000;
-			System.out.println("ya estoy en timerrrrrrrrrrrrrrrrrrr:");
-			Timer timer = new Timer (tiempoEnMilisegundos, new ActionListener ()
-					
-			{ 
-			    public void actionPerformed(ActionEvent e) 
-			    { 
-			        System.out.println("esta en el timer");
-			     } 
-			}); 
+			//Integer tiempoEnMilisegundos=(600000000);
+			System.out.println("ya estoy en timerrr y el estado del timer es::"+estado);
+			Timer timer= new Timer();
+			System.out.println("ya estoy en timerrr y el estado del}2");
+//			Timer timer = new Timer (tiempoEnMilisegundos, new ActionListener ()
+//					
+//			{ 
+//			    public void actionPerformed(ActionEvent e) 
+//			    { 
+//			        System.out.println("esta en el timer");//bfuncion de start
+//			     } 
+//			}); 
 			//checar si ya hay hora de inicio de la tarea
+			//timer.stop();
 			
-			if (h.getHoraIncio().equals(null)){
-				
+			
+			
+			System.out.println("checando si hay hora inicio:"+h.getHoraIncio());
+			if (h.getHoraIncio()== null){
+				System.out.println("pasa el ifffff");
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd:hh:mm:ss");
 				String fecha= sdf.format(new Date());
 				h.setHoraIncio(fecha);
 				horasHombreDao.update(h);
 				timer.start();
-				System.out.println("timer primero:"+timer);
-				System.out.println("hra inicio:"+h.getHoraIncio());
+				System.out.println("timer primero:"+timer.getNbNotifications());
+				System.out.println("hora inicio:"+h.getHoraIncio());
 				
 			}else{			
+				System.out.println("pasa al esle");
 					switch (estado){
-					case "start": timer.start();System.out.println("timer en start");
-					case "stop": timer.stop();System.out.println("timer en stop");
+					case "start": timer.start();System.out.println("timer en start:"); break;
+					case "stop": timer.stop();System.out.println("timer en stop");break;
 					}
 					System.out.println("timer:"+timer);
 			}

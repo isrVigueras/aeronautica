@@ -70,14 +70,9 @@ public class PuestoController {
 	        	 System.out.println("request......."+request);
 	        	 System.out.println("request......."+response);
 	        	 PuestoEntity p =(PuestoEntity) JsonConvertidor.fromJson(json,PuestoEntity.class);
-	        	// System.out.println("el nuevo objeto: "+orden );
-	        	//pegar el valor de empresa, aeronave y contacato
-	        	//cmp.setD_pendientes(50);//aqui va funcion para calcular cuantas piezas pendientes hay de cada componente
-	        	//orden.setFolio(1111);
 	        	puestoDao.save(p);	            
 	        } catch (RuntimeException ignored) {
 	        	ignored.printStackTrace();
-	            // getUniqueEntity should throw exception
 	        }
 	       
 	    }

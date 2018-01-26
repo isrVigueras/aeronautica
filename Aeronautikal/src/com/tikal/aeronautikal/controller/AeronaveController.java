@@ -111,7 +111,7 @@ public class AeronaveController  {
 //		}
     
     @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
-	   public void addComponente(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
+	   public void addAeronave(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
 	    	  System.out.println("si entra al add por POST"+json);
 	        try {
 	        	AsignadorDeCharset.asignar(request, response);
