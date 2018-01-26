@@ -267,7 +267,9 @@ public class OrdenController {
 	            try {
 	                newExcelFile.createNewFile();
 	            } catch (IOException ioe) {
-	                System.out.println("(Error al crear el fichero nuevo ......)" + ioe);
+	                System.out.println("(Error al crear el fichero nuevo ......)"+ ioe);
+	                System.out.println("(ruta absoluta ......)"+newExcelFile.getAbsolutePath());
+	                System.out.println("(ruta canonica..)"+newExcelFile.getPath());
 	            }
 	        }
        
@@ -279,10 +281,10 @@ public class OrdenController {
 			//EditaOrdenXls.readWriteExcelFile();
 	 //       System.out.println("Empezando a ecribir en el Xls..." );
 	  //      EditaOrdenXls.WriteXls(ox);
-	        System.out.println("empiezo a generar pdf..." );
+	        System.out.println("empiezo a generar pdf..hsbd." );
 	        /////igual puedo 
 	    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf(ox, dets);
-	    	System.out.println("nombre de archivo para edgar:"+ox.getNombreArchivo().substring(7) );
+	    	System.out.println("nombre de archivo para edgar:"+ox.getNombreArchivo().substring(8) );
 	    	response.getWriter().println((ox.getNombreArchivo().substring(7)));
 	    	//generaOrdenPdf.GeneraOrdenPdf(new File(ox.getNombreArchivo()));
 	    	//generaOrdenPdf.GeneraOrdenPdf(ox));
@@ -347,6 +349,7 @@ public class OrdenController {
 	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
 	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
 	       String nombre="pdf\\OTs\\OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
+	       //String nombre="https://aeronautikal.appspot.com/pdf/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
 	       ox.setNombreArchivo(nombre.replaceAll("[\n\r]",""));
 	       System.out.println("fecha"+orden.getFechaApertura());
 	       System.out.println("nombre xls:"+ox.getNombreArchivo());

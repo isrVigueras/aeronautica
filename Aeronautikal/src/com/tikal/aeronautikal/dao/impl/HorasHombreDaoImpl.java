@@ -61,4 +61,13 @@ public class HorasHombreDaoImpl implements HorasHombreDao {
 		}
 
 
+		@Override
+		public List<HorasHombre> getByEmpleado(Long idEmpleado) {
+			// TODO Auto-generated method stub
+			System.out.println(" consultando la horas hombre por empleado.."+idEmpleado);
+		    return ofy().load().type(HorasHombre.class).filter("idEmpleado",idEmpleado).list();
+		
+		}
+
+
 }

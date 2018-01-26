@@ -54,7 +54,7 @@ public class GeneraValePdf {
     	   
             PdfPTable table = new PdfPTable(16);              
             
-            Image imagen = Image.getInstance("img\\LogoCross.png");
+            Image imagen = Image.getInstance("img/LogoCross.png");
             imagen.scaleAbsolute(150, 45);
            
       

@@ -19,5 +19,7 @@ public interface HorasHombreDao {
 	public void findAll(HorasHombre h);
 	
 	public List<HorasHombre> getAll();
+	
+	public List<HorasHombre> getByEmpleado(Long idEmpleado);
 
 }

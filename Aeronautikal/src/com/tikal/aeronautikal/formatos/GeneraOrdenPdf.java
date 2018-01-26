@@ -69,7 +69,7 @@ public class GeneraOrdenPdf {
             PdfPTable table = new PdfPTable(4);                
            
             
-            Image imagen = Image.getInstance("img\\LogoCross.png");
+            Image imagen = Image.getInstance("img/LogoCross.png");
             imagen.scaleAbsolute(190, 40);
             imagen.setSpacingBefore(1);
             imagen.setSpacingAfter(90);

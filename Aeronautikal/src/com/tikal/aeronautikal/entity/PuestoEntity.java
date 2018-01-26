@@ -10,6 +10,7 @@ public class PuestoEntity {
 	@Id private Long id;
 	private String Descripcion;
 	private String Clave;
+	
 	public Long getId() {
 		return id;
 	}
