@@ -71,7 +71,7 @@ app.controller('EmpleadoMuestraController', ['$scope','eliminaCondicionServicio'
           location.reload();
         })         
   }
-    $scope.muestra_condicion=function(objeto) {
+    $scope.muestra_empleado=function(objeto) {
     console.log(objeto);
     $scope.detalle_condicion = objeto; 
 

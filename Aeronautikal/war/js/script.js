@@ -736,7 +736,11 @@ $routeProvider.when('/Admin/Empleados/Consulta', {
     resolve: {
       empleados_lista:['remoteResource',function(remoteResource) {
         return remoteResource.empleados_lista();
+      }],
+      puestos:['remoteResource',function(remoteResource) {
+        return remoteResource.puestos_lista();
       }]
+
     }
   });
 $routeProvider.when('/Admin/Puestos/Consulta', {
