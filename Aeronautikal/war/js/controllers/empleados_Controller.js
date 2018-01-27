@@ -53,7 +53,7 @@ app.controller('Empleados_Controller', ['$scope', 'altaEmpleadoServicio','puesto
           console.log(data);
           location.reload();
           alert("Trabajador dado de Alta");
-          //location.href="#/Inventario/condicion/colsulta";
+          location.href="#/Admin/Empleados/Consulta";
         })         
   }
 }]);

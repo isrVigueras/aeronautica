@@ -48,7 +48,7 @@ app.controller('AdminController', ['$scope', 'altaPuestoServicio',function($scop
           console.log(data);
           location.reload();
           alert("Puesto Guardado");
-          //location.href="#/Inventario/condicion/colsulta";
+          location.href="#/Admin/Puestos/Consulta";
         })         
   }
 }]);

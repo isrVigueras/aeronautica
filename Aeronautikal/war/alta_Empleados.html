@@ -7,11 +7,11 @@
   <label for="apellidoPaterno">Apellido Paterno:</label><input class="form-control" placeholder="Escriba el Apellido Paterno" ng-model="empleadoform.apellidoPaterno" id="apellidoPaterno" name="apellidoPaterno" type="text"/>
   <label for="apellidoMaterno">Apellido Materno</label><input class="form-control" placeholder="Escriba el Apellido Materno" ng-model="empleadoform.apellidoMaterno" id="apellidoMaterno" name="apellidoMaterno" type="text"/>
   <label for="nombre">Nombres:</label><input class="form-control" placeholder="Escriba el Nombre" ng-model="empleadoform.nombre" id="nombre" name="nombre" type="text"/>
-  <label for="idPuesto">Puesto:</label><select class="form-control" ng-model="empleadoform.idPuesto" id="idPuesto" name="idPuesto" type="checkbox">
-  <option value="">Elige un puesto</option>
-  <option Value=1>Gerente</option>
-  <option Value=2>jefe de mecanicos</option>
-  </select>
+  <label for="idPuesto">Puesto:</label>
+  <select class="form-control" ng-model="empleadoform.idPuesto" >
+            <option value="">--Elige una Puesto--</option>
+          <option value="{{puesto.id}}" ng-repeat="puesto in puestos_lista"  >{{puesto.Descripcion}}</option>
+        </select>
   <br>
   <br>
   <center><button type="button" class="btn btn-primary" ng-click="guarda_empleado()" ng-disabled="form.$invalid">
