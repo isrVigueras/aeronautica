@@ -42,18 +42,13 @@ public class GeneraOrdenPdf {
      * @throws MalformedURLException 
      */
   //  public void GeneraOrdenPdf(File pdfNewFile) throws MalformedURLException, IOException {
-      public GeneraOrdenPdf(OrdenXlsVo ox,   List<DetalleDiscrepanciaVo> dets) throws MalformedURLException, IOException {
+      public GeneraOrdenPdf(OrdenXlsVo ox,   List<DetalleDiscrepanciaVo> dets, OutputStream ops) throws MalformedURLException, IOException {
         // Aquí introduciremos el código para crear el PDF.
     	  
     	  
     	try {
     	    Document document = new Document(PageSize.LETTER, 20,20,35,35);
-    	    try {
-    	        PdfWriter.getInstance(document, new FileOutputStream(ox.getNombreArchivo()));
-    	    } catch (FileNotFoundException fileNotFoundException) {
-    	        System.out.println("No such file was found to generate the PDF "
-    	                + "(No se encontró el fichero para generar el pdf)" + fileNotFoundException);
-    	    }
+    	    PdfWriter.getInstance(document, ops);
     	    document.open();
     	    Font fuente = new Font();
     	    fuente.setStyle(1);

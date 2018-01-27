@@ -245,9 +245,11 @@ public class OrdenController {
 		   }
 	   }
 	   
-	  @RequestMapping(value = { "/generaOrdenXls/{idOrden}" }, method = RequestMethod.POST)
+	  @RequestMapping(value = { "/generaOrdenXls/{idOrden}" }, method = RequestMethod.GET, produces = "application/pdf" )
 		public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idOrden) throws IOException {
 		 // EditaOrdenXls eox = new EditaOrdenXls();
+		  System.out.println("si entra:");
+		  response.setContentType("Application/Pdf");
 		  OrdenXlsVo ox = getObjectXls(idOrden);   
 		  List<DiscrepanciaEntity> dis= discrepanciaDao.getByOrden(idOrden);
 		  List<DetalleDiscrepanciaVo> dets = new ArrayList<DetalleDiscrepanciaVo>();
@@ -262,26 +264,7 @@ public class OrdenController {
 				
 			}
 		 // 
-			
-			File directorio = new File("C:/pdf"); 
-			if(!directorio.exists()){
-				directorio.mkdir(); 	
-			}
-			
-			
-			File directorio1= new File("C:/pdf/OTs"); 
-			if(!directorio1.exists()){
-				directorio1.mkdir(); 	
-			}
-			File directorio2 = new File("C:/pdf/Discrepancias"); 
-			if(!directorio2.exists()){
-				directorio2.mkdir(); 	
-			}
-			File directorio3 = new File("C:/pdf/Vales"); 
-			if(!directorio3.exists()){
-				directorio3.mkdir(); 	
-			} 
-			
+					
 	        File newExcelFile = new File(ox.getNombreArchivo());		 
 	        if (!newExcelFile.exists()){
 	            try {
@@ -303,9 +286,13 @@ public class OrdenController {
 	  //      EditaOrdenXls.WriteXls(ox);
 	        System.out.println("empiezo a generar pdf..hsbd." );
 	        /////igual puedo 
-	    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf(ox, dets);
-	    	System.out.println("nombre de archivo para edgar:"+ox.getNombreArchivo().substring(11) );
-	    	response.getWriter().println((ox.getNombreArchivo().substring(11)));
+	    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf(ox, dets, response.getOutputStream());
+	    	System.out.println("nombre de archivo para edgar:"+ox.getNombreArchivo().substring(8) );
+	    	System.out.println("El Directorio Temporal del Sistema Es: ");
+	        System.out.println( System.getProperty("java.io.tmpdir") );
+//	    	response.getWriter().println((ox.getNombreArchivo().substring(7)));
+	        response.getOutputStream().flush();
+	        response.getOutputStream().close();
 	    	//generaOrdenPdf.GeneraOrdenPdf(new File(ox.getNombreArchivo()));
 	    	//generaOrdenPdf.GeneraOrdenPdf(ox));
 		}
@@ -368,7 +355,7 @@ public class OrdenController {
 	       OrdenVo orden =ordenDao.consult(idOrden);
 	       EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
 	       AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
-	       String nombre="C:\\pdf\\OTs\\OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
+	       String nombre="pdf\\OTs\\OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
 	       //String nombre="https://aeronautikal.appspot.com/pdf/OTs/OT_"+orden.getFolio()+"_"+nave.getMatricula()+".pdf";
 	       ox.setNombreArchivo(nombre.replaceAll("[\n\r]",""));
 	       System.out.println("fecha"+orden.getFechaApertura());
