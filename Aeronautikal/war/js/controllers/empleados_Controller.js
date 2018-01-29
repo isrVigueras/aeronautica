@@ -57,18 +57,18 @@ app.controller('Empleados_Controller', ['$scope', 'altaEmpleadoServicio','puesto
         })         
   }
 }]);
-app.controller('EmpleadoMuestraController', ['$scope','eliminaCondicionServicio','ActualizaEmpleadoServicio','empleados_lista','puestos',function($scope,eliminaCondicionServicio,ActualizaEmpleadoServicio,empleados_lista,puestos) {
+app.controller('EmpleadoMuestraController', ['$scope','eliminaEmpleadoServicio','ActualizaEmpleadoServicio','empleados_lista','puestos',function($scope,eliminaEmpleadoServicio,ActualizaEmpleadoServicio,empleados_lista,puestos) {
   $scope.empleados_lista = empleados_lista;
   $scope.puestos_lista = puestos;
       console.log(empleados_lista);
       
-       $scope.elimina_condicion=function(folio) {
+       $scope.elimina_empleado=function(folio) {
     //console.log(altarequisicion);
     console.log(folio);
-      eliminaCondicionServicio.elimina_condicion(folio).then(
+      eliminaEmpleadoServicio.elimina_empleado(folio).then(
         function(data) {
           console.log(data);
-          alert("condicion Eliminada");
+          alert("Trabajador Eliminado");
           location.reload();
         })         
   }
