@@ -98,7 +98,7 @@ public class OrdenDaoImpl implements OrdenDao{
 
 	@Override
 	public OrdenVo consult(Long id) {
-		
+		System.out.println("aqui esta consultando la OT" );
        return ofy().load().type(OrdenVo.class).id(id).now();
 		
 	}

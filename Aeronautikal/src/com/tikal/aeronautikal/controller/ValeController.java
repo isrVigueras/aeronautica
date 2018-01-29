@@ -193,7 +193,9 @@ public class ValeController {
 	 	        System.out.println("Empiezo a generar pdf...." );
 	 	    	GeneraValePdf generaValePdf = new GeneraValePdf(vpdf, response.getOutputStream());
 	 	    	System.out.println("nombre de archivo para edgar:"+vpdf.getNombreArchivo().substring(10) );
-	 	    	response.getWriter().println((vpdf.getNombreArchivo().substring(10)));
+	 	    	//response.getWriter().println((vpdf.getNombreArchivo().substring(10)));
+	 	    	  response.getOutputStream().flush();
+	 		        response.getOutputStream().close();
 	 	    	//generaOrdenPdf.GeneraOrdenPdf(new File(ox.getNombreArchivo()));
 	 	    	//generaOrdenPdf.GeneraOrdenPdf(ox));
 	 		}

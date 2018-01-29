@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.management.timer.Timer;
 import javax.servlet.http.HttpServletRequest;
@@ -153,7 +155,18 @@ public class HorasHombreController {
 			response.getWriter().println(JsonConvertidor.toJson(h));
 		}
 	    
-	   
+	   @RequestMapping(value = {"/inicia" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+		public void ini(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
+				throws IOException {
+			AsignadorDeCharset.asignar(request, response);
+			HorasHombre h = (HorasHombre) JsonConvertidor.fromJson(json, HorasHombre.class);
+			Locale l = new Locale("es","MX");
+			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
+			System.out.println("fecha mexico:"+cal);
+			////h.setHoraIncio();
+			//horasHombreDao.update(h);
+			//response.getWriter().println(JsonConvertidor.toJson(h));
+		}
 	   
 	   
 	   @RequestMapping(value = {"/timer/{idHoras}/{estado}" }, method = RequestMethod.GET)
