@@ -1,5 +1,7 @@
 package com.tikal.aeronautikal.entity;
 
+import java.util.Date;
+
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
@@ -12,10 +14,10 @@ public class HorasHombre {
 	private String accion;
 	private Long idEmpleado;
 	private String estatus;
-	private String horaIncio;
-	private String horaFin;
-	private String finParcial;
-	private String tiempoTotal;
+	private Date horaIncio;
+	private Date horaFin;
+	private Date finParcial;
+	private Date tiempoTotal;
 	
 	
 	public Long getId() {
@@ -54,28 +56,28 @@ public class HorasHombre {
 	public void setEstatus(String estatus) {
 		this.estatus = estatus;
 	}
-	public String getHoraIncio() {
+	public Date getHoraIncio() {
 		return horaIncio;
 	}
-	public void setHoraIncio(String horaIncio) {
+	public void setHoraIncio(Date horaIncio) {
 		this.horaIncio = horaIncio;
 	}
-	public String getHoraFin() {
+	public Date getHoraFin() {
 		return horaFin;
 	}
-	public void setHoraFin(String horaFin) {
+	public void setHoraFin(Date horaFin) {
 		this.horaFin = horaFin;
 	}
-	public String getFinParcial() {
+	public Date getFinParcial() {
 		return finParcial;
 	}
-	public void setFinParcial(String finParcial) {
+	public void setFinParcial(Date finParcial) {
 		this.finParcial = finParcial;
 	}
-	public String getTiempoTotal() {
+	public Date getTiempoTotal() {
 		return tiempoTotal;
 	}
-	public void setTiempoTotal(String tiempoTotal) {
+	public void setTiempoTotal(Date tiempoTotal) {
 		this.tiempoTotal = tiempoTotal;
 	}
 	

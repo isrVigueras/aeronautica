@@ -30,23 +30,12 @@ public class EmpleadoDaoImpl implements EmpleadoDao{
 		System.out.print("old:"+old);
 			if (old != null) {
 //				old.setMarca(nave.getMarca());
-//				old.setMatricula(nave.getMatricula());
-//				old.setModelo(nave.getModelo());
-//				old.setNacionalidad(nave.getNacionalidad());
-//				old.setNumeroSerie(nave.getNumeroSerie());
-//				old.setTiempovuelo(nave.getTiempovuelo());
-//				old.setAterrizaje(nave.getAterrizaje());
-//				old.setPlaneador(nave.getPlaneador());
-//				old.setMotor1(nave.getMotor1());
-//				old.setMotor2(nave.getMotor2());
-//				old.setMarcas(nave.getMarcas());
-				
+				old.setApellidoMaterno(e.getApellidoPaterno());
+				old.setApellidoPaterno(e.getApellidoPaterno());
+				old.setIdPuesto(e.getIdPuesto());
+				old.setNombre(e.getNombre());
 			}
-//				old.setMatricula(nave.getMatricula());
-//				old.setModelo(nave.getModelo());
-//				old.setTiempovuelo(nave.getTiempovuelo());
-//				old.setAterrizaje(nave.getAterrizaje());
-				ofy().save().entity(e);
+				ofy().save().entity(old);
 	   }
 
 	    

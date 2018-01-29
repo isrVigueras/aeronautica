@@ -3,6 +3,7 @@ package com.tikal.aeronautikal.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.google.appengine.repackaged.com.google.common.flogger.parser.ParseException;
 import com.tikal.aeronautikal.dao.HorasHombreDao;
 import com.tikal.aeronautikal.entity.HorasHombre;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
@@ -58,9 +60,12 @@ public class HorasHombreController {
 		   		entry.setIdDiscrepancia(Long.parseLong("02029392930"));
 		   		entry.setIdEmpleado(Long.parseLong("0101010101"));
 		   		entry.setIdOrden(Long.parseLong("0202020202"));
-		   		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd:hh:mm:ss");
-				String fecha= sdf.format(new Date());
-		   		//entry.setHoraIncio(fecha);
+		   		Locale l = new Locale("es","MX");
+				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
+				Date fec =cal.getTime();
+		   		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd:hh:mm:ss");
+				//String fecha= sdf.format(new Date());
+		   		//entry.setHoraIncio(fec);
 		   	//	entry.setFinParcial(fecha);
 		   	//	entry.setHoraFin(fecha);
 		  
@@ -155,79 +160,131 @@ public class HorasHombreController {
 			response.getWriter().println(JsonConvertidor.toJson(h));
 		}
 	    
-	   @RequestMapping(value = {"/inicia" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
-		public void ini(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
+	   @RequestMapping(value = {"/inicia/{id}" }, method = RequestMethod.GET)
+		public void ini(@PathVariable Long id)
 				throws IOException {
-			AsignadorDeCharset.asignar(request, response);
-			HorasHombre h = (HorasHombre) JsonConvertidor.fromJson(json, HorasHombre.class);
+		   System.out.println("si entraaaaaaa  INICIA");
+			//AsignadorDeCharset.asignar(request, response);
+			HorasHombre h = horasHombreDao.consult(id);
 			Locale l = new Locale("es","MX");
 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
-			System.out.println("fecha mexico:"+cal);
-			////h.setHoraIncio();
-			//horasHombreDao.update(h);
+			Date fec =cal.getTime();
+			//Calendar  resta = cal-Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
+		//	SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd::HH:mm:ss");
+			//String fec= sdf.format(cal.getTime());
+			System.out.println("fecha mexico:"+fec.toString());
+			Date dia = new Date();
+			////System.out.println("Date:"+dia);
+			h.setHoraIncio(fec);
+		//	h.setHoraFin();
+			//h.setHoraFin(h.getHoraIncio()-h.getHoraFin());
+			horasHombreDao.update(h);
 			//response.getWriter().println(JsonConvertidor.toJson(h));
 		}
 	   
-	   
-	   @RequestMapping(value = {"/timer/{idHoras}/{estado}" }, method = RequestMethod.GET)
-		public void start(HttpServletResponse response, HttpServletRequest request,@PathVariable Long idHoras, @PathVariable String estado)
-				throws IOException {
-			AsignadorDeCharset.asignar(request, response);
-			HorasHombre h = horasHombreDao.consult(idHoras);
-			//Integer tiempoEnMilisegundos=(600000000);
-			System.out.println("ya estoy en timerrr y el estado del timer es::"+estado);
-			Timer timer= new Timer();
-			System.out.println("ya estoy en timerrr y el estado del}2");
-//			Timer timer = new Timer (tiempoEnMilisegundos, new ActionListener ()
-//					
-//			{ 
-//			    public void actionPerformed(ActionEvent e) 
-//			    { 
-//			        System.out.println("esta en el timer");//bfuncion de start
-//			     } 
-//			}); 
-			//checar si ya hay hora de inicio de la tarea
-			//timer.stop();
+	   @RequestMapping(value = {"/stop/{id}" }, method = RequestMethod.GET)
+		public void stop(@PathVariable Long id)
+				throws IOException, java.text.ParseException {
+		   System.out.println("si entraaaaaaa  stop");
+			//AsignadorDeCharset.asignar(request, response);
+			HorasHombre h = horasHombreDao.consult(id);
+			Locale l = new Locale("es","MX");
+			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
+			Date fecStop =cal.getTime();
+			System.out.println("la hora del inicio es :"+h.getHoraIncio());
+			System.out.println("la hora del stop es :"+fecStop);
+			double dif = diferenciasDeFechas(h.getHoraIncio(),fecStop);
+			//Calendar  resta = cal-Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
+		//	SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd::HH:mm:ss");
+			//String fec= sdf.format(cal.getTime());
 			
-			
-			
-			System.out.println("checando si hay hora inicio:"+h.getHoraIncio());
-			if (h.getHoraIncio()== null){
-				System.out.println("pasa el ifffff");
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd:hh:mm:ss");
-				String fecha= sdf.format(new Date());
-				h.setHoraIncio(fecha);
-				horasHombreDao.update(h);
-				timer.start();
-				System.out.println("timer primero:"+timer.getNbNotifications());
-				System.out.println("hora inicio:"+h.getHoraIncio());
-				
-			}else{			
-				System.out.println("pasa al esle");
-					switch (estado){
-					case "start": timer.start();System.out.println("timer en start:"); break;
-					case "stop": timer.stop();System.out.println("timer en stop");break;
-					}
-					System.out.println("timer:"+timer);
-			}
-		
-			
-			response.getWriter().println("ok en timer");
+			System.out.println("dias de diferencia:"+dif);
+			//Date dia = new Date();
+			////System.out.println("Date:"+dia);
+			//h.setHoraIncio(fec);
+		//	h.setHoraFin();
+			//h.setHoraFin(h.getHoraIncio()-h.getHoraFin());
+			//horasHombreDao.update(h);
+			//response.getWriter().println(JsonConvertidor.toJson(h));
 		}
-	
-	  
+//	   @RequestMapping(value = {"/timer/{idHoras}/{estado}" }, method = RequestMethod.GET)
+//		public void start(HttpServletResponse response, HttpServletRequest request,@PathVariable Long idHoras, @PathVariable String estado)
+//				throws IOException {
+//			AsignadorDeCharset.asignar(request, response);
+//			HorasHombre h = horasHombreDao.consult(idHoras);
+//			//Integer tiempoEnMilisegundos=(600000000);
+//			System.out.println("ya estoy en timerrr y el estado del timer es::"+estado);
+//			Timer timer= new Timer();
+//			System.out.println("ya estoy en timerrr y el estado del}2");
+////			Timer timer = new Timer (tiempoEnMilisegundos, new ActionListener ()
+////					
+////			{ 
+////			    public void actionPerformed(ActionEvent e) 
+////			    { 
+////			        System.out.println("esta en el timer");//bfuncion de start
+////			     } 
+////			}); 
+//			//checar si ya hay hora de inicio de la tarea
+//			//timer.stop();
+//			
+//			
+//			
+//			System.out.println("checando si hay hora inicio:"+h.getHoraIncio());
+//			if (h.getHoraIncio()== null){
+//				System.out.println("pasa el ifffff");
+//				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd:hh:mm:ss");
+//				String fecha= sdf.format(new Date());
+//				h.setHoraIncio(fecha);
+//				horasHombreDao.update(h);
+//				timer.start();
+//				System.out.println("timer primero:"+timer.getNbNotifications());
+//				System.out.println("hora inicio:"+h.getHoraIncio());
+//				
+//			}else{			
+//				System.out.println("pasa al esle");
+//					switch (estado){
+//					case "start": timer.start();System.out.println("timer en start:"); break;
+//					case "stop": timer.stop();System.out.println("timer en stop");break;
+//					}
+//					System.out.println("timer:"+timer);
+//			}
+//		
+//			
+//			response.getWriter().println("ok en timer");
+//		}
+//	
+//	  
 	  
 	   
 	   
-	 public float  calculaHoras(HorasHombre h){
-		 
-		 float time=0;
-		 System.out.println("inicio:"+h.getHoraIncio());
-		 System.out.println("final:"+h.getHoraFin());
-		 //time = h.getHoraIncio() - h.getHoraFin();
-		 System.out.println("total:"+time);
-		 return time;
-	 }
+	 //Diferencias entre dos fechas
+	    //@param fechaInicial La fecha de inicio
+	    //@param fechaFinal  La fecha de fin
+	    //@return Retorna el numero de dias entre dos fechas
+	    public static synchronized double diferenciasDeFechas(Date fechaInicial, Date fechaFinal) throws java.text.ParseException {
+
+//	        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+//	        String fechaInicioString = df.format(fechaInicial);
+//	        try {
+//	            fechaInicial = df.parse(fechaInicioString);
+//	        } catch (ParseException ex) {
+//	        }
+//
+//	        String fechaFinalString = df.format(fechaFinal);
+//	        try {
+//	            fechaFinal = df.parse(fechaFinalString);
+//	        } catch (ParseException ex) {
+//	        }
+
+	        long fechaInicialMs = fechaInicial.getTime();
+	        long fechaFinalMs = fechaFinal.getTime();
+	        long diferencia = fechaFinalMs - fechaInicialMs;
+	        System.out.println("diferencia en milisegundos:"+diferencia);
+	       // double dias = Math.floor(diferencia);
+	       double dif =  (diferencia / (1000 * 60));
+	       System.out.println("dif:"+dif);
+	        return diferencia;
+	    }
 	 
 	 
 
