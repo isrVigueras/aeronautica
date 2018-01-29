@@ -89,7 +89,7 @@ app.controller("MuestraValesController", ['$scope','discrepancia_vale','CerrarVa
         function(data) {
           console.log(data)
            console.log("El pdf se genero");
-            window.open('C:/pdf/Vales/'+data, "nombre de la ventana");
+            //window.open('C:/pdf/Vales/'+data, "nombre de la ventana");
         })
 
   }
