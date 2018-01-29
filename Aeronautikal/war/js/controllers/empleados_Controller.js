@@ -24,7 +24,7 @@ app.service('eliminaEmpleadoServicio', [ '$http', '$q', function($http, $q) {
 } ]);
  //servicio actualiza empresa
 app.service('ActualizaEmpleadoServicio', [ '$http', '$q', function($http, $q) {
-  this.actualiza_empelado = function(objeto) {
+  this.actualiza_empleado = function(objeto) {
     var d = $q.defer();
     $http.post("/empleado/update",objeto).then(function(response) {
       console.log(response);
@@ -57,8 +57,9 @@ app.controller('Empleados_Controller', ['$scope', 'altaEmpleadoServicio','puesto
         })         
   }
 }]);
-app.controller('EmpleadoMuestraController', ['$scope','eliminaCondicionServicio','ActualizaCondicionServicio','empleados_lista',function($scope,eliminaCondicionServicio,ActualizaCondicionServicio,empleados_lista) {
+app.controller('EmpleadoMuestraController', ['$scope','eliminaCondicionServicio','ActualizaEmpleadoServicio','empleados_lista','puestos',function($scope,eliminaCondicionServicio,ActualizaEmpleadoServicio,empleados_lista,puestos) {
   $scope.empleados_lista = empleados_lista;
+  $scope.puestos_lista = puestos;
       console.log(empleados_lista);
       
        $scope.elimina_condicion=function(folio) {
@@ -73,21 +74,23 @@ app.controller('EmpleadoMuestraController', ['$scope','eliminaCondicionServicio'
   }
     $scope.muestra_empleado=function(objeto) {
     console.log(objeto);
-    $scope.detalle_condicion = objeto; 
+    $scope.detalle_empleado = objeto; 
 
     $scope.condicion_edi = {
-    id: $scope.detalle_condicion.id,
-    clave: $scope.detalle_condicion.clave,
-    descripcion: $scope.detalle_condicion.descripcion  
+    id: $scope.detalle_empleado.id,
+    apellidoPaterno: $scope.detalle_empleado.apellidoPaterno,
+    apellidoMaterno: $scope.detalle_empleado.apellidoMaterno,
+    idPuesto: $scope.detalle_empleado.idPuesto,
+    nombre: $scope.detalle_empleado.nombre
   }   
   }
 
-    $scope.Actualiza_condicion=function() {   
+    $scope.Actualiza_Empleado=function() {   
 
-      ActualizaCondicionServicio.actualiza_condicion($scope.condicion_edi).then(
+      ActualizaEmpleadoServicio.actualiza_empleado($scope.condicion_edi).then(
         function(data) {
           console.log(data);
-          alert("condicion Modificada");
+          alert("Datos de Trabajador Modificados");
           location.reload();
         })  
   }
