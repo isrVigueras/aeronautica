@@ -711,7 +711,12 @@ $routeProvider.when('/Inicio/paginaPrincipal', {
   });
 $routeProvider.when('/Admin/Horas_Hombre', {
     templateUrl: "asigna_Horas.html",
-    controller: "AdminController"
+    controller: "HorasHombreController",
+    resolve: {
+      empleados_lista:['remoteResource',function(remoteResource) {
+        return remoteResource.empleados_lista();
+      }]
+    }
   });
 $routeProvider.when('/Usuario/Horas_Hombre', {
     templateUrl: "horas_hombre.html",

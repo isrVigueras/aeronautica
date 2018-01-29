@@ -76,7 +76,7 @@ app.controller('EmpleadoMuestraController', ['$scope','eliminaEmpleadoServicio',
     console.log(objeto);
     $scope.detalle_empleado = objeto; 
 
-    $scope.condicion_edi = {
+    $scope.empleado_edi = {
     id: $scope.detalle_empleado.id,
     apellidoPaterno: $scope.detalle_empleado.apellidoPaterno,
     apellidoMaterno: $scope.detalle_empleado.apellidoMaterno,
@@ -86,7 +86,7 @@ app.controller('EmpleadoMuestraController', ['$scope','eliminaEmpleadoServicio',
   }
 
     $scope.Actualiza_Empleado=function() {   
-
+      console.log($scope.condicion_edi);
       ActualizaEmpleadoServicio.actualiza_empleado($scope.condicion_edi).then(
         function(data) {
           console.log(data);

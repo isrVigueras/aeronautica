@@ -87,3 +87,23 @@ app.controller('PuestoMuestraController', ['$scope','eliminaCondicionServicio','
         })  
   }
 }]);
+app.controller('HorasHombreController', ['$scope', 'empleados_lista',function($scope, empleados_lista) {
+    console.log(empleados_lista);
+   //$scope.puestos_lista = puestos_lista;
+   $scope.puestoform = {
+    id: undefined,
+    Clave: undefined,
+    Descripcion:""
+  }
+     $scope.guarda_puesto=function() {
+    //console.log(altarequisicion);
+    console.log($scope.puestoform);
+      altaPuestoServicio.alta_puesto($scope.puestoform).then(
+        function(data) {
+          console.log(data);
+          location.reload();
+          alert("Puesto Guardado");
+          location.href="#/Admin/Puestos/Consulta";
+        })         
+  }
+}]);

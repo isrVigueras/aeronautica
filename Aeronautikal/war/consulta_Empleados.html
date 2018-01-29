@@ -60,10 +60,10 @@
    <div class="row" style="margin: 1% 13%;">
   
     <h3>Datos de Trabajador</h3>
-  <label for="nom_empresa">Apellido Paterno::</label><input class="form-control" placeholder="Escriba el Apellido Paterno" ng-model="detalle_empleado.apellidoPaterno" id="nom_empresa" name="nom_empresa" type="text"/>
-  <label for="em_rfc">Apellido Materno:</label><input class="form-control" placeholder="Escriba el Apellido Materno" ng-model="detalle_empleado.apellidoMaterno" id="em_rfc" name="em_rfc" type="text"/>
-  <label for="em_razon">Nombres:</label><input class="form-control" placeholder="Escriba el Nombre(s)" ng-model="detalle_empleado.nombre" id="em_razon" name="em_razon" type="text"/>
-  <label for="em-pais">Puesto:</label> <select class="form-control" ng-model="detalle_empleado.idPuesto" >
+  <label for="nom_empresa">Apellido Paterno::</label><input class="form-control" placeholder="Escriba el Apellido Paterno" ng-model="empleado_edi.apellidoPaterno" id="nom_empresa" name="nom_empresa" type="text"/>
+  <label for="em_rfc">Apellido Materno:</label><input class="form-control" placeholder="Escriba el Apellido Materno" ng-model="empleado_edi.apellidoMaterno" id="em_rfc" name="em_rfc" type="text"/>
+  <label for="em_razon">Nombres:</label><input class="form-control" placeholder="Escriba el Nombre(s)" ng-model="empleado_edi.nombre" id="em_razon" name="em_razon" type="text"/>
+  <label for="em-pais">Puesto:</label> <select class="form-control" ng-model="empleado_edi.idPuesto" >
           <option value="{{puesto.id}}" ng-repeat="puesto in puestos_lista"  >{{puesto.Descripcion}}</option>
         </select>
       </div>
