@@ -29,7 +29,7 @@ public class GeneraValePdf {
     	  
     	try {
     		Document document = new Document(PageSize.LETTER.rotate(),20,20,20,20);   	  
-    	        PdfWriter.getInstance(document, new FileOutputStream(vp.getNombreArchivo()));
+    	        PdfWriter.getInstance(document,ops);
     	    document.open();
     	    
     	    

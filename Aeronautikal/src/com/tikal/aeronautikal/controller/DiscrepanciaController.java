@@ -350,7 +350,7 @@ public class DiscrepanciaController {
 					        response.getOutputStream().close();
 				}
 		   
-		   
+		    
 			  @RequestMapping(value = {"/cerrarDiscrepancia/{idDiscrepancia}" }, method = RequestMethod.POST)
 			   public void cerrarDis(HttpServletResponse response, HttpServletRequest request,@PathVariable Long idDiscrepancia)
 				throws IOException {

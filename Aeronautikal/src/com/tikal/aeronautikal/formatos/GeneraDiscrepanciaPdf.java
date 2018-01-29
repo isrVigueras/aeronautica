@@ -27,7 +27,7 @@ public class GeneraDiscrepanciaPdf {
  	  // Aquí introduciremos el código para crear el PDF.     
  	  try {
    	    Document document = new Document(PageSize.LETTER, 30,30,30,30);
-   	    PdfWriter.getInstance(document, new FileOutputStream(det.getNombreArchivo()));
+   	    PdfWriter.getInstance(document,ops);
    	    document.open();
   
    
