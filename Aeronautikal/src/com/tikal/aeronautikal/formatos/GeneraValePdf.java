@@ -24,21 +24,12 @@ import java.util.Date;
 import java.util.List; 
 public class GeneraValePdf {
 	
-      public GeneraValePdf(ValePdfVo vp) throws MalformedURLException, IOException {
+      public GeneraValePdf(ValePdfVo vp,  OutputStream ops) throws MalformedURLException, IOException {
 
     	  
     	try {
-    		Document document = new Document(PageSize.LETTER.rotate(),20,20,20,20);
-    		
-    	
-    	    try {
+    		Document document = new Document(PageSize.LETTER.rotate(),20,20,20,20);   	  
     	        PdfWriter.getInstance(document, new FileOutputStream(vp.getNombreArchivo()));
-    	    } catch (FileNotFoundException fileNotFoundException) {
-    	        System.out.println("No such file was found to generate the PDF "
-    	                + "(No se encontró el fichero para generar el pdf)" + fileNotFoundException);
-    	    }
-    	    
-    	    
     	    document.open();
     	    
     	    

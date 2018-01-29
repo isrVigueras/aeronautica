@@ -22,17 +22,12 @@ import java.net.MalformedURLException;
 import java.util.List; 
 public class GeneraDiscrepanciaPdf {
 	
-	public GeneraDiscrepanciaPdf(DetalleDiscrepanciaVo det) throws MalformedURLException, IOException {
+	public GeneraDiscrepanciaPdf(DetalleDiscrepanciaVo det, OutputStream ops) throws MalformedURLException, IOException {
  	   //public void GeneraDiscrepanciaPdf(DetalleDiscrepanciaVo det, Document document, Integer index) throws DocumentException, MalformedURLException, IOException {
  	  // Aquí introduciremos el código para crear el PDF.     
  	  try {
    	    Document document = new Document(PageSize.LETTER, 30,30,30,30);
-   	    try {
-   	        PdfWriter.getInstance(document, new FileOutputStream(det.getNombreArchivo()));
-   	    } catch (FileNotFoundException fileNotFoundException) {
-   	        System.out.println("No such file was found to generate the PDF "
-   	                + "(No se encontró el fichero para generar el pdf)" + fileNotFoundException);
-   	    }
+   	    PdfWriter.getInstance(document, new FileOutputStream(det.getNombreArchivo()));
    	    document.open();
   
    

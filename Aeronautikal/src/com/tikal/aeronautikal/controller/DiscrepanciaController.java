@@ -327,9 +327,10 @@ public class DiscrepanciaController {
 		   
 		
 		   
-			  @RequestMapping(value = { "/generaDiscrepanciaPdf/{idDiscrepancia}" }, method = RequestMethod.POST)
+			  @RequestMapping(value = { "/generaDiscrepanciaPdf/{idDiscrepancia}" }, method = RequestMethod.GET, produces = "application/pdf" )
 				public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idDiscrepancia) throws IOException {
 				
+				  response.setContentType("Application/Pdf");
 				  DetalleDiscrepanciaVo dd = getDetalleDiscrepancia(idDiscrepancia);   
 				  
 			        File newExcelFile = new File(dd.getNombreArchivo());		 
@@ -342,7 +343,7 @@ public class DiscrepanciaController {
 			        }
 		
 			        System.out.println("empiezo a generar Pdf..." );
-			    	GeneraDiscrepanciaPdf generaDiscrepanciaPdf = new GeneraDiscrepanciaPdf(dd);
+			    	GeneraDiscrepanciaPdf generaDiscrepanciaPdf = new GeneraDiscrepanciaPdf(dd,  response.getOutputStream());
 				    	System.out.println("nombre de archivo para edgar:"+dd.getNombreArchivo().substring(18) );
 				    	response.getWriter().println((dd.getNombreArchivo().substring(18)));
 				}

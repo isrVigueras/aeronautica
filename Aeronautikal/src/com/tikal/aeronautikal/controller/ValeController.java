@@ -175,9 +175,10 @@ public class ValeController {
 		}
 
 	   
-	   @RequestMapping(value = { "/generaValePdf/{idVale}" }, method = RequestMethod.POST)
+	   @RequestMapping(value = { "/generaValePdf/{idVale}" },  method = RequestMethod.GET, produces = "application/pdf")
 	 		public void generaVale(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idVale) throws IOException {
 		   System.out.println("wwwwwwwwwwww");
+		   response.setContentType("Application/Pdf");
 	 		  ValePdfVo vpdf = getValePdf(idVale);   
 	 	        File newPdfFile = new File(vpdf.getNombreArchivo());		 
 	 	        if (!newPdfFile.exists()){
@@ -190,7 +191,7 @@ public class ValeController {
 	        
 	 	  
 	 	        System.out.println("Empiezo a generar pdf...." );
-	 	    	GeneraValePdf generaValePdf = new GeneraValePdf(vpdf);
+	 	    	GeneraValePdf generaValePdf = new GeneraValePdf(vpdf, response.getOutputStream());
 	 	    	System.out.println("nombre de archivo para edgar:"+vpdf.getNombreArchivo().substring(10) );
 	 	    	response.getWriter().println((vpdf.getNombreArchivo().substring(10)));
 	 	    	//generaOrdenPdf.GeneraOrdenPdf(new File(ox.getNombreArchivo()));
