@@ -21,5 +21,9 @@ public interface HorasHombreDao {
 	public List<HorasHombre> getAll();
 	
 	public List<HorasHombre> getByEmpleado(Long idEmpleado);
+	
+	public List<HorasHombre> getAsignadas();
+	
+	public List<HorasHombre> getAsignadasByEmpleado(Long idEmpleado);
 
 }

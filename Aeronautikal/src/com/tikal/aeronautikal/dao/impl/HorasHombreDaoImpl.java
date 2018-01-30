@@ -32,11 +32,10 @@ public class HorasHombreDaoImpl implements HorasHombreDao {
 			if (old != null) {
 				//old.setClave(h.getClave());
 				old.setEstatus(h.getEstatus());
-				old.setFinParcial(h.getFinParcial());
-				old.setHoraFin(h.getHoraFin());
 				old.setHoraIncio(h.getHoraIncio());
 				old.setTiempoTotal(h.getTiempoTotal());
 				old.setIdEmpleado(h.getIdEmpleado());
+
 				//old.setDescripcion(h.getDescripcion());				
 			}
 			ofy().save().entity(old);
@@ -69,5 +68,21 @@ public class HorasHombreDaoImpl implements HorasHombreDao {
 		
 		}
 
-
+		@Override
+		public List<HorasHombre> getAsignadas() {
+			// TODO Auto-generated method stub
+			System.out.println(" consultando todas la horas hombre asignadas..");
+		    return ofy().load().type(HorasHombre.class).filter("idEmpleado !=",null).list();
+		
+		}
+		
+		
+		@Override
+		public List<HorasHombre> getAsignadasByEmpleado(Long idEmpleado) {
+			// TODO Auto-generated method stub
+			System.out.println(" consultando horas hombre asignadas al empleado.."+idEmpleado);
+		    return ofy().load().type(HorasHombre.class).filter("idEmpleado",idEmpleado).list();
+		
+		}
+		
 }

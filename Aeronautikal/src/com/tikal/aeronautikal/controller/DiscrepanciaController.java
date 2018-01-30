@@ -398,6 +398,8 @@ public class DiscrepanciaController {
 				  hh.setIdDiscrepancia(id);
 				  hh.setAccion(dis.getAccion());
 				  hh.setEstatus("ABIERTA");
+				  hh.setTiempoParcial(0);
+				  hh.setTiempoTotal(0);
 				  horasHombreDao.save(hh);
 				  return hh;
 				  

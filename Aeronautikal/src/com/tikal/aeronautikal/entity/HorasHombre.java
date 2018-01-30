@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 @Entity
 public class HorasHombre {
@@ -12,14 +13,16 @@ public class HorasHombre {
 	private Long idOrden;
 	private Long idDiscrepancia;
 	private String accion;
-	private Long idEmpleado;
+	@Index private Long idEmpleado;
 	private String Empleado;
 	private String estatus;
 	private Date horaIncio;
-	private Date horaFin;
-	private Date finParcial;
-	private double tiempoTotal;
-	private double tiempoParcial;
+	//private Date horaFin;
+	private Date inicioParcial;
+	//private Date finParcial;
+	private long tiempoTotal;
+	private long tiempoParcial;
+	private String tiempoHoras;
 	
 	
 	public Long getId() {
@@ -71,29 +74,30 @@ public class HorasHombre {
 	public void setHoraIncio(Date horaIncio) {
 		this.horaIncio = horaIncio;
 	}
-	public Date getHoraFin() {
-		return horaFin;
+	
+	public String getTiempoHoras() {
+		return tiempoHoras;
 	}
-	public void setHoraFin(Date horaFin) {
-		this.horaFin = horaFin;
+	public void setTiempoHoras(String tiempoHoras) {
+		this.tiempoHoras = tiempoHoras;
 	}
-	public Date getFinParcial() {
-		return finParcial;
-	}
-	public void setFinParcial(Date finParcial) {
-		this.finParcial = finParcial;
-	}
-	public double getTiempoTotal() {
+	public long getTiempoTotal() {
 		return tiempoTotal;
 	}
-	public void setTiempoTotal(double tiempoTotal) {
+	public void setTiempoTotal(long tiempoTotal) {
 		this.tiempoTotal = tiempoTotal;
 	}
-	public double getTiempoParcial() {
+	public long getTiempoParcial() {
 		return tiempoParcial;
 	}
-	public void setTiempoParcial(double tiempoParcial) {
+	public void setTiempoParcial(long tiempoParcial) {
 		this.tiempoParcial = tiempoParcial;
+	}
+	public Date getInicioParcial() {
+		return inicioParcial;
+	}
+	public void setInicioParcial(Date inicioParcial) {
+		this.inicioParcial = inicioParcial;
 	}
 	
 	

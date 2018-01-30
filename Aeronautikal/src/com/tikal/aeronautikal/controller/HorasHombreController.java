@@ -116,18 +116,30 @@ public class HorasHombreController {
 
 		}
 	   
-	     @RequestMapping(value = { "/getByEmpleado/{idEmpleado}" }, method = RequestMethod.GET, produces = "application/json")
+	   @RequestMapping(value = { "/getAsignadas" }, method = RequestMethod.GET, produces = "application/json")
+			public void findAsignadas(HttpServletResponse response, HttpServletRequest request) throws IOException {
+				AsignadorDeCharset.asignar(request, response);
+				List<HorasHombre> lista = horasHombreDao.getAsignadas();
+				
+				System.out.println("Asignadas::"+lista);
+				if (lista == null) {
+					lista = new ArrayList<HorasHombre>();
+				}
+				response.getWriter().println(JsonConvertidor.toJson(lista));
+
+			}
+	     @RequestMapping(value = { "/getAsignadasByEmpleado/{idEmpleado}" }, method = RequestMethod.GET, produces = "application/json")
 		public void findByEmpleado(HttpServletResponse response, HttpServletRequest request,
 				@PathVariable Long idEmpleado) throws IOException {
 		   System.out.println("ya entro a buscar horas hombe por empleado");
 			AsignadorDeCharset.asignar(request, response);
-			List<HorasHombre> hrs= horasHombreDao.getByEmpleado(idEmpleado);
-			if (hrs==null){
-				hrs= new ArrayList<HorasHombre>();
+			List<HorasHombre> lista= horasHombreDao.getByEmpleado(idEmpleado);
+
+			System.out.println("Asignadas::"+lista);
+			if (lista == null) {
+				lista = new ArrayList<HorasHombre>();
 			}
-			
-			response.getWriter().println(JsonConvertidor.toJson(hrs));
-			
+			response.getWriter().println(JsonConvertidor.toJson(lista));
 		}
 	   
 	   
@@ -167,19 +179,27 @@ public class HorasHombreController {
 		   System.out.println("si entraaaaaaa  INICIA");
 			//AsignadorDeCharset.asignar(request, response);
 			HorasHombre h = horasHombreDao.consult(id);
+			Locale l = new Locale("es","MX");
+			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
+			Date fec =cal.getTime();
+			System.out.println("fecha mexico:"+fec.toString());		
 			if (h.getHoraIncio()== null){
 				System.out.println("pasa el ifffff");
-				Locale l = new Locale("es","MX");
-				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
-				Date fec =cal.getTime();
-				System.out.println("fecha mexico:"+fec.toString());		
 				h.setHoraIncio(fec);
-				horasHombreDao.update(h);
-			}else{			
-				System.out.println("pasa al esle");
-				
-				
+				//horasHombreDao.update(h);
+			}else{			   //inicia un periodo
+				System.out.println("pasa al esle con "+h.getInicioParcial());
+				if (h.getInicioParcial()==null){
+					System.out.println("------------");
+					h.setInicioParcial(fec);
+					System.out.println("inicio parcial:"+h.getInicioParcial());
+				}else{
+					System.out.println("presiono inicia cuando ya habia otro iniciado");
+					
+				}
+				//horasHombreDao.update(h);
 			}
+			horasHombreDao.update(h);
 			//response.getWriter().println(JsonConvertidor.toJson(h));
 		}
 	   
@@ -192,22 +212,67 @@ public class HorasHombreController {
 			Locale l = new Locale("es","MX");
 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
 			Date fecStop =cal.getTime();
-			System.out.println("la hora del inicio es :"+h.getHoraIncio());
-			System.out.println("la hora del stop es :"+fecStop);
-			double dif = diferenciasDeFechas(h.getHoraIncio(),fecStop);
-			h.setTiempoParcial(dif);
-			
+			if (h.getTiempoParcial() == 0 ){   /// si es el primer inicio
+					System.out.println("la hora del inicio es :"+h.getHoraIncio());
+					System.out.println("la hora del stop es :"+fecStop);
+					long dif = diferenciasDeFechas(h.getHoraIncio(),fecStop);
+					h.setTiempoParcial(dif);
+			}else{                            // si es un periodo
+				System.out.println("ELSE*** ");				
+				long aux= h.getTiempoParcial();
+				if (h.getInicioParcial() == null){  /// si solo presionaron el boton de stop sin iniciar antes
+					System.out.println("no han iniciado primero :");
+				}else{                               /// si se inicio un periodo correctamente
+					System.out.println("ELSE  else inicio es :"+h.getInicioParcial());
+					System.out.println("ELSE else stop es :"+fecStop);
+					long dif = diferenciasDeFechas(h.getInicioParcial(),fecStop);
+					long newParcial= aux+dif;
+					h.setTiempoParcial(newParcial);
+					h.setInicioParcial(null);
+					//h.setFinParcial(null);
+				}
+				horasHombreDao.update(h);
+				//double dif = diferenciasDeFechas(h.getInicioParcial(),fecStop);
+				
+			}
 			horasHombreDao.update(h);
 			//response.getWriter().println(JsonConvertidor.toJson(h));
 		}
 	  
+	   @RequestMapping(value = {"/termina/{id}" }, method = RequestMethod.GET)
+	 		public void termina(@PathVariable Long id)
+	 				throws IOException, java.text.ParseException {
+	 		   System.out.println("si entraaaaaaa  termina");
+	 			//AsignadorDeCharset.asignar(request, response);
+	 			HorasHombre h = horasHombreDao.consult(id);
+	 			Locale l = new Locale("es","MX");
+	 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
+	 			Date fecStop =cal.getTime();
+	 			
+	 			if (h.getInicioParcial()==null && h.getTiempoParcial()==0){
+	 				System.out.println("la hora del inicio es :"+h.getHoraIncio());
+					System.out.println("la hora del stop es :"+fecStop);
+					long dif = diferenciasDeFechas(h.getHoraIncio(),fecStop);
+					h.setTiempoTotal(dif);
+	 			}else{
+	 				System.out.println("debe terminar primero con un stop....");
+	 			}
+	 			if (h.getTiempoParcial()>0){
+	 				h.setTiempoTotal(h.getTiempoParcial());
+		 			h.setTiempoHoras(formatoFecha(h.getTiempoTotal()));
+		 			horasHombreDao.update(h);
+		 			System.out.println("total de milisegundos"+h.getTiempoTotal());
+		 			System.out.println("total en horas formateadas"+h.getTiempoHoras());
+	 				
+	 			}
+	 			
 	   
-	   
+	   }
 	 //Diferencias entre dos fechas
 	    //@param fechaInicial La fecha de inicio
 	    //@param fechaFinal  La fecha de fin
 	    //@return Retorna el numero de dias entre dos fechas
-	    public static synchronized double diferenciasDeFechas(Date fechaInicial, Date fechaFinal) throws java.text.ParseException {
+	    public static synchronized long diferenciasDeFechas(Date fechaInicial, Date fechaFinal) throws java.text.ParseException {
 	    	
 
 	        long fechaInicialMs = fechaInicial.getTime();
