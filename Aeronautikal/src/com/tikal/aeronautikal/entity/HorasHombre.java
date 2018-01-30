@@ -13,11 +13,13 @@ public class HorasHombre {
 	private Long idDiscrepancia;
 	private String accion;
 	private Long idEmpleado;
+	private String Empleado;
 	private String estatus;
 	private Date horaIncio;
 	private Date horaFin;
 	private Date finParcial;
-	private Date tiempoTotal;
+	private double tiempoTotal;
+	private double tiempoParcial;
 	
 	
 	public Long getId() {
@@ -50,6 +52,13 @@ public class HorasHombre {
 	public void setIdEmpleado(Long idEmpleado) {
 		this.idEmpleado = idEmpleado;
 	}
+	
+	public String getEmpleado() {
+		return Empleado;
+	}
+	public void setEmpleado(String empleado) {
+		Empleado = empleado;
+	}
 	public String getEstatus() {
 		return estatus;
 	}
@@ -74,11 +83,17 @@ public class HorasHombre {
 	public void setFinParcial(Date finParcial) {
 		this.finParcial = finParcial;
 	}
-	public Date getTiempoTotal() {
+	public double getTiempoTotal() {
 		return tiempoTotal;
 	}
-	public void setTiempoTotal(Date tiempoTotal) {
+	public void setTiempoTotal(double tiempoTotal) {
 		this.tiempoTotal = tiempoTotal;
+	}
+	public double getTiempoParcial() {
+		return tiempoParcial;
+	}
+	public void setTiempoParcial(double tiempoParcial) {
+		this.tiempoParcial = tiempoParcial;
 	}
 	
 	

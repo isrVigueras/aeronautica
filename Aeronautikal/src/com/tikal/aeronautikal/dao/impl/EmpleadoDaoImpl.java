@@ -26,16 +26,20 @@ public class EmpleadoDaoImpl implements EmpleadoDao{
 	   @Override
 		public void update(EmpleadoEntity e) {
 		   System.out.print("empleado:"+e.getId());
+		   System.out.print("empleado:"+e.getApellidoMaterno());
 		   EmpleadoEntity old = this.consult(e.getId());
-		System.out.print("old:"+old);
+		   System.out.print("old:"+old);
 			if (old != null) {
-//				old.setMarca(nave.getMarca());
+				 System.out.print("ejsfffss");
 				old.setApellidoMaterno(e.getApellidoPaterno());
 				old.setApellidoPaterno(e.getApellidoPaterno());
 				old.setIdPuesto(e.getIdPuesto());
 				old.setNombre(e.getNombre());
+				System.out.print("old.get apmater"+old.getApellidoMaterno());
 			}
-				ofy().save().entity(old);
+			ofy().save().entity(old).now();
+			
+				//ofy().save().entity(e);
 	   }
 
 	    

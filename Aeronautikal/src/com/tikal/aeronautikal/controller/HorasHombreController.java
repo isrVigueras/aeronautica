@@ -57,7 +57,7 @@ public class HorasHombreController {
 		   		
 		   		entry.setAccion("Accion de la discrepancia");
 		   		entry.setEstatus("ABIERTA");
-		   		entry.setIdDiscrepancia(Long.parseLong("02029392930"));
+		   		entry.setIdDiscrepancia(Long.parseLong("5471169859813376"));
 		   		entry.setIdEmpleado(Long.parseLong("0101010101"));
 		   		entry.setIdOrden(Long.parseLong("0202020202"));
 		   		Locale l = new Locale("es","MX");
@@ -108,6 +108,7 @@ public class HorasHombreController {
 		public void findAllHoras(HttpServletResponse response, HttpServletRequest request) throws IOException {
 			AsignadorDeCharset.asignar(request, response);
 			List<HorasHombre> lista = horasHombreDao.getAll();
+			System.out.println("lista:"+lista);
 			if (lista == null) {
 				lista = new ArrayList<HorasHombre>();
 			}
@@ -166,19 +167,19 @@ public class HorasHombreController {
 		   System.out.println("si entraaaaaaa  INICIA");
 			//AsignadorDeCharset.asignar(request, response);
 			HorasHombre h = horasHombreDao.consult(id);
-			Locale l = new Locale("es","MX");
-			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
-			Date fec =cal.getTime();
-			//Calendar  resta = cal-Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
-		//	SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd::HH:mm:ss");
-			//String fec= sdf.format(cal.getTime());
-			System.out.println("fecha mexico:"+fec.toString());
-			Date dia = new Date();
-			////System.out.println("Date:"+dia);
-			h.setHoraIncio(fec);
-		//	h.setHoraFin();
-			//h.setHoraFin(h.getHoraIncio()-h.getHoraFin());
-			horasHombreDao.update(h);
+			if (h.getHoraIncio()== null){
+				System.out.println("pasa el ifffff");
+				Locale l = new Locale("es","MX");
+				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
+				Date fec =cal.getTime();
+				System.out.println("fecha mexico:"+fec.toString());		
+				h.setHoraIncio(fec);
+				horasHombreDao.update(h);
+			}else{			
+				System.out.println("pasa al esle");
+				
+				
+			}
 			//response.getWriter().println(JsonConvertidor.toJson(h));
 		}
 	   
@@ -194,66 +195,11 @@ public class HorasHombreController {
 			System.out.println("la hora del inicio es :"+h.getHoraIncio());
 			System.out.println("la hora del stop es :"+fecStop);
 			double dif = diferenciasDeFechas(h.getHoraIncio(),fecStop);
-			//Calendar  resta = cal-Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
-		//	SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd::HH:mm:ss");
-			//String fec= sdf.format(cal.getTime());
+			h.setTiempoParcial(dif);
 			
-			System.out.println("dias de diferencia:"+dif);
-			//Date dia = new Date();
-			////System.out.println("Date:"+dia);
-			//h.setHoraIncio(fec);
-		//	h.setHoraFin();
-			//h.setHoraFin(h.getHoraIncio()-h.getHoraFin());
-			//horasHombreDao.update(h);
+			horasHombreDao.update(h);
 			//response.getWriter().println(JsonConvertidor.toJson(h));
 		}
-//	   @RequestMapping(value = {"/timer/{idHoras}/{estado}" }, method = RequestMethod.GET)
-//		public void start(HttpServletResponse response, HttpServletRequest request,@PathVariable Long idHoras, @PathVariable String estado)
-//				throws IOException {
-//			AsignadorDeCharset.asignar(request, response);
-//			HorasHombre h = horasHombreDao.consult(idHoras);
-//			//Integer tiempoEnMilisegundos=(600000000);
-//			System.out.println("ya estoy en timerrr y el estado del timer es::"+estado);
-//			Timer timer= new Timer();
-//			System.out.println("ya estoy en timerrr y el estado del}2");
-////			Timer timer = new Timer (tiempoEnMilisegundos, new ActionListener ()
-////					
-////			{ 
-////			    public void actionPerformed(ActionEvent e) 
-////			    { 
-////			        System.out.println("esta en el timer");//bfuncion de start
-////			     } 
-////			}); 
-//			//checar si ya hay hora de inicio de la tarea
-//			//timer.stop();
-//			
-//			
-//			
-//			System.out.println("checando si hay hora inicio:"+h.getHoraIncio());
-//			if (h.getHoraIncio()== null){
-//				System.out.println("pasa el ifffff");
-//				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd:hh:mm:ss");
-//				String fecha= sdf.format(new Date());
-//				h.setHoraIncio(fecha);
-//				horasHombreDao.update(h);
-//				timer.start();
-//				System.out.println("timer primero:"+timer.getNbNotifications());
-//				System.out.println("hora inicio:"+h.getHoraIncio());
-//				
-//			}else{			
-//				System.out.println("pasa al esle");
-//					switch (estado){
-//					case "start": timer.start();System.out.println("timer en start:"); break;
-//					case "stop": timer.stop();System.out.println("timer en stop");break;
-//					}
-//					System.out.println("timer:"+timer);
-//			}
-//		
-//			
-//			response.getWriter().println("ok en timer");
-//		}
-//	
-//	  
 	  
 	   
 	   
@@ -262,31 +208,32 @@ public class HorasHombreController {
 	    //@param fechaFinal  La fecha de fin
 	    //@return Retorna el numero de dias entre dos fechas
 	    public static synchronized double diferenciasDeFechas(Date fechaInicial, Date fechaFinal) throws java.text.ParseException {
-
-//	        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-//	        String fechaInicioString = df.format(fechaInicial);
-//	        try {
-//	            fechaInicial = df.parse(fechaInicioString);
-//	        } catch (ParseException ex) {
-//	        }
-//
-//	        String fechaFinalString = df.format(fechaFinal);
-//	        try {
-//	            fechaFinal = df.parse(fechaFinalString);
-//	        } catch (ParseException ex) {
-//	        }
+	    	
 
 	        long fechaInicialMs = fechaInicial.getTime();
 	        long fechaFinalMs = fechaFinal.getTime();
 	        long diferencia = fechaFinalMs - fechaInicialMs;
 	        System.out.println("diferencia en milisegundos:"+diferencia);
-	       // double dias = Math.floor(diferencia);
-	       double dif =  (diferencia / (1000 * 60));
-	       System.out.println("dif:"+dif);
+	        System.out.println("diferencia formateada:"+formatoFecha(diferencia)) ; 
+	      
 	        return diferencia;
 	    }
 	 
 	 
-
+	    public static String formatoFecha(long milisegundos){	    	    System.out.println("entra a formatear fecha con estos milisegundos:"+milisegundos)
+		   ;
+		       double dif =  (milisegundos / (1000 * 60*60));
+		       double hora = Math.floor(milisegundos/3600000);
+		       double  restohora = milisegundos%3600000;
+		       double minuto = Math.floor(restohora/60000);
+		       //double restominuto = restohora%60000;
+		       String sh= String.valueOf((int)hora);
+		       String sm= String.valueOf((int)minuto);
+		       String parcial= sh+":"+sm;
+		       System.out.println(" ---------------------horas formateada ="+parcial);      
+	    	
+	    	return parcial;
+	    	
+	    }
 
 }

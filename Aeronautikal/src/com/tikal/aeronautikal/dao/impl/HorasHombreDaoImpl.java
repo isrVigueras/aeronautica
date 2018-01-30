@@ -51,9 +51,9 @@ public class HorasHombreDaoImpl implements HorasHombreDao {
 		}
 
 		@Override
-		public void findAll(HorasHombre h) {
+		public  List<HorasHombre> findAll() {
 			// TODO Auto-generated method stub
-			
+			return ofy().load().type(HorasHombre.class).list();
 		}
 	   
 		public List<HorasHombre> getAll() {

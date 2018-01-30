@@ -16,7 +16,7 @@ public interface HorasHombreDao {
 	
 	public HorasHombre consult(Long id);	
     
-	public void findAll(HorasHombre h);
+	public List<HorasHombre> findAll();
 	
 	public List<HorasHombre> getAll();
 	

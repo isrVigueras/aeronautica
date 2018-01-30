@@ -29,6 +29,7 @@ import com.tikal.aeronautikal.dao.ComponenteDiscrepanciaDao;
 import com.tikal.aeronautikal.dao.DiscrepanciaDao;
 import com.tikal.aeronautikal.dao.EmpresaDao;
 import com.tikal.aeronautikal.dao.EventoDao;
+import com.tikal.aeronautikal.dao.HorasHombreDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
 import com.tikal.aeronautikal.dao.RequisicionDao;
 import com.tikal.aeronautikal.dao.ValeDao;
@@ -37,6 +38,7 @@ import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
 import com.tikal.aeronautikal.entity.EventoEntity;
+import com.tikal.aeronautikal.entity.HorasHombre;
 import com.tikal.aeronautikal.entity.ValeEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.formatos.GeneraDiscrepanciaPdf;
@@ -88,6 +90,10 @@ public class DiscrepanciaController {
 		 @Autowired
 		 @Qualifier("valeDao")
 		 ValeDao valeDao;
+		 
+		 @Autowired
+		 @Qualifier("horasHombreDao")
+		 HorasHombreDao horasHombreDao;
 		 
 		 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 		   
@@ -156,6 +162,8 @@ public class DiscrepanciaController {
 		        	d.setFolio((d.getTaller()+d.getSeccion()+"-"+ordenDao.consult(folio).getFolio()));
 		        	 System.out.println("el nuevo folio de discrepancia: "+ d.getFolio());
 		        	 d.setEstatus("ABIERTA");
+		        	
+		        	 
 		        	 //ComponenteEntity c = new ComponenteEntity();
 		        	// ACTUALIZABA LAS EXISTENCIAS 
 //		        	 c= componenteDao.consult(d.getFolio_componente());
@@ -163,6 +171,8 @@ public class DiscrepanciaController {
 //		        	 c.setD_cantidad(ex);
 //		        	 componenteDao.save(c);
 		        	 discrepanciaDao.save(d);
+		        	 // aqui se generan las horas hombre para cada discrepancia que se cree
+		        	 creaHorasHombre(d.getId());
 		        
 		        	 response.getWriter().println(JsonConvertidor.toJson(d));
 		        } catch (RuntimeException ignored) {
@@ -375,6 +385,23 @@ public class DiscrepanciaController {
 				   response.getWriter().println("ok");
 			   }
 			  
+			  
+			  
+			  public HorasHombre creaHorasHombre(long id){
+				  DiscrepanciaEntity dis = discrepanciaDao.consult(id);
+				  //OrdenVo orden =ordenDao.consult(dis.getFolioOrden());
+				 // EmpresaEntity empresa= empresaDao.consult(orden.getEmpresa());
+				  //AeronaveEntity nave = aeronaveDao.consult(orden.getAeronave());
+				  
+				  HorasHombre hh= new HorasHombre();
+				  hh.setIdOrden(dis.getFolioOrden());
+				  hh.setIdDiscrepancia(id);
+				  hh.setAccion(dis.getAccion());
+				  hh.setEstatus("ABIERTA");
+				  horasHombreDao.save(hh);
+				  return hh;
+				  
+			  }
 			  
 			  public void generarVales(Long idDiscrepancia){
 				  //consultar componentes de la discrepancia que no tengan vale
