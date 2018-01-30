@@ -740,7 +740,7 @@ $routeProvider.when('/Admin/Horas_Hombre', {
   });
 $routeProvider.when('/Usuario/Horas_Hombre', {
     templateUrl: "horas_hombre.html",
-    controller: "MainController"
+    controller: "UsuariosH_Hombre_Controller"
   });
 $routeProvider.when('/Admin/alta_empleados', {
     templateUrl: "alta_Empleados.html",
