@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.appengine.repackaged.com.google.common.flogger.parser.ParseException;
+import com.tikal.aeronautikal.dao.EmpleadoDao;
 import com.tikal.aeronautikal.dao.HorasHombreDao;
 import com.tikal.aeronautikal.entity.HorasHombre;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
@@ -39,6 +40,10 @@ public class HorasHombreController {
 	 @Autowired
 	 @Qualifier("horasHombreDao")
 	 HorasHombreDao horasHombreDao;
+	 
+	 @Autowired
+	 @Qualifier("empleadoDao")
+	EmpleadoDao empleadoDao;
 	 
 
 	 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
@@ -154,11 +159,13 @@ public class HorasHombreController {
 	   }
 	   
 		   
-	   @RequestMapping(value = {"/asignar" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-		public void asigna(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
+	   @RequestMapping(value = {"/asignar/{idEmpleado}/{idHorasHombre}" }, method = RequestMethod.POST, produces = "application/json")
+		public void asigna(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idEmpleado, @PathVariable Long idHorasHombre)
 				throws IOException {
 			AsignadorDeCharset.asignar(request, response);
-			HorasHombre h = (HorasHombre) JsonConvertidor.fromJson(json, HorasHombre.class);
+			HorasHombre h = horasHombreDao.consult(idHorasHombre);
+			h.setIdEmpleado(idEmpleado);
+			h.setEmpleado((empleadoDao.consult(idEmpleado)).getNombreCompleto());
 			horasHombreDao.update(h);
 			response.getWriter().println(JsonConvertidor.toJson(h));
 		}
