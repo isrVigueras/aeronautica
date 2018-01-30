@@ -443,7 +443,7 @@ function RemoteResource($http,$q, baseUrl) {
     return promise;
     
   }
-}
+
    this.puestos_lista = function() {
     var defered=$q.defer();
     var promise=defered.promise;
@@ -460,6 +460,23 @@ function RemoteResource($http,$q, baseUrl) {
     return promise;
     
   }
+     this.disHoras_lista = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/horasHombre/findAll'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+}
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
 function RemoteResourceProvider() {
   var _baseUrl;
@@ -715,6 +732,9 @@ $routeProvider.when('/Admin/Horas_Hombre', {
     resolve: {
       empleados_lista:['remoteResource',function(remoteResource) {
         return remoteResource.empleados_lista();
+      }],
+       discrepancias:['remoteResource',function(remoteResource) {
+        return remoteResource.disHoras_lista();
       }]
     }
   });

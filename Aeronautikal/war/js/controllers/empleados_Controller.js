@@ -86,8 +86,8 @@ app.controller('EmpleadoMuestraController', ['$scope','eliminaEmpleadoServicio',
   }
 
     $scope.Actualiza_Empleado=function() {   
-      console.log($scope.condicion_edi);
-      ActualizaEmpleadoServicio.actualiza_empleado($scope.condicion_edi).then(
+      console.log($scope.empleado_edi);
+      ActualizaEmpleadoServicio.actualiza_empleado($scope.empleado_edi).then(
         function(data) {
           console.log(data);
           alert("Datos de Trabajador Modificados");

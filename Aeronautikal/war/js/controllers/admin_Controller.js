@@ -87,8 +87,10 @@ app.controller('PuestoMuestraController', ['$scope','eliminaCondicionServicio','
         })  
   }
 }]);
-app.controller('HorasHombreController', ['$scope', 'empleados_lista',function($scope, empleados_lista) {
+app.controller('HorasHombreController', ['$scope', 'empleados_lista','discrepancias',function($scope, empleados_lista,discrepancias) {
     console.log(empleados_lista);
+    console.log("discrepancias para signar horas");
+    console.log(discrepancias);
    //$scope.puestos_lista = puestos_lista;
    $scope.puestoform = {
     id: undefined,
