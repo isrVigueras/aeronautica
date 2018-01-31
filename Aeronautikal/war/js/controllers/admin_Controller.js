@@ -118,7 +118,7 @@ app.controller('HorasHombreController', ['$scope', 'empleados_lista','discrepanc
       AsignarDiscServicio.asigna_discre($scope.IdEmpleado.idEmpleado,id).then(
         function(data) {
           console.log(data);
-          //location.reload();
+          location.reload();
           alert("Discrepancia Asignada");
           })         
   }

@@ -466,7 +466,7 @@ function RemoteResource($http,$q, baseUrl) {
     
     $http({
       method: 'GET',
-      url: baseUrl + '/horasHombre/findAll'
+      url: baseUrl + '/horasHombre/getNoAsignadas'
     }).success(function(data, status, headers, config) {
       defered.resolve(data);
     }).error(function(data, status, headers, config) {
