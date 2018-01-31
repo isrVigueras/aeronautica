@@ -459,7 +459,7 @@ function RemoteResource($http,$q, baseUrl) {
     
     return promise;
     
-  }
+  } 
      this.disHoras_lista = function() {
     var defered=$q.defer();
     var promise=defered.promise;
@@ -467,6 +467,22 @@ function RemoteResource($http,$q, baseUrl) {
     $http({
       method: 'GET',
       url: baseUrl + '/horasHombre/findAll'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+       this.dis_asignadas_lista = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/horasHombre/getAsignadas'
     }).success(function(data, status, headers, config) {
       defered.resolve(data);
     }).error(function(data, status, headers, config) {
@@ -740,7 +756,12 @@ $routeProvider.when('/Admin/Horas_Hombre', {
   });
 $routeProvider.when('/Usuario/Horas_Hombre', {
     templateUrl: "horas_hombre.html",
-    controller: "UsuariosH_Hombre_Controller"
+    controller: "UsuariosH_Hombre_Controller",
+    resolve: {
+      dis_asignadas:['remoteResource',function(remoteResource) {
+        return remoteResource.dis_asignadas_lista();
+      }]
+    }
   });
 $routeProvider.when('/Admin/alta_empleados', {
     templateUrl: "alta_Empleados.html",

@@ -3,7 +3,7 @@
 <div class="contenedor" style="color:#EEE6E6">
  <center><h1>Horas Hombre</h1></center>
   <div class="row" style="margin: 1% 13%;">
-    <label for="d_componente">Nombre del Usuario: Alberto Peña</label>
+    <label for="d_componente">Nombre del Usuario: {{dis_asignadas.Empleado}}</label>
     <br>
     <label for="d_componente">Orden de trabajo: 13000</label>
 
@@ -17,10 +17,10 @@
       </tr>
   </thead>
     <tbody>
-      <tr>
-        <td>123999</td>
-        <td>Hacer cosas de accion</td>
-        <td>       <button type="button" class="btn btn-default"  ng-click="iniciar_trabajo(1)">
+      <tr ng-repeat="dis in dis_asignadas">
+        <td>{{dis.idDiscrepancia}}</td>
+        <td>{{dis.accion}}</td>
+        <td>       <button type="button" class="btn btn-default"  ng-click="iniciar_trabajo(dis.id)">
   <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
 </button>
 <button type="button" class="btn btn-default"  ng-click="pausar_trabajo(1)">

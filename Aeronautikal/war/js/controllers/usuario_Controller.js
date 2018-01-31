@@ -22,8 +22,9 @@ app.service('PausarTrabajoServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
-app.controller('UsuariosH_Hombre_Controller', ['$scope','IniciaTrabajoServicio','PausarTrabajoServicio',function($scope,IniciaTrabajoServicio,PausarTrabajoServicio) {
-    //console.log(empleados_lista);
+app.controller('UsuariosH_Hombre_Controller', ['$scope','IniciaTrabajoServicio','PausarTrabajoServicio','dis_asignadas',function($scope,IniciaTrabajoServicio,PausarTrabajoServicio,dis_asignadas) {
+    $scope.dis_asignadas = dis_asignadas;
+    console.log(dis_asignadas);
    
      $scope.iniciar_trabajo=function(id) {
     	console.log(id);

@@ -15,34 +15,16 @@
       </tr>
   </thead>
     <tbody>
-      <tr>
-        <td>123</td>
-        <td>1200</td>
-        <td>Hacer cosas de accion</td>
-        <td><select class="form-control" ng-model="empresaform.pais" id="em-pais" name="em-pais" type="checkbox">
-  <option value="">Elige un Tecnico</option>
-  <option Value="Mexico">Rafael Perez</option>
-  <option Value="Mexico">Armando Nieto</option>
-  <option Value="Mexico">Edgar Acuña</option>
-  </select></td>
-        <td>      <button type="button" class="btn btn-default" data-toggle="modal" ng-click="muestra(inv_consulta)" data-target="#mydetalle">
-  <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
-</button>
-<!--<input type ='button' value = 'texto boton' onclick="window.open('http://localhost/aeronau/Detalle_discrepancias.html', 'width=800,height=600');"/>--> 
-
-</td>
-      </tr>
-       <tr>
-        <td>123</td>
-        <td>1200</td>
-        <td>Hacer cosas de accion</td>
-        <td><select class="form-control" ng-model="empresaform.pais" id="em-pais" name="em-pais" type="checkbox">
-  <option value="">Elige un Tecnico</option>
-  <option Value="Mexico">Rafael Perez</option>
-  <option Value="Mexico">Armando Nieto</option>
-  <option Value="Mexico">Edgar Acuña</option>
-  </select></td>
-        <td>      <button type="button" class="btn btn-default" data-toggle="modal" ng-click="muestra(inv_consulta)" data-target="#mydetalle">
+       <tr ng-repeat="disc in discrepancias">
+        <td>{{disc.idOrden}}</td>
+        <td>{{disc.idDiscrepancia}}</td>
+        <td>{{disc.accion}}</td>
+        <td><select class="form-control" ng-model="IdEmpleado.idEmpleado" >
+            <option value="">--Elige un Responsable--</option>
+          <option value="{{empleado.id}}" ng-repeat="empleado in empleados_lista"  >{{empleado.nombre}} {{empleado.apellidoPaterno}}</option>
+        </select>
+         </td>
+        <td>      <button type="button" class="btn btn-default"  ng-click="asigna_discre(disc.id)">
   <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
 </button>
 <!--<input type ='button' value = 'texto boton' onclick="window.open('http://localhost/aeronau/Detalle_discrepancias.html', 'width=800,height=600');"/>--> 
@@ -61,4 +43,5 @@
   
 </div>
 
-<br><br><br><br><br><br><br><br><br><br> 
+<br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br>  

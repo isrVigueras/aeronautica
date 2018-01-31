@@ -1,3 +1,15 @@
+//servicio asignar discrepancia
+app.service('AsignarDiscServicio', [ '$http', '$q', function($http, $q) {
+  this.asigna_discre = function(id,id2) {
+    var d = $q.defer();
+    $http.post(" /horasHombre/asignar/"+id+"/"+id2).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
 //servicio alta empresa
 app.service('altaPuestoServicio', [ '$http', '$q', function($http, $q) {
   this.alta_puesto = function(objt) {
@@ -87,25 +99,27 @@ app.controller('PuestoMuestraController', ['$scope','eliminaCondicionServicio','
         })  
   }
 }]);
-app.controller('HorasHombreController', ['$scope', 'empleados_lista','discrepancias',function($scope, empleados_lista,discrepancias) {
+app.controller('HorasHombreController', ['$scope', 'empleados_lista','discrepancias','AsignarDiscServicio',function($scope, empleados_lista,discrepancias,AsignarDiscServicio) {
+    $scope.discrepancias = discrepancias;
+    $scope.empleados_lista = empleados_lista;
     console.log(empleados_lista);
     console.log("discrepancias para signar horas");
     console.log(discrepancias);
    //$scope.puestos_lista = puestos_lista;
-   $scope.puestoform = {
-    id: undefined,
-    Clave: undefined,
-    Descripcion:""
+   $scope.IdEmpleado = {
+    idEmpleado: undefined
   }
-     $scope.guarda_puesto=function() {
+     $scope.asigna_discre=function(id) {
     //console.log(altarequisicion);
-    console.log($scope.puestoform);
-      altaPuestoServicio.alta_puesto($scope.puestoform).then(
+     console.log("id de horas horasHombre");
+      console.log(id);
+      console.log("id empleado");
+    console.log($scope.IdEmpleado);
+      AsignarDiscServicio.asigna_discre($scope.IdEmpleado.idEmpleado,id).then(
         function(data) {
           console.log(data);
-          location.reload();
-          alert("Puesto Guardado");
-          location.href="#/Admin/Puestos/Consulta";
-        })         
+          //location.reload();
+          alert("Discrepancia Asignada");
+          })         
   }
 }]);
