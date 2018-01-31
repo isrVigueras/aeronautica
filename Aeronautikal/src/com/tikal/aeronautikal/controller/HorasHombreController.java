@@ -196,11 +196,11 @@ public class HorasHombreController {
 			response.getWriter().println(JsonConvertidor.toJson(h));
 		}
 	    
-	   @RequestMapping(value = {"/inicia/{id}" }, method = RequestMethod.GET)
-		public void ini(@PathVariable Long id)
+	   @RequestMapping(value = {"/start/{id}" }, method = RequestMethod.POST,produces = "application/json")
+		public void ini(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id)
 				throws IOException {
 		   System.out.println("si entraaaaaaa  INICIA");
-			//AsignadorDeCharset.asignar(request, response);
+			AsignadorDeCharset.asignar(request, response);
 			HorasHombre h = horasHombreDao.consult(id);
 			Locale l = new Locale("es","MX");
 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
@@ -223,14 +223,14 @@ public class HorasHombreController {
 				//horasHombreDao.update(h);
 			}
 			horasHombreDao.update(h);
-			//response.getWriter().println(JsonConvertidor.toJson(h));
+			response.getWriter().println(JsonConvertidor.toJson(h));
 		}
 	   
-	   @RequestMapping(value = {"/stop/{id}" }, method = RequestMethod.GET)
-		public void stop(@PathVariable Long id)
+	   @RequestMapping(value = {"/pausa/{id}" }, method = RequestMethod.POST,produces = "application/json")
+		public void stop(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id)
 				throws IOException, java.text.ParseException {
 		   System.out.println("si entraaaaaaa  stop");
-			//AsignadorDeCharset.asignar(request, response);
+			AsignadorDeCharset.asignar(request, response);
 			HorasHombre h = horasHombreDao.consult(id);
 			Locale l = new Locale("es","MX");
 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
@@ -259,28 +259,25 @@ public class HorasHombreController {
 				
 			}
 			horasHombreDao.update(h);
-			//response.getWriter().println(JsonConvertidor.toJson(h));
+			response.getWriter().println(JsonConvertidor.toJson(h));
 		}
 	  
-	   @RequestMapping(value = {"/termina/{id}" }, method = RequestMethod.GET)
-	 		public void termina(@PathVariable Long id)
+	   @RequestMapping(value = {"/stop/{id}" }, method = RequestMethod.POST,produces = "application/json")
+	 		public void termina(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id)
 	 				throws IOException, java.text.ParseException {
 	 		   System.out.println("si entraaaaaaa  termina");
-	 			//AsignadorDeCharset.asignar(request, response);
+	 			AsignadorDeCharset.asignar(request, response);
 	 			HorasHombre h = horasHombreDao.consult(id);
 	 			Locale l = new Locale("es","MX");
 	 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
 	 			Date fecStop =cal.getTime();
 	 			
-	 			if (h.getInicioParcial()==null && h.getTiempoParcial()==0){
+	 			if (h.getTiempoParcial()==0){
 	 				System.out.println("la hora del inicio es :"+h.getHoraIncio());
 					System.out.println("la hora del stop es :"+fecStop);
 					long dif = diferenciasDeFechas(h.getHoraIncio(),fecStop);
 					h.setTiempoTotal(dif);
 	 			}else{
-	 				System.out.println("debe terminar primero con un stop....");
-	 			}
-	 			if (h.getTiempoParcial()>0){
 	 				h.setTiempoTotal(h.getTiempoParcial());
 		 			h.setTiempoHoras(formatoFecha(h.getTiempoTotal()));
 		 			horasHombreDao.update(h);
@@ -289,8 +286,32 @@ public class HorasHombreController {
 	 				
 	 			}
 	 			
-	   
+	 			response.getWriter().println(JsonConvertidor.toJson(h));
 	   }
+	   
+	   
+	   @RequestMapping(value = {"/restart/{id}" }, method = RequestMethod.POST,produces = "application/json")
+		public void restart(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id)
+				throws IOException, java.text.ParseException {
+		   System.out.println("si entraaaaaaa  restart");
+			AsignadorDeCharset.asignar(request, response);
+			HorasHombre h = horasHombreDao.consult(id);
+			Locale l = new Locale("es","MX");
+			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
+			Date fecStop =cal.getTime();
+			
+			h.setHoraIncio(null);
+			h.setInicioParcial(null);
+			h.setTiempoHoras("");
+			h.setTiempoParcial(0);
+			h.setTiempoTotal(0);
+			
+			horasHombreDao.update(h);
+	 		System.out.println("SE REINICIO EL CONTADOR DE HORAS....");
+			response.getWriter().println(JsonConvertidor.toJson(h));
+  }
+	   
+	   
 	 //Diferencias entre dos fechas
 	    //@param fechaInicial La fecha de inicio
 	    //@param fechaFinal  La fecha de fin
