@@ -15,7 +15,7 @@ public class HorasHombre {
 	private String accion;
 	@Index private Long idEmpleado;
 	private String Empleado;
-	private String estatus;
+	@Index private String estatus;
 	private Date horaIncio;
 	//private Date horaFin;
 	private Date inicioParcial;

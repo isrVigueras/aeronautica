@@ -397,7 +397,7 @@ public class DiscrepanciaController {
 				  hh.setIdOrden(dis.getFolioOrden());
 				  hh.setIdDiscrepancia(id);
 				  hh.setAccion(dis.getAccion());
-				  hh.setEstatus("ABIERTA");
+				  hh.setEstatus("NO ASIGNADA");
 				  hh.setTiempoParcial(0);
 				  hh.setTiempoTotal(0);
 				  horasHombreDao.save(hh);

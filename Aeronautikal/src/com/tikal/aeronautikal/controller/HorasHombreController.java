@@ -133,7 +133,22 @@ public class HorasHombreController {
 				response.getWriter().println(JsonConvertidor.toJson(lista));
 
 			}
-	     @RequestMapping(value = { "/getAsignadasByEmpleado/{idEmpleado}" }, method = RequestMethod.GET, produces = "application/json")
+	 
+	   @RequestMapping(value = { "/getNoAsignadas" }, method = RequestMethod.GET, produces = "application/json")
+		public void findNoAsignadas(HttpServletResponse response, HttpServletRequest request) throws IOException {
+			AsignadorDeCharset.asignar(request, response);
+			List<HorasHombre> lista = horasHombreDao.getNoAsignadas();
+			
+			System.out.println("No Asignadas::"+lista);
+			if (lista == null) {
+				lista = new ArrayList<HorasHombre>();
+			}
+			response.getWriter().println(JsonConvertidor.toJson(lista));
+
+		}
+
+	   
+	   @RequestMapping(value = { "/getAsignadasByEmpleado/{idEmpleado}" }, method = RequestMethod.GET, produces = "application/json")
 		public void findByEmpleado(HttpServletResponse response, HttpServletRequest request,
 				@PathVariable Long idEmpleado) throws IOException {
 		   System.out.println("ya entro a buscar horas hombe por empleado");
@@ -165,6 +180,7 @@ public class HorasHombreController {
 			AsignadorDeCharset.asignar(request, response);
 			HorasHombre h = horasHombreDao.consult(idHorasHombre);
 			h.setIdEmpleado(idEmpleado);
+			h.setEstatus("ASIGNADA");
 			h.setEmpleado((empleadoDao.consult(idEmpleado)).getNombreCompleto());
 			horasHombreDao.update(h);
 			response.getWriter().println(JsonConvertidor.toJson(h));
