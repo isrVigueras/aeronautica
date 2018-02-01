@@ -173,22 +173,29 @@ public class CompDisController {
 					List<ComponenteDiscrepancia> comps= v.getItems(); //componentes x vale
 					System.out.println("lista de comps en el vale antes:"+comps);
 					System.out.println("componente buscado:"+id);
-					for (ComponenteDiscrepancia c: comps){
-						System.out.println("componente buscado:"+id);
-						System.out.println("componente:"+c.getId());
-						if (c.getId()==id.longValue()){
-							comps.remove(c);
-							System.out.println("se elimino componente"+c.getId());
-							System.out.println("lista de comps en el vale despues:"+comps);
-							v.setItems(comps);
-							valeDao.update(v);
-						}else{
-							System.out.println("no es el componente buscado");
+					if (comps.size()==1){
+						System.out.println("se eliminara el vale"+v.getId());
+						valeDao.delete(v);
+					}else{
+						for (ComponenteDiscrepancia c: comps){
+							System.out.println("componente buscado:"+id);
+							System.out.println("componente:"+c.getId());
+							if (c.getId()==id.longValue()){
+								comps.remove(c);
+								System.out.println("lista de comps en el vale despues:"+comps);							
+								v.setItems(comps);
+								valeDao.update(v);
+								System.out.println("se elimino componente"+c.getId());
+								
+							}else{
+								System.out.println("no es el componente buscado");
+							}
 						}
 					}
 					
 				}
 			   //////////////////////////////////////////////////////////////
+				System.out.println("ahora se borrara el comdis...");
 			   componenteDiscrepanciaDao.delete(componenteDiscrepanciaDao.consult(id));
 			   
 			  

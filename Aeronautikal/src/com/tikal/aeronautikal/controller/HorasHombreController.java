@@ -121,6 +121,8 @@ public class HorasHombreController {
 
 		}
 	   
+	   
+	   //lista de horas hombre asignadas o en estatus EN PROGRESO, EN PAUSA O TERMINADA
 	   @RequestMapping(value = { "/getAsignadas" }, method = RequestMethod.GET, produces = "application/json")
 			public void findAsignadas(HttpServletResponse response, HttpServletRequest request) throws IOException {
 				AsignadorDeCharset.asignar(request, response);
@@ -209,6 +211,7 @@ public class HorasHombreController {
 			if (h.getHoraIncio()== null){
 				System.out.println("pasa el ifffff");
 				h.setHoraIncio(fec);
+				h.setEstatus("EN PROGRESO");
 				//horasHombreDao.update(h);
 			}else{			   //inicia un periodo
 				System.out.println("pasa al esle con "+h.getInicioParcial());
@@ -253,7 +256,8 @@ public class HorasHombreController {
 					h.setTiempoParcial(newParcial);
 					h.setInicioParcial(null);
 					//h.setFinParcial(null);
-				}
+			}
+				h.setEstatus("EN PAUSA");
 				horasHombreDao.update(h);
 				//double dif = diferenciasDeFechas(h.getInicioParcial(),fecStop);
 				
@@ -280,6 +284,7 @@ public class HorasHombreController {
 	 			}else{
 	 				h.setTiempoTotal(h.getTiempoParcial());
 		 			h.setTiempoHoras(formatoFecha(h.getTiempoTotal()));
+		 			h.setEstatus("TERMINADA");
 		 			horasHombreDao.update(h);
 		 			System.out.println("total de milisegundos"+h.getTiempoTotal());
 		 			System.out.println("total en horas formateadas"+h.getTiempoHoras());
@@ -305,6 +310,7 @@ public class HorasHombreController {
 			h.setTiempoHoras("");
 			h.setTiempoParcial(0);
 			h.setTiempoTotal(0);
+			h.setEstatus("ASIGNADA");
 			
 			horasHombreDao.update(h);
 	 		System.out.println("SE REINICIO EL CONTADOR DE HORAS....");

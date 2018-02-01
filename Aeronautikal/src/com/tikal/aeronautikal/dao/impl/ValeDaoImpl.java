@@ -15,15 +15,15 @@ public class ValeDaoImpl implements ValeDao{
 		
 	@Override
 	  public  void save(ValeEntity v) {    
-		System.out.println("si esta en daoimpl salvando "+v);
+		System.out.println("si esta en daoimpl salvando vale"+v);
 	        ofy().save().entity(v).now();
 	    }
 
 	    
 	    public void delete(ValeEntity v) {
-	    	 System.out.println("si esta en daoimpl eliminando"+v);
+	    	 System.out.println("si esta en daoimpl vale eliminando"+v.getId());
 	        ofy().delete().entity(v).now();
-	        System.out.println("eliminando...");
+	        System.out.println(" vale eliminando...");
 	    }
 
 	   @Override

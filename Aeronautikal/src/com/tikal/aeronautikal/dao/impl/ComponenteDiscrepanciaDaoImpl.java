@@ -20,9 +20,9 @@ public class ComponenteDiscrepanciaDaoImpl implements ComponenteDiscrepanciaDao 
 
 	    
 	    public void delete(ComponenteDiscrepancia a) {
-	    	 System.out.println("si esta en daoimpl eliminando "+a);
+	    	 System.out.println("si esta en daoimpl comdis eliminando "+a);
 	        ofy().delete().entity(a).now();
-	        System.out.println("eliminando...");
+	        System.out.println("comdis eliminado... ");
 	    }
 
 	   @Override

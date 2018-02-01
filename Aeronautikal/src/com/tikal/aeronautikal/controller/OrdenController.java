@@ -178,7 +178,10 @@ public class OrdenController {
 	   public void deleteOrden(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
 		@PathVariable Long id) throws IOException {
 		   System.out.println("ya entro a delete de   orden");
-		   ordenDao.delete(ordenDao.consult(id));
+		   //ordenDao.delete(ordenDao.consult(id));
+		   OrdenVo orden =(OrdenVo) JsonConvertidor.fromJson(json, OrdenVo.class);
+		   orden.setEstatus("INACTIVA");
+		   ordenDao.update(orden);
 	   }
 	   
 	   @RequestMapping(value={"/prueba"},method = RequestMethod.GET)

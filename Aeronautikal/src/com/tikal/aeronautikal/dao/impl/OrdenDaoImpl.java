@@ -18,6 +18,7 @@ import com.tikal.aeronautikal.dao.OrdenDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.BaseEntity;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
+import com.tikal.aeronautikal.entity.ValeEntity;
 import com.tikal.aeronautikal.exception.ObjectNotFoundException;
 
 
@@ -89,9 +90,18 @@ public class OrdenDaoImpl implements OrdenDao{
 
 	@Override
 	public void update(OrdenVo o) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub System.out.print("consultando vale:"+v.getId());
+		   OrdenVo old =consult(o.getId());
+		System.out.print("old:"+old);
+			if (old != null) {
+				old.setAccionGeneral(o.getAccionGeneral());
+				old.setAeronave(o.getAeronave());
+				old.setEmpresa(o.getEmpresa());
+				
+			}
+				ofy().save().entity(old);
 	
-			ofy().save().entity(o).now();
+
 		
 		}
 

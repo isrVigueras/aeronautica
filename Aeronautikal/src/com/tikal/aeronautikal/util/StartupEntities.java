@@ -23,13 +23,16 @@ import com.tikal.aeronautikal.entity.EmpresaEntity;
 import com.tikal.aeronautikal.entity.EventoEntity;
 //import com.tikal.aeronautikal.entity.EventoEntity;
 import com.tikal.aeronautikal.entity.OrdenEntity;
+import com.tikal.aeronautikal.entity.Perfil;
 import com.tikal.aeronautikal.entity.PuestoEntity;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
 import com.tikal.aeronautikal.entity.HorasHombre;
 import com.tikal.aeronautikal.entity.Unidad;
+import com.tikal.aeronautikal.entity.Usuario;
 import com.tikal.aeronautikal.entity.ValeEntity;
 
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
+
 
 @Component
 public class StartupEntities {
@@ -62,6 +65,8 @@ public class StartupEntities {
 		ObjectifyService.register(ValePdfVo.class);
 		ObjectifyService.register(PuestoEntity.class);
 		ObjectifyService.register(HorasHombre.class);
+		ObjectifyService.register(Usuario.class);
+		ObjectifyService.register(Perfil.class);
 		
 		
 	}

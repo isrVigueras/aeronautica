@@ -72,7 +72,8 @@ public class HorasHombreDaoImpl implements HorasHombreDao {
 		public List<HorasHombre> getAsignadas() {
 			// TODO Auto-generated method stub
 			System.out.println(" consultando todas la horas hombre asignadas..");
-		    return ofy().load().type(HorasHombre.class).filter("estatus","ASIGNADA").list();
+		   // return ofy().load().type(HorasHombre.class).filter("estatus","ASIGNADA").list();
+		    return ofy().load().type(HorasHombre.class).filter("idEmpleado !=",null).list();
 		
 		}
 		
