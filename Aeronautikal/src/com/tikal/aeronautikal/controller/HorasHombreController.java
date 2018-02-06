@@ -232,7 +232,7 @@ public class HorasHombreController {
 	   @RequestMapping(value = {"/pausa/{id}" }, method = RequestMethod.POST,produces = "application/json")
 		public void stop(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id)
 				throws IOException, java.text.ParseException {
-		   System.out.println("si entraaaaaaa  stop");
+		   System.out.println("si entraaaaaaa  pausa");
 			AsignadorDeCharset.asignar(request, response);
 			HorasHombre h = horasHombreDao.consult(id);
 			Locale l = new Locale("es","MX");
@@ -248,6 +248,8 @@ public class HorasHombreController {
 					System.out.println("la hora del stop es :"+fecStop);
 					long dif = diferenciasDeFechas(h.getHoraIncio(),fecStop);
 					h.setTiempoParcial(dif);
+					String hp= formatoFecha(h.getTiempoParcial());
+		 			h.setParcialEnHoras(hp);
 			}else{                            // si es un periodo
 				System.out.println("ELSE*** ");				
 				long aux= h.getTiempoParcial();
@@ -259,6 +261,11 @@ public class HorasHombreController {
 					long dif = diferenciasDeFechas(h.getInicioParcial(),fecStop);
 					long newParcial= aux+dif;
 					h.setTiempoParcial(newParcial);
+					System.out.println("parcial de milisegundos"+h.getTiempoParcial());
+		 			
+					String hp= formatoFecha(h.getTiempoParcial());
+		 			h.setParcialEnHoras(hp);
+		 			System.out.println("parcial en horas formateadas"+h.getParcialEnHoras());
 					h.setInicioParcial(null);
 					//h.setFinParcial(null);
 			}
@@ -289,7 +296,7 @@ public class HorasHombreController {
 	 			}else{
 	 				h.setTiempoTotal(h.getTiempoParcial());
 		 			h.setTiempoHoras(formatoFecha(h.getTiempoTotal()));
-		 			String hp= formatoFecha(Long.parseLong(h.getTiempoHoras()));
+		 			String hp= formatoFecha(h.getTiempoParcial());
 		 			h.setParcialEnHoras(hp);
 		 			h.setEstatus("TERMINADA");
 		 			horasHombreDao.update(h);
@@ -348,10 +355,12 @@ public class HorasHombreController {
 		       double hora = Math.floor(milisegundos/3600000);
 		       double  restohora = milisegundos%3600000;
 		       double minuto = Math.floor(restohora/60000);
-		       //double restominuto = restohora%60000;
+		       double restominuto=restohora%60000;
+		       double seg = Math.floor(restominuto/1000);
 		       String sh= String.valueOf((int)hora);
 		       String sm= String.valueOf((int)minuto);
-		       String parcial= sh+":"+sm;
+		       String ss= String.valueOf((int)seg);
+		       String parcial= sh+":"+sm+":"+ss;
 		       System.out.println(" ---------------------horas formateada ="+parcial);      
 	    	
 	    	return parcial;
