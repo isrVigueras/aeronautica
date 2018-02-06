@@ -289,6 +289,8 @@ public class HorasHombreController {
 	 			}else{
 	 				h.setTiempoTotal(h.getTiempoParcial());
 		 			h.setTiempoHoras(formatoFecha(h.getTiempoTotal()));
+		 			String hp= formatoFecha(Long.parseLong(h.getTiempoHoras()));
+		 			h.setParcialEnHoras(hp);
 		 			h.setEstatus("TERMINADA");
 		 			horasHombreDao.update(h);
 		 			System.out.println("total de milisegundos"+h.getTiempoTotal());

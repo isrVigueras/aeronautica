@@ -22,6 +22,7 @@ public class HorasHombre {
 	//private Date finParcial;
 	private long tiempoTotal;
 	private long tiempoParcial;
+	private String ParcialEnHoras;
 	private String tiempoHoras;
 	
 	
@@ -36,6 +37,13 @@ public class HorasHombre {
 	}
 	public void setIdOrden(Long idOrden) {
 		this.idOrden = idOrden;
+	}
+	
+	public String getParcialEnHoras() {
+		return ParcialEnHoras;
+	}
+	public void setParcialEnHoras(String parcialEnHoras) {
+		ParcialEnHoras = parcialEnHoras;
 	}
 	public Long getIdDiscrepancia() {
 		return idDiscrepancia;

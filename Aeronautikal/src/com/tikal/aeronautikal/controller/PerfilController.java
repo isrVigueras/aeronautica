@@ -58,12 +58,12 @@ public class PerfilController {
 
 	@RequestMapping(value = { "/getAll" }, method = RequestMethod.GET, produces = "application/json")
 	public void consultarUsuarios(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		if (SesionController.verificarPermiso(request, usuarioDao, perfilDAO, 10)) {
+		//if (SesionController.verificarPermiso(request, usuarioDao, perfilDAO, 10)) {
 			AsignadorDeCharset.asignar(request, response);
 			this.consult(response);
-		}else{
-			response.sendError(403);
-		}
+	//	}else{
+	//		response.sendError(403);
+	//	}
 	}
 
 	@RequestMapping(value = { "/update" }, method = RequestMethod.POST, consumes = "Application/Json")

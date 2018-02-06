@@ -399,6 +399,7 @@ public class DiscrepanciaController {
 				  hh.setAccion(dis.getAccion());
 				  hh.setEstatus("NO ASIGNADA");
 				  hh.setTiempoParcial(0);
+				  hh.setParcialEnHoras("0:0");
 				  hh.setTiempoTotal(0);
 				  horasHombreDao.save(hh);
 				  return hh;
