@@ -167,7 +167,7 @@ app.controller('UsuarioController', ['$scope','altaUsuarioServicio','eliminaUsua
     id: undefined,
     usuario: "",
     pasword: "",
-    perfil: undefined,
+    perfil: "",
     //authorities:undefined,
     email: ""
   }
