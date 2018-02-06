@@ -188,8 +188,7 @@ app.controller('PerfilController', ['$scope','altaPerfilServicio','eliminaUsuari
    $scope.fomPerfiles = {
     id: undefined,
     tipo: "",
-    authorities:[false,false,false,false,false,false]
-   
+    permisos:[false,false,false,false,false,false]
   }
      $scope.alta_perfil=function() {
     console.log($scope.fomPerfiles)
