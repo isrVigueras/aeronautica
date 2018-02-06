@@ -238,6 +238,11 @@ public class HorasHombreController {
 			Locale l = new Locale("es","MX");
 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
 			Date fecStop =cal.getTime();
+			System.out.println("la hora de pausa es :"+fecStop);
+			///////////////////// validar la hora de salidA 
+			String salida=checaSalida(fecStop);
+			System.out.println("Es la hora de salida?"+salida);
+			
 			if (h.getTiempoParcial() == 0 ){   /// si es el primer inicio
 					System.out.println("la hora del inicio es :"+h.getHoraIncio());
 					System.out.println("la hora del stop es :"+fecStop);
@@ -349,6 +354,16 @@ public class HorasHombreController {
 	    	
 	    	return parcial;
 	    	
+	    }
+	    
+	    public static String checaSalida(Date fechaPausa){
+	    	String resp="NO";
+	    	String x = (fechaPausa.toString()).substring(10, 18);
+	    	System.out.println("**** x******"+x);
+	    	//if (fecPausa){
+				
+			//}
+	    	return resp;
 	    }
 
 }

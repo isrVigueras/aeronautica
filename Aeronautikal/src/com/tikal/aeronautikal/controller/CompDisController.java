@@ -108,7 +108,8 @@ public class CompDisController {
 		        		r=cantidad.toString();
 		        		// actualiza la cantidad de las piezas del componente menos las que se requisitaron, cantidad original es cantOriginal
 		        		
-		        		cd.setCantidad(cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad());
+		        		//cd.setCantidad(cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad());
+		        		cd.setCantidad(componenteDao.consult(cd.getIdComponente()).getD_cantidad());
 		        		 System.out.println("cantidad nueva de componentes:"+cd.getCantidad());
 		        		 componenteDiscrepanciaDao.save(cd);
 		        		actualizaExistencias(cd.getIdComponente(),componenteDao.consult(cd.getIdComponente()).getD_cantidad(),"add");

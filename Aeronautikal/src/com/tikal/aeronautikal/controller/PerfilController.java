@@ -45,13 +45,15 @@ public class PerfilController {
 	@RequestMapping(value = { "/add" }, method = RequestMethod.POST, consumes = "Application/Json")
 	public void crearPerfil(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)
 			throws IOException {
-		if (SesionController.verificarPermiso(request, usuarioDao, perfilDAO, 9)) {
+		//if (SesionController.verificarPermiso(request, usuarioDao, perfilDAO, 9)) {
 			AsignadorDeCharset.asignar(request, response);
+			System.out.println(" edgar manda:"+json);
 			Perfil perfil = (Perfil) JsonConvertidor.fromJson(json, Perfil.class);
+			System.out.println("lista de permisos:"+perfil.getPermisos());
 			perfilDAO.crearPerfil(perfil);
-		} else {
-			response.sendError(403);
-		}
+		//} else {
+		//	response.sendError(403);
+		//}
 	}
 
 	@RequestMapping(value = { "/getAll" }, method = RequestMethod.GET, produces = "application/json")

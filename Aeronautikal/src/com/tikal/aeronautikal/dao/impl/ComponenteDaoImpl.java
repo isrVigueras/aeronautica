@@ -102,13 +102,15 @@ public class ComponenteDaoImpl implements ComponenteDao{
 	@Override
 	public List<ComponenteEntity> getMaxMin() {
 		// TODO Auto-generated method stub
+		System.out.println("obtenendo minimos......" );
 		List<ComponenteEntity> min = new ArrayList<ComponenteEntity>();
 		List<ComponenteEntity> todos = ofy().load().type(ComponenteEntity.class).list();
 		for (ComponenteEntity c :todos){
 			if (c.getD_cantidad()<=c.getMinimo()){
 				System.out.println("El componente ya esta en alerta de mínimo" );
-				min.add(c);
+				min.add(c);				
 			}
+			System.out.println("No hay componentes en alerta"+min.size() );
 			
 		}
 		

@@ -39,6 +39,7 @@ public class AlertaController {
 			public void findComp(HttpServletResponse response, HttpServletRequest request) throws IOException {
 				AsignadorDeCharset.asignar(request, response);
 				List<ComponenteEntity> lista = componenteDao.getMaxMin();
+				System.out.println("Lista:");
 				
 				if (lista.size()==0) {
 					lista = new ArrayList<ComponenteEntity>();
