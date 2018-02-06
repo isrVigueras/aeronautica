@@ -46,6 +46,42 @@ app.service('ActualizaCondicionServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+//servicio alta usuario
+app.service('altaUsuarioServicio', [ '$http', '$q', function($http, $q) {
+  this.alta_usuario = function(objt) {
+    var d = $q.defer();
+    $http.post("usuario/registro",objt).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
+//servicio elmina usuario
+app.service('eliminaUsuarioServicio', [ '$http', '$q', function($http, $q) {
+  this.elimina_usuario = function(id) {
+    var d = $q.defer();
+    $http.post("/usuario/delete/"+id).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
+//servicio alta perfil
+app.service('altaPerfilServicio', [ '$http', '$q', function($http, $q) {
+  this.alta_perfil = function(objeto) {
+    var d = $q.defer();
+    $http.post(" /perfil/add/",objeto).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
 app.controller('AdminController', ['$scope', 'altaPuestoServicio',function($scope, altaPuestoServicio) {
    $scope.puestoform = {
     id: undefined,
@@ -68,7 +104,7 @@ app.controller('PuestoMuestraController', ['$scope','eliminaCondicionServicio','
   $scope.puestos_lista = puestos_lista;
       console.log(puestos_lista);
       
-       $scope.elimina_condicion=function(folio) {
+       $scope.elimina_puesto=function(folio) {
     //console.log(altarequisicion);
     console.log(folio);
       eliminaCondicionServicio.elimina_condicion(folio).then(
@@ -78,7 +114,7 @@ app.controller('PuestoMuestraController', ['$scope','eliminaCondicionServicio','
           location.reload();
         })         
   }
-    $scope.muestra_condicion=function(objeto) {
+    $scope.muestra_puesto=function(objeto) {
     console.log(objeto);
     $scope.detalle_condicion = objeto; 
 
@@ -89,7 +125,7 @@ app.controller('PuestoMuestraController', ['$scope','eliminaCondicionServicio','
   }   
   }
 
-    $scope.Actualiza_condicion=function() {   
+    $scope.Actualiza_puesto=function() {   
 
       ActualizaCondicionServicio.actualiza_condicion($scope.condicion_edi).then(
         function(data) {
@@ -120,6 +156,48 @@ app.controller('HorasHombreController', ['$scope', 'empleados_lista','discrepanc
           console.log(data);
           location.reload();
           alert("Discrepancia Asignada");
+          })         
+  }
+}]);
+app.controller('UsuarioController', ['$scope','altaUsuarioServicio','eliminaUsuarioServicio','AsignarDiscServicio',function($scope,altaUsuarioServicio,eliminaUsuarioServicio,AsignarDiscServicio) {
+    //$scope.discrepancias = discrepancias;
+    //console.log(discrepancias);
+  
+   $scope.fomUsuarios = {
+    id: undefined,
+    usuario: "",
+    pasword: "",
+    authorities:undefined,
+    perfil: undefined,
+    email: ""
+  }
+     $scope.alta_usuario=function() {
+    
+      altaUsuarioServicio.alta_usuario($scope.fomUsuarios).then(
+        function(data) {
+          console.log(data);
+          location.reload();
+          alert("Nuevo Usuario Dado de Alta");
+          })         
+  }
+}]);
+app.controller('PerfilController', ['$scope','altaPerfilServicio','eliminaUsuarioServicio','AsignarDiscServicio',function($scope,altaPerfilServicio,eliminaUsuarioServicio,AsignarDiscServicio) {
+    //$scope.discrepancias = discrepancias;
+    //console.log(discrepancias);
+  
+   $scope.fomPerfiles = {
+    id: undefined,
+    tipo: "",
+    authorities:[false,false,false,false,false,false]
+   
+  }
+     $scope.alta_perfil=function() {
+    console.log($scope.fomPerfiles)
+      altaPerfilServicio.alta_perfil($scope.fomPerfiles).then(
+        function(data) {
+          console.log(data);
+          location.reload();
+          alert("El Nuevo Perfil se ha Creado");
           })         
   }
 }]);

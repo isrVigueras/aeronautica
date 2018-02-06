@@ -13,6 +13,8 @@
       <tr bgcolor="#A9F5F2">
         <th>No.Discrepancia</th>
         <th>Accion de la discrepancia</th>
+        <th>Estatus</th>
+        <th>Tiempo Parcial</th>
         <th>Accion</th>
       </tr>
   </thead>
@@ -20,6 +22,8 @@
       <tr ng-repeat="dis in dis_asignadas">
         <td>{{dis.idDiscrepancia}}</td>
         <td>{{dis.accion}}</td>
+        <td>{{dis.estatus}}</td>
+        <td>{{dis.tiempoParcial}}</td>
         <td>       <button type="button" class="btn btn-default"  ng-click="iniciar_trabajo(dis.id)">
   <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
 </button>

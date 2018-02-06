@@ -48,7 +48,8 @@ app.controller('ordenController', ['$scope','OrdenesService','new_folio','empres
     folio: $scope.new_folio,
     fechaApertura:new Date(),
     empresa:"",
-    aeronave:undefined
+    aeronave:undefined,
+    accionGeneral:""
   }
 
   //$scope.CurrentDate = new Date();

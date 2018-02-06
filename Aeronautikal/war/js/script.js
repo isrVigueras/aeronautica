@@ -798,6 +798,14 @@ $routeProvider.when('/Admin/Puestos/Consulta', {
       }]
     }
   });
+$routeProvider.when('/Admin/Alta_Usuario', {
+    templateUrl: "alta_Usuario.html",
+    controller: "UsuarioController"
+  });
+$routeProvider.when('/Admin/Alta_Perfil', {
+    templateUrl: "alta_Perfil.html",
+    controller: "PerfilController"
+  });
   $routeProvider.otherwise({
         redirectTo: '/'
   });   

@@ -56,6 +56,7 @@ app.controller('UsuariosH_Hombre_Controller', ['$scope','IniciaTrabajoServicio',
         function(data) {
           console.log(data);
           alert("Iniciando el medidor de tiempo");
+          location.reload();
         })         
   }
 
@@ -65,6 +66,7 @@ app.controller('UsuariosH_Hombre_Controller', ['$scope','IniciaTrabajoServicio',
         function(data) {
           console.log(data);
           alert("pausado el medidor de tiempo");
+          location.reload();
         })         
   }
        $scope.parar_trabajo=function(id) {
@@ -73,6 +75,7 @@ app.controller('UsuariosH_Hombre_Controller', ['$scope','IniciaTrabajoServicio',
         function(data) {
           console.log(data);
           alert("parado el medidor de tiempo");
+          location.reload();
         })         
   }
        $scope.reiniciar_trabajo=function(id) {
@@ -81,6 +84,7 @@ app.controller('UsuariosH_Hombre_Controller', ['$scope','IniciaTrabajoServicio',
         function(data) {
           console.log(data);
           alert("reiniciado el medidor de tiempo");
+          location.reload();
         })         
   }
 }]);

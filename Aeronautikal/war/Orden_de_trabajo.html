@@ -26,12 +26,14 @@
           <option value="{{aeronave.id}}" ng-repeat="aeronave in aeronaves"  >{{aeronave.matricula}}</option>
         </select>
   </div>
-  <div class="col-xs-11">
-          <center><textarea class="form-control" rows="4" cols="30" placeholder="Escriba la Descripcion." ng-model="discrepancia_fo.descripcion">
+  </div>
+    <br>
+    <div class="row" style="margin: 1% 1%;">
+  <div class="col-xs-8">
+          <center><textarea class="form-control" rows="4" cols="30" placeholder="Escriba la Accion General por la que Entra la Nave." ng-model="fo.accionGeneral">
         </textarea></center>
       </div>
-  
-  </div>
+    </div>
    <br>
   <center><button type="button" class="btn btn-primary" ng-click="guardar()" ng-disabled="form.$invalid">
   <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Generar
