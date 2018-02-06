@@ -1,0 +1,30 @@
+<div class="contenedor" style="color:#EEE6E6">
+    <center><h1>Registro de Perfiles</h1></center>
+    <div class="row" style="margin: 1% 13%;">
+      <form>
+  
+  <h3>Datos del Comportamiento del Perfil</h3>
+  <label for="tipo">Tipo:</label><input class="form-control" placeholder="Escriba el Tipo de Perfil" ng-model="fomPerfiles.tipo" id="tipo" name="tipo" type="text"/>
+  <br>
+  <label for="idPuesto">Permisos:</label>
+        <div class="form-group"> 
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label><input type="checkbox" ng-model="fomPerfiles.authorities[0]"> generar Orden de trabajo</label>
+        <label><input type="checkbox" ng-model="fomPerfiles.authorities[1]"> editar orden de trabajo</label>
+        <label><input type="checkbox" ng-model="fomPerfiles.authorities[2]"> ver Orden de trabajo</label>
+        <label><input type="checkbox" ng-model="fomPerfiles.authorities[3]"> imprimir orden de trabajo</label>
+        <label><input type="checkbox" ng-model="fomPerfiles.authorities[4]"> elimina discrepancia</label>
+        <label><input type="checkbox" ng-model="fomPerfiles.authorities[5]"> eliminar orden de trabajo</label>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <center><button type="button" class="btn btn-primary" ng-click="alta_perfil()" ng-disabled="form.$invalid">
+  <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>Crear
+  </button></center>
+  </form>
+</div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br>

@@ -1,0 +1,23 @@
+<div class="contenedor" style="color:#EEE6E6">
+    <center><h1>Registro de Usuario</h1></center>
+    <div class="row" style="margin: 1% 13%;">
+      <form>
+  
+  <h3>Datos Personales</h3>
+  <label for="apellidoPaterno">Usuario</label><input class="form-control" placeholder="Escriba el Nombre del Usuario" ng-model="empleadoform.apellidoPaterno" id="apellidoPaterno" name="apellidoPaterno" type="text"/>
+  <label for="apellidoMaterno">Password</label><input class="form-control" placeholder="Escriba la Contraseña" ng-model="empleadoform.apellidoMaterno" id="apellidoMaterno" name="apellidoMaterno" type="Password"/>
+  <label for="nombre">Email:</label><input class="form-control" placeholder="Escriba el Nombre" ng-model="empleadoform.nombre" id="nombre" name="nombre" type="text"/>
+  <label for="idPuesto">Puesto:</label>
+  <select class="form-control" ng-model="empleadoform.idPuesto" >
+            <option value="">--Elige una Puesto--</option>
+          <option value="{{puesto.id}}" ng-repeat="puesto in puestos_lista"  >{{puesto.Descripcion}}</option>
+        </select>
+  <br>
+  <br>
+  <center><button type="button" class="btn btn-primary" ng-click="guarda_empleado()" ng-disabled="form.$invalid">
+  <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>Guardar
+  </button></center>
+  </form>
+</div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br>
