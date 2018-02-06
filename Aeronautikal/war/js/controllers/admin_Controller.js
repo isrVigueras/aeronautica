@@ -159,20 +159,20 @@ app.controller('HorasHombreController', ['$scope', 'empleados_lista','discrepanc
           })         
   }
 }]);
-app.controller('UsuarioController', ['$scope','altaUsuarioServicio','eliminaUsuarioServicio','AsignarDiscServicio',function($scope,altaUsuarioServicio,eliminaUsuarioServicio,AsignarDiscServicio) {
-    //$scope.discrepancias = discrepancias;
-    //console.log(discrepancias);
+app.controller('UsuarioController', ['$scope','altaUsuarioServicio','eliminaUsuarioServicio','AsignarDiscServicio','perfil_lista',function($scope,altaUsuarioServicio,eliminaUsuarioServicio,AsignarDiscServicio,perfil_lista) {
+    $scope.perfil_lista = perfil_lista;
+    console.log(perfil_lista);
   
    $scope.fomUsuarios = {
     id: undefined,
     usuario: "",
     pasword: "",
-    authorities:undefined,
-    perfil: undefined,
+    idPerfil: undefined,
+    //authorities:undefined,
     email: ""
   }
      $scope.alta_usuario=function() {
-    
+    console.log($scope.fomUsuarios);
       altaUsuarioServicio.alta_usuario($scope.fomUsuarios).then(
         function(data) {
           console.log(data);

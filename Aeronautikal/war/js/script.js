@@ -492,6 +492,23 @@ function RemoteResource($http,$q, baseUrl) {
     return promise;
     
   }
+
+         this.perfil_lista = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/perfil/getAll'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
 }
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
 function RemoteResourceProvider() {
@@ -800,7 +817,12 @@ $routeProvider.when('/Admin/Puestos/Consulta', {
   });
 $routeProvider.when('/Admin/Alta_Usuario', {
     templateUrl: "alta_Usuario.html",
-    controller: "UsuarioController"
+    controller: "UsuarioController",
+    resolve: {
+      perfil_lista:['remoteResource',function(remoteResource) {
+        return remoteResource.perfil_lista();
+      }]
+    }
   });
 $routeProvider.when('/Admin/Alta_Perfil', {
     templateUrl: "alta_Perfil.html",
