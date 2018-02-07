@@ -401,7 +401,7 @@ public class HorasHombreController {
 	        return paro;
 	    }
 	    
-	    public static String formatoFecha(long milisegundos){	    	  //  System.out.println("entra a formatear fecha con estos milisegundos:"+milisegundos);
+	    public static String formatoFecha(long milisegundos){	    	    System.out.println("entra a formatear fecha con estos milisegundos:"+milisegundos);
 		       double dif =  (milisegundos / (1000 * 60*60));
 		       double hora = Math.floor(milisegundos/3600000);
 		       double  restohora = milisegundos%3600000;
