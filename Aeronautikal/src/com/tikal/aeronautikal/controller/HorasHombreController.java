@@ -225,14 +225,14 @@ public class HorasHombreController {
 				//if (h.getInicioParcial()==null){
 					System.out.println("------------");
 					h.setInicioParcial(fec);
-					if (fec.before(getHoraParo())){
+					//if (fec.before(getHoraParo())){
 						long tiempoParo = diferenciasDeFechas(h.getInicioParcial(),getHoraParo());
 						h.setTiempoParo(tiempoParo);
 						System.out.println("tiempo paro2:"+h.getTiempoParo());
 						System.out.println("inicio parcial:"+h.getInicioParcial());
 						h.setEstatus("EN PROGRESO");
 						
-					}
+					//}
 				//}else{
 				//	System.out.println("presiono inicia cuando ya habia otro iniciado");
 					
@@ -259,8 +259,11 @@ public class HorasHombreController {
 			//String salida=calculaHoraParo(fecStop);
 			//System.out.println("Es la hora de salida?"+salida);
 			paro=checarParo(fecStop);
-			if (paro==true){ ///////////suma el parcial mas el tiempo de paro
+			if (paro){ ///////////suma el parcial mas el tiempo de paro
+				System.out.println("debo hacer paro automatico");
 				h.setTiempoTotal(h.getTiempoParcial()+h.getTiempoParo());
+				//paro=false;
+				h.setTiempoParo(0);
 			}else{
 				if (h.getTiempoParcial() == 0 ){   /// si es el primer inicio
 						System.out.println("la hora del inicio es :"+h.getHoraIncio());
@@ -310,29 +313,30 @@ public class HorasHombreController {
 	 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
 	 			Date fecStop =cal.getTime();
 	 			paro=checarParo(fecStop);
-				if (paro==true){ ///////////suma el parcial mas el tiempo de paro
+				if (paro){ ///////////si termina antes de la hora de entrada, suma el parcial mas el tiempo de paro
 					h.setTiempoTotal(h.getTiempoParcial()+h.getTiempoParo());
+					h.setTiempoParo(0);
 				}else{
 		 			if (h.getTiempoParcial()==0){
 		 				System.out.println("la hora del inicio es :"+h.getHoraIncio());
 						System.out.println("la hora del stop es :"+fecStop);
-						paro=checarParo(fecStop);
+						//paro=checarParo(fecStop);
 						long dif = diferenciasDeFechas(h.getHoraIncio(),fecStop);
 						h.setTiempoTotal(dif);
 						
 		 			}else{
 		 				
 		 				h.setTiempoTotal(h.getTiempoParcial());
-			 			h.setTiempoHoras(formatoFecha(h.getTiempoTotal()));
-			 			String hp= formatoFecha(h.getTiempoParcial());
-			 			h.setParcialEnHoras(hp);
-			 			h.setEstatus("TERMINADA");
-			 			horasHombreDao.update(h);
-			 			System.out.println("total de milisegundos"+h.getTiempoTotal());
-			 			System.out.println("total en horas formateadas"+h.getTiempoHoras());
-		 				
 		 			}
 				}
+			 	h.setTiempoHoras(formatoFecha(h.getTiempoTotal()));
+			 	String hp= formatoFecha(h.getTiempoParcial());
+			 	h.setParcialEnHoras(hp);
+			 	h.setEstatus("TERMINADA");
+			 	horasHombreDao.update(h);
+			 	System.out.println("total de milisegundos"+h.getTiempoTotal());
+			 	System.out.println("total en horas formateadas"+h.getTiempoHoras());	 						
+				
 	 			response.getWriter().println(JsonConvertidor.toJson(h));
 	   }
 	   
@@ -375,6 +379,9 @@ public class HorasHombreController {
 	        long diferencia = fechaFinalMs - fechaInicialMs;
 	        System.out.println("diferencia en milisegundos:"+diferencia);
 	        System.out.println("diferencia formateada:"+formatoFecha(diferencia)) ; 
+	        if (diferencia<0){
+	        	diferencia=0;
+	        }
 	      
 	        return diferencia;
 	    }
@@ -387,19 +394,20 @@ public class HorasHombreController {
 	        long horaParoMs = getHoraParo().getTime();
 	        long fechaMs =fecha.getTime();
 	       ///calculando la hora si esta entre la hora de paro y la hora de entrda
-	        if ((fechaMs>= horaParoMs) && (fechaMs<=horaEntradaMs)){
-	        	System.out.println("Pausa despues del PARO, se tomara en cuenta la ultima pausa a las:"+fecha);
-	        	
-	        }
-	        if (fechaMs<horaParoMs){
-	        	System.out.println("La pausa se realizo antes del paro....NO HAY PARO AUTOMATICO AUN:::: ");
-	        }else{	
-	        	
-	        	System.out.println("No hubo movimientos en deshoras de trabajo, se realizara PARO AUTOMATICO!");
+	        if ((fechaMs>=horaEntradaMs)){
+	        	System.out.println("PARO AUTOMATICO, porque no  hubo actividad en la discrepancia hasta la hora::"+fecha);
 	        	paro=true;
 	        }
+//	        if (fechaMs>horaEntradaMs) {
+//	        	System.out.println("Se realiza paro automatico, porque no  hubo actividad en la discrepancia::: ");
+//	        }
+//	        
+//	        if (fechaMs>horaParoMs){	
+//	        	System.out.println("Se realizo una pausa  despues del paro...NO HAY PARO AUTOMATICO :::: ");
+//	        	//paro=true;
+//	        }
 	        return paro;
-	    }
+	    } 
 	    
 	    public static String formatoFecha(long milisegundos){	    	    System.out.println("entra a formatear fecha con estos milisegundos:"+milisegundos);
 		       double dif =  (milisegundos / (1000 * 60*60));
@@ -424,8 +432,8 @@ public class HorasHombreController {
 	    	int anio= now.get(Calendar.YEAR);
 	    	int mes =now.get(Calendar.MONTH);
 	    	int dia = now.get(Calendar.DATE);
-	    	int hora= 13;
-	    	int min = 40;
+	    	int hora= 16;
+	    	int min = 8;
 	    	int seg = 0;
 	    	
 	    	Calendar horaSalida= Calendar.getInstance();
@@ -443,8 +451,8 @@ public class HorasHombreController {
 	    	int anio= now.get(Calendar.YEAR);
 	    	int mes =now.get(Calendar.MONTH);
 	    	int dia = now.get(Calendar.DATE);
-	    	int hora= 9;
-	    	int min = 0;
+	    	int hora= 16;
+	    	int min = 10;
 	    	int seg = 0;
 	    	
 	    	Calendar horaSalida= Calendar.getInstance();

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Base64Utils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -17,6 +18,7 @@ import com.tikal.aeronautikal.dao.PerfilDAO;
 import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.entity.Perfil;
 import com.tikal.aeronautikal.entity.Usuario;
+import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
 
 
@@ -28,26 +30,33 @@ public class SesionController {
 	
 	////////////////////// checar si el usuario es válido
 
-	@RequestMapping(value = { "/user" }, method = RequestMethod.POST, produces = "application/json")
-	public void user(HttpServletResponse res, HttpServletRequest req) throws IOException {
-		String auti = req.getHeader("authorization");
-		System.out.println("Authorization:"+auti);
-		auti = auti.substring(5);
-		byte[] dec = Base64Utils.decodeFromString(auti);
-
-		String c = "";
-		for (byte b : dec) {
-			c += (char) b;
-		}
-		String[] parts = c.split(":");
-		String u = parts[0];
-		String p = UsuarioController.otroMetodo(parts[1]);
-		Usuario usuario = usuarioDao.consultarUsuario(u);
+	@RequestMapping(value = { "/user" }, method = RequestMethod.POST, consumes="application/json", produces = "application/json")
+	public void user(HttpServletResponse res, HttpServletRequest req, @RequestBody String json) throws IOException {
+//		String auti = req.getHeader("authorization");
+//		System.out.println("Authorization:"+auti);
+//		auti = auti.substring(5);
+//		byte[] dec = Base64Utils.decodeFromString(auti);
+//
+//		String c = "";
+//		for (byte b : dec) {
+//			c += (char) b;
+//		}
+//		String[] parts = c.split(":");
+//		String u = parts[0];
+//		String p = UsuarioController.otroMetodo(parts[1]);
+		AsignadorDeCharset.asignar(req, res);
+		System.out.println("usuario edgar "+json);
+		Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
+		String p = UsuarioController.otroMetodo(usuario.getPassword());
+		//Usuario usuario = usuarioDao.consultarUsuario(u);
 		// Verificar que el usuario y contraseña coincidan
 		if (usuario == null || (usuario.getPassword().equals(p) == false)) {
+			System.out.println("Error 403 , usuario no autentificado");
 			res.sendError(403);
+			
 		} else {
-			usuario.resetPassword();
+			System.out.println(" usuario Valido");
+			//usuario.resetPassword();
 			req.getSession().setAttribute("userName", usuario.getUsername());
 			res.getWriter().println(JsonConvertidor.toJson(usuario));
 		}
