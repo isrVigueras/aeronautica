@@ -19,7 +19,8 @@ public class HorasHombre {
 	private Date horaIncio;
 	//private Date horaFin;
 	private Date inicioParcial;
-	//private Date finParcial;
+	private Date finParcial;
+	private long tiempoParo;
 	private long tiempoTotal;
 	private long tiempoParcial;
 	private String ParcialEnHoras;
@@ -76,6 +77,13 @@ public class HorasHombre {
 	public void setEstatus(String estatus) {
 		this.estatus = estatus;
 	}
+	
+	public long getTiempoParo() {
+		return tiempoParo;
+	}
+	public void setTiempoParo(long tiempoParo) {
+		this.tiempoParo = tiempoParo;
+	}
 	public Date getHoraIncio() {
 		return horaIncio;
 	}
@@ -106,6 +114,12 @@ public class HorasHombre {
 	}
 	public void setInicioParcial(Date inicioParcial) {
 		this.inicioParcial = inicioParcial;
+	}
+	public Date getFinParcial() {
+		return finParcial;
+	}
+	public void setFinParcial(Date finParcial) {
+		this.finParcial = finParcial;
 	}
 	
 	

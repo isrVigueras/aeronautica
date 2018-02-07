@@ -16,7 +16,8 @@ public class Usuario implements UserDetails{
 	@Index String usuario;
 	private String password;
 	private List<Rol> authorities;
-	@Index private String perfil;
+	@Index private String perfil;    //nombre del perfil
+	//@Index private Long idPerfil;
 	@Index private String email;
 
 
@@ -67,15 +68,24 @@ public class Usuario implements UserDetails{
 		return true;
 	}
 	
-//	public boolean hasRole(String rol){
-//		for(Rol r:this.getAuthorities()){
-//			if(r.getName().compareTo(rol)==0){
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
+	public boolean hasRole(String rol){
+		for(Rol r:this.getAuthorities()){
+			if(r.getName().compareTo(rol)==0){
+				return true;
+			}
+		}
+		return false;
+
+	}
 	
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+	
+
 	public String getPerfil() {
 		return perfil;
 	}
@@ -84,9 +94,13 @@ public class Usuario implements UserDetails{
 		this.perfil = perfil;
 	}
 
-	public String getEmail() {
-		return email;
-	}
+//	public Long getIdPerfil() {
+//		return idPerfil;
+//	}
+//
+//	public void setIdPerfil(Long idPerfil) {
+//		this.idPerfil = idPerfil;
+//	}
 
 	public void setEmail(String email) {
 		this.email = email;

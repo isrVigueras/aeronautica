@@ -36,15 +36,20 @@ public class UsuarioController {
 //	UsuarioDAO usuarioImp;
 	
 	@Autowired
-	PerfilDAO perfilDAO;
-
+	PerfilDAO perfilDAO; 
+	
+	 
+																	///////////alta de usuarios
 	@RequestMapping(value = { "/registro" }, method = RequestMethod.POST, consumes = "Application/Json")
 	public void crearUsuario(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)
 			throws IOException {
-		if(SesionController.verificarPermiso(request, usuarioDao, perfilDAO, 7)){
+		//if(SesionController.verificarPermiso(request, usuarioDao, perfilDAO, 7)){
 			AsignadorDeCharset.asignar(request, response);
+			System.out.println("usuario edgar "+json);
 			Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
+			System.out.println("usuari password: "+usuario.getPassword());
 			usuario.setPassword(UsuarioController.otroMetodo(usuario.getPassword()));
+			
 			//if (usuario.getUsername() == null || usuario.getPassword() == null || usuario.getEmail() == null) {
 			if (usuario.getUsername() == null || usuario.getPassword() == null ) {
 				response.sendError(400);
@@ -54,9 +59,9 @@ public class UsuarioController {
 					response.sendError(400);
 				}
 			}
-		}else{
-			response.sendError(403);
-		}
+		//}else{
+		//	response.sendError(403);
+		//}
 	}
 
 	@RequestMapping(value = { "/getAll" }, method = RequestMethod.GET, produces = "application/json")
@@ -94,7 +99,7 @@ public class UsuarioController {
 		Usuario usuario = usuarioDao.consultarPorEmail(correo);
 		//System.out.println("Printf de UsuarioController = " + usuario.getUsername());
 		String user= usuario.getUsername();
-		String mail= usuario.getEmail();
+		//String mail= usuario.getEmail();
 		if(usuario.getUsername()==null){
 			response.sendError(400);
 		}else{
@@ -141,14 +146,17 @@ public class UsuarioController {
 		return sb.toString();
 	}
 		
+		  ///////////////////////////////////////verifica si la session del usuario esta activa
 		@RequestMapping(value = {"/check"}, method = RequestMethod.GET)
 		public void consultarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException{
 			HttpSession s = request.getSession();
 			String user = (String)s.getAttribute("userName");
 			if(user == null){
-				response.sendError(403);
+				response.sendError(403); 
 			}
 		}
+		
+		
 		
 		@RequestMapping(value = {"/cerrarSesion"}, method = RequestMethod.GET)
 		public void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException{
@@ -165,7 +173,7 @@ public class UsuarioController {
 			
 				Usuario usuario = new Usuario();
 				usuario.setEmail("root@root.com");
-				usuario.setPassword("root");
+				usuario.setPassword(otroMetodo("root"));
 				usuario.setPerfil("SuperAdministrador");
 				usuario.setUsername("root");
 				
@@ -173,7 +181,7 @@ public class UsuarioController {
 				
 				Perfil perfil = new Perfil();
 				perfil.setTipo("SuperAdministrador");
-				boolean[] arreglo = new boolean[15];
+				boolean[] arreglo = new boolean[6];
 				for(int i=0; i < arreglo.length; i++){
 					arreglo[i] = true;
 				}

@@ -28,9 +28,10 @@ public class SesionController {
 	
 	////////////////////// checar si el usuario es válido
 
-	@RequestMapping(value = { "/user" }, method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = { "/user" }, method = RequestMethod.POST, produces = "application/json")
 	public void user(HttpServletResponse res, HttpServletRequest req) throws IOException {
 		String auti = req.getHeader("authorization");
+		System.out.println("Authorization:"+auti);
 		auti = auti.substring(5);
 		byte[] dec = Base64Utils.decodeFromString(auti);
 
@@ -52,7 +53,7 @@ public class SesionController {
 		}
 	}
 
-	// currentSession chec la session activa
+	// currentSession checa la session activa
 
 	@RequestMapping(value = { "/currentSession" }, method = RequestMethod.GET, produces = "application/json")
 	public void currentUser(HttpServletResponse res, HttpServletRequest req) throws IOException {
