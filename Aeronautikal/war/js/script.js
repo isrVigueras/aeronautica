@@ -882,13 +882,38 @@ app.directive('caDatepicker', [function(dateFormat) {
   };
 }]);
 
+//servicio inicia sesion ususario
+app.service('IniSessServicio', [ '$http', '$q', function($http, $q) {
+  this.inicia_session = function(objeto) {
+    var d = $q.defer();
+    $http.post("/user",objeto).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
 
-app.controller("MainController", ['$scope','remoteResource',function($scope,remoteResource) {
-  
-
+app.controller("MainController", ['$scope','remoteResource','IniSessServicio',function($scope,remoteResource,IniSessServicio) {
   remoteResource.alertas().then(function(data){
     $scope.alertas = data;
   })
   console.log($scope.alertas);
+
+   $scope.forminicia = {
+    usuario:"",
+    password: ""
+  }
+
+    $scope.inisession=function() {
+    console.log($scope.forminicia)
+      IniSessServicio.inicia_session($scope.forminicia).then(
+        function(data) {
+          console.log(data);
+          location.reload();
+          alert("Inicio session");
+          })     
+      }
 
 }]);

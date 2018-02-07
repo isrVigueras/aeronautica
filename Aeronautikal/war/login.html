@@ -1,20 +1,40 @@
-<!DOCTYPE HTML>
-<!--
-	Landed by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>CROSS</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<!--********************************** Modal Editar Aeronave ***********************************-->
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <center><h3 class="modal-title" id="myModalLabel" style="color:#000000">Inicio de Sesion</h3></center>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+    <div class="row" style="margin: 1% 13%;">
+  
+  <center><h3 style="color:#000000">Usuario:</h3></center>
+
+<input class="form-control" placeholder="Escriba el Usuario" id="usuario" name="usuario" type="text" ng-model="forminicia.usuario" required/>
+<br>
+<center><h3 style="color:#000000">Contraseña:</h3></center>
+
+<input class="form-control" placeholder="Escriba la Contraseña" id="password" name="password" type="password" ng-model="forminicia.password" required/>
+  
+  </div>
+      </div>
+      <div class="modal-footer">
+                 <button type="button" class="btn btn-primary" ng-click="inisession()">
+        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Inicias Session
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $('#login').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+</script>
 		<link rel="stylesheet" href="assets/css/main.css" />
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-	</head>
-	<body class="landing">
+	
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -42,7 +62,13 @@
 							</li>
 							<li><a href="elements.html">Elements</a></li>-->
 							<!--<li><a href="http://localhost:8080/Ordenes_generadas.html" class="button special">Iniciar Session</a></li>-->
-							<li><a href="#/Inicio/paginaPrincipal">Iniciar Session</a></li>
+							<li><a href="#/Inicio/paginaPrincipal" data-toggle="modal" ng-click="" data-target="#login">Iniciar Session</a>
+							</li>
+							<li>
+							<button type="button" class="btn btn-default" data-toggle="modal" ng-click="" data-target="#login">
+        <span class="glyphicon glyphicon-pencil" aria-hidden="true">Iniciar Session</span>
+      </button>
+      						</li>
 						</ul>
 					</nav>
 				</header>
@@ -210,6 +236,7 @@
 				</footer>
 
 		</div>
+	
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
@@ -220,6 +247,3 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
-
-	</body>
-</html>

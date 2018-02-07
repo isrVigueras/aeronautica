@@ -2159,10 +2159,10 @@
 		margin: 0 0 1em 0;
 	}
 
-	input[type="text"],
+	/*input[type="text"],
 	input[type="password"],
 	input[type="email"],
-	select,
+	select,*/
 	textarea {
 		-moz-appearance: none;
 		-webkit-appearance: none;
@@ -2183,10 +2183,10 @@
 		width: 100%;
 	}
 
-		input[type="text"]:invalid,
+		/*input[type="text"]:invalid,
 		input[type="password"]:invalid,
 		input[type="email"]:invalid,
-		select:invalid,
+		select:invalid,*/
 		textarea:invalid {
 			box-shadow: none;
 		}
@@ -2232,9 +2232,9 @@
 			display: none;
 		}
 
-	input[type="text"],
+	/*input[type="text"],
 	input[type="password"],
-	input[type="email"],
+	input[type="email"],*/
 	select {
 		height: 3em;
 	}
