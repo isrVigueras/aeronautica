@@ -18,7 +18,7 @@ public class Usuario implements UserDetails{
 	private List<Rol> authorities;
 	@Index private String perfil;    //nombre del perfil
 	//@Index private Long idPerfil;
-	@Index private String email;
+	
 
 
 	@Override
@@ -80,9 +80,7 @@ public class Usuario implements UserDetails{
 	
 	
 
-	public String getEmail() {
-		return email;
-	}
+
 
 	
 
@@ -102,9 +100,7 @@ public class Usuario implements UserDetails{
 //		this.idPerfil = idPerfil;
 //	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	
 
 
 	public void setPassword(String password) {

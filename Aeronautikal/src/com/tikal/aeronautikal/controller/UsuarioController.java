@@ -66,13 +66,13 @@ public class UsuarioController {
 
 	@RequestMapping(value = { "/getAll" }, method = RequestMethod.GET, produces = "application/json")
 	public void consultarUsuarios(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		if(SesionController.verificarPermiso(request, usuarioDao, perfilDAO, 8)){
+		//if(SesionController.verificarPermiso(request, usuarioDao, perfilDAO, 8)){
 			AsignadorDeCharset.asignar(request, response);
 			List<Usuario> lista = usuarioDao.consultarUsuarios();
 			response.getWriter().println(JsonConvertidor.toJson(lista));
-		}else{
-			response.sendError(403);
-		}
+	////	}else{
+		//	response.sendError(403);
+		//}
 	}
 
 	@RequestMapping(value = { "/update" }, method = RequestMethod.POST, consumes = "Application/Json")
@@ -172,7 +172,7 @@ public class UsuarioController {
 		public void crearUsuarioUnico(HttpServletRequest request, HttpServletResponse response){
 			
 				Usuario usuario = new Usuario();
-				usuario.setEmail("root@root.com");
+			//	usuario.setEmail("root@root.com");
 				usuario.setPassword(otroMetodo("root"));
 				usuario.setPerfil("SuperAdministrador");
 				usuario.setUsername("root");

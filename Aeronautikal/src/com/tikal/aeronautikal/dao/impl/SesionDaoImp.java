@@ -22,9 +22,9 @@ public class SesionDaoImp implements SesionDao {
 //		System.out.println(this.consultarPorEmail(usuario.getEmail()).getEmail()+"PRIMER IF");
 //		System.out.println(this.consultarUsuario(usuario.getUsername())+"SEGUNDO IF");
 
-		if(this.consultarPorEmail(usuario.getEmail()).getEmail()!=null){
-			return false;
-		}
+		//if(this.consultarPorEmail(usuario.getEmail()).getEmail()!=null){
+			//return false;
+		//}
 		if (this.consultarUsuario(usuario.getUsername())==null) {
 			ofy().save().entity(usuario).now();
 		} else {
