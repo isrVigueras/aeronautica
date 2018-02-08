@@ -886,7 +886,7 @@ app.directive('caDatepicker', [function(dateFormat) {
 app.service('IniSessServicio', [ '$http', '$q', function($http, $q) {
   this.inicia_session = function(objeto) {
     var d = $q.defer();
-    $http.get("/user",objeto).then(function(response) {
+    $http.post("/user",objeto).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
