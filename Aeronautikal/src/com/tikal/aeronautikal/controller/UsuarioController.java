@@ -172,7 +172,7 @@ public class UsuarioController {
 		public void crearUsuarioUnico(HttpServletRequest request, HttpServletResponse response){
 			
 				Usuario usuario = new Usuario();
-				usuario.setEmail("root@root.com");
+				//usuario.setEmail("root@root.com");
 				usuario.setPassword(otroMetodo("root"));
 				usuario.setPerfil("SuperAdministrador");
 				usuario.setUsername("root");
