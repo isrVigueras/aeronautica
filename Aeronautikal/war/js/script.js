@@ -931,7 +931,7 @@ app.service('sessionService', [
               + btoa(credentials.username + ":"
                   + credentials.password)
         } : {};
-        $http.get('user', {
+        $http.get('/user', {
           headers : headers
         }).success(function(data) {
           if (data.usuario) {
