@@ -65,6 +65,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
 	@Override
 	public Usuario consultarUsuario(String usuario) {
 		List<Usuario> usu = ofy().load().type(Usuario.class).filter("usuario", usuario).list();
+		System.out.println("lista de usuarios con ese username:"+usu);
 		if (usu.size() == 0) {
 			return null;
 		}

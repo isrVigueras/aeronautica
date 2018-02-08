@@ -7,22 +7,22 @@
     Allows App Engine to send multiple requests to one instance in parallel:
   -->
   <threadsafe>true</threadsafe>
-
-  <!-- Configure java.util.logging -->
-  <system-properties>
-    <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
-  </system-properties>
   
-  <runtime>java8</runtime>
-  
-  <static-files>
+ <static-files>
         <include path="/favicon.ico" />
         <include path="/images/**" />
          <include path="/img/**" />
           <include path="/pdf/**" />
     </static-files>
     
-     <sessions-enabled>true</sessions-enabled>
+  <!-- Configure java.util.logging -->
+  <system-properties>
+    <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
+  </system-properties>
+  
+  <runtime>java8</runtime>
+     
+  <sessions-enabled>true</sessions-enabled>
 
  <!--
     HTTP Sessions are disabled by default. To enable HTTP sessions specify:

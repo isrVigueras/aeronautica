@@ -24,6 +24,7 @@ import com.tikal.aeronautikal.util.JsonConvertidor;
 
 
 @Controller
+
 public class SesionController {
 
 	@Autowired
@@ -48,6 +49,9 @@ public class SesionController {
 		AsignadorDeCharset.asignar(req, res);
 		System.out.println("usuario edgar "+json);
 		Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
+		System.out.println("username json:"+usuario.getUsername());
+		Usuario usuBase= usuarioDao.consultarUsuario(usuario.getUsername());
+		System.out.println("obeto usuario de bck:"+usuBase);
 		//String p = UsuarioController.otroMetodo(usuario.getPassword());
 		//////////////////////////
 //		byte[] dec = Base64Utils.decodeFromString(usuario.getPassword());
@@ -58,26 +62,32 @@ public class SesionController {
 //		}
 		///////////////////////////
 		//String p = UsuarioController.otroMetodo(c);
-		String p= usuario.getPassword();
-		String username= usuario.getUsername() ;
+		String p= usuario.getPassword(); // el que trae Edgar
+		//String username= usuBase.getUsername() ;
 		// Verificar que el usuario y contraseña coincidan
-		System.out.println("username:"+username);
-		System.out.println("password:"+p);
-		
-		if (username == null || (usuario.getPassword().equals(p) == false)) {
+		//System.out.println("username:"+username);
+		System.out.println("password front:"+p);
+		System.out.println("obeto usuario de bck:"+usuBase);
+		System.out.println("password back:"+usuBase.getPassword());
+		String passfront= UsuarioController.otroMetodo(p);
+		System.out.println("password encriptado front:"+passfront);
+		if ((usuBase == null ) || (usuBase.getPassword().equals(passfront) == false)) {
 			System.out.println("Error 403 , usuario no autentificado");
 			res.sendError(403);
 			
 		} else {
 			System.out.println(" usuario Valido");
+			
 			//usuario.resetPassword();
-			req.getSession().setAttribute("userName", usuario.getUsername());
-			System.out.println("req.getSessio.setAtribute:"+req.getSession());
+			//req.getSession().setAttribute("userName", usuario.getUsername());
+			req.setAttribute("usuario", usuario.getUsername());
+			//System.out.println("req:::::"+req.getAttribute("usuario"));
+			
 			res.getWriter().println(JsonConvertidor.toJson(usuario));
 		}
 	}
 
-
+  
 
 	
 	

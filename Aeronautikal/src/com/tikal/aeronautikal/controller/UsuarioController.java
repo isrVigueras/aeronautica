@@ -48,7 +48,7 @@ public class UsuarioController {
 			System.out.println("usuario edgar "+json);
 			Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
 			System.out.println("usuari password: "+usuario.getPassword());
-			//usuario.setPassword(UsuarioController.otroMetodo(usuario.getPassword()));
+			usuario.setPassword(UsuarioController.otroMetodo(usuario.getPassword()));
 			
 			//if (usuario.getUsername() == null || usuario.getPassword() == null || usuario.getEmail() == null) {
 			if (usuario.getUsername() == null || usuario.getPassword() == null ) {
@@ -172,7 +172,7 @@ public class UsuarioController {
 		public void crearUsuarioUnico(HttpServletRequest request, HttpServletResponse response){
 			
 				Usuario usuario = new Usuario();
-			//	usuario.setEmail("root@root.com");
+				usuario.setEmail("root@root.com");
 				usuario.setPassword(otroMetodo("root"));
 				usuario.setPerfil("SuperAdministrador");
 				usuario.setUsername("root");
