@@ -1,0 +1,75 @@
+<script>
+  $('#editaUsuario').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+</script>
+<link href="css/tabla.css" rel="stylesheet" type="text/css" />
+<div class="contenedor">
+ <center><h1 style="color:#EEE6E6">Consulta Usuario</h1></center>
+ <br>
+<table class="tito">
+    <thead>
+      <tr style="background-color: #201b17c9;">
+        <th>ID</th>
+        <th>Nombre de Usuario</th>
+        <th>Perfil</th>
+        <th>Accion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="usu in usuarios_lista">
+        <td>{{usu.id}}</td>
+        <td>{{usu.usuario}}</td>
+        <td>{{usu.perfil}}</td>
+        <td>
+          <button type="button" class="btn btn-default" data-toggle="modal" ng-click="muestra_usu(usu)" data-target="#editaUsuario">
+        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+      </button>&nbsp;&nbsp;&nbsp;&nbsp;
+           <button type="button" class="btn btn-default" ng-click="elimina_usuario(usu.id)">
+  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+</button>
+<!--<input type ='button' value = 'texto boton' onclick="window.open('http://localhost/aeronau/Detalle_discrepancias.html', 'width=800,height=600');"/>--> 
+
+</td>
+      </tr>
+    </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="2">El Numero Usuarios Registrados es:</td>
+        <td ng-bind="usuarios_lista.length"></td>
+      </tr>
+    </tfoot>
+  </table>
+  <br><br><br><br><br>
+</div>
+<br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br>
+<!--********************************** Modal Editar Cliente ***********************************-->
+<div class="modal fade" id="editaUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <center><h3 class="modal-title" id="myModalLabel" style="color:#000000">Editar Usuario</h3></center>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+   <div class="row" style="margin: 1% 13%;">
+  
+   <h3>Datos Personales</h3>
+  <label for="usuario">Usuario</label><input class="form-control" placeholder="Escriba el Nombre del Usuario" ng-model="editaUsuarios.usuario" id="usuario" name="usuario" type="text"/>
+  <label for="pasword">Password</label><input class="form-control" placeholder="Escriba la Nueva Contraseña" ng-model="editaUsuarios.password" id="pasword" name="pasword" type="Password"/>
+  <label for="idPerfil">Puesto:</label>
+  <select class="form-control" ng-model="editaUsuarios.perfil" >
+            <option value="">--Elige un Perfil--</option>
+          <option value="{{perfil.tipo}}" ng-repeat="perfil in perfil_lista"  >{{perfil.tipo}}</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+                 <button type="button" class="btn btn-primary" ng-click="Actualiza_Empresa()">
+        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Actualizar
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

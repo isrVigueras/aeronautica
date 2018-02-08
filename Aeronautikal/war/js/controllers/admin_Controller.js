@@ -169,9 +169,46 @@ app.controller('UsuarioController', ['$scope','altaUsuarioServicio','eliminaUsua
     password: "",
     perfil: "",
     //authorities:undefined,
-    email: ""
   }
      $scope.alta_usuario=function() {
+    console.log($scope.fomUsuarios);
+      altaUsuarioServicio.alta_usuario($scope.fomUsuarios).then(
+        function(data) {
+          console.log(data);
+          location.reload();
+          alert("Nuevo Usuario Dado de Alta");
+          })         
+  }
+}]);
+app.controller('UsuarioMuestraController', ['$scope','usuarios_lista','perfil_lista','eliminaUsuarioServicio','AsignarDiscServicio',function($scope,usuarios_lista,perfil_lista,eliminaUsuarioServicio,AsignarDiscServicio) {
+    $scope.usuarios_lista = usuarios_lista;
+    console.log(usuarios_lista);
+    $scope.perfil_lista = perfil_lista;
+    console.log(perfil_lista);
+
+ $scope.muestra_usu=function(objeto) {
+    console.log(objeto);
+     $scope.detalle_usuario = objeto;
+       
+    $scope.editaUsuarios = {
+    id: $scope.detalle_usuario.id,
+    usuario: $scope.detalle_usuario.usuario,
+    password: $scope.detalle_usuario.password,
+    perfil: $scope.detalle_usuario.perfil,
+    //authorities:undefined,
+  }
+
+    }
+     $scope.elimina_usuario=function() {
+    console.log($scope.fomUsuarios);
+      altaUsuarioServicio.alta_usuario($scope.fomUsuarios).then(
+        function(data) {
+          console.log(data);
+          location.reload();
+          alert("Nuevo Usuario Dado de Alta");
+          })         
+  }
+   $scope.actualizar_usuario=function() {
     console.log($scope.fomUsuarios);
       altaUsuarioServicio.alta_usuario($scope.fomUsuarios).then(
         function(data) {
