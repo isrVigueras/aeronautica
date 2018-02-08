@@ -967,6 +967,7 @@ app.controller('navigation', [ 'sessionService', '$rootScope', '$scope',
 
       $scope.credentials = {};
       $scope.login = function() {
+        console.log($scope.credentials);
         sessionService.authenticate($scope.credentials, function() {
           if ($rootScope.authenticated) {
             $scope.error = false;
