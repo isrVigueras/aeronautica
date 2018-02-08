@@ -263,6 +263,8 @@ public class HorasHombreController {
 				System.out.println("debo hacer paro automatico");
 				h.setTiempoTotal(h.getTiempoParcial()+h.getTiempoParo());
 				//paro=false;
+				String hp= formatoFecha(h.getTiempoTotal());
+	 			h.setParcialEnHoras(hp);
 				h.setTiempoParo(0);
 			}else{
 				if (h.getTiempoParcial() == 0 ){   /// si es el primer inicio
@@ -315,6 +317,8 @@ public class HorasHombreController {
 	 			paro=checarParo(fecStop);
 				if (paro){ ///////////si termina antes de la hora de entrada, suma el parcial mas el tiempo de paro
 					h.setTiempoTotal(h.getTiempoParcial()+h.getTiempoParo());
+					String hp= formatoFecha(h.getTiempoTotal());
+		 			h.setParcialEnHoras(hp);
 					h.setTiempoParo(0);
 				}else{
 		 			if (h.getTiempoParcial()==0){
@@ -432,8 +436,8 @@ public class HorasHombreController {
 	    	int anio= now.get(Calendar.YEAR);
 	    	int mes =now.get(Calendar.MONTH);
 	    	int dia = now.get(Calendar.DATE);
-	    	int hora= 16;
-	    	int min = 8;
+	    	int hora= 17;
+	    	int min = 43;
 	    	int seg = 0;
 	    	
 	    	Calendar horaSalida= Calendar.getInstance();
@@ -451,8 +455,8 @@ public class HorasHombreController {
 	    	int anio= now.get(Calendar.YEAR);
 	    	int mes =now.get(Calendar.MONTH);
 	    	int dia = now.get(Calendar.DATE);
-	    	int hora= 16;
-	    	int min = 10;
+	    	int hora= 17;
+	    	int min = 45;
 	    	int seg = 0;
 	    	
 	    	Calendar horaSalida= Calendar.getInstance();

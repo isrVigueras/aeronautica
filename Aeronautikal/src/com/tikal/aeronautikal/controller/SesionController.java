@@ -30,7 +30,7 @@ public class SesionController {
 	
 	////////////////////// checar si el usuario es válido
 
-	@RequestMapping(value = { "/user" }, method = RequestMethod.POST, consumes="application/json", produces = "application/json")
+	@RequestMapping(value = { "/user" }, method = RequestMethod.GET, consumes="application/json", produces = "application/json")
 	public void user(HttpServletResponse res, HttpServletRequest req, @RequestBody String json) throws IOException {
 //		String auti = req.getHeader("authorization");
 //		System.out.println("Authorization:"+auti);
@@ -47,10 +47,22 @@ public class SesionController {
 		AsignadorDeCharset.asignar(req, res);
 		System.out.println("usuario edgar "+json);
 		Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
-		String p = UsuarioController.otroMetodo(usuario.getPassword());
-		//Usuario usuario = usuarioDao.consultarUsuario(u);
+		//String p = UsuarioController.otroMetodo(usuario.getPassword());
+		//////////////////////////
+		byte[] dec = Base64Utils.decodeFromString(usuario.getPassword());
+
+		String c = "";
+		for (byte b : dec) {
+			c += (char) b;
+		}
+		///////////////////////////
+		String p = UsuarioController.otroMetodo(c);
+		String username= usuario.getUsername() ;
 		// Verificar que el usuario y contraseña coincidan
-		if (usuario == null || (usuario.getPassword().equals(p) == false)) {
+		System.out.println("username:"+username);
+		System.out.println("password:"+p);
+		
+		if (username == null || (usuario.getPassword().equals(p) == false)) {
 			System.out.println("Error 403 , usuario no autentificado");
 			res.sendError(403);
 			
