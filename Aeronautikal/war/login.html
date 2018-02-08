@@ -11,16 +11,16 @@
   
   <center><h3 style="color:#000000">Usuario:</h3></center>
 
-<input class="form-control" placeholder="Escriba el Usuario" id="usuario" name="usuario" type="text" ng-model="credentials.username" required/>
+<input class="form-control" placeholder="Escriba el Usuario" id="usuario" name="usuario" type="text" ng-model="forminicia.usuario" required/>
 <br>
 <center><h3 style="color:#000000">Contraseña:</h3></center>
 
-<input class="form-control" placeholder="Escriba la Contraseña" id="password" name="password" type="password" ng-model="credentials.password" required/>
+<input class="form-control" placeholder="Escriba la Contraseña" id="password" name="password" type="password" ng-model="forminicia.password" required/>
   
   </div>
       </div>
       <div class="modal-footer">
-                 <button type="button" class="btn btn-primary" ng-click="login()">
+                 <button type="button" class="btn btn-primary" ng-click="inisession()">
         <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Inicias Session
         </button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
