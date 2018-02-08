@@ -34,44 +34,26 @@ public class SesionController {
 
 	@RequestMapping(value = { "/user" }, method = RequestMethod.POST, consumes="application/json", produces = "application/json")
 	public void user(HttpServletResponse res, HttpServletRequest req, @RequestBody String json) throws IOException {
-//		String auti = req.getHeader("authorization");
-	//	System.out.println("Authorization:"+auti);
-//		auti = auti.substring(5);
-//		byte[] dec = Base64Utils.decodeFromString(auti);
-//
-//		String c = "";
-//		for (byte b : dec) {
-//			c += (char) b;
-//		}
-//		String[] parts = c.split(":");
-//		String u = parts[0];
-//		String p = UsuarioController.otroMetodo(parts[1]);
+
 		AsignadorDeCharset.asignar(req, res);
 		System.out.println("usuario edgar "+json);
-		Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
-		System.out.println("username json:"+usuario.getUsername());
-		Usuario usuBase= usuarioDao.consultarUsuario(usuario.getUsername());
+		Usuario usuarioFront = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
+		System.out.println("username json:"+usuarioFront.getUsername());
+		Usuario usuBase= usuarioDao.consultarUsuario(usuarioFront.getUsername());
 		System.out.println("obeto usuario de bck:"+usuBase);
-		//String p = UsuarioController.otroMetodo(usuario.getPassword());
-		//////////////////////////
-//		byte[] dec = Base64Utils.decodeFromString(usuario.getPassword());
-//
-//		String c = "";
-//		for (byte b : dec) {
-//			c += (char) b;
-//		}
-		///////////////////////////
-		//String p = UsuarioController.otroMetodo(c);
-		String p= usuario.getPassword(); // el que trae Edgar
+
+		String p= usuarioFront.getPassword(); 
+		
 		//String username= usuBase.getUsername() ;
 		// Verificar que el usuario y contraseña coincidan
 		//System.out.println("username:"+username);
 		System.out.println("password front:"+p);
-		System.out.println("obeto usuario de bck:"+usuBase);
-		System.out.println("password back:"+usuBase.getPassword());
-		String passfront= UsuarioController.otroMetodo(p);
-		System.out.println("password encriptado front:"+passfront);
-		if ((usuBase == null ) || (usuBase.getPassword().equals(passfront) == false)) {
+		//System.out.println("obeto usuario de bck:"+usuBase);
+		System.out.println("password back:"+usuBase.getPassword());		
+		String passfrontCryp= UsuarioController.otroMetodo(p);
+		System.out.println("password encriptado front:"+passfrontCryp);
+		
+		if ((usuBase == null ) || (usuBase.getPassword().equals(passfrontCryp) == false)) {
 			System.out.println("Error 403 , usuario no autentificado");
 			res.sendError(403);
 			
@@ -80,17 +62,14 @@ public class SesionController {
 			
 			//usuario.resetPassword();
 			//req.getSession().setAttribute("userName", usuario.getUsername());
-			req.setAttribute("usuario", usuario.getUsername());
+			req.setAttribute("usuario", usuarioFront.getUsername());
 			//System.out.println("req:::::"+req.getAttribute("usuario"));
 			
-			res.getWriter().println(JsonConvertidor.toJson(usuario));
+			res.getWriter().println(JsonConvertidor.toJson(usuarioFront));
 		}
 	}
 
   
-
-	
-	
 	
 	@RequestMapping(value = { "/currentSession" }, method = RequestMethod.GET, produces = "application/json")
 	public void currentUser(HttpServletResponse res, HttpServletRequest req) throws IOException {
