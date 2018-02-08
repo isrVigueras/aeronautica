@@ -48,7 +48,7 @@ public class UsuarioController {
 			System.out.println("usuario edgar "+json);
 			Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
 			System.out.println("usuari password: "+usuario.getPassword());
-			usuario.setPassword(UsuarioController.otroMetodo(usuario.getPassword()));
+			//usuario.setPassword(UsuarioController.otroMetodo(usuario.getPassword()));
 			
 			//if (usuario.getUsername() == null || usuario.getPassword() == null || usuario.getEmail() == null) {
 			if (usuario.getUsername() == null || usuario.getPassword() == null ) {

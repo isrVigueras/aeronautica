@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tikal.aeronautikal.dao.PerfilDAO;
 import com.tikal.aeronautikal.dao.UsuarioDao;
+import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.Perfil;
 import com.tikal.aeronautikal.entity.Usuario;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
@@ -49,14 +50,15 @@ public class SesionController {
 		Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
 		//String p = UsuarioController.otroMetodo(usuario.getPassword());
 		//////////////////////////
-		byte[] dec = Base64Utils.decodeFromString(usuario.getPassword());
-
-		String c = "";
-		for (byte b : dec) {
-			c += (char) b;
-		}
+//		byte[] dec = Base64Utils.decodeFromString(usuario.getPassword());
+//
+//		String c = "";
+//		for (byte b : dec) {
+//			c += (char) b;
+//		}
 		///////////////////////////
-		String p = UsuarioController.otroMetodo(c);
+		//String p = UsuarioController.otroMetodo(c);
+		String p= usuario.getPassword();
 		String username= usuario.getUsername() ;
 		// Verificar que el usuario y contraseña coincidan
 		System.out.println("username:"+username);
@@ -70,6 +72,7 @@ public class SesionController {
 			System.out.println(" usuario Valido");
 			//usuario.resetPassword();
 			req.getSession().setAttribute("userName", usuario.getUsername());
+			System.out.println("req.getSessio.setAtribute:"+req.getSession());
 			res.getWriter().println(JsonConvertidor.toJson(usuario));
 		}
 	}
