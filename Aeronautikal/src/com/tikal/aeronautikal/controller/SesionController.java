@@ -38,34 +38,45 @@ public class SesionController {
 		AsignadorDeCharset.asignar(req, res);
 		System.out.println("usuario edgar "+json);
 		Usuario usuarioFront = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
-		System.out.println("username json:"+usuarioFront.getUsername());
-		Usuario usuBase= usuarioDao.consultarUsuario(usuarioFront.getUsername());
-		System.out.println("obeto usuario de bck:"+usuBase);
-
-		String p= usuarioFront.getPassword(); 
-		
-		//String username= usuBase.getUsername() ;
-		// Verificar que el usuario y contraseña coincidan
-		//System.out.println("username:"+username);
-		System.out.println("password front:"+p);
-		//System.out.println("obeto usuario de bck:"+usuBase);
-		System.out.println("password back:"+usuBase.getPassword());		
-		String passfrontCryp= UsuarioController.otroMetodo(p);
-		System.out.println("password encriptado front:"+passfrontCryp);
-		
-		if ((usuBase == null ) || (usuBase.getPassword().equals(passfrontCryp) == false)) {
+		if (usuarioFront.getUsername().isEmpty() || usuarioFront.getPassword().isEmpty()){
+			System.out.println("username vacio:"+usuarioFront.getUsername());
 			System.out.println("Error 403 , usuario no autentificado");
 			res.sendError(403);
-			
-		} else {
-			System.out.println(" usuario Valido");
-			
-			//usuario.resetPassword();
-			//req.getSession().setAttribute("userName", usuario.getUsername());
-			req.setAttribute("usuario", usuarioFront.getUsername());
-			//System.out.println("req:::::"+req.getAttribute("usuario"));
-			
-			res.getWriter().println(JsonConvertidor.toJson(usuarioFront));
+		}else{
+				System.out.println("username json:"+usuarioFront.getUsername());
+				Usuario usuBase= usuarioDao.consultarUsuario(usuarioFront.getUsername());
+				System.out.println("obeto usuario de bck:"+usuBase);
+				if(usuBase==null){
+					System.out.println("username vacio:"+usuarioFront.getUsername());
+					System.out.println("Error 403 , usuario no autentificado");
+					res.sendError(403);
+				}else{
+						String p= usuarioFront.getPassword(); 
+						
+						//String username= usuBase.getUsername() ;
+						// Verificar que el usuario y contraseña coincidan
+						//System.out.println("username:"+username);
+						System.out.println("password front:"+p);
+						//System.out.println("obeto usuario de bck:"+usuBase);
+						System.out.println("password back:"+usuBase.getPassword());		
+						String passfrontCryp= UsuarioController.otroMetodo(p);
+						System.out.println("password encriptado front:"+passfrontCryp);
+						
+						if (usuBase.getPassword().equals(passfrontCryp) == false) {
+							System.out.println("Error 403 , usuario no autentificado");
+							res.sendError(403);
+							 
+						} else {
+							System.out.println(" usuario Valido");
+							
+							//usuario.resetPassword();
+							//req.getSession().setAttribute("userName", usuario.getUsername());
+							req.setAttribute("usuario", usuarioFront.getUsername());
+							//System.out.println("req:::::"+req.getAttribute("usuario"));
+							
+							res.getWriter().println(JsonConvertidor.toJson(usuarioFront));
+						}
+				}
 		}
 	}
 
