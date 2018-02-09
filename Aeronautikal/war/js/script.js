@@ -848,9 +848,10 @@ $routeProvider.when('/Admin/Consulta_Usuario', {
       usuarios_lista:['remoteResource',function(remoteResource) {
         return remoteResource.usuarios_lista();
       }],
-      perfil_lista:['remoteResource',function(remoteResource) {
+       perfil_lista:['remoteResource',function(remoteResource) {
         return remoteResource.perfil_lista();
       }]
+
     }
   });
 $routeProvider.when('/Admin/Alta_Perfil', {
@@ -919,6 +920,10 @@ app.service('IniSessServicio', [ '$http', '$q', function($http, $q) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+      if(response.status==403){
+      alert("Usuario o Contraseña incorrectos");
+      location.href="/";
+                              }
     });
     return d.promise;
   }
@@ -942,6 +947,7 @@ app.controller("MainController", ['$scope','remoteResource','IniSessServicio',fu
           console.log(data);
           location.reload();
           alert("Inicio session");
+          location.href="#/Inicio/paginaPrincipal";
           })     
       }
 
