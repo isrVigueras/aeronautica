@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.tikal.aeronautikal.dao.PerfilDAO;
 import com.tikal.aeronautikal.dao.SesionDao;
@@ -25,7 +26,7 @@ import com.tikal.aeronautikal.util.JsonConvertidor;
 import com.tikal.aeronautikal.util.Util;
 
 
-
+@SessionAttributes({"usuario"})
 @Controller
 @RequestMapping(value = { "/usuario" })
 public class UsuarioController {
@@ -33,7 +34,7 @@ public class UsuarioController {
 	@Autowired
 	@Qualifier ("usuarioDao")
 	UsuarioDao usuarioDao;
-//	UsuarioDAO usuarioImp;
+
 	
 	@Autowired
 	PerfilDAO perfilDAO; 

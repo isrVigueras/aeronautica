@@ -436,8 +436,8 @@ public class HorasHombreController {
 	    	int anio= now.get(Calendar.YEAR);
 	    	int mes =now.get(Calendar.MONTH);
 	    	int dia = now.get(Calendar.DATE);
-	    	int hora= 17;
-	    	int min = 43;
+	    	int hora= 18;
+	    	int min = 0;
 	    	int seg = 0;
 	    	
 	    	Calendar horaSalida= Calendar.getInstance();
@@ -455,13 +455,13 @@ public class HorasHombreController {
 	    	int anio= now.get(Calendar.YEAR);
 	    	int mes =now.get(Calendar.MONTH);
 	    	int dia = now.get(Calendar.DATE);
-	    	int hora= 17;
-	    	int min = 45;
+	    	int hora= 9;
+	    	int min = 0;
 	    	int seg = 0;
 	    	
 	    	Calendar horaSalida= Calendar.getInstance();
 	    	horaSalida.set(Calendar.YEAR, anio);
-	    	horaSalida.set(anio, mes, dia, hora, min, seg);
+	    	horaSalida.set(anio, mes, dia+1, hora, min, seg);
 	    	Date theDate = horaSalida.getTime();
 	    	System.out.println("-------------------La hora de entrada es:"+theDate);
 

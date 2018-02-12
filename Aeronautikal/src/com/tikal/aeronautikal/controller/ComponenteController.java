@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.tikal.aeronautikal.controller.vo.ComDisVo;
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.ComponenteDiscrepanciaDao;
+import com.tikal.aeronautikal.dao.PerfilDAO;
 import com.tikal.aeronautikal.dao.RequisicionDao;
+import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.dao.ValeDao;
 import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
@@ -40,6 +42,15 @@ public class ComponenteController {
 	
 	 @Autowired
 	    private ComponenteService componenteService;
+	 
+	 @Autowired
+		@Qualifier ("usuarioDao")
+		UsuarioDao usuarioDao;
+//		UsuarioDAO usuarioImp;
+		
+		@Autowired
+		PerfilDAO perfilDAO; 
+		
 	 
 	 @Autowired
 	 @Qualifier("componenteDao")
@@ -99,20 +110,25 @@ public class ComponenteController {
 	 @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
 	   public void addComponente(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
 	    	  System.out.println("si entra al add por POST"+json);
-	        try {
-	        	AsignadorDeCharset.asignar(request, response);
-	        	// System.out.println("request......."+request);
-	        	// System.out.println("request......."+response);
-	        	ComponenteEntity cmp =(ComponenteEntity) JsonConvertidor.fromJson(json, ComponenteEntity.class);
-	        	// System.out.println("el nuevo objeto: "+orden );
-	        	//pegar el valor de empresa, aeronave y contacato
-	        	//cmp.setD_pendientes(50);//aqui va funcion para calcular cuantas piezas pendientes hay de cada componente
-	        	//orden.setFolio(1111);
-	        	componenteDao.save(cmp);	            
-	        } catch (RuntimeException ignored) {
-	        	ignored.printStackTrace();
-	            // getUniqueEntity should throw exception
-	        }
+	      if(SesionController.verificarPermiso(request, usuarioDao, perfilDAO, 1)){
+
+		        try {
+		        	AsignadorDeCharset.asignar(request, response);
+		        	// System.out.println("request......."+request);
+		        	// System.out.println("request......."+response);
+		        	ComponenteEntity cmp =(ComponenteEntity) JsonConvertidor.fromJson(json, ComponenteEntity.class);
+		        	// System.out.println("el nuevo objeto: "+orden );
+		        	//pegar el valor de empresa, aeronave y contacato
+		        	//cmp.setD_pendientes(50);//aqui va funcion para calcular cuantas piezas pendientes hay de cada componente
+		        	//orden.setFolio(1111);
+		        	componenteDao.save(cmp);	            
+		        } catch (RuntimeException ignored) {
+		        	ignored.printStackTrace();
+		            // getUniqueEntity should throw exception
+		        }
+	      }else{
+			response.sendError(403);
+		  }
 	       
 	    }
 	 
