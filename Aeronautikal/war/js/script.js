@@ -913,7 +913,7 @@ app.directive('caDatepicker', [function(dateFormat) {
 }]);
 
 //servicio inicia sesion ususario
-app.service('IniSessServicio', [ '$http', '$q', function($http, $q) {
+app.service('IniSessServicio', [ '$http', '$q','$rootScope', function($http, $q,$rootScope) {
   this.inicia_session = function(objeto) {
     var d = $q.defer();
     $http.post("/user",objeto).then(function(response) {
@@ -923,13 +923,75 @@ app.service('IniSessServicio', [ '$http', '$q', function($http, $q) {
       if(response.status==403){
       alert("Usuario o Contraseña incorrectos");
       location.href="/";
+      $rootScope.authenticated = false;
+      console.log($rootScope);
                               }
+      else {
+        $rootScope.authenticated = true;
+        $rootScope.variable = true;
+         console.log($rootScope);
+      }
     });
     return d.promise;
   }
 } ]);
+//servicio cerrar sesion ususario
+app.service('CerrarSessServicio', [ '$http', '$q','$rootScope', function($http, $q,$rootScope) {
+  this.cerrar_session = function() {
+    var d = $q.defer();
+    $http.post("/cerrarSesion").then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+   
+    });
+    return d.promise;
+  }
+} ]);
+app.service('sessionService', [
+    '$rootScope',
+    '$http',
+    '$location',
+    '$q',
+    function($rootScope, $http, $location, $q) {
+      this.authenticate = function(credentials, callback) {
 
-app.controller("MainController", ['$scope','remoteResource','IniSessServicio',function($scope,remoteResource,IniSessServicio) {
+        var headers = credentials ? {
+          authorization : "Basic"
+              + btoa(credentials.username + ":"
+                  + credentials.password)
+        } : {};
+        $http.get('user', {
+          headers : headers
+        }).success(function(data) {
+          if (data.usuario) {
+            $rootScope.authenticated = true;
+            $rootScope.variable = true;
+            $rootScope.cargarEmpresasHeader();
+            $location.path("/empresas/list");
+          } else {
+            $rootScope.authenticated = false;
+          }
+        }).error(function(data) {
+          alert("Usuario o Contraseña incorrectos");
+          $location.path("/login");
+        });
+      }
+      
+      this.isAuthenticated = function() {
+        var d = $q.defer();
+        $http.get("currentSession").success(function(data) {
+          $rootScope.authenticated = true;
+          d.resolve(data);
+        }).error(function(data) {
+          $location.path("/login");
+        });
+        return d.promise;
+      }
+    } ]);
+
+
+app.controller("MainController", ['$scope','remoteResource','IniSessServicio','$rootScope','CerrarSessServicio',function($scope,remoteResource,IniSessServicio,$rootScope,CerrarSessServicio) {
   remoteResource.alertas().then(function(data){
     $scope.alertas = data;
   })
@@ -948,6 +1010,16 @@ app.controller("MainController", ['$scope','remoteResource','IniSessServicio',fu
           location.reload();
           alert("Inicio session");
           location.href="#/Inicio/paginaPrincipal";
+          })     
+      }
+
+      $scope.cerrar_session=function() {
+      CerrarSessServicio.cerrar_session().then(
+        
+        function(data) {
+          console.log(data);
+          alert("La session se cerrara");
+          location.href="/";
           })     
       }
 
