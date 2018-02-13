@@ -163,7 +163,7 @@ public class UsuarioController {
 		public void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException{
 			
 			HttpSession session = request.getSession(false);
-			System.out.println("se invalidara la SESSION... "+session);
+			System.out.println("la SESSION trae... "+session);
 			if (session != null) {
 				System.out.println("SESION invalida ");
 			    session.invalidate();
