@@ -161,8 +161,11 @@ public class UsuarioController {
 		
 		@RequestMapping(value = {"/cerrarSesion"}, method = RequestMethod.GET)
 		public void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException{
+			
 			HttpSession session = request.getSession(false);
+			System.out.println("se invalidara la SESSION... "+session);
 			if (session != null) {
+				System.out.println("SESION invalida ");
 			    session.invalidate();
 			}
 		}

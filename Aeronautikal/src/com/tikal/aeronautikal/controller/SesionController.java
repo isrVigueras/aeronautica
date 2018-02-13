@@ -115,9 +115,18 @@ public class SesionController {
 							 
 						} else {
 							System.out.println(" usuario Valido");
-							
+							/////////////////////////////////
+							//HttpServletRequest request = this.getThreadLocalRequest();
+
+							//HttpSession session = request.getSession();
+
+							// in your authentication method
+							//if(isCorrectPassword)
+							  // session.setAttribute("authenticatedUserName", "name");
+							////////////////////////////////////
 							//usuario.resetPassword();
 							//req.getSession().setAttribute("userName", usuarioFront.getUsername());
+							//req.getRequestedSessionId().getSession();
 							HttpSession s = req.getSession();
 							
 							System.out.println(" ------ sesion:"+s);
@@ -135,14 +144,17 @@ public class SesionController {
 	
 	@RequestMapping(value = { "/currentSession" }, method = RequestMethod.GET, produces = "application/json")
 	public void currentUser(HttpServletResponse res, HttpServletRequest req) throws IOException, ServletException {
-		System.out.println("currentSession:urtenticate::"+req.authenticate(res));
+		System.out.println("currentSession:autenticate::"+req.authenticate(res));
 		HttpSession s = req.getSession();
+		String name = (String) req.getAttribute("usuario");
+		System.out.println("usuario en req:"+req.getAttributeNames());
 		System.out.println(" ------ sesion:"+s);
 		String n = (String) s.getAttribute("usuario");
 		
 		System.out.println(" atributo usuario de la sesion:"+req.getAttribute("usuario"));
 		if (n == null) {
-			res.sendError(400);
+			System.out.println(" No hay usuario asignado a la session");   
+		 	res.sendError(400);
 		}
 	}
 	
