@@ -934,12 +934,23 @@ app.service('IniSessServicio', [ '$http', '$q','$rootScope', function($http, $q,
     });
     return d.promise;
   }
+
+  this.isAuthenticated = function() {
+        var d = $q.defer();
+        $http.get("/currentSession").success(function(data) {
+          $rootScope.authenticated = true;
+          d.resolve(data);
+        }).error(function(data) {
+          location.href="/";
+        });
+        return d.promise;
+      }
 } ]);
 //servicio cerrar sesion ususario
 app.service('CerrarSessServicio', [ '$http', '$q','$rootScope', function($http, $q,$rootScope) {
   this.cerrar_session = function() {
     var d = $q.defer();
-    $http.post("/cerrarSesion").then(function(response) {
+    $http.get("usuario/cerrarSesion").then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {

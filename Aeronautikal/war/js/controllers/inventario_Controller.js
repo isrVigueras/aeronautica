@@ -1,11 +1,17 @@
 //servicio alta Inventario
-app.service('InventarioService', [ '$http', '$q', function($http, $q) {
+app.service('InventarioService', [ '$http', '$q','$rootScope', function($http, $q,$rootScope) {
   this.genera_inventario = function(inventario) {
     var d = $q.defer();
     $http.post("/componente/add",inventario).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+            if(response.status==403){
+      alert("No tienes Permiso");
+      location.href="/";
+      $rootScope.authenticated = false;
+      console.log($rootScope);
+                              }
     });
     return d.promise;
   }
@@ -24,7 +30,16 @@ app.service('EliminaInventarioService', [ '$http', '$q', function($http, $q) {
 } ]);
 
 
-app.controller("InventarioController", ['$scope','InventarioService','categoria','unidad','condicion',function($scope,InventarioService,categoria,unidad,condicion) {
+app.controller("InventarioController", ['$scope','InventarioService','categoria','unidad','condicion','$rootScope',function($scope,InventarioService,categoria,unidad,condicion,$rootScope) {
+  /*$scope.Txt=true;
+      if(!$rootScope.variable){
+        location.href="/";
+        alert("no tienes papi");
+      }
+      else
+        {
+          alert("si tiene permisos");
+        }*/
 $scope.categoria =categoria;
 $scope.unidad =unidad;
 $scope.condicion =condicion;
