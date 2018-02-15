@@ -164,7 +164,7 @@ public class SesionController {
 							s.setNameUser(usuarioFront.getUsername());
 							System.out.println("req:::::"+req.getAttribute("usuario"));
 							//System.out.println("session:::::"+s.getAttribute("usuario"));
-							System.out.println("objeto s:::::"+s);
+							System.out.println("objetossss s:::::"+s);
 							sessionDao.save(s);
 							
 							res.getWriter().println(JsonConvertidor.toJson(s));///ojo decirle a edgar como la lleva esta...
