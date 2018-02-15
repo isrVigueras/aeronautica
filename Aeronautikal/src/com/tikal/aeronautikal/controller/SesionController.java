@@ -98,8 +98,8 @@ public class SesionController {
 							//System.out.println("session:::::"+s.getAttribute("usuario"));
 							
 							
-													
-							res.getWriter().println(JsonConvertidor.toJson(s.getNameUser()));
+							res.getWriter().println(s.getNameUser());						
+							//res.getWriter().println(JsonConvertidor.toJson(s.getNameUser()));
 						}
 				}
 		}
@@ -167,13 +167,13 @@ public class SesionController {
 							System.out.println("objetossss s:::::"+s);
 							sessionDao.save(s);
 							
-							res.getWriter().println(JsonConvertidor.toJson(s.getNameUser()));///ojo decirle a edgar como la lleva esta...
+							res.getWriter().println(s.getNameUser());///ojo decirle a edgar como la lleva esta...
 						}
 				}
 		}
 	}
 
-  
+   
 	
 	@RequestMapping(value = { "/currentSession" }, method = RequestMethod.GET, produces = "application/json")
 	public void currentUser(HttpServletResponse res, HttpServletRequest req) throws IOException, ServletException {
