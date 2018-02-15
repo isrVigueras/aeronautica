@@ -10,7 +10,7 @@ app.service('AsignarDiscServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
-//servicio alta empresa
+//servicio alta puesto
 app.service('altaPuestoServicio', [ '$http', '$q', function($http, $q) {
   this.alta_puesto = function(objt) {
     var d = $q.defer();
@@ -22,7 +22,31 @@ app.service('altaPuestoServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
-//servicio elmina empresa
+//servicio actualiza puesto
+app.service('ActualizaPuestoServicio', [ '$http', '$q', function($http, $q) {
+  this.actualiza_puesto = function(objeto) {
+    var d = $q.defer();
+    $http.post("/puesto/update",objeto).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
+//servicio eliminar puesto
+app.service('EliminaPuestoServicio', [ '$http', '$q', function($http, $q) {
+  this.elimina_puesto = function(id) {
+    var d = $q.defer();
+    $http.post("/puesto/delete/"+id).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+    });
+    return d.promise;
+  }
+} ]);
+//servicio elmina condicion
 app.service('eliminaCondicionServicio', [ '$http', '$q', function($http, $q) {
   this.elimina_condicion = function(id) {
     var d = $q.defer();
@@ -82,6 +106,7 @@ app.service('altaPerfilServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+
 app.controller('AdminController', ['$scope', 'altaPuestoServicio',function($scope, altaPuestoServicio) {
    $scope.puestoform = {
     id: undefined,
@@ -100,37 +125,37 @@ app.controller('AdminController', ['$scope', 'altaPuestoServicio',function($scop
         })         
   }
 }]);
-app.controller('PuestoMuestraController', ['$scope','eliminaCondicionServicio','ActualizaCondicionServicio','puestos_lista',function($scope,eliminaCondicionServicio,ActualizaCondicionServicio,puestos_lista) {
+app.controller('PuestoMuestraController', ['$scope','EliminaPuestoServicio','ActualizaPuestoServicio','puestos_lista',function($scope,EliminaPuestoServicio,ActualizaPuestoServicio,puestos_lista) {
   $scope.puestos_lista = puestos_lista;
       console.log(puestos_lista);
       
-       $scope.elimina_puesto=function(folio) {
+       $scope.elimina_puesto=function(id) {
     //console.log(altarequisicion);
-    console.log(folio);
-      eliminaCondicionServicio.elimina_condicion(folio).then(
+    console.log(id);
+      EliminaPuestoServicio.elimina_puesto(id).then(
         function(data) {
           console.log(data);
-          alert("condicion Eliminada");
+          alert("Puesto Eliminado");
           location.reload();
         })         
   }
     $scope.muestra_puesto=function(objeto) {
     console.log(objeto);
-    $scope.detalle_condicion = objeto; 
+    $scope.detalle_puesto = objeto; 
 
-    $scope.condicion_edi = {
-    id: $scope.detalle_condicion.id,
-    clave: $scope.detalle_condicion.clave,
-    descripcion: $scope.detalle_condicion.descripcion  
+    $scope.puesto_edi = {
+    id: $scope.detalle_puesto.id,
+    Clave: $scope.detalle_puesto.Clave,
+    Descripcion: $scope.detalle_puesto.Descripcion  
   }   
   }
 
     $scope.Actualiza_puesto=function() {   
-
-      ActualizaCondicionServicio.actualiza_condicion($scope.condicion_edi).then(
+      console.log($scope.puesto_edi);
+      ActualizaPuestoServicio.actualiza_puesto($scope.puesto_edi).then(
         function(data) {
           console.log(data);
-          alert("condicion Modificada");
+          alert("Puesto Modificada");
           location.reload();
         })  
   }

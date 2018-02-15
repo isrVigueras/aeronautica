@@ -8,8 +8,9 @@ app.service('InventarioService', [ '$http', '$q','$rootScope', function($http, $
     }, function(response) {
             if(response.status==403){
       alert("No tienes Permiso");
-      location.href="/";
-      $rootScope.authenticated = false;
+      $rootScope.authenticated;
+      //location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
       console.log($rootScope);
                               }
     });
@@ -78,7 +79,7 @@ $scope.condicion =condicion;
         function(data) {
           console.log(data);
           //alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
-            location.href="#/Inventario/colsulta";
+            //location.href="#/Inventario/colsulta";
          alert("componente dado de alta");
         })
               

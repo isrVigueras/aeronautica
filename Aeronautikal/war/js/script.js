@@ -1018,9 +1018,12 @@ app.controller("MainController", ['$scope','remoteResource','IniSessServicio','$
       IniSessServicio.inicia_session($scope.forminicia).then(
         function(data) {
           console.log(data);
-          location.reload();
+           $rootScope.authenticated = data;
+            console.log("session");
+           console.log($rootScope.authenticated);
           alert("Inicio session");
           location.href="#/Inicio/paginaPrincipal";
+          location.reload();
           })     
       }
 
