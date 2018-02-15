@@ -96,7 +96,7 @@ public class PuestoController {
 	   public void deletePuesto(HttpServletResponse response, HttpServletRequest request, @PathVariable Long id)
 			   throws IOException {
 		   System.out.println("si esta en delete puesto"+id);
-		   puestoDao.delete(puestoDao.consult(id));
+		   puestoDao.delete(id);
 		   System.out.println("Puesto eliminado....");
 		   response.getWriter().println("ok");
 		   
@@ -114,21 +114,7 @@ public class PuestoController {
 			response.getWriter().println(JsonConvertidor.toJson(p));
 		}
 	    
-	   
-	 /*  @RequestMapping(value = { "/getByDiscrepancia/{idDiscrepancia}" }, method = RequestMethod.GET, produces = "application/json")
-		public void findByDiscrepancia(HttpServletResponse response, HttpServletRequest request,
-				@PathVariable Long idDiscrepancia) throws IOException {
-		   System.out.println("ya entro a evento controller....");
-			AsignadorDeCharset.asignar(request, response);
-			List<EventoEntity> evs= eventoDao.getByDiscrepancia(idDiscrepancia);
-			if (evs==null){
-				evs= new ArrayList<EventoEntity>();
-			}
-			
-			response.getWriter().println(JsonConvertidor.toJson(evs));
-			
-		}*/
-	 
+	
 	 
 	 
 

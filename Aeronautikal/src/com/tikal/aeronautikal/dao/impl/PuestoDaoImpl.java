@@ -18,8 +18,9 @@ public class PuestoDaoImpl implements PuestoDao{
 	    }
 
 	    
-	    public void delete(PuestoEntity p) {
-	    	 System.out.println("si esta en daoimpl eliminando"+p);
+	    public void delete(Long id) {
+	    	 System.out.println("si esta en daoimpl eliminando"+id);
+	    	 PuestoEntity p= this.consult(id);
 	        ofy().delete().entity(p).now();
 	        System.out.println("eliminando...");
 	    }
@@ -39,7 +40,7 @@ public class PuestoDaoImpl implements PuestoDao{
 	    
 	   @Override
 		public PuestoEntity consult(Long id) {
-		   System.out.println("si esta en daoimpl consultando la condicion.."+id);
+		   System.out.println("si esta en daoimpl consultando el puesto.."+id);
 	      return ofy().load().type(PuestoEntity.class).id(id).now();
 			
 		}

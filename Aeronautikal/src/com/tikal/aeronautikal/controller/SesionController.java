@@ -2,8 +2,10 @@ package com.tikal.aeronautikal.controller;
 
 import java.io.IOException;
 //import java.security.Principal;
+import java.util.Date;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -96,7 +98,8 @@ public class SesionController {
 							s.setNameUser(usuarioFront.getUsername());
 							System.out.println("req++++++++"+req.getAttribute("usuario"));
 							//System.out.println("session:::::"+s.getAttribute("usuario"));
-							
+							 Cookie miCookie = new Cookie("userName",s.getNameUser());
+                             System.out.println("cookie:::"+miCookie.getValue());
 							
 							res.getWriter().println(s.getNameUser());						
 							//res.getWriter().println(JsonConvertidor.toJson(s.getNameUser()));
@@ -167,6 +170,12 @@ public class SesionController {
 							System.out.println("objetossss s:::::"+s);
 							sessionDao.save(s);
 							
+							 //final long DURATION = 1000 * 60 ; //duration remembering login. 2 weeks
+                             //Date expires = new Date(System.currentTimeMillis() + (15*DURATION));
+                            // Cookies.setCookie("sid", session.getId(), expires, null, "/", false);
+                             Cookie miCookie = new Cookie("userName",s.getNameUser());
+                             System.out.println("cookie:::"+miCookie.getValue());
+
 							res.getWriter().println(s.getNameUser());///ojo decirle a edgar como la lleva esta...
 						}
 				}
@@ -213,7 +222,7 @@ public class SesionController {
 		return false;
 	}
 	
-	public static boolean verificarPermiso2(HttpServletRequest request, UsuarioDao usuarioDao, PerfilDAO  perfildao, int per, SessionDao sessionDao){
+	public static boolean verificarPermiso2(HttpServletRequest request, UsuarioDao usuarioDao, PerfilDAO  perfildao, int per, SessionDao sessionDao, String userName){
 		String u = (String) request.getAttribute("usuario");
 	////	String nombreUsuario = (String) s.getAttribute("userName");
 		System.out.println(" ------ usuario:"+u);
@@ -221,18 +230,23 @@ public class SesionController {
 	//	System.out.println(" --------- id de session consultada------"+s.getId());
 //		SessionEntity ss = sessionDao.consult();
 //		System.out.println(" ---------session consultada------"+ss);
-//		if(ss.getNameUser() == null){
-//			System.out.println(" *****************usuario sin session*******");
-//			return false;
-//		}else{
-//			System.out.println(" ----------------usuario con session-----------");
-//			Usuario usuario = usuarioDao.consultarUsuario(nombreUsuario);
-//			Perfil perfil = perfildao.consultarPerfil(usuario.getPerfil());
-//			if(perfil.getPermisos()[per]==true){
-//				System.out.println(" ----------------usuario con Permisos-----------");
-//				return true;
-//			}
-		//}
+		if(userName == null){
+			System.out.println(" ****************No existe ese usuario en sessionEntity*******");
+			return false;
+		}else{
+		//	System.out.println(" ----------------usuario con session-----------");
+			SessionEntity s= sessionDao.getByName(userName);
+			if (s==null){
+				System.out.println(" *****No hay session con ese  usuario *******");
+				return false;
+			}
+			Usuario usuario = usuarioDao.consultarUsuario(userName);
+			Perfil perfil = perfildao.consultarPerfil(usuario.getPerfil());
+			if(perfil.getPermisos()[per]==true){
+				System.out.println(" ----------------usuario con Permisos-----------");
+				return true;
+			}
+		}
 		System.out.println(" ----------------usuario SIN PERMISOS----------");
 		return false;
 	}

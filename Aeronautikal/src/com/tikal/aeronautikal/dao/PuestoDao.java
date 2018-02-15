@@ -10,7 +10,7 @@ public interface PuestoDao {
 	
 	public void save(PuestoEntity p);
 
-	public void delete(PuestoEntity p);
+	public void delete(Long id);
 
 	public void update(PuestoEntity p);
 	

@@ -12,4 +12,6 @@ public interface SessionDao {
 	public void update(SessionEntity s);
 	
 	public SessionEntity consult(String id);
+	
+	public SessionEntity getByName(String nameUser);
 }

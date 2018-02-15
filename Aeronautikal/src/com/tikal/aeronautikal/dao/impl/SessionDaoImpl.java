@@ -2,11 +2,14 @@ package com.tikal.aeronautikal.dao.impl;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.tikal.aeronautikal.dao.SessionDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.SessionEntity;
+import com.tikal.aeronautikal.entity.Usuario;
 
 @Service("sessionDao")
 
@@ -46,6 +49,21 @@ public class SessionDaoImpl implements SessionDao {
 	      return ofy().load().type(SessionEntity.class).id(id).now();
 			
 		}
+
+
+	@Override
+	public SessionEntity getByName(String nameUser) {
+		// TODO Auto-generated method stub
+		 System.out.println("si esta en daoimpl consultando la Session con el username.."+nameUser);
+		 List<SessionEntity> s = ofy().load().type(SessionEntity.class).filter("nameUser", nameUser).list();
+			System.out.println("lista de usuarios con ese username:"+nameUser);
+			if (s.size() == 0) {
+				return null;
+			}
+			SessionEntity nuevo = s.get(0);
+			return nuevo;
+
+	}
 
 
 
