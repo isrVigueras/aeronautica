@@ -99,7 +99,7 @@ public class SesionController {
 							
 							
 													
-							res.getWriter().println(JsonConvertidor.toJson(usuarioFront));
+							res.getWriter().println(JsonConvertidor.toJson(s));
 						}
 				}
 		}
