@@ -1,8 +1,8 @@
 //servicio alta Inventario
-app.service('InventarioService', [ '$http', '$q','$rootScope','$cookieStore', function($http, $q,$rootScope,$cookieStore) {
-  this.genera_inventario = function(inventario) {
+app.service('InventarioService', [ '$http', '$q','$rootScope', function($http, $q,$rootScope) {
+  this.genera_inventario = function(id,inventario) {
     var d = $q.defer();
-    $http.post("/componente/add",inventario).then(function(response) {
+    $http.post("/componente/add/"+id,inventario).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -10,7 +10,6 @@ app.service('InventarioService', [ '$http', '$q','$rootScope','$cookieStore', fu
       alert("No tienes Permiso");
       //location.href="#/Inicio/paginaPrincipal";
       //$rootScope.authenticated = false;
-      console.log($cookieStore.cosa);
                               }
     });
     return d.promise;
@@ -30,7 +29,8 @@ app.service('EliminaInventarioService', [ '$http', '$q', function($http, $q) {
 } ]);
 
 
-app.controller("InventarioController", ['$scope','InventarioService','categoria','unidad','condicion','$rootScope',function($scope,InventarioService,categoria,unidad,condicion,$rootScope) {
+app.controller("InventarioController", ['$scope','InventarioService','categoria','unidad','condicion','$rootScope','$cookies',function($scope,InventarioService,categoria,unidad,condicion,$rootScope,$cookies) {
+   console.log($cookies.cosa);
   /*$scope.Txt=true;
       if(!$rootScope.variable){
         location.href="/";
@@ -74,7 +74,7 @@ $scope.condicion =condicion;
     console.log($scope.inventario);
     if ($scope.form.$valid) {
       //alert("variable comprobada: "+$scope.inventario.d_componente+" y la fecha "+ $scope.inventario.fechaApertura);
-      InventarioService.genera_inventario($scope.inventario).then(
+      InventarioService.genera_inventario($cookies.cosa,$scope.inventario).then(
         function(data) {
           console.log(data);
           //alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");

@@ -1002,7 +1002,7 @@ app.service('sessionService', [
     } ]);
 
 
-app.controller("MainController", ['$scope','remoteResource','IniSessServicio','CerrarSessServicio','$rootScope','$cookieStore',function($scope,remoteResource,IniSessServicio,CerrarSessServicio,$rootScope,$cookieStore) {
+app.controller("MainController", ['$scope','remoteResource','IniSessServicio','CerrarSessServicio','$rootScope','$cookieStore','$cookies',function($scope,remoteResource,IniSessServicio,CerrarSessServicio,$rootScope,$cookieStore,$cookies) {
   remoteResource.alertas().then(function(data){
     $scope.alertas = data;
   })
@@ -1018,10 +1018,10 @@ app.controller("MainController", ['$scope','remoteResource','IniSessServicio','C
       IniSessServicio.inicia_session($scope.forminicia).then(
         function(data) {
           console.log(data);
-          $cookieStore.cosa = data;
+          $cookies.cosa = data;
            //$rootScope.authenticated = data;
             console.log("session almacenada");
-          console.log($cookieStore.cosa);
+          console.log($cookies);
           alert("Inicio session");
           location.href="#/Inicio/paginaPrincipal";
           location.reload();
