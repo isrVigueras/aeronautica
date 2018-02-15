@@ -8,10 +8,6 @@ import java.util.List;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 
 
-
-
-
-
 public interface AeronaveDao {
 
 

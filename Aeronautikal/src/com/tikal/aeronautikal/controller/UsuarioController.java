@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.tikal.aeronautikal.dao.PerfilDAO;
 import com.tikal.aeronautikal.dao.SesionDao;
+import com.tikal.aeronautikal.dao.SessionDao;
 import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.entity.Perfil;
 import com.tikal.aeronautikal.entity.Usuario;
@@ -34,6 +35,10 @@ public class UsuarioController {
 	@Autowired
 	@Qualifier ("usuarioDao")
 	UsuarioDao usuarioDao;
+	
+	@Autowired
+	@Qualifier ("sessionDao")
+	SessionDao sessionDao;
 
 	
 	@Autowired
@@ -162,10 +167,10 @@ public class UsuarioController {
 		@RequestMapping(value = {"/cerrarSesion"}, method = RequestMethod.GET)
 		public void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException{
 			
-			HttpSession session = request.getSession(false);
+			HttpSession session = request.getSession(true);
 			System.out.println("la SESSION trae... "+session);
 			if (session != null) {
-				System.out.println("SESION invalida ");
+				System.out.println("Se cerrara la session.........");
 			    session.invalidate();
 			}
 		}

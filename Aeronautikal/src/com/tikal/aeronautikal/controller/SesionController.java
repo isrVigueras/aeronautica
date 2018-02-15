@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,20 +18,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.tikal.aeronautikal.dao.PerfilDAO;
+import com.tikal.aeronautikal.dao.SessionDao;
 import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.Perfil;
+import com.tikal.aeronautikal.entity.SessionEntity;
 import com.tikal.aeronautikal.entity.Usuario;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
 
-@SessionAttributes({"usuario"})
+//@SessionAttributes({"usuario"})
 @Controller
 
 public class SesionController {
 
 	@Autowired
 	UsuarioDao usuarioDao;  // para la autentificacion
+	
+	@Autowired
+	@Qualifier ("sessionDao")
+	SessionDao sessionDao;
 	
 	////////////////////// checar si el usuario es válido
 
@@ -65,17 +72,33 @@ public class SesionController {
 							res.sendError(403);
 							 
 						} else {
-							System.out.println(" usuario Valido");
+							System.out.println(" usuario Valido_Post");
 							
 							//usuario.resetPassword();
 							//req.getSession().setAttribute("userName", usuarioFront.getUsername());
-							HttpSession s = req.getSession();
-							
-							System.out.println(" ------ sesion:"+s);
-							System.out.println(" ------id:"+s.getId());
+							HttpSession session = req.getSession();
+							SessionEntity s = new SessionEntity();
+							s.setIdSession(session.getId());
+							s.setNameUser(usuarioFront.getUsername());
+							s.setId(s.getIdSession());
+							//s.setId(Long.parseLong("121112112222"));
+							s.setEstatus("activa");
+							System.out.println("objeto s++id+++"+s.getId());
+							System.out.println("objeto s++++name+"+s.getNameUser());
+							System.out.println("objeto s++idSession+++"+s.getIdSession());
+							System.out.println("objeto s++++estatus+"+s.getEstatus());
+							sessionDao.save(s);
+							//s.setAttribute("usuario", usuarioFront);
+						//	s.setAttribute("usuario", "yomero");
+							System.out.println(" ++++++ sesion:"+session);
+							System.out.println(" -+++++id:"+session.getId());
 							req.setAttribute("usuario", usuarioFront.getUsername());
-							System.out.println("req:::::"+req.getAttribute("usuario"));
+							s.setNameUser(usuarioFront.getUsername());
+							System.out.println("req+++++"+req.getAttribute("usuario"));
+							//System.out.println("session:::::"+s.getAttribute("usuario"));
 							
+							
+													
 							res.getWriter().println(JsonConvertidor.toJson(usuarioFront));
 						}
 				}
@@ -114,7 +137,7 @@ public class SesionController {
 							res.sendError(403);
 							 
 						} else {
-							System.out.println(" usuario Valido");
+							System.out.println(" usuario Valido---Get");
 							/////////////////////////////////
 							//HttpServletRequest request = this.getThreadLocalRequest();
 
@@ -126,15 +149,25 @@ public class SesionController {
 							////////////////////////////////////
 							//usuario.resetPassword();
 							//req.getSession().setAttribute("userName", usuarioFront.getUsername());
-							//req.getRequestedSessionId().getSession();
-							HttpSession s = req.getSession();
+							//req.getRequestedSessionId().getSession()
 							
-							System.out.println(" ------ sesion:"+s);
-							System.out.println(" ------id:"+s.getId());
+							//usuario.resetPassword();
+							//req.getSession().setAttribute("userName", usuarioFront.getUsername());
+							HttpSession session = req.getSession();
+							SessionEntity s = new SessionEntity();
+							s.setIdSession(session.getId());
+							//s.setAttribute("usuario", usuarioFront);
+						//	s.setAttribute("usuario", "yomero");
+							System.out.println(" ------ sesion:"+session);
+							System.out.println(" ------id:"+session.getId());
 							req.setAttribute("usuario", usuarioFront.getUsername());
+							s.setNameUser(usuarioFront.getUsername());
 							System.out.println("req:::::"+req.getAttribute("usuario"));
+							//System.out.println("session:::::"+s.getAttribute("usuario"));
+							System.out.println("objeto s:::::"+s);
+							sessionDao.save(s);
 							
-							res.getWriter().println(JsonConvertidor.toJson(usuarioFront));
+							res.getWriter().println(JsonConvertidor.toJson(s));///ojo decirle a edgar como la lleva esta...
 						}
 				}
 		}
@@ -165,6 +198,7 @@ public class SesionController {
 		HttpSession s = request.getSession();
 		String nombreUsuario = (String) s.getAttribute("userName");
 		System.out.println(" ------ usuario:"+nombreUsuario);
+		System.out.println(" ------ req:atribute:usuario"+request.getAttribute("usuario"));
 		if(nombreUsuario == null){
 			System.out.println(" *****************usuario con permisos*******");
 			return false;
@@ -176,6 +210,30 @@ public class SesionController {
 				return true;
 			}
 		}
+		return false;
+	}
+	
+	public static boolean verificarPermiso2(HttpServletRequest request, UsuarioDao usuarioDao, PerfilDAO  perfildao, int per, SessionDao sessionDao){
+		String u = (String) request.getAttribute("usuario");
+	////	String nombreUsuario = (String) s.getAttribute("userName");
+		System.out.println(" ------ usuario:"+u);
+		//System.out.println(" ------ req:atribute:usuario"+request.getAttribute("usuario"));
+	//	System.out.println(" --------- id de session consultada------"+s.getId());
+//		SessionEntity ss = sessionDao.consult();
+//		System.out.println(" ---------session consultada------"+ss);
+//		if(ss.getNameUser() == null){
+//			System.out.println(" *****************usuario sin session*******");
+//			return false;
+//		}else{
+//			System.out.println(" ----------------usuario con session-----------");
+//			Usuario usuario = usuarioDao.consultarUsuario(nombreUsuario);
+//			Perfil perfil = perfildao.consultarPerfil(usuario.getPerfil());
+//			if(perfil.getPermisos()[per]==true){
+//				System.out.println(" ----------------usuario con Permisos-----------");
+//				return true;
+//			}
+		//}
+		System.out.println(" ----------------usuario SIN PERMISOS----------");
 		return false;
 	}
 	

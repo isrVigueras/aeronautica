@@ -23,6 +23,7 @@ import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.ComponenteDiscrepanciaDao;
 import com.tikal.aeronautikal.dao.PerfilDAO;
 import com.tikal.aeronautikal.dao.RequisicionDao;
+import com.tikal.aeronautikal.dao.SessionDao;
 import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.dao.ValeDao;
 import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
@@ -42,6 +43,11 @@ public class ComponenteController {
 	
 	 @Autowired
 	    private ComponenteService componenteService;
+	 
+	 
+	 @Autowired
+	 @Qualifier("sessionDao")
+	 SessionDao sessionDao;
 	 
 	 @Autowired
 		@Qualifier ("usuarioDao")
@@ -110,7 +116,7 @@ public class ComponenteController {
 	 @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
 	   public void addComponente(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
 	    	  System.out.println("si entra al add por POST"+json);
-	      if(SesionController.verificarPermiso(request, usuarioDao, perfilDAO, 1)){
+	      if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 1, sessionDao)){
 
 		        try {
 		        	AsignadorDeCharset.asignar(request, response);
