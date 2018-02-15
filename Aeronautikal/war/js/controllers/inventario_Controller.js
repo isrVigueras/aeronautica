@@ -1,5 +1,5 @@
 //servicio alta Inventario
-app.service('InventarioService', [ '$http', '$q','$rootScope', function($http, $q,$rootScope) {
+app.service('InventarioService', [ '$http', '$q','$rootScope','$cookieStore', function($http, $q,$rootScope,$cookieStore) {
   this.genera_inventario = function(inventario) {
     var d = $q.defer();
     $http.post("/componente/add",inventario).then(function(response) {
@@ -8,10 +8,9 @@ app.service('InventarioService', [ '$http', '$q','$rootScope', function($http, $
     }, function(response) {
             if(response.status==403){
       alert("No tienes Permiso");
-      $rootScope.authenticated;
       //location.href="#/Inicio/paginaPrincipal";
       //$rootScope.authenticated = false;
-      console.log($rootScope);
+      console.log($cookieStore.cosa);
                               }
     });
     return d.promise;

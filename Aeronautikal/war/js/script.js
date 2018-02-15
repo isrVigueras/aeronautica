@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute']);
+var app = angular.module('app', ['ngRoute', 'ngCookies']);
 //servicio alta requisicion
 app.service('insertaRequiServicio', [ '$http', '$q', function($http, $q) {
   this.inserta_requisicion = function(cosas) {
@@ -1002,7 +1002,7 @@ app.service('sessionService', [
     } ]);
 
 
-app.controller("MainController", ['$scope','remoteResource','IniSessServicio','$rootScope','CerrarSessServicio',function($scope,remoteResource,IniSessServicio,$rootScope,CerrarSessServicio) {
+app.controller("MainController", ['$scope','remoteResource','IniSessServicio','CerrarSessServicio','$rootScope','$cookieStore',function($scope,remoteResource,IniSessServicio,CerrarSessServicio,$rootScope,$cookieStore) {
   remoteResource.alertas().then(function(data){
     $scope.alertas = data;
   })
@@ -1018,9 +1018,10 @@ app.controller("MainController", ['$scope','remoteResource','IniSessServicio','$
       IniSessServicio.inicia_session($scope.forminicia).then(
         function(data) {
           console.log(data);
-           $rootScope.authenticated = data;
-            console.log("session");
-           console.log($rootScope.authenticated);
+          $cookieStore.cosa = data;
+           //$rootScope.authenticated = data;
+            console.log("session almacenada");
+          console.log($cookieStore.cosa);
           alert("Inicio session");
           location.href="#/Inicio/paginaPrincipal";
           location.reload();
