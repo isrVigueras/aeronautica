@@ -26,12 +26,16 @@ import com.tikal.aeronautikal.dao.DiscrepanciaDao;
 import com.tikal.aeronautikal.dao.EmpresaDao;
 import com.tikal.aeronautikal.dao.EventoDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
+import com.tikal.aeronautikal.dao.PerfilDAO;
+import com.tikal.aeronautikal.dao.SessionDao;
+import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
 import com.tikal.aeronautikal.entity.Contador;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
 import com.tikal.aeronautikal.entity.EventoEntity;
+import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 //import com.tikal.aeronautikal.entity.OrdenEntity;
 import com.tikal.aeronautikal.model.Aeronave;
 import com.tikal.aeronautikal.service.OrdenService;
@@ -55,6 +59,18 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value="/orden")
 
 public class OrdenController {
+	
+	 @Autowired
+	 @Qualifier("sessionDao")
+	 SessionDao sessionDao;
+	 
+	@Autowired
+	@Qualifier ("usuarioDao")
+	UsuarioDao usuarioDao;
+
+		
+	@Autowired
+	PerfilDAO perfilDAO; 
 	
 	@Autowired
 	@Qualifier("aeronaveDao")
@@ -108,30 +124,34 @@ public class OrdenController {
 	        return "Orden_de_trabajo";
 		}
 	
-	   @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
-	   public void addOrden(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
+	   @RequestMapping(value = {"/add/{userName}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
+	   public void addOrden(HttpServletResponse response, HttpServletRequest request, @RequestBody String json, @PathVariable String userName) throws IOException{
 	    	  System.out.println("si entra al add por POST"+json);
-	        try {
-	        	AsignadorDeCharset.asignar(request, response);
-	        	// System.out.println("request......."+request);
-	        	// System.out.println("request......."+response);
-	        	OrdenVo orden =(OrdenVo) JsonConvertidor.fromJson(json, OrdenVo.class);
-	        	// System.out.println("el nuevo objeto: "+orden );
-	        	//pegar el valor de empresa, aeronave y contacato
-	        	//orden.setFolio(Long.parseLong("1111"));
-	        	//crearListaIdsOT();
-	        	 System.out.println("folio orden:"+orden.getFolio());
-	        	 System.out.println("folio aeronave:"+aeronaveDao.consult(orden.getAeronave()).getNumeroAeronave());
-	        	 orden.setEstatus("ABIERTA");
-	        	 orden.setNombreEmpresa(empresaDao.consult(orden.getEmpresa()).getNombreEmpresa());
-	        	 String fol=(orden.getFolio()+aeronaveDao.consult(orden.getAeronave()).getNumeroAeronave()).replaceAll("[\n\r]","");
-	        	orden.setFolio(orden.getFolio()+aeronaveDao.consult(orden.getAeronave()).getNumeroAeronave());
-	        	ordenDao.save(orden);	 
-	        	Contador.incremeta();
-	        } catch (RuntimeException ignored) {
-	        	ignored.printStackTrace();
-	            // getUniqueEntity should throw exception
-	        }
+	    	if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 1, sessionDao,userName)){  
+		        try {
+		        	AsignadorDeCharset.asignar(request, response);
+		        	// System.out.println("request......."+request);
+		        	// System.out.println("request......."+response);
+		        	OrdenVo orden =(OrdenVo) JsonConvertidor.fromJson(json, OrdenVo.class);
+		        	// System.out.println("el nuevo objeto: "+orden );
+		        	//pegar el valor de empresa, aeronave y contacato
+		        	//orden.setFolio(Long.parseLong("1111"));
+		        	//crearListaIdsOT();
+		        	 System.out.println("folio orden:"+orden.getFolio());
+		        	 System.out.println("folio aeronave:"+aeronaveDao.consult(orden.getAeronave()).getNumeroAeronave());
+		        	 orden.setEstatus("ABIERTA");
+		        	 orden.setNombreEmpresa(empresaDao.consult(orden.getEmpresa()).getNombreEmpresa());
+		        	 String fol=(orden.getFolio()+aeronaveDao.consult(orden.getAeronave()).getNumeroAeronave()).replaceAll("[\n\r]","");
+		        	orden.setFolio(orden.getFolio()+aeronaveDao.consult(orden.getAeronave()).getNumeroAeronave());
+		        	ordenDao.save(orden);	 
+		        	Contador.incremeta();
+		        } catch (RuntimeException ignored) {
+		        	ignored.printStackTrace();
+		            // getUniqueEntity should throw exception
+		        }
+	    	}else{
+				response.sendError(403);
+		}
 	       
 	    }
 
@@ -173,15 +193,35 @@ public class OrdenController {
 			response.getWriter().println(JsonConvertidor.toJson(lista));
 
 		}
+	   @RequestMapping(value = {"/update/{userName}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+		public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json, @PathVariable String userName)
+				throws IOException {
+		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 2, sessionDao,userName)){
+
+				AsignadorDeCharset.asignar(request, response);
+				OrdenVo o = (OrdenVo) JsonConvertidor.fromJson(json, OrdenVo.class);
+				//Empleado e= evo.getEmpleado();
+				ordenDao.update(o);
+				response.getWriter().println(JsonConvertidor.toJson(o));
+		   }else{
+				response.sendError(403);
+		   }
+		}
 	   
-	   @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+	   @RequestMapping(value = {"/delete/{id}/{userName}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
 	   public void deleteOrden(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
-		@PathVariable Long id) throws IOException {
-		   System.out.println("ya entro a delete de   orden");
-		   //ordenDao.delete(ordenDao.consult(id));
-		   OrdenVo orden =(OrdenVo) JsonConvertidor.fromJson(json, OrdenVo.class);
-		   orden.setEstatus("INACTIVA");
-		   ordenDao.update(orden);
+		@PathVariable Long id, @PathVariable String userName) throws IOException {
+		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 5, sessionDao,userName)){
+
+				   System.out.println("ya entro a delete de   orden");
+				   //ordenDao.delete(ordenDao.consult(id));
+				   OrdenVo orden =(OrdenVo) JsonConvertidor.fromJson(json, OrdenVo.class);
+				   orden.setEstatus("INACTIVA");
+				   ordenDao.update(orden);
+				   
+		   }else{
+				response.sendError(403);
+	 	   }
 	   }
 	   
 	   @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
@@ -248,56 +288,53 @@ public class OrdenController {
 		   }
 	   }
 	   
-	  @RequestMapping(value = { "/generaOrdenXls/{idOrden}" }, method = RequestMethod.GET, produces = "application/pdf" )
-		public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idOrden) throws IOException {
-		 // EditaOrdenXls eox = new EditaOrdenXls();
-		  System.out.println("si entra:");
-		  response.setContentType("Application/Pdf");
-		  OrdenXlsVo ox = getObjectXls(idOrden);   
-		  List<DiscrepanciaEntity> dis= discrepanciaDao.getByOrden(idOrden);
-		  List<DetalleDiscrepanciaVo> dets = new ArrayList<DetalleDiscrepanciaVo>();
-			if (dis==null){
-				dis= new ArrayList<DiscrepanciaEntity>();
-			}else{
-				
-				for (DiscrepanciaEntity d : dis ){
-					DetalleDiscrepanciaVo dd = getDetalleDiscrepancia(d.getId());
-					dets.add(dd);
-				}
-				
-			}
-		 // 
-					
-	        File newExcelFile = new File(ox.getNombreArchivo());		 
-	        if (!newExcelFile.exists()){
-	            try {
-	                newExcelFile.createNewFile();
-	            } catch (IOException ioe) {
-	                System.out.println("(Error al crear el fichero nuevo ......)"+ ioe);
-	                System.out.println("(ruta absoluta ......)"+newExcelFile.getAbsolutePath());
-	                System.out.println("(ruta canonica..)"+newExcelFile.getPath());
-	            }
-	        }
-       
-	     //   String origen ="C:/Users/Lenovo/Desktop/OTs/OrdenDeTrabajo.xls";
-	   //     String destino ="C:/Users/Lenovo/Desktop/OTs/O.T."+orden.getFolio()+" "+nave.getMatricula()+".xls";
-	   //     System.out.println("copiando archivo orige a destino:"+ox.getNombreArchivo());
-	  //      eox.FileCopy(origen, ox.getNombreArchivo());  
-	  //      System.out.println("termino de copiar.....");
-			//EditaOrdenXls.readWriteExcelFile();
-	 //       System.out.println("Empezando a ecribir en el Xls..." );
-	  //      EditaOrdenXls.WriteXls(ox);
-	        System.out.println("empiezo a generar pdf..hsbd." );
-	        /////igual puedo 
-	    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf(ox, dets, response.getOutputStream());
-	    	System.out.println("nombre de archivo para edgar:"+ox.getNombreArchivo().substring(8) );
-	    	System.out.println("El Directorio Temporal del Sistema Es: ");
-	        System.out.println( System.getProperty("java.io.tmpdir") );
-//	    	response.getWriter().println((ox.getNombreArchivo().substring(7)));
-	        response.getOutputStream().flush();
-	        response.getOutputStream().close();
-	    	//generaOrdenPdf.GeneraOrdenPdf(new File(ox.getNombreArchivo()));
-	    	//generaOrdenPdf.GeneraOrdenPdf(ox));
+	  @RequestMapping(value = { "/generaOrdenXls/{idOrden}/userName" }, method = RequestMethod.GET, produces = "application/pdf" )
+		public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idOrden, @PathVariable String userName) throws IOException {
+		 
+		  if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 4, sessionDao,userName)){
+				  System.out.println("si entra:");
+				  response.setContentType("Application/Pdf");
+				  OrdenXlsVo ox = getObjectXls(idOrden);   
+				  List<DiscrepanciaEntity> dis= discrepanciaDao.getByOrden(idOrden);
+				  List<DetalleDiscrepanciaVo> dets = new ArrayList<DetalleDiscrepanciaVo>();
+					if (dis==null){
+						dis= new ArrayList<DiscrepanciaEntity>();
+					}else{
+						
+						for (DiscrepanciaEntity d : dis ){
+							DetalleDiscrepanciaVo dd = getDetalleDiscrepancia(d.getId());
+							dets.add(dd);
+						}
+						
+					}
+				 
+							
+			        File newExcelFile = new File(ox.getNombreArchivo());		 
+			        if (!newExcelFile.exists()){
+			            try {
+			                newExcelFile.createNewFile();
+			            } catch (IOException ioe) {
+			                System.out.println("(Error al crear el fichero nuevo ......)"+ ioe);
+			                System.out.println("(ruta absoluta ......)"+newExcelFile.getAbsolutePath());
+			                System.out.println("(ruta canonica..)"+newExcelFile.getPath());
+			            }
+			        }
+		       
+			    
+			        System.out.println("empiezo a generar pdf..hsbd." );
+			        /////igual puedo 
+			    	GeneraOrdenPdf generaOrdenPdf = new GeneraOrdenPdf(ox, dets, response.getOutputStream());
+			    	System.out.println("nombre de archivo para edgar:"+ox.getNombreArchivo().substring(8) );
+			    	System.out.println("El Directorio Temporal del Sistema Es: ");
+			        System.out.println( System.getProperty("java.io.tmpdir") );
+		//	    	response.getWriter().println((ox.getNombreArchivo().substring(7)));
+			        response.getOutputStream().flush();
+			        response.getOutputStream().close();
+			    	//generaOrdenPdf.GeneraOrdenPdf(new File(ox.getNombreArchivo()));
+			    	//generaOrdenPdf.GeneraOrdenPdf(ox));
+		  }else{
+				response.sendError(403);
+		   }
 		}
 	  
 	  

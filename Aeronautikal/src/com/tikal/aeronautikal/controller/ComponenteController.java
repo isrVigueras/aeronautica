@@ -116,7 +116,7 @@ public class ComponenteController {
 	 @RequestMapping(value = {"/add/{userName}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
 	   public void addComponente(HttpServletResponse response, HttpServletRequest request, @RequestBody String json, @PathVariable String userName) throws IOException{
 	    	  System.out.println("si entra al add por POST"+json);
-	      if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 1, sessionDao, userName)){
+	      if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 12, sessionDao,userName)){
 
 		        try {
 		        	AsignadorDeCharset.asignar(request, response);

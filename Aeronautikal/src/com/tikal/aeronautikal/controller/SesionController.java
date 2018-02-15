@@ -175,7 +175,7 @@ public class SesionController {
                             // Cookies.setCookie("sid", session.getId(), expires, null, "/", false);
                              Cookie miCookie = new Cookie("userName",s.getNameUser());
                              System.out.println("cookie:::"+miCookie.getValue());
-
+                             res.addCookie(miCookie);
 							res.getWriter().println(s.getNameUser());///ojo decirle a edgar como la lleva esta...
 						}
 				}
@@ -206,6 +206,7 @@ public class SesionController {
 	public static boolean verificarPermiso(HttpServletRequest request, UsuarioDao usuarioDao, PerfilDAO  perfildao, int per){
 		HttpSession s = request.getSession();
 		String nombreUsuario = (String) s.getAttribute("userName");
+		System.out.println("cookie:::"+request.getCookies());
 		System.out.println(" ------ usuario:"+nombreUsuario);
 		System.out.println(" ------ req:atribute:usuario"+request.getAttribute("usuario"));
 		if(nombreUsuario == null){
@@ -224,6 +225,7 @@ public class SesionController {
 	
 	public static boolean verificarPermiso2(HttpServletRequest request, UsuarioDao usuarioDao, PerfilDAO  perfildao, int per, SessionDao sessionDao, String userName){
 		String u = (String) request.getAttribute("usuario");
+		System.out.println("cookie:::"+request.getCookies());
 	////	String nombreUsuario = (String) s.getAttribute("userName");
 		System.out.println(" ------ usuario:"+u);
 		//System.out.println(" ------ req:atribute:usuario"+request.getAttribute("usuario"));
