@@ -99,7 +99,7 @@ public class SesionController {
 							
 							
 													
-							res.getWriter().println(JsonConvertidor.toJson(s));
+							res.getWriter().println(JsonConvertidor.toJson(s.getNameUser()));
 						}
 				}
 		}
@@ -167,7 +167,7 @@ public class SesionController {
 							System.out.println("objetossss s:::::"+s);
 							sessionDao.save(s);
 							
-							res.getWriter().println(JsonConvertidor.toJson(s));///ojo decirle a edgar como la lleva esta...
+							res.getWriter().println(JsonConvertidor.toJson(s.getNameUser()));///ojo decirle a edgar como la lleva esta...
 						}
 				}
 		}
