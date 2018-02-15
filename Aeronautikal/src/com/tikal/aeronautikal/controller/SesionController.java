@@ -94,7 +94,7 @@ public class SesionController {
 							System.out.println(" -+++++id:"+session.getId());
 							req.setAttribute("usuario", usuarioFront.getUsername());
 							s.setNameUser(usuarioFront.getUsername());
-							System.out.println("req+++++"+req.getAttribute("usuario"));
+							System.out.println("req++++++++"+req.getAttribute("usuario"));
 							//System.out.println("session:::::"+s.getAttribute("usuario"));
 							
 							
