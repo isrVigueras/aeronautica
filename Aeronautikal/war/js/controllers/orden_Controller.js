@@ -30,12 +30,17 @@ app.service('OrdenesService', [ '$http', '$q', function($http, $q) {
 } ]);
 //servicio para generar Xls
 app.service('OrdenenDocumentoService', [ '$http', '$q', function($http, $q) {
-  this.genera_Xls = function(idOrden) {
+  this.genera_Xls = function(idOrden,user) {
     var d = $q.defer();
-    $http.post("/orden/generaOrdenXls/"+idOrden).then(function(response) {
+    $http.post("/orden/generaOrdenXls/"+idOrden+"/"+user).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
@@ -80,13 +85,14 @@ $scope.new_folio = new_folio;
 
 }]);
 
-app.controller("OrdenesgeneradasController", ['$scope', 'generadas','OrdenenDocumentoService',function($scope,generadas,OrdenenDocumentoService) {
+app.controller("OrdenesgeneradasController", ['$scope', 'generadas','OrdenenDocumentoService','$cookies',function($scope,generadas,OrdenenDocumentoService,$cookies) {
+console.log($cookies.cosa);
 $scope.generadas = generadas;
 
  $scope.genera_Xls=function(id) {
   console.log(id)
       //alert("variable comprobada: "+$scope.fo.con_nombre+" y la fecha "+ $scope.fo.fechaApertura+"folio: "+ $scope.new_folio );
-      OrdenenDocumentoService.genera_Xls(id).then(
+      OrdenenDocumentoService.genera_Xls(id,$cookies.cosa).then(
         function(data) {
           console.log(data);
          // alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
@@ -101,7 +107,8 @@ $scope.generadas = generadas;
               
   }
 }]);
-app.controller('detalledisController', ['$scope', 'detalle_dis',function($scope, detalle_dis) {
+app.controller('detalledisController', ['$scope', 'detalle_dis','$cookies',function($scope, detalle_dis,$cookies) {
+ console.log($cookies.cosa);
  $scope.detalle_dis = detalle_dis;
  console.log(detalle_dis);
 }]);

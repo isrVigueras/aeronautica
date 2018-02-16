@@ -1,40 +1,56 @@
 //servicio alta empresa
 app.service('altaCondicionServicio', [ '$http', '$q', function($http, $q) {
-  this.alta_condicion = function(empresa) {
+  this.alta_condicion = function(user,empresa) {
     var d = $q.defer();
-    $http.post("/condicion/add",empresa).then(function(response) {
+    $http.post("/condicion/add/"+user,empresa).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //servicio elmina empresa
 app.service('eliminaCondicionServicio', [ '$http', '$q', function($http, $q) {
-  this.elimina_condicion = function(id) {
+  this.elimina_condicion = function(id,user) {
     var d = $q.defer();
-    $http.post("/condicion/delete/"+id).then(function(response) {
+    $http.post("/condicion/delete/"+id+"/"+user).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
  //servicio actualiza empresa
 app.service('ActualizaCondicionServicio', [ '$http', '$q', function($http, $q) {
-  this.actualiza_condicion = function(objeto) {
+  this.actualiza_condicion = function(user,objeto) {
     var d = $q.defer();
-    $http.post("/condicion/update",objeto).then(function(response) {
+    $http.post("/condicion/update/"+user,objeto).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
-app.controller('condicionController', ['$scope', 'altaCondicionServicio',function($scope, altaCondicionServicio) {
+app.controller('condicionController', ['$scope', 'altaCondicionServicio','$cookies',function($scope, altaCondicionServicio,$cookies) {
+   console.log($cookies.cosa);
    $scope.condicionform = {
     id: undefined,
     clave: undefined,
@@ -42,7 +58,7 @@ app.controller('condicionController', ['$scope', 'altaCondicionServicio',functio
   }
      $scope.guarda_condicion=function() {
     //console.log(altarequisicion);
-      altaCondicionServicio.alta_condicion($scope.condicionform).then(
+      altaCondicionServicio.alta_condicion($cookies.cosa,$scope.condicionform).then(
         function(data) {
           console.log(data);
           location.reload();
@@ -51,14 +67,15 @@ app.controller('condicionController', ['$scope', 'altaCondicionServicio',functio
         })         
   }
 }]);
-app.controller('condicionMuestraController', ['$scope','eliminaCondicionServicio','condiciones_consultas','ActualizaCondicionServicio',function($scope,eliminaCondicionServicio,condiciones_consultas,ActualizaCondicionServicio) {
+app.controller('condicionMuestraController', ['$scope','eliminaCondicionServicio','condiciones_consultas','ActualizaCondicionServicio','$cookies',function($scope,eliminaCondicionServicio,condiciones_consultas,ActualizaCondicionServicio,$cookies) {
+  console.log($cookies.cosa);
   $scope.condiciones_consultas = condiciones_consultas;
       console.log(condiciones_consultas);
       
        $scope.elimina_condicion=function(folio) {
     //console.log(altarequisicion);
     console.log(folio);
-      eliminaCondicionServicio.elimina_condicion(folio).then(
+      eliminaCondicionServicio.elimina_condicion(folio,$cookies.cosa).then(
         function(data) {
           console.log(data);
           alert("condicion Eliminada");
@@ -78,7 +95,7 @@ app.controller('condicionMuestraController', ['$scope','eliminaCondicionServicio
 
     $scope.Actualiza_condicion=function() {   
 
-      ActualizaCondicionServicio.actualiza_condicion($scope.condicion_edi).then(
+      ActualizaCondicionServicio.actualiza_condicion($cookies.cosa,$scope.condicion_edi).then(
         function(data) {
           console.log(data);
           alert("condicion Modificada");

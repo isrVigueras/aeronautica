@@ -6,9 +6,9 @@ app.service('InventarioService', [ '$http', '$q','$rootScope', function($http, $
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
-            if(response.status==403){
-      alert("No tienes Permiso");
-      //location.href="#/Inicio/paginaPrincipal";
+        if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
       //$rootScope.authenticated = false;
                               }
     });
@@ -23,6 +23,11 @@ app.service('EliminaInventarioService', [ '$http', '$q', function($http, $q) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
@@ -87,7 +92,7 @@ $scope.condicion =condicion;
     }
   }
 }]);
-app.controller("InventarioconsultaController", ['$scope','inv_consultas','EliminaInventarioService',function($scope,inv_consultas,EliminaInventarioService) {
+app.controller("InventarioconsultaController", ['$scope','inv_consultas','EliminaInventarioService','$cookies',function($scope,inv_consultas,EliminaInventarioService,$cookies) {
  $scope.inv_consultas =inv_consultas;
   console.log($scope.inv_consultas);
    $scope.muestra=function(data) {

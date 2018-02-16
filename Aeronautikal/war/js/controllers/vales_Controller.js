@@ -1,23 +1,33 @@
 //servicio Cerrar Vale
 app.service('CerrarValeService', [ '$http', '$q', function($http, $q) {
-  this.Cerrar_Vale = function(idVale) {
+  this.Cerrar_Vale = function(idVale,user) {
     var d = $q.defer();
-    $http.post("/vale/cerrarVale/"+idVale).then(function(response) {
+    $http.post("/vale/cerrarVale/"+idVale+"/"+user).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //servicio Imprime Vale
 app.service('ImprimeValeService', [ '$http', '$q', function($http, $q) {
-  this.imprime_Vale = function(idVale) {
+  this.imprime_Vale = function(idVale,user) {
     var d = $q.defer();
-    $http.post("/vale/generaValePdf/"+idVale).then(function(response) {
+    $http.post("/vale/generaValePdf/"+idVale+"/"+user).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
@@ -59,7 +69,8 @@ app.filter("filtroV",["$filter",function($filter) {
   return filtroV;
    
 }]);
-app.controller("MuestraValesController", ['$scope','discrepancia_vale','CerrarValeService','ImprimeValeService',function($scope,discrepancia_vale,CerrarValeService,ImprimeValeService) {
+app.controller("MuestraValesController", ['$scope','discrepancia_vale','CerrarValeService','ImprimeValeService','$cookies',function($scope,discrepancia_vale,CerrarValeService,ImprimeValeService,$cookies) {
+ console.log($cookies.cosa);
  $scope.discrepancia_vale =discrepancia_vale;
  $scope.filtro = {
       discrepancia: ""
@@ -73,7 +84,7 @@ app.controller("MuestraValesController", ['$scope','discrepancia_vale','CerrarVa
 
    $scope.Despachar_Vale=function(id) {
     console.log(id);
-    CerrarValeService.Cerrar_Vale(id).then(
+    CerrarValeService.Cerrar_Vale(id,$cookies.cosa).then(
         function(data) {
           console.log(data);
            location.reload();
@@ -85,7 +96,7 @@ app.controller("MuestraValesController", ['$scope','discrepancia_vale','CerrarVa
      $scope.Imprime_Vale=function(id) {
     console.log(id);
     
-      ImprimeValeService.imprime_Vale(id).then(
+      ImprimeValeService.imprime_Vale(id,$cookies.cosa).then(
         function(data) {
           console.log(data)
            console.log("El pdf se genero");

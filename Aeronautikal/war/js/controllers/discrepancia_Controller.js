@@ -1,80 +1,110 @@
 //servicio alta Discrepeancia
 app.service('DiscrepanciaServicio', [ '$http', '$q', function($http, $q) {
-  this.genera_discrepancia = function(folio,discrepancia) {
+  this.genera_discrepancia = function(folio,user,discrepancia) {
     var d = $q.defer();
-    $http.post("/discrepancia/add/"+folio,discrepancia).then(function(response) {
+    $http.post("/discrepancia/add/"+folio+"/"+user,discrepancia).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //servicio update discrepancia
 app.service('UpdateDiscrepanciaServicio', [ '$http', '$q', function($http, $q) {
-  this.update_discrepancia = function(Objeto) {
+  this.update_discrepancia = function(user,Objeto) {
     var d = $q.defer();
-    $http.post("/discrepancia/update/",Objeto).then(function(response) {
+    $http.post("/discrepancia/update/"+user,Objeto).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //servicio alta evento en discrepancia
 app.service('altaEventoServicio', [ '$http', '$q', function($http, $q) {
-  this.alta_evento = function(Objeto) {
+  this.alta_evento = function(user,Objeto) {
     var d = $q.defer();
-    $http.post("/evento/add/",Objeto).then(function(response) {
+    $http.post("/evento/add/"+user,Objeto).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //servicio alta componente en discrepancia
 app.service('altaComponenteServicio', [ '$http', '$q', function($http, $q) {
-  this.alta_componente = function(Objeto) {
+  this.alta_componente = function(user,Objeto) {
     var d = $q.defer();
-    $http.post("/componenteDiscrepancia/add/",Objeto).then(function(response) {
+    $http.post("/componenteDiscrepancia/add/"+user,Objeto).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //servicio borrar evento en discrepancia
 app.service('deleteEventoServicio', [ '$http', '$q', function($http, $q) {
-  this.delete_evento = function(id) {
+  this.delete_evento = function(id,user) {
     var d = $q.defer();
-    $http.post("/evento/delete/"+id).then(function(response) {
+    $http.post("/evento/delete/"+id+"/"+user).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //servicio borrar componente en discrepancia
 app.service('deleteComponenteServicio', [ '$http', '$q', function($http, $q) {
-  this.delete_componente = function(id) {
+  this.delete_componente = function(id,user) {
     var d = $q.defer();
-    $http.post("/componenteDiscrepancia/delete/"+id).then(function(response) {
+    $http.post("/componenteDiscrepancia/delete/"+id+"/"+user).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //servicio update evento en la discrepancia
 app.service('UpdateEventoServicio', [ '$http', '$q', function($http, $q) {
-  this.update_Evento = function(Objeto) {
+  this.update_Evento = function(user,Objeto) {
     var d = $q.defer();
-    $http.post("/evento/update/",Objeto).then(function(response) {
+    $http.post("/evento/update/"+user,Objeto).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
@@ -84,53 +114,74 @@ app.service('UpdateEventoServicio', [ '$http', '$q', function($http, $q) {
 } ]);
 //servicio que trae el detalle completo de la discrepancia
 app.service('DetalleDiscreServicio', [ '$http', '$q', function($http, $q) {
-  this.detalle_Discrepancia = function(id) {
+  this.detalle_Discrepancia = function(id,user) {
     var d = $q.defer();
-    $http.post("/discrepancia/findDetalle/"+id).then(function(response) {
+    $http.post("/discrepancia/findDetalle/"+id+"/"+user).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //segundocomboServicio.segundo_servicio(data).
 app.service('segundocomboServicio', [ '$http', '$q', function($http, $q) {
-  this.segundo_servicio = function(id) {
+  this.segundo_servicio = function(id,user) {
     var d = $q.defer();
-    $http.post("/componente/getByCategoria/"+id).then(function(response) {
+    $http.post("/componente/getByCategoria/"+id+"/"+user).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //Imprimir discrepancia.
 app.service('ImprimeDiscreServicio', [ '$http', '$q', function($http, $q) {
-  this.imprime_discrepancia = function(id) {
+  this.imprime_discrepancia = function(id,user) {
     var d = $q.defer();
-    $http.post("/discrepancia/generaDiscrepanciaPdf/"+id).then(function(response) {
+    $http.post("/discrepancia/generaDiscrepanciaPdf/"+id+"/"+user).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //Cerrar discrepancia.
 app.service('CerrarDiscreServicio', [ '$http', '$q', function($http, $q) {
-  this.cerrar_discrepancia = function(id) {
+  this.cerrar_discrepancia = function(id,user) {
     var d = $q.defer();
-    $http.post("/discrepancia/cerrarDiscrepancia/"+id).then(function(response) {
+    $http.post("/discrepancia/cerrarDiscrepancia/"+id+"/"+user).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
-app.controller("DiscrepanciamuestraController", ['$scope','inv_consultas','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio','DetalleDiscreServicio','ImprimeDiscreServicio','CerrarDiscreServicio',function($scope,inv_consultas,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio,DetalleDiscreServicio,ImprimeDiscreServicio,CerrarDiscreServicio) {
+app.controller("DiscrepanciamuestraController", ['$scope','inv_consultas','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio','DetalleDiscreServicio','ImprimeDiscreServicio','CerrarDiscreServicio','$cookies',function($scope,inv_consultas,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio,DetalleDiscreServicio,ImprimeDiscreServicio,CerrarDiscreServicio,$cookies) {
+console.log($cookies.cosa);
 $scope.discrepancias =discrepancias;
  $scope.provincias=inv_consultas; 
   $scope.miProvinciaSeleccionada=null
@@ -151,7 +202,7 @@ console.log($scope.discrepancias);
    $scope.alta_discrepancia=function() {
     console.log($scope.foliarrastrado+","+$scope.discrepancia.numero_piezas+","+$scope.discrepancia.folio_componente);
       
-      DiscrepanciaServicio.genera_discrepancia($scope.foliarrastrado,$scope.discrepancia).then(
+      DiscrepanciaServicio.genera_discrepancia($scope.foliarrastrado,$cookies.cosa,$scope.discrepancia).then(
         function(data) {
           console.log(data);
           alert("Discrepancia Agregada");
@@ -164,7 +215,7 @@ console.log($scope.discrepancias);
   $scope.muestra_discrepancia=function(objeto) {
     console.log(objeto);
     $scope.detalle_discrepancia = objeto;
-      DetalleDiscreServicio.detalle_Discrepancia($scope.detalle_discrepancia.id).then(
+      DetalleDiscreServicio.detalle_Discrepancia($scope.detalle_discrepancia.id,$cookies.cosa).then(
         function(data) {
           $scope.detalle_dis =data;
            console.log("scope");
@@ -175,7 +226,7 @@ console.log($scope.discrepancias);
    $scope.Imprime_discrepancia=function(id) {
     console.log(id);
     
-      ImprimeDiscreServicio.imprime_discrepancia(id).then(
+      ImprimeDiscreServicio.imprime_discrepancia(id,$cookies.cosa).then(
         function(data) {
           console.log(data)
            console.log("El pdf se genero");
@@ -186,7 +237,7 @@ console.log($scope.discrepancias);
     $scope.Cerrar_discrepancia=function(id) {
     console.log(id);
     
-      CerrarDiscreServicio.cerrar_discrepancia(id).then(
+      CerrarDiscreServicio.cerrar_discrepancia(id,$cookies.cosa).then(
         function(data) {
            console.log("La discrepancia se cerro");
            location.reload();
@@ -195,9 +246,10 @@ console.log($scope.discrepancias);
   }
 }]);
 app.controller("EditarDiscrepanciaController",
- ['$scope','discrepancia','UpdateDiscrepanciaServicio','altaEventoServicio','eventos','listado_inv','altaComponenteServicio','componentes','deleteEventoServicio','deleteComponenteServicio','componentes_0','insertaRequiServicio','UpdateEventoServicio','categoria','segundocomboServicio',
- function($scope,discrepancia,UpdateDiscrepanciaServicio,altaEventoServicio,eventos,listado_inv,altaComponenteServicio,componentes,deleteEventoServicio,deleteComponenteServicio,componentes_0,insertaRequiServicio,UpdateEventoServicio,categoria,segundocomboServicio) 
+ ['$scope','discrepancia','UpdateDiscrepanciaServicio','altaEventoServicio','eventos','listado_inv','altaComponenteServicio','componentes','deleteEventoServicio','deleteComponenteServicio','componentes_0','insertaRequiServicio','UpdateEventoServicio','categoria','segundocomboServicio','$cookies',
+ function($scope,discrepancia,UpdateDiscrepanciaServicio,altaEventoServicio,eventos,listado_inv,altaComponenteServicio,componentes,deleteEventoServicio,deleteComponenteServicio,componentes_0,insertaRequiServicio,UpdateEventoServicio,categoria,segundocomboServicio,$cookies) 
  {
+  console.log($cookies.cosa);
 $scope.discrepancia =discrepancia;
 $scope.eventos =eventos;
 $scope.listado_inv =listado_inv;
@@ -251,7 +303,7 @@ console.log($scope.componentes_0);
 
   $scope.Agregar=function(){
     console.log($scope.evento);
-    altaEventoServicio.alta_evento($scope.evento_tabla).then(
+    altaEventoServicio.alta_evento($cookies.cosa,$scope.evento_tabla).then(
         function(data) {
           console.log(data);
           alert("Evento Agregado");
@@ -260,7 +312,7 @@ console.log($scope.componentes_0);
   }
     $scope.Agregar_componente=function(){
     console.log($scope.componente);
-    altaComponenteServicio.alta_componente($scope.componente).then(
+    altaComponenteServicio.alta_componente($cookies.cosa,$scope.componente).then(
         function(data) {
          var d= data;
          console.log(d);
@@ -280,7 +332,7 @@ console.log($scope.componentes_0);
   }
     $scope.borrar_componente=function(id){
     console.log(id);
-    deleteComponenteServicio.delete_componente(id).then(
+    deleteComponenteServicio.delete_componente(id,$cookies.cosa).then(
         function(data) {
           console.log(data);
           alert("Componente Agregado");
@@ -289,7 +341,7 @@ console.log($scope.componentes_0);
   }
       $scope.borrar_evento=function(id){
     console.log(id);
-    deleteEventoServicio.delete_evento(id).then(
+    deleteEventoServicio.delete_evento(id,$cookies.cosa).then(
         function(data) {
           console.log(data);
           alert("Componente Borrado");
@@ -321,7 +373,7 @@ console.log($scope.componentes_0);
 
    $scope.Actualizar_evento=function() {
     console.log($scope.evento_edi);
-      UpdateEventoServicio.update_Evento($scope.evento_edi).then(
+      UpdateEventoServicio.update_Evento($cookies.cosa,$scope.evento_edi).then(
         function(data) {
           console.log(data);
           alert("Evento Modificado");
@@ -333,7 +385,7 @@ $scope.guardar_edit=function(){
       $scope.discrepancia_fo.eventos = $scope.discrepancia.entos;
       console.log($scope.discrepancia_fo);
       console.log($scope.discrepancia.entos);
-      UpdateDiscrepanciaServicio.update_discrepancia($scope.discrepancia_fo).then(
+      UpdateDiscrepanciaServicio.update_discrepancia($cookies.cosa,$scope.discrepancia_fo).then(
         function(data) {
           console.log(data);
           alert("Discrepeancia Modificada");
@@ -343,7 +395,7 @@ $scope.guardar_edit=function(){
       }   
 $scope.segundocombo=function(data){
       
-      segundocomboServicio.segundo_servicio($scope.componente.idCategoria).then(
+      segundocomboServicio.segundo_servicio($scope.componente.idCategoria,$cookies.cosa).then(
         function(data) {
           console.log("segundocombo",data);
           $scope.segundo=data;

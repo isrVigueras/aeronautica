@@ -1,40 +1,56 @@
 //servicio alta Aeronave
 app.service('altaAeronaveServicio', [ '$http', '$q', function($http, $q) {
-  this.alta_aeronave = function(aeronave) {
+  this.alta_aeronave = function(user,aeronave) {
     var d = $q.defer();
-    $http.post("/aeronave/add",aeronave).then(function(response) {
+    $http.post("/aeronave/add/"+user,aeronave).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //servicio elmina Aeronave
 app.service('eliminaAeronaveServicio', [ '$http', '$q', function($http, $q) {
-  this.elimina_aeronave = function(folio) {
+  this.elimina_aeronave = function(folio,user) {
     var d = $q.defer();
-    $http.post("/aeronave/delete/"+folio).then(function(response) {
+    $http.post("/aeronave/delete/"+folio+"/"+user).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //servicio actualiza Aeronave
 app.service('ActualizaAeronaveServicio', [ '$http', '$q', function($http, $q) {
-  this.actualiza_aeronave = function(objeto) {
+  this.actualiza_aeronave = function(user,objeto) {
     var d = $q.defer();
-    $http.post("/aeronave/update",objeto).then(function(response) {
+    $http.post("/aeronave/update/"+user,objeto).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
-app.controller('aeronaveController', ['$scope','altaAeronaveServicio',function($scope,altaAeronaveServicio) {
+app.controller('aeronaveController', ['$scope','altaAeronaveServicio','$cookies',function($scope,altaAeronaveServicio,$cookies) {
+   console.log($cookies.cosa);
    $scope.aeronaveform = {
     numeroAeronave: undefined,
     matricula:"",
@@ -52,7 +68,7 @@ app.controller('aeronaveController', ['$scope','altaAeronaveServicio',function($
      $scope.guarda_aero=function() {
     //console.log(altarequisicion);
     console.log($scope.aeronaveform);
-      altaAeronaveServicio.alta_aeronave($scope.aeronaveform).then(
+      altaAeronaveServicio.alta_aeronave($cookies.cosa,$scope.aeronaveform).then(
         function(data) {
           console.log(data);
           alert("Aeronave Guardada");
@@ -60,13 +76,14 @@ app.controller('aeronaveController', ['$scope','altaAeronaveServicio',function($
         })         
   }
 }]);
-app.controller('aeronaveMuestraController', ['$scope','eliminaAeronaveServicio','aeronaves_consultas','ActualizaAeronaveServicio',function($scope,eliminaAeronaveServicio,aeronaves_consultas,ActualizaAeronaveServicio) {
+app.controller('aeronaveMuestraController', ['$scope','eliminaAeronaveServicio','aeronaves_consultas','ActualizaAeronaveServicio','$cookies',function($scope,eliminaAeronaveServicio,aeronaves_consultas,ActualizaAeronaveServicio,$cookies) {
+  console.log($cookies.cosa);
   $scope.aeronaves_consultas = aeronaves_consultas;
       console.log(aeronaves_consultas);
        $scope.elimina_aero=function(folio) {
     //console.log(altarequisicion);
     console.log(folio);
-      eliminaAeronaveServicio.elimina_aeronave(folio).then(
+      eliminaAeronaveServicio.elimina_aeronave(folio,$cookies.cosa).then(
         function(data) {
           console.log(data);
           alert("Aeronave Eliminada....");
@@ -96,7 +113,7 @@ app.controller('aeronaveMuestraController', ['$scope','eliminaAeronaveServicio',
 
     $scope.Actualiza_aeronave=function() {   
 
-      ActualizaAeronaveServicio.actualiza_aeronave($scope.aeronave_edi).then(
+      ActualizaAeronaveServicio.actualiza_aeronave($cookies.cosa,$scope.aeronave_edi).then(
         function(data) {
           console.log(data);
           alert("Aeronave Modificada");

@@ -1,47 +1,67 @@
 //servicio asignar discrepancia
 app.service('AsignarDiscServicio', [ '$http', '$q', function($http, $q) {
-  this.asigna_discre = function(id,id2) {
+  this.asigna_discre = function(id,id2,user) {
     var d = $q.defer();
-    $http.post(" /horasHombre/asignar/"+id+"/"+id2).then(function(response) {
+    $http.post(" /horasHombre/asignar/"+id+"/"+id2+"/"+user).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //servicio alta puesto
 app.service('altaPuestoServicio', [ '$http', '$q', function($http, $q) {
-  this.alta_puesto = function(objt) {
+  this.alta_puesto = function(user,objt) {
     var d = $q.defer();
-    $http.post("/puesto/add",objt).then(function(response) {
+    $http.post("/puesto/add/"+user,objt).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //servicio actualiza puesto
 app.service('ActualizaPuestoServicio', [ '$http', '$q', function($http, $q) {
-  this.actualiza_puesto = function(objeto) {
+  this.actualiza_puesto = function(user,objeto) {
     var d = $q.defer();
-    $http.post("/puesto/update",objeto).then(function(response) {
+    $http.post("/puesto/update/"+user,objeto).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //servicio eliminar puesto
 app.service('EliminaPuestoServicio', [ '$http', '$q', function($http, $q) {
-  this.elimina_puesto = function(id) {
+  this.elimina_puesto = function(id,user) {
     var d = $q.defer();
-    $http.post("/puesto/delete/"+id).then(function(response) {
+    $http.post("/puesto/delete/"+id+"/"+user).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
@@ -54,6 +74,11 @@ app.service('eliminaCondicionServicio', [ '$http', '$q', function($http, $q) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
@@ -66,18 +91,28 @@ app.service('ActualizaCondicionServicio', [ '$http', '$q', function($http, $q) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //servicio alta usuario
 app.service('altaUsuarioServicio', [ '$http', '$q', function($http, $q) {
-  this.alta_usuario = function(objt) {
+  this.alta_usuario = function(user,objt) {
     var d = $q.defer();
-    $http.post("usuario/registro",objt).then(function(response) {
+    $http.post("usuario/registro/"+user,objt).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
@@ -90,24 +125,69 @@ app.service('eliminaUsuarioServicio', [ '$http', '$q', function($http, $q) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 //servicio alta perfil
 app.service('altaPerfilServicio', [ '$http', '$q', function($http, $q) {
-  this.alta_perfil = function(objeto) {
+  this.alta_perfil = function(user,objeto) {
     var d = $q.defer();
-    $http.post(" /perfil/add/",objeto).then(function(response) {
+    $http.post("/perfil/add/"+user,objeto).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
+    });
+    return d.promise;
+  }
+} ]);
+//servicio elimina usuario
+app.service('eliminaUsuarioServicio', [ '$http', '$q', function($http, $q) {
+  this.elimina_usuario = function(id,user) {
+    var d = $q.defer();
+    $http.post("/usuario/delete/"+id+"/"+user).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
+    });
+    return d.promise;
+  }
+} ]);
+ //servicio actualiza usuario
+app.service('ActualizaUsuarioServicio', [ '$http', '$q', function($http, $q) {
+  this.actualiza_usuario = function(user,objeto) {
+    var d = $q.defer();
+    $http.post("/usuario/update/"+user,objeto).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
     });
     return d.promise;
   }
 } ]);
 
-app.controller('AdminController', ['$scope', 'altaPuestoServicio',function($scope, altaPuestoServicio) {
+app.controller('AdminController', ['$scope', 'altaPuestoServicio','$cookies',function($scope, altaPuestoServicio,$cookies) {
+    console.log($cookies.cosa);
    $scope.puestoform = {
     id: undefined,
     Clave: undefined,
@@ -116,7 +196,7 @@ app.controller('AdminController', ['$scope', 'altaPuestoServicio',function($scop
      $scope.guarda_puesto=function() {
     //console.log(altarequisicion);
     console.log($scope.puestoform);
-      altaPuestoServicio.alta_puesto($scope.puestoform).then(
+      altaPuestoServicio.alta_puesto($cookies.cosa,$scope.puestoform).then(
         function(data) {
           console.log(data);
           location.reload();
@@ -125,14 +205,15 @@ app.controller('AdminController', ['$scope', 'altaPuestoServicio',function($scop
         })         
   }
 }]);
-app.controller('PuestoMuestraController', ['$scope','EliminaPuestoServicio','ActualizaPuestoServicio','puestos_lista',function($scope,EliminaPuestoServicio,ActualizaPuestoServicio,puestos_lista) {
+app.controller('PuestoMuestraController', ['$scope','EliminaPuestoServicio','ActualizaPuestoServicio','puestos_lista','$cookies',function($scope,EliminaPuestoServicio,ActualizaPuestoServicio,puestos_lista,$cookies) {
+   console.log($cookies.cosa);
   $scope.puestos_lista = puestos_lista;
       console.log(puestos_lista);
       
        $scope.elimina_puesto=function(id) {
     //console.log(altarequisicion);
     console.log(id);
-      EliminaPuestoServicio.elimina_puesto(id).then(
+      EliminaPuestoServicio.elimina_puesto(id,$cookies.cosa).then(
         function(data) {
           console.log(data);
           alert("Puesto Eliminado");
@@ -152,7 +233,7 @@ app.controller('PuestoMuestraController', ['$scope','EliminaPuestoServicio','Act
 
     $scope.Actualiza_puesto=function() {   
       console.log($scope.puesto_edi);
-      ActualizaPuestoServicio.actualiza_puesto($scope.puesto_edi).then(
+      ActualizaPuestoServicio.actualiza_puesto($cookies.cosa,$scope.puesto_edi).then(
         function(data) {
           console.log(data);
           alert("Puesto Modificada");
@@ -160,7 +241,8 @@ app.controller('PuestoMuestraController', ['$scope','EliminaPuestoServicio','Act
         })  
   }
 }]);
-app.controller('HorasHombreController', ['$scope', 'empleados_lista','discrepancias','AsignarDiscServicio',function($scope, empleados_lista,discrepancias,AsignarDiscServicio) {
+app.controller('HorasHombreController', ['$scope', 'empleados_lista','discrepancias','AsignarDiscServicio','$cookies',function($scope, empleados_lista,discrepancias,AsignarDiscServicio,$cookies) {
+     console.log($cookies.cosa);
     $scope.discrepancias = discrepancias;
     $scope.empleados_lista = empleados_lista;
     console.log(empleados_lista);
@@ -176,7 +258,7 @@ app.controller('HorasHombreController', ['$scope', 'empleados_lista','discrepanc
       console.log(id);
       console.log("id empleado");
     console.log($scope.IdEmpleado);
-      AsignarDiscServicio.asigna_discre($scope.IdEmpleado.idEmpleado,id).then(
+      AsignarDiscServicio.asigna_discre($scope.IdEmpleado.idEmpleado,id,$cookies.cosa).then(
         function(data) {
           console.log(data);
           location.reload();
@@ -184,7 +266,8 @@ app.controller('HorasHombreController', ['$scope', 'empleados_lista','discrepanc
           })         
   }
 }]);
-app.controller('UsuarioController', ['$scope','altaUsuarioServicio','eliminaUsuarioServicio','AsignarDiscServicio','perfil_lista',function($scope,altaUsuarioServicio,eliminaUsuarioServicio,AsignarDiscServicio,perfil_lista) {
+app.controller('UsuarioController', ['$scope','altaUsuarioServicio','AsignarDiscServicio','perfil_lista','$cookies',function($scope,altaUsuarioServicio,AsignarDiscServicio,perfil_lista,$cookies) {
+     console.log($cookies.cosa);
     $scope.perfil_lista = perfil_lista;
     console.log(perfil_lista);
   
@@ -197,7 +280,7 @@ app.controller('UsuarioController', ['$scope','altaUsuarioServicio','eliminaUsua
   }
      $scope.alta_usuario=function() {
     console.log($scope.fomUsuarios);
-      altaUsuarioServicio.alta_usuario($scope.fomUsuarios).then(
+      altaUsuarioServicio.alta_usuario($cookies.cosa,$scope.fomUsuarios).then(
         function(data) {
           console.log(data);
           location.reload();
@@ -205,7 +288,8 @@ app.controller('UsuarioController', ['$scope','altaUsuarioServicio','eliminaUsua
           })         
   }
 }]);
-app.controller('UsuarioMuestraController', ['$scope','usuarios_lista','perfil_lista','eliminaUsuarioServicio','AsignarDiscServicio',function($scope,usuarios_lista,perfil_lista,eliminaUsuarioServicio,AsignarDiscServicio) {
+app.controller('UsuarioMuestraController', ['$scope','usuarios_lista','perfil_lista','eliminaUsuarioServicio','AsignarDiscServicio','$cookies','ActualizaUsuarioServicio',function($scope,usuarios_lista,perfil_lista,eliminaUsuarioServicio,AsignarDiscServicio,$cookies,ActualizaUsuarioServicio) {
+     console.log($cookies.cosa);
     $scope.usuarios_lista = usuarios_lista;
     console.log(usuarios_lista);
     $scope.perfil_lista = perfil_lista;
@@ -224,37 +308,46 @@ app.controller('UsuarioMuestraController', ['$scope','usuarios_lista','perfil_li
   }
 
     }
-     $scope.elimina_usuario=function() {
-    console.log($scope.fomUsuarios);
-      altaUsuarioServicio.alta_usuario($scope.fomUsuarios).then(
+     $scope.elimina_usuario=function(id) {
+    console.log(id);
+      eliminaUsuarioServicio.elimina_usuario(id,$cookies.cosa).then(
         function(data) {
           console.log(data);
           location.reload();
-          alert("Nuevo Usuario Dado de Alta");
+          alert("El Usuario Eliminado");
           })         
   }
-   $scope.actualizar_usuario=function() {
+   $scope.actualiza_usuario=function() {
     console.log($scope.fomUsuarios);
-      altaUsuarioServicio.alta_usuario($scope.fomUsuarios).then(
+      ActualizaUsuarioServicio.actualiza_usuario($cookies.cosa,$scope.editaUsuarios).then(
         function(data) {
           console.log(data);
           location.reload();
-          alert("Nuevo Usuario Dado de Alta");
+          alert("Usuario Modificado");
           })         
   }
 }]);
-app.controller('PerfilController', ['$scope','altaPerfilServicio','eliminaUsuarioServicio','AsignarDiscServicio',function($scope,altaPerfilServicio,eliminaUsuarioServicio,AsignarDiscServicio) {
+app.controller('PerfilController', ['$scope','altaPerfilServicio','eliminaUsuarioServicio','AsignarDiscServicio','$cookies',function($scope,altaPerfilServicio,eliminaUsuarioServicio,AsignarDiscServicio,$cookies) {
+     console.log($cookies.cosa);
     //$scope.discrepancias = discrepancias;
     //console.log(discrepancias);
   
    $scope.fomPerfiles = {
     id: undefined,
     tipo: "",
-    permisos:[false,false,false,false,false,false]
+    permisos:[false,false,false,false,false,false,
+              false,false,false,false,false,false,
+              false,false,false,false,false,false,
+              false,false,false,false,false,false,
+              false,false,false,false,false,false,
+              false,false,false,false,false,false,
+              false,false,false,false,false,false,
+              false,false,false,false,false,false,
+              false,false,false,false,false]
   }
      $scope.alta_perfil=function() {
     console.log($scope.fomPerfiles)
-      altaPerfilServicio.alta_perfil($scope.fomPerfiles).then(
+      altaPerfilServicio.alta_perfil($cookies.cosa,$scope.fomPerfiles).then(
         function(data) {
           console.log(data);
           location.reload();
