@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.tikal.aeronautikal.dao.UsuarioDao;
+import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.Usuario;
 
 
@@ -80,8 +81,22 @@ public class UsuarioDaoImpl implements UsuarioDao{
 	}
 
 	@Override
-	public boolean actualizarUsuario(Usuario usuario) {
-		ofy().save().entity(usuario).now();
+	public boolean actualizarUsuario(Usuario u) {
+		
+		 System.out.print("usu:"+u.getId());
+			Usuario old = this.consultarUsuario(u.getUsername());
+			System.out.print("old:"+old);
+				if (old != null) {
+					old.setUsername(u.getUsername());
+					old.setNombre(u.getNombre());
+					old.setaPaterno(u.getaPaterno());
+					old.setaMaterno(u.getaMaterno());
+					old.setPerfil(u.getPerfil());
+					
+				}
+
+					ofy().save().entity(old);
+		
 		return true;
 	}
 

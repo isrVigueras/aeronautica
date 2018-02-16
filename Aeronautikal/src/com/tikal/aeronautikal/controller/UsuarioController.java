@@ -194,12 +194,15 @@ public class UsuarioController {
 				usuario.setPassword(otroMetodo("root"));
 				usuario.setPerfil("SuperAdministrador");
 				usuario.setUsername("root");
+				usuario.setNombre("ROOT");
+				usuario.setaPaterno("Root");
+				usuario.setaMaterno("Root");
 				
 				usuarioDao.crearUsuario(usuario);
 				
 				Perfil perfil = new Perfil();
 				perfil.setTipo("SuperAdministrador");
-				boolean[] arreglo = new boolean[6];
+				boolean[] arreglo = new boolean[53];
 				for(int i=0; i < arreglo.length; i++){
 					arreglo[i] = true;
 				}

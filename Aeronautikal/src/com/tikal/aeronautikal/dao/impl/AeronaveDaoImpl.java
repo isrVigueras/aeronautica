@@ -46,10 +46,7 @@ public class AeronaveDaoImpl implements AeronaveDao {
 			old.setMarcas(nave.getMarcas());
 			
 		}
-//			old.setMatricula(nave.getMatricula());
-//			old.setModelo(nave.getModelo());
-//			old.setTiempovuelo(nave.getTiempovuelo());
-//			old.setAterrizaje(nave.getAterrizaje());
+
 			ofy().save().entity(old);
    }
 
