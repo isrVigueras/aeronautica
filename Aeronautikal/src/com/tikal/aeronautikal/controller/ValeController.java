@@ -28,7 +28,10 @@ import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.CondicionDao;
 import com.tikal.aeronautikal.dao.DiscrepanciaDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
+import com.tikal.aeronautikal.dao.PerfilDAO;
+import com.tikal.aeronautikal.dao.SessionDao;
 import com.tikal.aeronautikal.dao.UnidadDao;
+import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.dao.ValeDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
@@ -51,6 +54,19 @@ public class ValeController {
 	 @Autowired
 	 @Qualifier("valeDao")
 	 ValeDao valeDao;
+	 
+	 @Autowired
+	 @Qualifier("sessionDao")
+	 SessionDao sessionDao;
+	 
+	@Autowired
+	@Qualifier ("usuarioDao")
+	UsuarioDao usuarioDao;
+
+		
+	@Autowired
+	PerfilDAO perfilDAO; 
+
 	 
 	 @Autowired
 	 @Qualifier("aeronaveDao")
@@ -201,16 +217,21 @@ public class ValeController {
 	 		}
  	  
 	   
-	   @RequestMapping(value = {"/cerrarVale/{idVale}" }, method = RequestMethod.POST)
-		public void update(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idVale)
-				throws IOException {
+	   @RequestMapping(value = {"/cerrarVale/{idVale}/{userName}" }, method = RequestMethod.POST)
+		public void update(HttpServletResponse response, HttpServletRequest request,
+				@PathVariable Long idVale,  @PathVariable String userName)	throws IOException {
 			//System.out.println("obj de edgar:"+json);
-			AsignadorDeCharset.asignar(request, response);
-		//	AeronaveEntity a = (AeronaveEntity) JsonConvertidor.fromJson(json, AeronaveEntity.class);
-			ValeEntity v= valeDao.consult(idVale);
-			v.setEstatus("CERRADO");
-			valeDao.update(v);
-			response.getWriter().println("ok");
+		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 20, sessionDao,userName)){  
+
+					AsignadorDeCharset.asignar(request, response);
+				//	AeronaveEntity a = (AeronaveEntity) JsonConvertidor.fromJson(json, AeronaveEntity.class);
+					ValeEntity v= valeDao.consult(idVale);
+					v.setEstatus("CERRADO");
+					valeDao.update(v);
+					response.getWriter().println("ok");
+		   }else{
+				response.sendError(403);
+			}
 		}
        
 	  

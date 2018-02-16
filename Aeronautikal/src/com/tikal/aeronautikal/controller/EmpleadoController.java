@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tikal.aeronautikal.dao.EmpleadoDao;
+import com.tikal.aeronautikal.dao.PerfilDAO;
+import com.tikal.aeronautikal.dao.SessionDao;
+import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.entity.EmpleadoEntity;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
@@ -29,6 +32,17 @@ public class EmpleadoController {
 	    @Qualifier("empleadoDao")
 	    EmpleadoDao empleadoDao;
 
+	 @Autowired
+	 @Qualifier("sessionDao")
+	 SessionDao sessionDao;
+	 
+	@Autowired
+	@Qualifier ("usuarioDao")
+	UsuarioDao usuarioDao;
+
+		
+	@Autowired
+	PerfilDAO perfilDAO; 
 
 	 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 	   
@@ -55,19 +69,23 @@ public class EmpleadoController {
 	       
 	    }
 	 
-	  @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
-	   public void addEmpleado(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
-		  try {
-		  		System.out.println("si entra al add por POST en empleado"+json);
-	        
-	        	AsignadorDeCharset.asignar(request, response);
-	        	EmpleadoEntity e =(EmpleadoEntity) JsonConvertidor.fromJson(json, EmpleadoEntity.class);        	
-	        	
-	        	empleadoDao.save(e);	            
-	        } catch (RuntimeException ignored) {
-	        	ignored.printStackTrace();
-	        }
-	       
+	  @RequestMapping(value = {"/add/{userName}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
+	   public void addEmpleado(HttpServletResponse response, HttpServletRequest request,
+			   @RequestBody String json,  @PathVariable String userName) throws IOException{
+		  if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 39, sessionDao,userName)){   
+			  try {
+			  		System.out.println("si entra al add por POST en empleado"+json);
+		        
+		        	AsignadorDeCharset.asignar(request, response);
+		        	EmpleadoEntity e =(EmpleadoEntity) JsonConvertidor.fromJson(json, EmpleadoEntity.class);        	
+		        	
+		        	empleadoDao.save(e);	            
+		        } catch (RuntimeException ignored) {
+		        	ignored.printStackTrace();
+		        }
+		  }else{
+				response.sendError(403);
+			}
 	    }
    
    /////////////////////////////////////////////////////////////////////////////////////////**********************
@@ -83,24 +101,32 @@ public class EmpleadoController {
 		}
 	   
 	   
-	   @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.POST)
-	   public void deleteAeronave(HttpServletResponse response, HttpServletRequest request, @PathVariable Long id) 
+	   @RequestMapping(value = {"/delete/{id}/{userName}" }, method = RequestMethod.POST)
+	   public void deleteAeronave(HttpServletResponse response, HttpServletRequest request, @PathVariable Long id, @PathVariable String userName) 
 			   throws IOException {
 		   ////////////ojo cuando borra aeronave, checr muy bien lo de Static en el dao y el @override de daoimpl
 		   System.out.println("si esta en delete empleado"+id);
-		   empleadoDao.delete(empleadoDao.consult(id));
-		   System.out.println("empleado eliminado....");
-		   response.getWriter().println("ok");
+		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 41, sessionDao,userName)){ 
+			   empleadoDao.delete(empleadoDao.consult(id));
+			   System.out.println("empleado eliminado....");
+			   response.getWriter().println("ok");
+		   }else{
+				response.sendError(403);
+			}
 	   }
 	   
-	   @RequestMapping(value = {"/update" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-		public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
+	   @RequestMapping(value = {"/update/{userName}" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+		public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json, @PathVariable String userName)
 				throws IOException {
 			System.out.println("obj de edgar:"+json);
-			AsignadorDeCharset.asignar(request, response);
-			EmpleadoEntity e = (EmpleadoEntity) JsonConvertidor.fromJson(json, EmpleadoEntity.class);
-			empleadoDao.update(e);
-			response.getWriter().println(JsonConvertidor.toJson(e));
+			if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 40, sessionDao,userName)){  
+				AsignadorDeCharset.asignar(request, response);
+				EmpleadoEntity e = (EmpleadoEntity) JsonConvertidor.fromJson(json, EmpleadoEntity.class);
+				empleadoDao.update(e);
+				response.getWriter().println(JsonConvertidor.toJson(e));
+			 }else{
+					response.sendError(403);
+				}
 		}
 	   
 	   //////////////////////////////////////////////////////////////////////////////////////////*******************

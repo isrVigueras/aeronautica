@@ -30,6 +30,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.google.appengine.repackaged.com.google.common.flogger.parser.ParseException;
 import com.tikal.aeronautikal.dao.EmpleadoDao;
 import com.tikal.aeronautikal.dao.HorasHombreDao;
+import com.tikal.aeronautikal.dao.PerfilDAO;
+import com.tikal.aeronautikal.dao.SessionDao;
+import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.entity.HorasHombre;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
@@ -45,6 +48,18 @@ public class HorasHombreController {
 	 @Autowired
 	 @Qualifier("empleadoDao")
 	EmpleadoDao empleadoDao;
+	 
+	 @Autowired
+	 @Qualifier("sessionDao")
+	 SessionDao sessionDao;
+	 
+	@Autowired
+	@Qualifier ("usuarioDao")
+	UsuarioDao usuarioDao;
+
+		
+	@Autowired
+	PerfilDAO perfilDAO; 
 	 
 
 	 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
@@ -177,16 +192,20 @@ public class HorasHombreController {
 	   }
 	   
 		   
-	   @RequestMapping(value = {"/asignar/{idEmpleado}/{idHorasHombre}" }, method = RequestMethod.POST, produces = "application/json")
-		public void asigna(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idEmpleado, @PathVariable Long idHorasHombre)
-				throws IOException {
-			AsignadorDeCharset.asignar(request, response);
-			HorasHombre h = horasHombreDao.consult(idHorasHombre);
-			h.setIdEmpleado(idEmpleado);
-			h.setEstatus("ASIGNADA");
-			h.setEmpleado((empleadoDao.consult(idEmpleado)).getNombreCompleto());
-			horasHombreDao.update(h);
-			response.getWriter().println(JsonConvertidor.toJson(h));
+	   @RequestMapping(value = {"/asignar/{idEmpleado}/{idHorasHombre}/{userName}" }, method = RequestMethod.POST, produces = "application/json")
+		public void asigna(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idEmpleado,
+				@PathVariable Long idHorasHombre,  @PathVariable String userName)	throws IOException {
+		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 34, sessionDao,userName)){  
+				AsignadorDeCharset.asignar(request, response);
+				HorasHombre h = horasHombreDao.consult(idHorasHombre);
+				h.setIdEmpleado(idEmpleado);
+				h.setEstatus("ASIGNADA");
+				h.setEmpleado((empleadoDao.consult(idEmpleado)).getNombreCompleto());
+				horasHombreDao.update(h);
+				response.getWriter().println(JsonConvertidor.toJson(h));
+		   }else{
+				response.sendError(403);
+			}
 		}
 	   
 	   
@@ -199,175 +218,192 @@ public class HorasHombreController {
 			response.getWriter().println(JsonConvertidor.toJson(h));
 		}
 	    
-	   @RequestMapping(value = {"/start/{id}" }, method = RequestMethod.POST,produces = "application/json")
-		public void ini(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id)
+	   @RequestMapping(value = {"/start/{id}/{usrName}" }, method = RequestMethod.POST,produces = "application/json")
+		public void ini(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id, @PathVariable String userName)
 				throws IOException, java.text.ParseException {
 		   System.out.println("si entraaaaaaa  INICIA");
-			AsignadorDeCharset.asignar(request, response);
-			HorasHombre h = horasHombreDao.consult(id);
-			Locale l = new Locale("es","MX");
-			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
-			Date fec =cal.getTime();
-			System.out.println("fecha mexico:"+fec.toString());		
-			
-			if (h.getHoraIncio()== null){
-				System.out.println("pasa el ifffff");
-				h.setHoraIncio(fec);
-				///////////cada que inicien un periodo se calculan los ms hasta la hora del paro y la guarda en tiempoParo
-				long tiempoParo = diferenciasDeFechas(h.getHoraIncio(),getHoraParo());
-				h.setTiempoParo(tiempoParo);
-				System.out.println("tiempo paro1:"+h.getTiempoParo());
-				//Date salida=getHoraParo(fec);
-				h.setEstatus("EN PROGRESO");
-				//horasHombreDao.update(h);
-			}else{			   //inicia un periodo
-				System.out.println("pasa al esle con "+h.getInicioParcial());
-				//if (h.getInicioParcial()==null){
-					System.out.println("------------");
-					h.setInicioParcial(fec);
-					//if (fec.before(getHoraParo())){
-						long tiempoParo = diferenciasDeFechas(h.getInicioParcial(),getHoraParo());
-						h.setTiempoParo(tiempoParo);
-						System.out.println("tiempo paro2:"+h.getTiempoParo());
-						System.out.println("inicio parcial:"+h.getInicioParcial());
-						h.setEstatus("EN PROGRESO");
-						
-					//}
-				//}else{
-				//	System.out.println("presiono inicia cuando ya habia otro iniciado");
+		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 35, sessionDao,userName)){  
+					AsignadorDeCharset.asignar(request, response);
+					HorasHombre h = horasHombreDao.consult(id);
+					Locale l = new Locale("es","MX");
+					Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
+					Date fec =cal.getTime();
+					System.out.println("fecha mexico:"+fec.toString());		
 					
-				//}
-				//horasHombreDao.update(h);
+					if (h.getHoraIncio()== null){
+						System.out.println("pasa el ifffff");
+						h.setHoraIncio(fec);
+						///////////cada que inicien un periodo se calculan los ms hasta la hora del paro y la guarda en tiempoParo
+						long tiempoParo = diferenciasDeFechas(h.getHoraIncio(),getHoraParo());
+						h.setTiempoParo(tiempoParo);
+						System.out.println("tiempo paro1:"+h.getTiempoParo());
+						//Date salida=getHoraParo(fec);
+						h.setEstatus("EN PROGRESO");
+						//horasHombreDao.update(h);
+					}else{			   //inicia un periodo
+						System.out.println("pasa al esle con "+h.getInicioParcial());
+						//if (h.getInicioParcial()==null){
+							System.out.println("------------");
+							h.setInicioParcial(fec);
+							//if (fec.before(getHoraParo())){
+								long tiempoParo = diferenciasDeFechas(h.getInicioParcial(),getHoraParo());
+								h.setTiempoParo(tiempoParo);
+								System.out.println("tiempo paro2:"+h.getTiempoParo());
+								System.out.println("inicio parcial:"+h.getInicioParcial());
+								h.setEstatus("EN PROGRESO");
+								
+							//}
+						//}else{
+						//	System.out.println("presiono inicia cuando ya habia otro iniciado");
+							
+						//}
+						//horasHombreDao.update(h);
+					}
+					horasHombreDao.update(h);
+					response.getWriter().println(JsonConvertidor.toJson(h));
+		   }else{
+				response.sendError(403);
 			}
-			horasHombreDao.update(h);
-			response.getWriter().println(JsonConvertidor.toJson(h));
 		}
 	   
-	   @RequestMapping(value = {"/pausa/{id}" }, method = RequestMethod.POST,produces = "application/json")
-		public void stop(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id)
+	   @RequestMapping(value = {"/pausa/{id}/{userName}" }, method = RequestMethod.POST,produces = "application/json")
+		public void stop(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id,  @PathVariable String userName)
 				throws IOException, java.text.ParseException {
 		   System.out.println("si entraaaaaaa  pausa");
-			AsignadorDeCharset.asignar(request, response);
-			boolean paro;
-			HorasHombre h = horasHombreDao.consult(id);
-			Locale l = new Locale("es","MX");
-			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
-			Date fecStop =cal.getTime();
-			System.out.println("la hora de pausa es :"+fecStop);
-			h.setFinParcial(fecStop);
-			///////////////////// validar la hora de salidA 
-			//String salida=calculaHoraParo(fecStop);
-			//System.out.println("Es la hora de salida?"+salida);
-			paro=checarParo(fecStop);
-			if (paro){ ///////////suma el parcial mas el tiempo de paro
-				System.out.println("debo hacer paro automatico");
-				h.setTiempoTotal(h.getTiempoParcial()+h.getTiempoParo());
-				//paro=false;
-				String hp= formatoFecha(h.getTiempoTotal());
-	 			h.setParcialEnHoras(hp);
-				h.setTiempoParo(0);
-			}else{
-				if (h.getTiempoParcial() == 0 ){   /// si es el primer inicio
-						System.out.println("la hora del inicio es :"+h.getHoraIncio());
-						System.out.println("la hora del stop es :"+fecStop);
-						long dif = diferenciasDeFechas(h.getHoraIncio(),fecStop);
-						h.setTiempoParcial(dif);
-						String hp= formatoFecha(h.getTiempoParcial());
+		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 36, sessionDao,userName)){  
+
+					AsignadorDeCharset.asignar(request, response);
+					boolean paro;
+					HorasHombre h = horasHombreDao.consult(id);
+					Locale l = new Locale("es","MX");
+					Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
+					Date fecStop =cal.getTime();
+					System.out.println("la hora de pausa es :"+fecStop);
+					h.setFinParcial(fecStop);
+					///////////////////// validar la hora de salidA 
+					//String salida=calculaHoraParo(fecStop);
+					//System.out.println("Es la hora de salida?"+salida);
+					paro=checarParo(fecStop);
+					if (paro){ ///////////suma el parcial mas el tiempo de paro
+						System.out.println("debo hacer paro automatico");
+						h.setTiempoTotal(h.getTiempoParcial()+h.getTiempoParo());
+						//paro=false;
+						String hp= formatoFecha(h.getTiempoTotal());
 			 			h.setParcialEnHoras(hp);
-				}else{                            // si es un periodo
-					System.out.println("ELSE*** ");				
-					long aux= h.getTiempoParcial();
-				//	if (h.getInicioParcial() == null){  /// si solo presionaron el boton de stop sin iniciar antes
-				//		System.out.println("no han iniciado primero :");
-				//	}else{                               /// si se inicio un periodo correctamente
-						System.out.println("ELSE  else inicio es :"+h.getInicioParcial());
-						System.out.println("ELSE else stop es :"+fecStop);
-						long dif = diferenciasDeFechas(h.getInicioParcial(),fecStop);
-						long newParcial= aux+dif;
-						h.setTiempoParcial(newParcial);
-						System.out.println("parcial de milisegundos"+h.getTiempoParcial());
-			 			
-						String hp= formatoFecha(h.getTiempoParcial());
-			 			h.setParcialEnHoras(hp);
-			 			System.out.println("parcial en horas formateadas"+h.getParcialEnHoras());
-						h.setInicioParcial(null);
-						//h.setFinParcial(null);
-				//}
-					
-					//horasHombreDao.update(h);
-					//double dif = diferenciasDeFechas(h.getInicioParcial(),fecStop);
-					
-				}
+						h.setTiempoParo(0);
+					}else{
+						if (h.getTiempoParcial() == 0 ){   /// si es el primer inicio
+								System.out.println("la hora del inicio es :"+h.getHoraIncio());
+								System.out.println("la hora del stop es :"+fecStop);
+								long dif = diferenciasDeFechas(h.getHoraIncio(),fecStop);
+								h.setTiempoParcial(dif);
+								String hp= formatoFecha(h.getTiempoParcial());
+					 			h.setParcialEnHoras(hp);
+						}else{                            // si es un periodo
+							System.out.println("ELSE*** ");				
+							long aux= h.getTiempoParcial();
+						//	if (h.getInicioParcial() == null){  /// si solo presionaron el boton de stop sin iniciar antes
+						//		System.out.println("no han iniciado primero :");
+						//	}else{                               /// si se inicio un periodo correctamente
+								System.out.println("ELSE  else inicio es :"+h.getInicioParcial());
+								System.out.println("ELSE else stop es :"+fecStop);
+								long dif = diferenciasDeFechas(h.getInicioParcial(),fecStop);
+								long newParcial= aux+dif;
+								h.setTiempoParcial(newParcial);
+								System.out.println("parcial de milisegundos"+h.getTiempoParcial());
+					 			
+								String hp= formatoFecha(h.getTiempoParcial());
+					 			h.setParcialEnHoras(hp);
+					 			System.out.println("parcial en horas formateadas"+h.getParcialEnHoras());
+								h.setInicioParcial(null);
+								//h.setFinParcial(null);
+						//}
+							
+							//horasHombreDao.update(h);
+							//double dif = diferenciasDeFechas(h.getInicioParcial(),fecStop);
+							
+						}
+					}
+					h.setEstatus("EN PAUSA");
+					horasHombreDao.update(h);
+					response.getWriter().println(JsonConvertidor.toJson(h));
+		   }else{
+				response.sendError(403);
 			}
-			h.setEstatus("EN PAUSA");
-			horasHombreDao.update(h);
-			response.getWriter().println(JsonConvertidor.toJson(h));
 		}
 	  
-	   @RequestMapping(value = {"/stop/{id}" }, method = RequestMethod.POST,produces = "application/json")
-	 		public void termina(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id)
+	   @RequestMapping(value = {"/stop/{id}/{userName}" }, method = RequestMethod.POST,produces = "application/json")
+	 		public void termina(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id,  @PathVariable String userName)
 	 				throws IOException, java.text.ParseException {
 	 		   System.out.println("si entraaaaaaa  termina");
-	 			AsignadorDeCharset.asignar(request, response);
-	 			Boolean paro;
-	 			HorasHombre h = horasHombreDao.consult(id);
-	 			Locale l = new Locale("es","MX");
-	 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
-	 			Date fecStop =cal.getTime();
-	 			paro=checarParo(fecStop);
-				if (paro){ ///////////si termina antes de la hora de entrada, suma el parcial mas el tiempo de paro
-					h.setTiempoTotal(h.getTiempoParcial()+h.getTiempoParo());
-					String hp= formatoFecha(h.getTiempoTotal());
-		 			h.setParcialEnHoras(hp);
-					h.setTiempoParo(0);
-				}else{
-		 			if (h.getTiempoParcial()==0){
-		 				System.out.println("la hora del inicio es :"+h.getHoraIncio());
-						System.out.println("la hora del stop es :"+fecStop);
-						//paro=checarParo(fecStop);
-						long dif = diferenciasDeFechas(h.getHoraIncio(),fecStop);
-						h.setTiempoTotal(dif);
+	 		  if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 37, sessionDao,userName)){  
+			 			AsignadorDeCharset.asignar(request, response);
+			 			Boolean paro;
+			 			HorasHombre h = horasHombreDao.consult(id);
+			 			Locale l = new Locale("es","MX");
+			 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
+			 			Date fecStop =cal.getTime();
+			 			paro=checarParo(fecStop);
+						if (paro){ ///////////si termina antes de la hora de entrada, suma el parcial mas el tiempo de paro
+							h.setTiempoTotal(h.getTiempoParcial()+h.getTiempoParo());
+							String hp= formatoFecha(h.getTiempoTotal());
+				 			h.setParcialEnHoras(hp);
+							h.setTiempoParo(0);
+						}else{
+				 			if (h.getTiempoParcial()==0){
+				 				System.out.println("la hora del inicio es :"+h.getHoraIncio());
+								System.out.println("la hora del stop es :"+fecStop);
+								//paro=checarParo(fecStop);
+								long dif = diferenciasDeFechas(h.getHoraIncio(),fecStop);
+								h.setTiempoTotal(dif);
+								
+				 			}else{
+				 				
+				 				h.setTiempoTotal(h.getTiempoParcial());
+				 			}
+						}
+					 	h.setTiempoHoras(formatoFecha(h.getTiempoTotal()));
+					 	String hp= formatoFecha(h.getTiempoParcial());
+					 	h.setParcialEnHoras(hp);
+					 	h.setEstatus("TERMINADA");
+					 	horasHombreDao.update(h);
+					 	System.out.println("total de milisegundos"+h.getTiempoTotal());
+					 	System.out.println("total en horas formateadas"+h.getTiempoHoras());	 						
 						
-		 			}else{
-		 				
-		 				h.setTiempoTotal(h.getTiempoParcial());
-		 			}
+			 			response.getWriter().println(JsonConvertidor.toJson(h));
+	 		 }else{
+					response.sendError(403);
 				}
-			 	h.setTiempoHoras(formatoFecha(h.getTiempoTotal()));
-			 	String hp= formatoFecha(h.getTiempoParcial());
-			 	h.setParcialEnHoras(hp);
-			 	h.setEstatus("TERMINADA");
-			 	horasHombreDao.update(h);
-			 	System.out.println("total de milisegundos"+h.getTiempoTotal());
-			 	System.out.println("total en horas formateadas"+h.getTiempoHoras());	 						
-				
-	 			response.getWriter().println(JsonConvertidor.toJson(h));
 	   }
 	   
 	   
-	   @RequestMapping(value = {"/restart/{id}" }, method = RequestMethod.POST,produces = "application/json")
-		public void restart(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id)
+	   @RequestMapping(value = {"/restart/{id}/{userName}" }, method = RequestMethod.POST,produces = "application/json")
+		public void restart(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id, @PathVariable String userName)
 				throws IOException, java.text.ParseException {
 		   System.out.println("si entraaaaaaa  restart");
-			AsignadorDeCharset.asignar(request, response);
-			HorasHombre h = horasHombreDao.consult(id);
-			Locale l = new Locale("es","MX");
-			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
-			Date fecStop =cal.getTime();
-			
-			h.setHoraIncio(null);
-			h.setInicioParcial(null);
-			h.setFinParcial(null);
-			h.setTiempoHoras("");
-			h.setTiempoParcial(0);
-			h.setParcialEnHoras("00:00:00");
-			h.setTiempoParo(0);
-			h.setTiempoTotal(0);
-			h.setEstatus("ASIGNADA");
-			
-			horasHombreDao.update(h);
-	 		System.out.println("SE REINICIO EL CONTADOR DE HORAS....");
-			response.getWriter().println(JsonConvertidor.toJson(h));
+		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 38, sessionDao,userName)){
+				AsignadorDeCharset.asignar(request, response);
+				HorasHombre h = horasHombreDao.consult(id);
+				Locale l = new Locale("es","MX");
+				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Mexico_City"),l);
+				Date fecStop =cal.getTime();
+				
+				h.setHoraIncio(null);
+				h.setInicioParcial(null);
+				h.setFinParcial(null);
+				h.setTiempoHoras("");
+				h.setTiempoParcial(0);
+				h.setParcialEnHoras("00:00:00");
+				h.setTiempoParo(0);
+				h.setTiempoTotal(0);
+				h.setEstatus("ASIGNADA");
+				
+				horasHombreDao.update(h);
+		 		System.out.println("SE REINICIO EL CONTADOR DE HORAS....");
+				response.getWriter().println(JsonConvertidor.toJson(h));
+		   }else{
+				response.sendError(403);
+			}
   }
 	   
 	   

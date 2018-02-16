@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tikal.aeronautikal.controller.vo.RequisicionesComponenteVo;
 import com.tikal.aeronautikal.dao.ComponenteDao;
+import com.tikal.aeronautikal.dao.PerfilDAO;
 import com.tikal.aeronautikal.dao.RequisicionDao;
-
+import com.tikal.aeronautikal.dao.SessionDao;
+import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
 import com.tikal.aeronautikal.entity.otBody.ComponenteEntity;
 import com.tikal.aeronautikal.service.RequisicionService;
@@ -41,6 +43,17 @@ public class RequisicionController {
 	 @Autowired
 	 @Qualifier("componenteDao")
 	 ComponenteDao componenteDao;
+	 @Autowired
+	 @Qualifier("sessionDao")
+	 SessionDao sessionDao;
+	 
+	@Autowired
+	@Qualifier ("usuarioDao")
+	UsuarioDao usuarioDao;
+
+		
+	@Autowired
+	PerfilDAO perfilDAO; 
 	 
 	 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 	   

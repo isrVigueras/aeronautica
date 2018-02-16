@@ -9,12 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tikal.aeronautikal.dao.PerfilDAO;
-
+import com.tikal.aeronautikal.dao.SessionDao;
 import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.entity.Perfil;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
@@ -35,6 +36,13 @@ public class PerfilController {
 	@Qualifier("perfilDAO")
 	PerfilDAO perfilDAO;
 	
+	 @Autowired
+	 @Qualifier("sessionDao")
+	 SessionDao sessionDao;
+
+	 
+
+	
 	@RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 	   
 	   public void prueba(HttpServletResponse response, HttpServletRequest request) throws IOException {
@@ -42,18 +50,18 @@ public class PerfilController {
 
 	    }
 
-	@RequestMapping(value = { "/add" }, method = RequestMethod.POST, consumes = "Application/Json")
-	public void crearPerfil(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)
-			throws IOException {
-		//if (SesionController.verificarPermiso(request, usuarioDao, perfilDAO, 9)) {
+	@RequestMapping(value = { "/add/{userName}" }, method = RequestMethod.POST, consumes = "Application/Json")
+	public void crearPerfil(HttpServletRequest request, HttpServletResponse response, 
+			@RequestBody String json, @PathVariable String userName)throws IOException {
+		if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 45, sessionDao,userName)){
 			AsignadorDeCharset.asignar(request, response);
 			System.out.println(" edgar manda:"+json);
 			Perfil perfil = (Perfil) JsonConvertidor.fromJson(json, Perfil.class);
 			System.out.println("lista de permisos:"+perfil.getPermisos());
 			perfilDAO.crearPerfil(perfil);
-		//} else {
-		//	response.sendError(403);
-		//}
+		} else {
+			response.sendError(403);
+		}
 	}
 
 	@RequestMapping(value = { "/getAll" }, method = RequestMethod.GET, produces = "application/json")
@@ -66,10 +74,10 @@ public class PerfilController {
 	//	}
 	}
 
-	@RequestMapping(value = { "/update" }, method = RequestMethod.POST, consumes = "Application/Json")
-	public void actualizarUsuario(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)
-			throws IOException {
-		if (SesionController.verificarPermiso(request, usuarioDao, perfilDAO, 10)) {
+	@RequestMapping(value = { "/update/{userName}" }, method = RequestMethod.POST, consumes = "Application/Json")
+	public void actualizarUsuario(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody String json, @PathVariable String userName)throws IOException {
+		if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 46, sessionDao,userName)){
 			AsignadorDeCharset.asignar(request, response);
 			Perfil perfil = (Perfil) JsonConvertidor.fromJson(json, Perfil.class);
 			Perfil aux = perfilDAO.consultarPerfilPorId(perfil.getId());
@@ -82,12 +90,16 @@ public class PerfilController {
 
 	}
 
-	@RequestMapping(value = { "/delete" }, method = RequestMethod.POST, consumes = "Application/Json")
-	public void eliminarUsuario(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)
-			throws IOException {
-		AsignadorDeCharset.asignar(request, response);
-		Perfil perfil = (Perfil) JsonConvertidor.fromJson(json, Perfil.class);
-		perfilDAO.eliminarPerfil(perfil.getTipo());
+	@RequestMapping(value = { "/delete/{userName}" }, method = RequestMethod.POST, consumes = "Application/Json")
+	public void eliminarUsuario(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody String json, @PathVariable String userName)throws IOException {
+		if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 47, sessionDao,userName)){
+			AsignadorDeCharset.asignar(request, response);
+			Perfil perfil = (Perfil) JsonConvertidor.fromJson(json, Perfil.class);
+			perfilDAO.eliminarPerfil(perfil.getTipo());
+		}else{
+			response.sendError(403);
+		}
 	}
 	
 	//consulta los perfiles de cada usuario

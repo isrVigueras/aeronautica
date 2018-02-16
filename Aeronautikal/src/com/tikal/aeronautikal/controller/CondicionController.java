@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tikal.aeronautikal.dao.CondicionDao;
-
+import com.tikal.aeronautikal.dao.PerfilDAO;
+import com.tikal.aeronautikal.dao.SessionDao;
+import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.entity.Condicion;
 
 import com.tikal.aeronautikal.service.CondicionService;
@@ -38,6 +40,19 @@ public class CondicionController {
 	 @Autowired
 	 @Qualifier("condicionDao")
 	 CondicionDao condicionDao;
+	 
+	 @Autowired
+	 @Qualifier("sessionDao")
+	 SessionDao sessionDao;
+	 
+	@Autowired
+	@Qualifier ("usuarioDao")
+	UsuarioDao usuarioDao;
+
+		
+	@Autowired
+	PerfilDAO perfilDAO; 
+
 	
 	
 	 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
@@ -70,24 +85,28 @@ public class CondicionController {
 	 /////////////////////////////////////////////////////********************************************************
 
 	 
-	 @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
-	   public void addCondicion(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
-	    	  System.out.println("si entra al add Condicion por POST"+json);
-	        try {
-	        	AsignadorDeCharset.asignar(request, response);
-	        	 System.out.println("request......."+request);
-	        	 System.out.println("request......."+response);
-	        	 Condicion c =(Condicion) JsonConvertidor.fromJson(json,Condicion.class);
-	        	// System.out.println("el nuevo objeto: "+orden );
-	        	//pegar el valor de empresa, aeronave y contacato
-	        	//cmp.setD_pendientes(50);//aqui va funcion para calcular cuantas piezas pendientes hay de cada componente
-	        	//orden.setFolio(1111);
-	        	condicionDao.save(c);	            
-	        } catch (RuntimeException ignored) {
-	        	ignored.printStackTrace();
-	            // getUniqueEntity should throw exception
-	        }
-	       
+	 @RequestMapping(value = {"/add/{userName}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
+	   public void addCondicion(HttpServletResponse response, HttpServletRequest request,
+			   @RequestBody String json, @PathVariable String userName) throws IOException{
+	    	System.out.println("si entra al add Condicion por POST"+json);
+	    	if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 30, sessionDao,userName)){  
+		        try {
+		        	AsignadorDeCharset.asignar(request, response);
+		        	 System.out.println("request......."+request);
+		        	 System.out.println("request......."+response);
+		        	 Condicion c =(Condicion) JsonConvertidor.fromJson(json,Condicion.class);
+		        	// System.out.println("el nuevo objeto: "+orden );
+		        	//pegar el valor de empresa, aeronave y contacato
+		        	//cmp.setD_pendientes(50);//aqui va funcion para calcular cuantas piezas pendientes hay de cada componente
+		        	//orden.setFolio(1111);
+		        	condicionDao.save(c);	            
+		        } catch (RuntimeException ignored) {
+		        	ignored.printStackTrace();
+		            // getUniqueEntity should throw exception
+		        }
+	    	}else{
+				response.sendError(403);
+			}
 	    }
 	 
 	   /////////////////////////////////////////////////////////////////////////////////////////**********************
@@ -105,26 +124,33 @@ public class CondicionController {
 	     
 	   
 	   
-	   @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.POST)
-	   public void deleteCondicion(HttpServletResponse response, HttpServletRequest request, @PathVariable Long id)
-			   throws IOException {
+	   @RequestMapping(value = {"/delete/{id}/{userName}" }, method = RequestMethod.POST)
+	   public void deleteCondicion(HttpServletResponse response, HttpServletRequest request,
+			   @PathVariable Long id,  @PathVariable String userName)   throws IOException {
 		   System.out.println("si esta en delete"+id);
-		   condicionDao.delete(condicionDao.consult(id));
-		   System.out.println("Condicion eliminado....");
-		   response.getWriter().println("ok");
-		   
+		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 32, sessionDao,userName)){  
+			   condicionDao.delete(condicionDao.consult(id));
+			   System.out.println("Condicion eliminado....");
+			   response.getWriter().println("ok");
+		   }else{
+				response.sendError(403);
+			}
 	   }
 	   
 		   
 	   
 	   
-	   @RequestMapping(value = {"/update" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-		public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
-				throws IOException {
-			AsignadorDeCharset.asignar(request, response);
-			Condicion c = (Condicion) JsonConvertidor.fromJson(json, Condicion.class);
-			condicionDao.update(c);
-			response.getWriter().println(JsonConvertidor.toJson(c));
+	   @RequestMapping(value = {"/update/{userName}" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+		public void update(HttpServletResponse response, HttpServletRequest request, 
+				@RequestBody String json, @PathVariable String userName)	throws IOException {
+		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 31, sessionDao,userName)){  
+				AsignadorDeCharset.asignar(request, response);
+				Condicion c = (Condicion) JsonConvertidor.fromJson(json, Condicion.class);
+				condicionDao.update(c);
+				response.getWriter().println(JsonConvertidor.toJson(c));
+		   }else{
+				response.sendError(403);
+			}
 		}
 	    
 	   

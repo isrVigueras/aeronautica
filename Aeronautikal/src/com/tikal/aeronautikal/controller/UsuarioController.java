@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,10 +47,10 @@ public class UsuarioController {
 	
 	 
 																	///////////alta de usuarios
-	@RequestMapping(value = { "/registro" }, method = RequestMethod.POST, consumes = "Application/Json")
-	public void crearUsuario(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)
+	@RequestMapping(value = { "/registro/{userName}" }, method = RequestMethod.POST, consumes = "Application/Json")
+	public void crearUsuario(HttpServletRequest request, HttpServletResponse response, @RequestBody String json, @PathVariable String userName)
 			throws IOException {
-		//if(SesionController.verificarPermiso(request, usuarioDao, perfilDAO, 7)){
+		if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 48, sessionDao,userName)){
 			AsignadorDeCharset.asignar(request, response);
 			System.out.println("usuario edgar "+json);
 			Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
@@ -65,9 +66,9 @@ public class UsuarioController {
 					response.sendError(400);
 				}
 			}
-		//}else{
-		//	response.sendError(403);
-		//}
+		}else{
+			response.sendError(403);
+		}
 	}
 
 	@RequestMapping(value = { "/getAll" }, method = RequestMethod.GET, produces = "application/json")
@@ -81,20 +82,28 @@ public class UsuarioController {
 		//}
 	}
 
-	@RequestMapping(value = { "/update" }, method = RequestMethod.POST, consumes = "Application/Json")
-	public void actualizarUsuario(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)
+	@RequestMapping(value = { "/update/{userName}" }, method = RequestMethod.POST, consumes = "Application/Json")
+	public void actualizarUsuario(HttpServletRequest request, HttpServletResponse response, @RequestBody String json, @PathVariable String userName)
 			throws IOException {
-		AsignadorDeCharset.asignar(request, response);
-		Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
-		usuarioDao.actualizarUsuario(usuario);
+		if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 49, sessionDao,userName)){
+			AsignadorDeCharset.asignar(request, response);
+			Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
+			usuarioDao.actualizarUsuario(usuario);
+		}else{
+			response.sendError(403);
+		}
 	}
 
-	@RequestMapping(value = { "/delete" }, method = RequestMethod.POST, consumes = "Application/Json")
-	public void eliminarUsuario(HttpServletRequest request, HttpServletResponse response, @RequestBody String json)
+	@RequestMapping(value = { "/delete/{userName}" }, method = RequestMethod.POST, consumes = "Application/Json")
+	public void eliminarUsuario(HttpServletRequest request, HttpServletResponse response, @RequestBody String json, @PathVariable String userName)
 			throws IOException {
-		AsignadorDeCharset.asignar(request, response);
-		Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
-		usuarioDao.eliminarUsuario(usuario);
+		if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 50, sessionDao,userName)){
+			AsignadorDeCharset.asignar(request, response);
+			Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
+			usuarioDao.eliminarUsuario(usuario);
+		}else{
+			response.sendError(403);
+		}
 	}
 
 	@RequestMapping(value = { "/reset" }, method = RequestMethod.POST, consumes = "Application/Json")

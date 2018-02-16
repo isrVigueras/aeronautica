@@ -116,7 +116,7 @@ public class ComponenteController {
 	 @RequestMapping(value = {"/add/{userName}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
 	   public void addComponente(HttpServletResponse response, HttpServletRequest request, @RequestBody String json, @PathVariable String userName) throws IOException{
 	    	  System.out.println("si entra al add por POST"+json);
-	      if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 12, sessionDao,userName)){
+	      if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 51, sessionDao,userName)){
 
 		        try {
 		        	AsignadorDeCharset.asignar(request, response);
@@ -216,10 +216,14 @@ public class ComponenteController {
 		}
 	   
 	   
-	   @RequestMapping(value = {"/delete/{folio}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+	   @RequestMapping(value = {"/delete/{folio}/{userName}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
 	   public void deleteOrden(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
-		@PathVariable Long id) throws IOException {
-		   componenteDao.delete(componenteDao.consult(id));
+		@PathVariable Long id, @PathVariable String userName) throws IOException {
+		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 53, sessionDao,userName)){ 
+		   		componenteDao.delete(componenteDao.consult(id));
+		   }else{
+				response.sendError(403);
+			}
 	   }
 	   
 	   //////////////////////////////////////////////////////////////////////////////////////////*******************
@@ -262,44 +266,51 @@ public class ComponenteController {
 	   }*/
 	   
 	   
-	   @RequestMapping(value = {"/upExistencias/{idRequisicion}"}, method = RequestMethod.POST,  produces = "application/json" )
-	   public void updateExistencias(HttpServletResponse response, HttpServletRequest request,  @PathVariable Long idRequisicion) 
-		throws IOException {
+	   @RequestMapping(value = {"/upExistencias/{idRequisicion}/{userName}"}, method = RequestMethod.POST,  produces = "application/json" )
+	   public void updateExistencias(HttpServletResponse response, HttpServletRequest request, 
+			   @PathVariable Long idRequisicion, @PathVariable String userName) throws IOException {
 		   System.out.println("si entra a actualizar existencias con este id de requisicion"+ idRequisicion);
 		  // AsignadorDeCharset.asignar(request, response);
-		   RequisicionEntity req = requisicionDao.consult(idRequisicion);
-		   System.out.println("el  id del componente, segun la req es: "+req.getFolio_componente());
-		   
-		   ComponenteEntity old = componenteDao.consult(req.getFolio_componente());
-		
-		   Integer existencias = (old.getD_cantidad()==0)? old.getD_cantidad():old.getD_cantidad()+req.getNumero_piezas();
-		   Integer pendientes = (old.getD_pendientes()==0)? old.getD_pendientes():old.getD_pendientes()-req.getNumero_piezas();
-		   System.out.println("EXISTENCIAS:"+existencias);
-		   System.out.println("PENDIENTES:"+pendientes);
-		   old.setD_cantidad(existencias);
-		   old.setD_pendientes(pendientes);  
-		   req.setEstatus("CERRADA");
-		   requisicionDao.update(req);
-		   componenteDao.update(old);
-		   System.out.println("termino de actualizar.......Ahora se Genera el vale..");
-		   //generar vale....
-		   generaVale((requisicionDao.consult(idRequisicion)).getFolio_discrepancia(), req.getFolio_componente(),req.getNumero_piezas() );
-		   
-		  //// AsignadorDeCharset.asignar(request, response);
-		  // response.getWriter().println(JsonConvertidor.toJson(old)); 
+		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 33, sessionDao,userName)){
+				   RequisicionEntity req = requisicionDao.consult(idRequisicion);
+				   System.out.println("el  id del componente, segun la req es: "+req.getFolio_componente());
+				   
+				   ComponenteEntity old = componenteDao.consult(req.getFolio_componente());
+				
+				   Integer existencias = (old.getD_cantidad()==0)? old.getD_cantidad():old.getD_cantidad()+req.getNumero_piezas();
+				   Integer pendientes = (old.getD_pendientes()==0)? old.getD_pendientes():old.getD_pendientes()-req.getNumero_piezas();
+				   System.out.println("EXISTENCIAS:"+existencias);
+				   System.out.println("PENDIENTES:"+pendientes);
+				   old.setD_cantidad(existencias);
+				   old.setD_pendientes(pendientes);  
+				   req.setEstatus("CERRADA");
+				   requisicionDao.update(req);
+				   componenteDao.update(old);
+				   System.out.println("termino de actualizar.......Ahora se Genera el vale..");
+				   //generar vale....
+				   generaVale((requisicionDao.consult(idRequisicion)).getFolio_discrepancia(), req.getFolio_componente(),req.getNumero_piezas() );
+				   
+				  //// AsignadorDeCharset.asignar(request, response);
+				  // response.getWriter().println(JsonConvertidor.toJson(old)); 
+		   }else{
+				response.sendError(403);
+			}
 
 	   }
 	   
 	   
-	   @RequestMapping(value = {
-		"/update" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
-		public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
+	   @RequestMapping(value = {"/update/{userName}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+		public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json, @PathVariable String userName)
 				throws IOException {
-			AsignadorDeCharset.asignar(request, response);
-			ComponenteEntity c = (ComponenteEntity) JsonConvertidor.fromJson(json, ComponenteEntity.class);
-			//Empleado e= evo.getEmpleado();
-			componenteDao.update(c);
-			response.getWriter().println(JsonConvertidor.toJson(c));
+		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 52, sessionDao,userName)){
+				AsignadorDeCharset.asignar(request, response);
+				ComponenteEntity c = (ComponenteEntity) JsonConvertidor.fromJson(json, ComponenteEntity.class);
+				//Empleado e= evo.getEmpleado();
+				componenteDao.update(c);
+				response.getWriter().println(JsonConvertidor.toJson(c));
+		   }else{
+				response.sendError(403);
+			}
 		}
 	    
 	   public void generaVale(Long idDiscrepancia, Long idComponente,Integer pzas){

@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.tikal.aeronautikal.controller.vo.ComDisVo;
 import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.dao.ComponenteDiscrepanciaDao;
+import com.tikal.aeronautikal.dao.PerfilDAO;
 import com.tikal.aeronautikal.dao.RequisicionDao;
+import com.tikal.aeronautikal.dao.SessionDao;
+import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.dao.ValeDao;
 import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
 import com.tikal.aeronautikal.entity.RequisicionEntity;
@@ -50,6 +53,18 @@ public class CompDisController {
 	    @Qualifier("valeDao")
 	    ValeDao valeDao;
 	    
+	    @Autowired
+		 @Qualifier("sessionDao")
+		 SessionDao sessionDao;
+		 
+		@Autowired
+		@Qualifier ("usuarioDao")
+		UsuarioDao usuarioDao;
+
+			
+		@Autowired
+		PerfilDAO perfilDAO; 
+	    
 	    @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 	    
 	    public void prueba(HttpServletResponse response, HttpServletRequest request) throws IOException {
@@ -77,51 +92,50 @@ public class CompDisController {
 		    }
 	    
 	    
-	    @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
-		   public void addCompDis(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) 
-				   throws IOException{
-		    	  System.out.println("si entra al add por POST"+json);
-		        try {
-		        	AsignadorDeCharset.asignar(request, response);
-		        	// System.out.println("request......."+request);
-		        	// System.out.println("request......."+response);
-		        	ComponenteDiscrepancia cd =(ComponenteDiscrepancia) JsonConvertidor.fromJson(json, ComponenteDiscrepancia.class);
-		        	String r="0";
-		        	///si la cantidad requerida es mayor a las existencias , se genera una requisicion
-		        	
-		        	// System.out.println("el nuevo objeto: "+orden );
-		        	//pegar el valor de empresa, aeronave y contacato
-		        	//orden.setFolio(1111);
-		        	cd.setCantOriginal(cd.getCantidad());
-		        	cd.setAuto("NO");
-		        	cd.setNombreComponente((componenteDao.consult(cd.getIdComponente())).getD_componente());
-		        	componenteDiscrepanciaDao.save(cd);
-		        	////generando requisicion
-		        	if (cd.getCantidad()> componenteDao.consult(cd.getIdComponente()).getD_cantidad()){
-		        		 System.out.println("cantidad requerida:"+cd.getCantidad());
-			        	 System.out.println("cantidad en almacen:"+componenteDao.consult(cd.getIdComponente()).getD_cantidad());
-			        	 System.out.println("idComDis:"+cd.getId());
-			        	 Integer cantidad= cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad();
-		        		System.out.println("Se generará una requisicion con este numero de piezas:"+(cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad()));
-		        		Long idReq=addRequisicionAutomatica(cd.getIdComponente(),cd.getIdDiscrepancia(), cd.getId(),cantidad);
-		        		actualizaPendientes(idReq);
-		        		r=cantidad.toString();
-		        		// actualiza la cantidad de las piezas del componente menos las que se requisitaron, cantidad original es cantOriginal
-		        		
-		        		//cd.setCantidad(cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad());
-		        		cd.setCantidad(componenteDao.consult(cd.getIdComponente()).getD_cantidad());
-		        		 System.out.println("cantidad nueva de componentes:"+cd.getCantidad());
-		        		 componenteDiscrepanciaDao.save(cd);
-		        		actualizaExistencias(cd.getIdComponente(),componenteDao.consult(cd.getIdComponente()).getD_cantidad(),"add");
-		        	}else{
-		        	actualizaExistencias(cd.getIdComponente(),cd.getCantidad(),"add");
-		        	}
-		        	response.getWriter().println(r);
-		        } catch (RuntimeException ignored) {
-		        	ignored.printStackTrace();
-		            // getUniqueEntity should throw exception
-		        }
-		       
+	    @RequestMapping(value = {"/add/{userName}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
+		   public void addCompDis(HttpServletResponse response, HttpServletRequest request,
+				   @RequestBody String json,  @PathVariable String userName) throws IOException{
+		       System.out.println("si entra al add por POST"+json);
+		       if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 21, sessionDao,userName)){  
+			        try {
+			        	AsignadorDeCharset.asignar(request, response);
+			        	// System.out.println("request......."+request);
+			        	// System.out.println("request......."+response);
+			        	ComponenteDiscrepancia cd =(ComponenteDiscrepancia) JsonConvertidor.fromJson(json, ComponenteDiscrepancia.class);
+			        	String r="0";
+			        	///si la cantidad requerida es mayor a las existencias , se genera una requisicion
+			        	cd.setCantOriginal(cd.getCantidad());
+			        	cd.setAuto("NO");
+			        	cd.setNombreComponente((componenteDao.consult(cd.getIdComponente())).getD_componente());
+			        	componenteDiscrepanciaDao.save(cd);
+			        	////generando requisicion
+			        	if (cd.getCantidad()> componenteDao.consult(cd.getIdComponente()).getD_cantidad()){
+			        		 System.out.println("cantidad requerida:"+cd.getCantidad());
+				        	 System.out.println("cantidad en almacen:"+componenteDao.consult(cd.getIdComponente()).getD_cantidad());
+				        	 System.out.println("idComDis:"+cd.getId());
+				        	 Integer cantidad= cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad();
+			        		System.out.println("Se generará una requisicion con este numero de piezas:"+(cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad()));
+			        		Long idReq=addRequisicionAutomatica(cd.getIdComponente(),cd.getIdDiscrepancia(), cd.getId(),cantidad);
+			        		actualizaPendientes(idReq);
+			        		r=cantidad.toString();
+			        		// actualiza la cantidad de las piezas del componente menos las que se requisitaron, cantidad original es cantOriginal
+			        		
+			        		//cd.setCantidad(cd.getCantidad()-componenteDao.consult(cd.getIdComponente()).getD_cantidad());
+			        		cd.setCantidad(componenteDao.consult(cd.getIdComponente()).getD_cantidad());
+			        		 System.out.println("cantidad nueva de componentes:"+cd.getCantidad());
+			        		 componenteDiscrepanciaDao.save(cd);
+			        		actualizaExistencias(cd.getIdComponente(),componenteDao.consult(cd.getIdComponente()).getD_cantidad(),"add");
+			        	}else{
+			        	actualizaExistencias(cd.getIdComponente(),cd.getCantidad(),"add");
+			        	}
+			        	response.getWriter().println(r);
+			        } catch (RuntimeException ignored) {
+			        	ignored.printStackTrace();
+			            // getUniqueEntity should throw exception
+			        }
+		       }else{
+					response.sendError(403);
+				} 
 		    }
 	    
 	    
@@ -151,58 +165,62 @@ public class CompDisController {
 		}
 	    
 		 
-	    @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.POST)
-		   public void deleteComDis(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id) 
-				   throws IOException {
+	    @RequestMapping(value = {"/delete/{id}/ {userName}" }, method = RequestMethod.POST)
+		   public void deleteComDis(HttpServletResponse response, HttpServletRequest request,
+				   @PathVariable Long id, @PathVariable String userName) throws IOException {
 	    	   System.out.println("si esta en delete"+id);
-			   actualizaExistencias(componenteDiscrepanciaDao.consult(id).getIdComponente(), componenteDiscrepanciaDao.consult(id).getCantidad(),"delete");
-			   ///borrando las requisiciones hechas en esa discrepancia y de ese componente
-			   Long idR =requisicionDao.getByComDis(id);
-			   System.out.println("idr="+idR);
-			   if (idR==  Long.parseLong("0000000000")){
-				   System.out.println("no hay requisiciones para ese componente ");
-			   }else{
-				   RequisicionEntity  r = requisicionDao.consult(idR);
-				   requisicionDao.delete(r);
-				   System.out.println("Requisicion automatica eliminada ....");
-			  
-			   }
-			   //checando si hay vales de salida ya depachados
-			   List<ValeEntity> vales= valeDao.getByDiscrepancia(componenteDiscrepanciaDao.consult(id).getIdDiscrepancia());
-			   System.out.println("lista de vales por discrepancia:"+vales);
-				for (ValeEntity v : vales){  //vales x discrepancia
-					List<ComponenteDiscrepancia> comps= v.getItems(); //componentes x vale
-					System.out.println("lista de comps en el vale antes:"+comps);
-					System.out.println("componente buscado:"+id);
-					if (comps.size()==1){
-						System.out.println("se eliminara el vale"+v.getId());
-						valeDao.delete(v);
-					}else{
-						for (ComponenteDiscrepancia c: comps){
+	    	   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 23, sessionDao,userName)){  
+					   actualizaExistencias(componenteDiscrepanciaDao.consult(id).getIdComponente(), componenteDiscrepanciaDao.consult(id).getCantidad(),"delete");
+					   ///borrando las requisiciones hechas en esa discrepancia y de ese componente
+					   Long idR =requisicionDao.getByComDis(id);
+					   System.out.println("idr="+idR);
+					   if (idR==  Long.parseLong("0000000000")){
+						   System.out.println("no hay requisiciones para ese componente ");
+					   }else{
+						   RequisicionEntity  r = requisicionDao.consult(idR);
+						   requisicionDao.delete(r);
+						   System.out.println("Requisicion automatica eliminada ....");
+					  
+					   }
+					   //checando si hay vales de salida ya depachados
+					   List<ValeEntity> vales= valeDao.getByDiscrepancia(componenteDiscrepanciaDao.consult(id).getIdDiscrepancia());
+					   System.out.println("lista de vales por discrepancia:"+vales);
+						for (ValeEntity v : vales){  //vales x discrepancia
+							List<ComponenteDiscrepancia> comps= v.getItems(); //componentes x vale
+							System.out.println("lista de comps en el vale antes:"+comps);
 							System.out.println("componente buscado:"+id);
-							System.out.println("componente:"+c.getId());
-							if (c.getId()==id.longValue()){
-								comps.remove(c);
-								System.out.println("lista de comps en el vale despues:"+comps);							
-								v.setItems(comps);
-								valeDao.update(v);
-								System.out.println("se elimino componente"+c.getId());
-								
+							if (comps.size()==1){
+								System.out.println("se eliminara el vale"+v.getId());
+								valeDao.delete(v);
 							}else{
-								System.out.println("no es el componente buscado");
+								for (ComponenteDiscrepancia c: comps){
+									System.out.println("componente buscado:"+id);
+									System.out.println("componente:"+c.getId());
+									if (c.getId()==id.longValue()){
+										comps.remove(c);
+										System.out.println("lista de comps en el vale despues:"+comps);							
+										v.setItems(comps);
+										valeDao.update(v);
+										System.out.println("se elimino componente"+c.getId());
+										
+									}else{
+										System.out.println("no es el componente buscado");
+									}
+								}
 							}
+							
 						}
-					}
-					
+					   //////////////////////////////////////////////////////////////
+						System.out.println("ahora se borrara el comdis...");
+					   componenteDiscrepanciaDao.delete(componenteDiscrepanciaDao.consult(id));
+					   
+					  
+					   
+					   System.out.println("Componente eliminado de la discrepancia....");
+					   response.getWriter().println("ok");
+	    	   }else{
+					response.sendError(403);
 				}
-			   //////////////////////////////////////////////////////////////
-				System.out.println("ahora se borrara el comdis...");
-			   componenteDiscrepanciaDao.delete(componenteDiscrepanciaDao.consult(id));
-			   
-			  
-			   
-			   System.out.println("Componente eliminado de la discrepancia....");
-			   response.getWriter().println("ok");
 		   }
 	    
 	    

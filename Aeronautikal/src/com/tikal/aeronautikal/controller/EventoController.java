@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tikal.aeronautikal.dao.EventoDao;
+import com.tikal.aeronautikal.dao.PerfilDAO;
+import com.tikal.aeronautikal.dao.SessionDao;
+import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.entity.DiscrepanciaEntity;
 import com.tikal.aeronautikal.entity.EventoEntity;
 import com.tikal.aeronautikal.service.EventoService;
@@ -36,6 +39,17 @@ public class EventoController {
 	 @Qualifier("eventoDao")
 	 EventoDao eventoDao;
 	 
+	 @Autowired
+	 @Qualifier("sessionDao")
+	 SessionDao sessionDao;
+	 
+	@Autowired
+	@Qualifier ("usuarioDao")
+	UsuarioDao usuarioDao;
+
+		
+	@Autowired
+	PerfilDAO perfilDAO; 
 	 
 	 @RequestMapping(value={"/prueba"},method = RequestMethod.GET)
 	   
@@ -69,23 +83,28 @@ public class EventoController {
 	 /////////////////////////////////////////////////////********************************************************
 
 	 
-	 @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
-	   public void addEvento(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
-	    	  System.out.println("si entra al add evento por POST"+json);
-	        try {
-	        	AsignadorDeCharset.asignar(request, response);
-	        	 System.out.println("request......."+request);
-	        	 System.out.println("request......."+response);
-	        	EventoEntity e =(EventoEntity) JsonConvertidor.fromJson(json, EventoEntity.class);
-	        	// System.out.println("el nuevo objeto: "+orden );
-	        	//pegar el valor de empresa, aeronave y contacato
-	        	//cmp.setD_pendientes(50);//aqui va funcion para calcular cuantas piezas pendientes hay de cada componente
-	        	//orden.setFolio(1111);
-	        	eventoDao.save(e);	            
-	        } catch (RuntimeException ignored) {
-	        	ignored.printStackTrace();
-	            // getUniqueEntity should throw exception
-	        }
+	 @RequestMapping(value = {"/add{userName}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
+	   public void addEvento(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,@PathVariable String userName) throws IOException{
+		 	System.out.println("si entra al add evento por POST"+json);
+		 	if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 12, sessionDao,userName)){  
+
+		        try {
+		        	AsignadorDeCharset.asignar(request, response);
+		        	 System.out.println("request......."+request);
+		        	 System.out.println("request......."+response);
+		        	EventoEntity e =(EventoEntity) JsonConvertidor.fromJson(json, EventoEntity.class);
+		        	// System.out.println("el nuevo objeto: "+orden );
+		        	//pegar el valor de empresa, aeronave y contacato
+		        	//cmp.setD_pendientes(50);//aqui va funcion para calcular cuantas piezas pendientes hay de cada componente
+		        	//orden.setFolio(1111);
+		        	eventoDao.save(e);	            
+		        } catch (RuntimeException ignored) {
+		        	ignored.printStackTrace();
+		            // getUniqueEntity should throw exception
+		        }
+		 	}else{
+				response.sendError(403);
+			}
 	       
 	    }
 	 
@@ -104,14 +123,18 @@ public class EventoController {
 	     
 	   
 	   
-	   @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.POST)
-	   public void deleteEvento(HttpServletResponse response, HttpServletRequest request, @PathVariable Long id)
-			   throws IOException {
+	   @RequestMapping(value = {"/delete/{id}/{userName}" }, method = RequestMethod.POST)
+	   public void deleteEvento(HttpServletResponse response, HttpServletRequest request,
+			   @PathVariable Long id,@PathVariable String userName) throws IOException {
 		   System.out.println("si esta en delete"+id);
-		   eventoDao.delete(eventoDao.consult(id));
-		   System.out.println("evento eliminado....");
-		   response.getWriter().println("ok");
-		   
+		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 13, sessionDao,userName)){  
+
+				   eventoDao.delete(eventoDao.consult(id));
+				   System.out.println("evento eliminado....");
+				   response.getWriter().println("ok");
+		   }else{
+				response.sendError(403);
+			}
 	   }
 	   
 		   
@@ -120,10 +143,10 @@ public class EventoController {
 	   @RequestMapping(value = {"/update" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 		public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
 				throws IOException {
-			AsignadorDeCharset.asignar(request, response);
-			EventoEntity c = (EventoEntity) JsonConvertidor.fromJson(json, EventoEntity.class);
-			eventoDao.update(c);
-			response.getWriter().println(JsonConvertidor.toJson(c));
+				AsignadorDeCharset.asignar(request, response);
+				EventoEntity c = (EventoEntity) JsonConvertidor.fromJson(json, EventoEntity.class);
+				eventoDao.update(c);
+				response.getWriter().println(JsonConvertidor.toJson(c));
 		}
 	    
 	   

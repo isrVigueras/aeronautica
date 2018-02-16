@@ -14,6 +14,9 @@ package com.tikal.aeronautikal.controller;
 	import org.springframework.web.bind.annotation.RequestMapping;
 	import org.springframework.web.bind.annotation.RequestMethod;
 	import com.tikal.aeronautikal.dao.EmpresaDao;
+import com.tikal.aeronautikal.dao.PerfilDAO;
+import com.tikal.aeronautikal.dao.SessionDao;
+import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.EmpresaEntity;
 	import com.tikal.aeronautikal.service.EmpresaService;
@@ -32,6 +35,18 @@ import com.tikal.aeronautikal.entity.EmpresaEntity;
 			 @Autowired
 			 @Qualifier("empresaDao")
 			 EmpresaDao empresaDao;
+			 
+			 @Autowired
+			 @Qualifier("sessionDao")
+			 SessionDao sessionDao;
+			 
+			@Autowired
+			@Qualifier ("usuarioDao")
+			UsuarioDao usuarioDao;
+
+				
+			@Autowired
+			PerfilDAO perfilDAO; 
 		   
 		   
 		   @RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -66,22 +81,27 @@ import com.tikal.aeronautikal.entity.EmpresaEntity;
 		    }
 		    
 
-		   @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
-		   public void addEmpresa(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
-		    	  System.out.println("si entra al add por POST"+json);
-		        try {
-		        	AsignadorDeCharset.asignar(request, response);
-		        	// System.out.println("request......."+request);
-		        	// System.out.println("request......."+response);
-		        	EmpresaEntity e =(EmpresaEntity) JsonConvertidor.fromJson(json, EmpresaEntity.class);
-		        	// System.out.println("el nuevo objeto: "+orden );
-		        	//pegar el valor de empresa, aeronave y contacato
-		        	//orden.setFolio(1111);
-		        	empresaDao.save(e);	            
-		        } catch (RuntimeException ignored) {
-		        	ignored.printStackTrace();
-		            // getUniqueEntity should throw exception
-		        }
+		   @RequestMapping(value = {"/add{userName}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
+		   public void addEmpresa(HttpServletResponse response, HttpServletRequest request,
+				   @RequestBody String json, @PathVariable String userName) throws IOException{
+		       System.out.println("si entra al add por POST"+json);
+		       if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 17, sessionDao,userName)){  		    	  
+			        try {
+			        	AsignadorDeCharset.asignar(request, response);
+			        	// System.out.println("request......."+request);
+			        	// System.out.println("request......."+response);
+			        	EmpresaEntity e =(EmpresaEntity) JsonConvertidor.fromJson(json, EmpresaEntity.class);
+			        	// System.out.println("el nuevo objeto: "+orden );
+			        	//pegar el valor de empresa, aeronave y contacato
+			        	//orden.setFolio(1111);
+			        	empresaDao.save(e);	            
+			        } catch (RuntimeException ignored) {
+			        	ignored.printStackTrace();
+			            // getUniqueEntity should throw exception
+			        }
+		       }else{
+					response.sendError(403);
+				}
 		       
 		    }
 		 
@@ -97,23 +117,32 @@ import com.tikal.aeronautikal.entity.EmpresaEntity;
 
 			}
 		   
-		   @RequestMapping(value = {"/delete/{idEmpresa}" }, method = RequestMethod.POST)
-		   public void deleteOrden(HttpServletResponse response, HttpServletRequest request,@PathVariable Long idEmpresa) 
-				   throws IOException {
+		   @RequestMapping(value = {"/delete/{idEmpresa}/{userName}" }, method = RequestMethod.POST)
+		   public void deleteOrden(HttpServletResponse response, HttpServletRequest request,
+				   @PathVariable Long idEmpresa,  @PathVariable String userName)  throws IOException {
 			   System.out.println("entra en metodo delete"+idEmpresa);
-			   empresaDao.delete(empresaDao.consult(idEmpresa));
-			   response.getWriter().println("ok");
+			   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 19, sessionDao,userName)){  
+				   empresaDao.delete(empresaDao.consult(idEmpresa));
+				   response.getWriter().println("ok");
+			   }else{
+					response.sendError(403);
+				}
 		   }
 		   
 		   //////////////////////////////////////////////////////////////////////////////////////////*******************
 		   
-		   @RequestMapping(value = {"/update" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-			public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
-					throws IOException {
-				AsignadorDeCharset.asignar(request, response);
-				EmpresaEntity e = (EmpresaEntity) JsonConvertidor.fromJson(json, EmpresaEntity.class);
-				empresaDao.update(e);
-				response.getWriter().println(JsonConvertidor.toJson(e));
+		   @RequestMapping(value = {"/update/{userName}" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+			public void update(HttpServletResponse response, HttpServletRequest request,
+					@RequestBody String json,  @PathVariable String userName)throws IOException {
+			   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 18, sessionDao,userName)){  
+
+					AsignadorDeCharset.asignar(request, response);
+					EmpresaEntity e = (EmpresaEntity) JsonConvertidor.fromJson(json, EmpresaEntity.class);
+					empresaDao.update(e);
+					response.getWriter().println(JsonConvertidor.toJson(e));
+			   }else{
+					response.sendError(403);
+				}
 			}
 		   
 	}

@@ -31,7 +31,10 @@ import com.tikal.aeronautikal.dao.EmpresaDao;
 import com.tikal.aeronautikal.dao.EventoDao;
 import com.tikal.aeronautikal.dao.HorasHombreDao;
 import com.tikal.aeronautikal.dao.OrdenDao;
+import com.tikal.aeronautikal.dao.PerfilDAO;
 import com.tikal.aeronautikal.dao.RequisicionDao;
+import com.tikal.aeronautikal.dao.SessionDao;
+import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.dao.ValeDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.ComponenteDiscrepancia;
@@ -54,6 +57,18 @@ public class DiscrepanciaController {
 	
 		@Autowired private DiscrepanciaService discrepanciaService;
 		 
+		@Autowired
+		 @Qualifier("sessionDao")
+		 SessionDao sessionDao;
+		 
+		@Autowired
+		@Qualifier ("usuarioDao")
+		UsuarioDao usuarioDao;
+
+			
+		@Autowired
+		PerfilDAO perfilDAO; 
+		
 		 @Autowired
 		 @Qualifier("discrepanciaDao")
 		 DiscrepanciaDao discrepanciaDao;
@@ -142,45 +157,43 @@ public class DiscrepanciaController {
 		 /////////////////////////////////////////////////////********************************************************
 
 		                            // id de la orden
-		 @RequestMapping(value = {"/add/{folio}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
+		 @RequestMapping(value = {"/add/{folio}/{userName}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
 		   public void addDiscrepancia(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
-				   @PathVariable Long folio) throws IOException{
+				   @PathVariable Long folio, @PathVariable String userName) throws IOException{
 		    	  System.out.println("si entra al add con el folio de orden :"+folio+"el json: "+json);
-		        try {
-		        	System.out.println("++++++++");
-		        	AsignadorDeCharset.asignar(request, response);
-		        	 System.out.println("request......."+request);
-		        	 System.out.println("response......."+response);
-		        	DiscrepanciaEntity d =(DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
-		        	
-//		        	List<EventoEntity> eventos = new ArrayList<EventoEntity>();
-//		        	d.setEventos(eventos);
-//		        	 System.out.println("el folio de la discre: "+d.getFolio());
-//		        	//pegar el valor de empresa, aeronave y contacato
-		        	d.setFolioOrden(folio);
-		        	System.out.println("el folio de la orden es--.: "+d.getFolioOrden() );
-		        	d.setFolio((d.getTaller()+d.getSeccion()+"-"+ordenDao.consult(folio).getFolio()));
-		        	 System.out.println("el nuevo folio de discrepancia: "+ d.getFolio());
-		        	 d.setEstatus("ABIERTA");
-		        	
-		        	 
-		        	 //ComponenteEntity c = new ComponenteEntity();
-		        	// ACTUALIZABA LAS EXISTENCIAS 
-//		        	 c= componenteDao.consult(d.getFolio_componente());
-//		        	 Integer ex= c.getD_cantidad()-d.getNumero_piezas();
-//		        	 c.setD_cantidad(ex);
-//		        	 componenteDao.save(c);
-		        	 discrepanciaDao.save(d);
-		        	 // aqui se generan las horas hombre para cada discrepancia que se cree
-		        	 creaHorasHombre(d.getId());
-		        
-		        	 response.getWriter().println(JsonConvertidor.toJson(d));
-		        } catch (RuntimeException ignored) {
-		        	ignored.printStackTrace();
-		            // getUniqueEntity should throw exception
-		        }
-		    	//  response.getWriter().println(JsonConvertidor.toJson(d));
-		       
+		    	  
+		    	  if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 6, sessionDao,userName)){  
+			        try {
+			        	System.out.println("++++++++");
+			        	AsignadorDeCharset.asignar(request, response);
+			        	 System.out.println("request......."+request);
+			        	 System.out.println("response......."+response);
+			        	DiscrepanciaEntity d =(DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
+			        	
+	//		        	List<EventoEntity> eventos = new ArrayList<EventoEntity>();
+	//		        	d.setEventos(eventos);
+	//		        	 System.out.println("el folio de la discre: "+d.getFolio());
+	//		        	//pegar el valor de empresa, aeronave y contacato
+			        	d.setFolioOrden(folio);
+			        	System.out.println("el folio de la orden es--.: "+d.getFolioOrden() );
+			        	d.setFolio((d.getTaller()+d.getSeccion()+"-"+ordenDao.consult(folio).getFolio()));
+			        	 System.out.println("el nuevo folio de discrepancia: "+ d.getFolio());
+			        	 d.setEstatus("ABIERTA");
+			        	
+			        	 discrepanciaDao.save(d);
+			        	 // aqui se generan las horas hombre para cada discrepancia que se cree
+			        	 creaHorasHombre(d.getId());
+			        
+			        	 response.getWriter().println(JsonConvertidor.toJson(d));
+			        } catch (RuntimeException ignored) {
+			        	ignored.printStackTrace();
+			            // getUniqueEntity should throw exception
+			        }
+			    	//  response.getWriter().println(JsonConvertidor.toJson(d));
+			       
+		    	  }else{
+						response.sendError(403);
+				}
 		    }
 		 
 		   /////////////////////////////////////////////////////////////////////////////////////////**********************
@@ -195,10 +208,15 @@ public class DiscrepanciaController {
 
 			}
 		   
-		   @RequestMapping(value = {"/delete/{folio}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+		   @RequestMapping(value = {"/delete/{folio}/{userName}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
 		   public void deleteOrden(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,
-			@PathVariable Long folio) throws IOException {
-			   discrepanciaDao.delete(discrepanciaDao.consult(folio));
+			@PathVariable Long folio,  @PathVariable String userName) throws IOException {
+			   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 10, sessionDao,userName)){  
+
+				   	discrepanciaDao.delete(discrepanciaDao.consult(folio));
+			   }else{
+					response.sendError(403);
+			   }
 		   }
 		   
 		   
@@ -230,29 +248,25 @@ public class DiscrepanciaController {
 				
 			}
 		   
-		   @RequestMapping(value = {"/update" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-		   public void updateDis(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
+		   @RequestMapping(value = {"/update/{userName}" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+		   public void updateDis(HttpServletResponse response, HttpServletRequest request, @RequestBody String json, @PathVariable String userName)
 			throws IOException {
 			   System.out.println("si entra a actualizar discrepancia:");
-			   AsignadorDeCharset.asignar(request, response);
-			   System.out.println("discrepancia que manda edgar:"+json);
-			   DiscrepanciaEntity d = (DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
-//			   List<EventoEntity> eventos = d.getEventos();
-//			   System.out.println("eventos"+eventos);				   			  
-//			  Contador.reiniciaE();
-//				for(EventoEntity e : eventos) {
-//					e.setIdEvento(Long.toString(d.getId())+"-"+Contador.getFolioEvento());
-//					Contador.incrementaE();
-//				    System.out.println("el id de evento es:"+e.getIdEvento());
-//				}
-//			   
-			   ////////////////////////////ojo ver si es necesario hacer un controller para evento....
-				System.out.println("objDisc:"+d);
-			   discrepanciaDao.update(d);
-			  // System.out.println("objDisc:"d);
-	        	 generarVales(d.getId());
-	        	
-			   response.getWriter().println(JsonConvertidor.toJson(discrepanciaDao.consult(d.getId())));
+			   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 7, sessionDao,userName)){  
+			   
+				   AsignadorDeCharset.asignar(request, response);
+				   System.out.println("discrepancia que manda edgar:"+json);
+				   DiscrepanciaEntity d = (DiscrepanciaEntity) JsonConvertidor.fromJson(json, DiscrepanciaEntity.class);
+	
+					System.out.println("objDisc:"+d);
+				   discrepanciaDao.update(d);
+				  // System.out.println("objDisc:"d);
+		        	 generarVales(d.getId());
+		        	
+				   response.getWriter().println(JsonConvertidor.toJson(discrepanciaDao.consult(d.getId())));
+			   }else{
+					response.sendError(403);
+			   }
 		   }
 		   
 		   @RequestMapping(value = { "/find/{id}" }, method = RequestMethod.GET, produces = "application/json")
@@ -337,52 +351,61 @@ public class DiscrepanciaController {
 		   
 		
 		   
-			  @RequestMapping(value = { "/generaDiscrepanciaPdf/{idDiscrepancia}" }, method = RequestMethod.GET, produces = "application/pdf" )
-				public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idDiscrepancia) throws IOException {
+			  @RequestMapping(value = { "/generaDiscrepanciaPdf/{idDiscrepancia}/{userName}" }, method = RequestMethod.GET, produces = "application/pdf" )
+				public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idDiscrepancia, @PathVariable String userName) throws IOException {
+				  	if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 9, sessionDao,userName)){  
+
+						  response.setContentType("Application/Pdf");
+						  DetalleDiscrepanciaVo dd = getDetalleDiscrepancia(idDiscrepancia);   
+						  
+					        File newExcelFile = new File(dd.getNombreArchivo());		 
+					        if (!newExcelFile.exists()){
+					            try {
+					                newExcelFile.createNewFile();
+					            } catch (IOException ioe) {
+					                System.out.println("(Error al crear el fichero nuevo ......)" + ioe);
+					            }
+					        }
 				
-				  response.setContentType("Application/Pdf");
-				  DetalleDiscrepanciaVo dd = getDetalleDiscrepancia(idDiscrepancia);   
-				  
-			        File newExcelFile = new File(dd.getNombreArchivo());		 
-			        if (!newExcelFile.exists()){
-			            try {
-			                newExcelFile.createNewFile();
-			            } catch (IOException ioe) {
-			                System.out.println("(Error al crear el fichero nuevo ......)" + ioe);
-			            }
-			        }
-		
-			        System.out.println("empiezo a generar Pdf..." );
-			    	GeneraDiscrepanciaPdf generaDiscrepanciaPdf = new GeneraDiscrepanciaPdf(dd,  response.getOutputStream());
-				    	System.out.println("nombre de archivo para edgar:"+dd.getNombreArchivo().substring(18) );
-				    	//response.getWriter().println((dd.getNombreArchivo().substring(18)));
-				    	  response.getOutputStream().flush();
-					        response.getOutputStream().close();
+					        System.out.println("empiezo a generar Pdf..." );
+					    	GeneraDiscrepanciaPdf generaDiscrepanciaPdf = new GeneraDiscrepanciaPdf(dd,  response.getOutputStream());
+						    	System.out.println("nombre de archivo para edgar:"+dd.getNombreArchivo().substring(18) );
+						    	//response.getWriter().println((dd.getNombreArchivo().substring(18)));
+						    	  response.getOutputStream().flush();
+							        response.getOutputStream().close();
+				  	}else{
+						response.sendError(403);
+				  	}
 				}
 		   
 		    
-			  @RequestMapping(value = {"/cerrarDiscrepancia/{idDiscrepancia}" }, method = RequestMethod.POST)
-			   public void cerrarDis(HttpServletResponse response, HttpServletRequest request,@PathVariable Long idDiscrepancia)
+			  @RequestMapping(value = {"/cerrarDiscrepancia/{idDiscrepancia}/{userName}" }, method = RequestMethod.POST)
+			   public void cerrarDis(HttpServletResponse response, HttpServletRequest request,@PathVariable Long idDiscrepancia,@PathVariable String userName)
 				throws IOException {
-				   System.out.println("si entra a actualizar discrepancia:");
-				   AsignadorDeCharset.asignar(request, response);
-				   System.out.println("idDiscrepancia que manda edgar:"+idDiscrepancia);
-				   DiscrepanciaEntity d = discrepanciaDao.consult(idDiscrepancia);
-				   d.setEstatus("CERRADA");
-				   discrepanciaDao.update(d);
-				   
-				   OrdenVo o = ordenDao.consult(d.getFolioOrden());
-				   //checar si hay discrepancias abiertas aun...
-				   List <DiscrepanciaEntity> abiertas = discrepanciaDao.getAbiertasByOrden(d.getFolioOrden());
-				   if (abiertas.size() == 0){
-					   o.setEstatus("CERRADA");
-					   ordenDao.update(o);	       	
-					   System.out.println("ORDEN CERRADA:"+o.getId());
-				   }else{
-					   System.out.println("NO se cerro la orden:"+o.getId());
-				   }
-		        	
-				   response.getWriter().println("ok");
+					  System.out.println("si entra a actualizar discrepancia:");
+					  if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 11, sessionDao,userName)){  
+						 
+						   AsignadorDeCharset.asignar(request, response);
+						   System.out.println("idDiscrepancia que manda edgar:"+idDiscrepancia);
+						   DiscrepanciaEntity d = discrepanciaDao.consult(idDiscrepancia);
+						   d.setEstatus("CERRADA");
+						   discrepanciaDao.update(d);
+						   
+						   OrdenVo o = ordenDao.consult(d.getFolioOrden());
+						   //checar si hay discrepancias abiertas aun...
+						   List <DiscrepanciaEntity> abiertas = discrepanciaDao.getAbiertasByOrden(d.getFolioOrden());
+						   if (abiertas.size() == 0){
+							   o.setEstatus("CERRADA");
+							   ordenDao.update(o);	       	
+							   System.out.println("ORDEN CERRADA:"+o.getId());
+						   }else{
+							   System.out.println("NO se cerro la orden:"+o.getId());
+						   }
+				        	
+						   response.getWriter().println("ok");
+					   }else{
+							response.sendError(403);
+						}
 			   }
 			  
 			  

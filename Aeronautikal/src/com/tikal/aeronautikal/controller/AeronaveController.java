@@ -18,6 +18,9 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.tikal.aeronautikal.controller.vo.OrdenVo;
 import com.tikal.aeronautikal.dao.AeronaveDao;
+import com.tikal.aeronautikal.dao.PerfilDAO;
+import com.tikal.aeronautikal.dao.SessionDao;
+import com.tikal.aeronautikal.dao.UsuarioDao;
 //import com.tikal.aeronautikal.dao.ComponenteDao;
 import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.Contador;
@@ -51,6 +54,18 @@ public class AeronaveController  {
     @Autowired
     @Qualifier("aeronaveDao")
     AeronaveDao aeronaveDao;
+    
+    @Autowired
+	 @Qualifier("sessionDao")
+	 SessionDao sessionDao;
+	 
+	@Autowired
+	@Qualifier ("usuarioDao")
+	UsuarioDao usuarioDao;
+
+		
+	@Autowired
+	PerfilDAO perfilDAO; 
 
  
 
@@ -110,26 +125,31 @@ public class AeronaveController  {
 //	        return "Orden_de_trabajo"; ///poner el html de aeronave alta
 //		}
     
-    @RequestMapping(value = {"/add"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
-	   public void addAeronave(HttpServletResponse response, HttpServletRequest request, @RequestBody String json) throws IOException{
-	    	  System.out.println("si entra al add por POST"+json);
-	        try {
-	        	AsignadorDeCharset.asignar(request, response);
-	        	AeronaveEntity a =(AeronaveEntity) JsonConvertidor.fromJson(json, AeronaveEntity.class);        	
-	        	
-	        	if (a.getNacionalidad().equals("NORTEAMERICANO")){
-					a.setNumeroAeronave(String.valueOf(Contador.getFolio())+"N");
-					Contador.incremeta();
-				}
-	        	if (a.getNacionalidad().equals("NACIONAL")){
-					a.setNumeroAeronave(String.valueOf(Contador.getFolio()));
-					Contador.incremeta();
-				}
-	        	//a.setNumeroAeronave(Contador.getFolio());
-	        	aeronaveDao.save(a);	            
-	        } catch (RuntimeException ignored) {
-	        	ignored.printStackTrace();
-	        }
+    @RequestMapping(value = {"/add/{userName}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
+	   public void addAeronave(HttpServletResponse response, HttpServletRequest request,
+			   @RequestBody String json,  @PathVariable String userName) throws IOException{
+	    	System.out.println("si entra al add por POST"+json);
+	    	if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 14, sessionDao,userName)){   
+		        try {
+		        	AsignadorDeCharset.asignar(request, response);
+		        	AeronaveEntity a =(AeronaveEntity) JsonConvertidor.fromJson(json, AeronaveEntity.class);        	
+		        	
+		        	if (a.getNacionalidad().equals("NORTEAMERICANO")){
+						a.setNumeroAeronave(String.valueOf(Contador.getFolio())+"N");
+						Contador.incremeta();
+					}
+		        	if (a.getNacionalidad().equals("NACIONAL")){
+						a.setNumeroAeronave(String.valueOf(Contador.getFolio()));
+						Contador.incremeta();
+					}
+		        	//a.setNumeroAeronave(Contador.getFolio());
+		        	aeronaveDao.save(a);	            
+		        } catch (RuntimeException ignored) {
+		        	ignored.printStackTrace();
+		        }
+	    	}else{
+				response.sendError(403);
+			}
 	       
 	    }
     
@@ -146,25 +166,35 @@ public class AeronaveController  {
 		}
 	   
 	   
-	   @RequestMapping(value = {"/delete/{id}" }, method = RequestMethod.POST)
-	   public void deleteAeronave(HttpServletResponse response, HttpServletRequest request, @PathVariable Long id) 
-			   throws IOException {
+	   @RequestMapping(value = {"/delete/{id}/{userName}" }, method = RequestMethod.POST)
+	   public void deleteAeronave(HttpServletResponse response, HttpServletRequest request,
+			   @PathVariable Long id,  @PathVariable String userName) throws IOException {
 		   ////////////ojo cuando borra aeronave, checr muy bien lo de Static en el dao y el @override de daoimpl
-		   System.out.println("si esta en delete"+id);
-		   aeronaveDao.delete(aeronaveDao.consult(id));
-		   System.out.println("aeronave eliminada....");
-		   response.getWriter().println("ok");
+		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 16, sessionDao,userName)){  
+				   System.out.println("si esta en delete"+id);
+				   aeronaveDao.delete(aeronaveDao.consult(id));
+				   System.out.println("aeronave eliminada....");
+				   response.getWriter().println("ok");
+		   }else{
+				response.sendError(403);
+			}
 	   }
 	   
-	   @RequestMapping(value = {"/update" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-		public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json)
-				throws IOException {
+	   @RequestMapping(value = {"/update/{userName}" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+		public void update(HttpServletResponse response, HttpServletRequest request,
+				@RequestBody String json , @PathVariable String userName)throws IOException {
 			System.out.println("obj de edgar:"+json);
-			AsignadorDeCharset.asignar(request, response);
-			AeronaveEntity a = (AeronaveEntity) JsonConvertidor.fromJson(json, AeronaveEntity.class);
-
-			aeronaveDao.update(a);
-			response.getWriter().println(JsonConvertidor.toJson(a));
+			if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 15, sessionDao,userName)){  
+			
+				AsignadorDeCharset.asignar(request, response);
+				AeronaveEntity a = (AeronaveEntity) JsonConvertidor.fromJson(json, AeronaveEntity.class);
+	
+				aeronaveDao.update(a);
+				response.getWriter().println(JsonConvertidor.toJson(a));
+			}else{
+				response.sendError(403);
+			}
+			
 		}
 	   
 	   //////////////////////////////////////////////////////////////////////////////////////////*******************
