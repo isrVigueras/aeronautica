@@ -92,6 +92,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
 					old.setaPaterno(u.getaPaterno());
 					old.setaMaterno(u.getaMaterno());
 					old.setPerfil(u.getPerfil());
+					old.setIdPuesto(u.getIdPuesto());
 					
 				}
 

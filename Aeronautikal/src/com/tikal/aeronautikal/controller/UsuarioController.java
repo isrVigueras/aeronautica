@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.tikal.aeronautikal.dao.PerfilDAO;
+import com.tikal.aeronautikal.dao.PuestoDao;
 import com.tikal.aeronautikal.dao.SesionDao;
 import com.tikal.aeronautikal.dao.SessionDao;
 import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.entity.Perfil;
+import com.tikal.aeronautikal.entity.PuestoEntity;
 import com.tikal.aeronautikal.entity.Usuario;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
@@ -45,7 +47,9 @@ public class UsuarioController {
 	@Autowired
 	PerfilDAO perfilDAO; 
 	
-	 
+	@Autowired
+	@Qualifier ("puestoDao")
+	PuestoDao puestoDao;
 																	///////////alta de usuarios
 	@RequestMapping(value = { "/registro/{userName}" }, method = RequestMethod.POST, consumes = "Application/Json")
 	public void crearUsuario(HttpServletRequest request, HttpServletResponse response, @RequestBody String json, @PathVariable String userName)
@@ -197,8 +201,17 @@ public class UsuarioController {
 				usuario.setNombre("ROOT");
 				usuario.setaPaterno("Root");
 				usuario.setaMaterno("Root");
+				usuario.setIdPuesto(Long.parseLong("1111111111"));
 				
 				usuarioDao.crearUsuario(usuario);
+				
+				PuestoEntity puesto = new PuestoEntity();
+				puesto.setId(Long.parseLong("1111111111"));
+				puesto.setClave("Admin");
+				puesto.setDescripcion("Administrador");
+				
+				puestoDao.save(puesto);
+				
 				
 				Perfil perfil = new Perfil();
 				perfil.setTipo("SuperAdministrador");

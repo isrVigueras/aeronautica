@@ -19,13 +19,22 @@ public class Usuario implements UserDetails{
 	@Index private String perfil;    //nombre del perfil
 	//@Index private Long idPerfil;
 	//private String email;
-	
+	@Index Long idPuesto;
 	private String nombre;
 	private String aPaterno;
 	private String aMaterno;
 	
 
 	
+	
+
+	public Long getIdPuesto() {
+		return idPuesto;
+	}
+
+	public void setIdPuesto(Long idPuesto) {
+		this.idPuesto = idPuesto;
+	}
 
 	@Override
 	public List<Rol> getAuthorities() {
