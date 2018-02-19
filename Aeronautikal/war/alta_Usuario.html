@@ -4,13 +4,23 @@
       <form>
   
   <h3>Datos Personales</h3>
+
+  <label for="apellidoPaterno">Apellido Paterno:</label><input class="form-control" placeholder="Escriba el Apellido Paterno" ng-model="fomUsuarios.aPaterno" id="apellidoPaterno" name="apellidoPaterno" type="text"/>
+  <label for="apellidoMaterno">Apellido Materno</label><input class="form-control" placeholder="Escriba el Apellido Materno" ng-model="fomUsuarios.aMaterno" id="apellidoMaterno" name="apellidoMaterno" type="text"/>
+  <label for="nombre">Nombres:</label><input class="form-control" placeholder="Escriba el Nombre" ng-model="fomUsuarios.nombre" id="nombre" name="nombre" type="text"/>
   <label for="usuario">Usuario</label><input class="form-control" placeholder="Escriba el Nombre del Usuario" ng-model="fomUsuarios.usuario" id="usuario" name="usuario" type="text"/>
   <label for="pasword">Password</label><input class="form-control" placeholder="Escriba la Contraseña" ng-model="fomUsuarios.password" id="pasword" name="pasword" type="Password"/>
-  <label for="idPerfil">Puesto:</label>
+  <label for="idPuesto">Puesto:</label>
+  <select class="form-control" ng-model="fomUsuarios.idPuesto" >
+            <option value="">--Elige una Puesto--</option>
+          <option value="{{puesto.id}}" ng-repeat="puesto in puestos_lista"  >{{puesto.Descripcion}}</option>
+        </select>
+  <label for="idPerfil">Perfil:</label>
   <select class="form-control" ng-model="fomUsuarios.perfil" >
             <option value="">--Elige un Perfil--</option>
           <option value="{{perfil.tipo}}" ng-repeat="perfil in perfil_lista"  >{{perfil.tipo}}</option>
         </select>
+
   <br>
   <br>
   <center><button type="button" class="btn btn-primary" ng-click="alta_usuario()" ng-disabled="form.$invalid">

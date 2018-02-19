@@ -241,11 +241,11 @@ app.controller('PuestoMuestraController', ['$scope','EliminaPuestoServicio','Act
         })  
   }
 }]);
-app.controller('HorasHombreController', ['$scope', 'empleados_lista','discrepancias','AsignarDiscServicio','$cookies',function($scope, empleados_lista,discrepancias,AsignarDiscServicio,$cookies) {
+app.controller('HorasHombreController', ['$scope', 'usuarios_lista','discrepancias','AsignarDiscServicio','$cookies',function($scope, usuarios_lista,discrepancias,AsignarDiscServicio,$cookies) {
      console.log($cookies.cosa);
     $scope.discrepancias = discrepancias;
-    $scope.empleados_lista = empleados_lista;
-    console.log(empleados_lista);
+    $scope.empleados_lista = usuarios_lista;
+    console.log(usuarios_lista);
     console.log("discrepancias para signar horas");
     console.log(discrepancias);
    //$scope.puestos_lista = puestos_lista;
@@ -266,9 +266,10 @@ app.controller('HorasHombreController', ['$scope', 'empleados_lista','discrepanc
           })         
   }
 }]);
-app.controller('UsuarioController', ['$scope','altaUsuarioServicio','AsignarDiscServicio','perfil_lista','$cookies',function($scope,altaUsuarioServicio,AsignarDiscServicio,perfil_lista,$cookies) {
+app.controller('UsuarioController', ['$scope','altaUsuarioServicio','AsignarDiscServicio','perfil_lista','$cookies','puestos',function($scope,altaUsuarioServicio,AsignarDiscServicio,perfil_lista,$cookies,puestos) {
      console.log($cookies.cosa);
     $scope.perfil_lista = perfil_lista;
+    $scope.puestos_lista = puestos;
     console.log(perfil_lista);
   
    $scope.fomUsuarios = {
@@ -276,7 +277,10 @@ app.controller('UsuarioController', ['$scope','altaUsuarioServicio','AsignarDisc
     usuario: "",
     password: "",
     perfil: "",
-    //authorities:undefined,
+    aPaterno: "",
+    aMaterno:"",
+    idPuesto: undefined
+
   }
      $scope.alta_usuario=function() {
     console.log($scope.fomUsuarios);

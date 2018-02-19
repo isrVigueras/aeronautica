@@ -780,8 +780,8 @@ $routeProvider.when('/Admin/Horas_Hombre', {
     templateUrl: "asigna_Horas.html",
     controller: "HorasHombreController",
     resolve: {
-      empleados_lista:['remoteResource',function(remoteResource) {
-        return remoteResource.empleados_lista();
+      usuarios_lista:['remoteResource',function(remoteResource) {
+        return remoteResource.usuarios_lista();
       }],
        discrepancias:['remoteResource',function(remoteResource) {
         return remoteResource.disHoras_lista();
@@ -838,6 +838,9 @@ $routeProvider.when('/Admin/Alta_Usuario', {
     resolve: {
       perfil_lista:['remoteResource',function(remoteResource) {
         return remoteResource.perfil_lista();
+      }],
+      puestos:['remoteResource',function(remoteResource) {
+        return remoteResource.puestos_lista();
       }]
     }
   });
