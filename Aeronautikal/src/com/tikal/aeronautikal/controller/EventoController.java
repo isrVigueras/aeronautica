@@ -83,7 +83,7 @@ public class EventoController {
 	 /////////////////////////////////////////////////////********************************************************
 
 	 
-	 @RequestMapping(value = {"/add{userName}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
+	 @RequestMapping(value = {"/add/{userName}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
 	   public void addEvento(HttpServletResponse response, HttpServletRequest request, @RequestBody String json,@PathVariable String userName) throws IOException{
 		 	System.out.println("si entra al add evento por POST"+json);
 		 	if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 12, sessionDao,userName)){  

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Base64Utils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,6 +41,9 @@ public class SesionController {
 	@Autowired
 	@Qualifier ("sessionDao")
 	SessionDao sessionDao;
+	
+	@Autowired
+	PerfilDAO perfilDAO;
 	
 	////////////////////// checar si el usuario es válido
 
@@ -253,5 +257,36 @@ public class SesionController {
 		return false;
 	}
 	
+	
+	@RequestMapping(value = { "/valida/{userName}/{per}" }, method = RequestMethod.GET)
+	public void valida(HttpServletResponse res, HttpServletRequest req, @RequestBody String json, @PathVariable String userName, @PathVariable int per) throws IOException {
+
+		AsignadorDeCharset.asignar(req, res);
+		System.out.println("usuario de edgar :"+userName);
+		Usuario usuarioFront = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
+	
+		if(userName == null){
+			System.out.println(" ****************No existe ese usuario en sessionEntity*******");
+			System.out.println("Error 403 , usuario no autentificado");
+			res.sendError(403);
+		}else{
+		//	System.out.println(" ----------------usuario con session-----------");
+			SessionEntity s= sessionDao.getByName(userName);
+			if (s==null){
+				System.out.println(" *****No hay session con ese  usuario *******");
+				System.out.println("Error 403 , usuario no autentificado");
+				res.sendError(403);
+			}
+			Usuario usuario = usuarioDao.consultarUsuario(userName);
+			Perfil perfil = perfilDAO.consultarPerfil(usuario.getPerfil());
+			if(perfil.getPermisos()[per]==true){
+				System.out.println(" ----------------usuario con Permisos-----------");
+				res.getWriter().println("ok");
+			}
+		}
+		System.out.println(" ----------------usuario SIN PERMISOS----------");
+		System.out.println("Error 403 , usuario no autentificado");
+		res.sendError(403);
+	}
 }
 
