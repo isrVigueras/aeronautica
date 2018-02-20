@@ -7,7 +7,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.tikal.aeronautikal.dao.HorasHombreDao;
+import com.tikal.aeronautikal.entity.AeronaveEntity;
 import com.tikal.aeronautikal.entity.HorasHombre;
+import com.tikal.aeronautikal.entity.Usuario;
 
 
 @Service("horasHombreDao")
@@ -42,10 +44,20 @@ public class HorasHombreDaoImpl implements HorasHombreDao {
 	   }
 
 	    
+	   
+	   
 	   @Override
 		public HorasHombre consult(Long id) {
 		   System.out.println("si esta en daoimpl consultando la horas hombre.."+id);
 	      return ofy().load().type(HorasHombre.class).id(id).now();
+	     
+//		   List<HorasHombre> hh = ofy().load().type(HorasHombre.class).filter("id", id).list();
+//			System.out.println("lista de horas hombre con ese id:"+id);
+//			if (hh.size() == 0) {
+//				return null;
+//			}
+//			HorasHombre nuevo = hh.get(0);
+//			return nuevo;
 			
 		}
 

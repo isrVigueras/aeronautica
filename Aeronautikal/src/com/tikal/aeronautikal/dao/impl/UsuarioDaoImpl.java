@@ -73,6 +73,14 @@ public class UsuarioDaoImpl implements UsuarioDao{
 		Usuario nuevo = usu.get(0);
 		return nuevo;
 	}
+	
+	@Override
+	public Usuario consult(Long idUsuario) {
+		System.out.println("lista de usuarios con ese username:"+idUsuario);
+		return ofy().load().type(Usuario.class).id(idUsuario).now();
+		
+		
+	}
 
 	@Override
 	public List<Usuario> consultarUsuarios() {

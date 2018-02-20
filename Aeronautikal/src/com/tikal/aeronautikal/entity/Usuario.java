@@ -23,6 +23,7 @@ public class Usuario implements UserDetails{
 	private String nombre;
 	private String aPaterno;
 	private String aMaterno;
+	private String nombreCompleto;
 	
 
 	
@@ -160,6 +161,13 @@ public class Usuario implements UserDetails{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public void setNombreCompleto(String nombreCompleto) {
+		this.nombreCompleto = nombreCompleto;
+	}
+	public String getNombreCompleto() {
+		nombreCompleto=this.nombre+" "+this.aPaterno+" "+this.aMaterno;
+		return nombreCompleto;
 	}
 	
 }

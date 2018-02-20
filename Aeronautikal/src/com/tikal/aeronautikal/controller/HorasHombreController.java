@@ -195,12 +195,13 @@ public class HorasHombreController {
 	   @RequestMapping(value = {"/asignar/{idEmpleado}/{idHorasHombre}/{userName}" }, method = RequestMethod.POST, produces = "application/json")
 		public void asigna(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idEmpleado,
 				@PathVariable Long idHorasHombre,  @PathVariable String userName)	throws IOException {
+		   System.out.println("Horas hombre asignar...usu,horhom, user:."+idEmpleado+","+idHorasHombre+","+userName);
 		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 34, sessionDao,userName)){  
 				AsignadorDeCharset.asignar(request, response);
 				HorasHombre h = horasHombreDao.consult(idHorasHombre);
-				h.setIdEmpleado(idEmpleado);
+				h.setIdEmpleado(idEmpleado);  // en realidad es idUsuario
 				h.setEstatus("ASIGNADA");
-				h.setEmpleado((empleadoDao.consult(idEmpleado)).getNombreCompleto());
+				h.setEmpleado(usuarioDao.consult(idEmpleado).getNombreCompleto());
 				horasHombreDao.update(h);
 				response.getWriter().println(JsonConvertidor.toJson(h));
 		   }else{
