@@ -288,7 +288,7 @@ public class OrdenController {
 		   }
 	   }
 	   
-	  @RequestMapping(value = { "/generaOrdenXls/{idOrden}/userName" }, method = RequestMethod.GET, produces = "application/pdf" )
+	  @RequestMapping(value = { "/generaOrdenXls/{idOrden}/{userName}" }, method = RequestMethod.GET, produces = "application/pdf" )
 		public void generaOrden(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idOrden, @PathVariable String userName) throws IOException {
 		 
 		  if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 4, sessionDao,userName)){
