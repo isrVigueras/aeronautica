@@ -133,15 +133,10 @@ app.service('DetalleDiscreServicio', [ '$http', '$q', function($http, $q) {
 app.service('segundocomboServicio', [ '$http', '$q', function($http, $q) {
   this.segundo_servicio = function(id,user) {
     var d = $q.defer();
-    $http.post("/componente/getByCategoria/"+id+"/"+user).then(function(response) {
+    $http.post("/componente/getByCategoria/"+id).then(function(response) {
       console.log(response);
       d.resolve(response.data);
     }, function(response) {
-       if(response.status==403){
-      alert("No tienes Permisos");
-      location.href="#/Inicio/paginaPrincipal";
-      //$rootScope.authenticated = false;
-                              }
     });
     return d.promise;
   }
@@ -395,7 +390,7 @@ $scope.guardar_edit=function(){
       }   
 $scope.segundocombo=function(data){
       
-      segundocomboServicio.segundo_servicio($scope.componente.idCategoria,$cookies.cosa).then(
+      segundocomboServicio.segundo_servicio($scope.componente.idCategoria).then(
         function(data) {
           console.log("segundocombo",data);
           $scope.segundo=data;
