@@ -87,10 +87,12 @@ $scope.new_folio = new_folio;
 
 app.controller("OrdenesgeneradasController", ['$scope', 'generadas','OrdenenDocumentoService','$cookies',function($scope,generadas,OrdenenDocumentoService,$cookies) {
 console.log($cookies.cosa);
+$scope.user =$cookies.cosa;
+console.log($scope.user)
 $scope.generadas = generadas;
 
  $scope.genera_Xls=function(id) {
-  console.log(id)
+  console.log("sdssss");
       //alert("variable comprobada: "+$scope.fo.con_nombre+" y la fecha "+ $scope.fo.fechaApertura+"folio: "+ $scope.new_folio );
       OrdenenDocumentoService.genera_Xls(id,$cookies.cosa).then(
         function(data) {
