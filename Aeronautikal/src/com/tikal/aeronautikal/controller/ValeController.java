@@ -191,10 +191,11 @@ public class ValeController {
 		}
 
 	   
-	   @RequestMapping(value = { "/generaValePdf/{idVale}" },  method = RequestMethod.GET, produces = "application/pdf")
-	 		public void generaVale(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idVale) throws IOException {
+	   @RequestMapping(value = { "/generaValePdf/{idVale}/{userName}" },  method = RequestMethod.GET, produces = "application/pdf")
+	 		public void generaVale(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idVale, @PathVariable String userName) throws IOException {
 		   System.out.println("wwwwwwwwwwww");
-		   response.setContentType("Application/Pdf");
+		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 20, sessionDao,userName)){
+			   response.setContentType("Application/Pdf");
 	 		  ValePdfVo vpdf = getValePdf(idVale);   
 	 	        File newPdfFile = new File(vpdf.getNombreArchivo());		 
 	 	        if (!newPdfFile.exists()){
@@ -214,7 +215,10 @@ public class ValeController {
 	 		        response.getOutputStream().close();
 	 	    	//generaOrdenPdf.GeneraOrdenPdf(new File(ox.getNombreArchivo()));
 	 	    	//generaOrdenPdf.GeneraOrdenPdf(ox));
-	 		}
+		   }else{
+				response.sendError(403);
+			}
+	 	}
  	  
 	   
 	   @RequestMapping(value = {"/cerrarVale/{idVale}/{userName}" }, method = RequestMethod.POST)
