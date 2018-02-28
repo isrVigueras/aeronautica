@@ -193,7 +193,7 @@ public class ValeController {
 	   
 	   @RequestMapping(value = { "/generaValePdf/{idVale}/{userName}" },  method = RequestMethod.GET, produces = "application/pdf")
 	 		public void generaVale(HttpServletResponse response, HttpServletRequest request, @PathVariable Long idVale, @PathVariable String userName) throws IOException {
-		   System.out.println("wwwwwwwwwwww");
+		   System.out.println("genera vale");
 		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 20, sessionDao,userName)){
 			   response.setContentType("Application/Pdf");
 	 		  ValePdfVo vpdf = getValePdf(idVale);   
