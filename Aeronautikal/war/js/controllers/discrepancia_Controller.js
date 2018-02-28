@@ -177,6 +177,8 @@ app.service('CerrarDiscreServicio', [ '$http', '$q', function($http, $q) {
 } ]);
 app.controller("DiscrepanciamuestraController", ['$scope','inv_consultas','discrepancias','foliarrastrado','DiscrepanciaServicio','insertaRequiServicio','DetalleDiscreServicio','ImprimeDiscreServicio','CerrarDiscreServicio','$cookies',function($scope,inv_consultas,discrepancias,foliarrastrado,DiscrepanciaServicio,insertaRequiServicio,DetalleDiscreServicio,ImprimeDiscreServicio,CerrarDiscreServicio,$cookies) {
 console.log($cookies.cosa);
+ $scope.user = $cookies.cosa;
+ console.log($scope.user);
 $scope.discrepancias =discrepancias;
  $scope.provincias=inv_consultas; 
   $scope.miProvinciaSeleccionada=null

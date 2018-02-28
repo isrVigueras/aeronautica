@@ -71,6 +71,8 @@ app.filter("filtroV",["$filter",function($filter) {
 }]);
 app.controller("MuestraValesController", ['$scope','discrepancia_vale','CerrarValeService','ImprimeValeService','$cookies',function($scope,discrepancia_vale,CerrarValeService,ImprimeValeService,$cookies) {
  console.log($cookies.cosa);
+ $scope.user = $cookies.cosa;
+ console.log($scope.user);
  $scope.discrepancia_vale =discrepancia_vale;
  $scope.filtro = {
       discrepancia: ""

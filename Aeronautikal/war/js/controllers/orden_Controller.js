@@ -88,7 +88,7 @@ $scope.new_folio = new_folio;
 app.controller("OrdenesgeneradasController", ['$scope', 'generadas','OrdenenDocumentoService','$cookies',function($scope,generadas,OrdenenDocumentoService,$cookies) {
 console.log($cookies.cosa);
 $scope.user =$cookies.cosa;
-console.log($scope.user)
+console.log($scope.user);
 $scope.generadas = generadas;
 
  $scope.genera_Xls=function(id) {
