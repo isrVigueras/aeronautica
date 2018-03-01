@@ -71,6 +71,7 @@ $scope.condicion =condicion;
     anaquel:"",
     repisa:"",
     imagen:"",
+    noSerie:"",
     certificado8130:Boolean
 
   }
@@ -83,7 +84,7 @@ $scope.condicion =condicion;
         function(data) {
           console.log(data);
           //alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
-            //location.href="#/Inventario/colsulta";
+            location.href="#/Inventario/colsulta";
          alert("componente dado de alta");
         })
               

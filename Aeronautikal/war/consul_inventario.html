@@ -23,6 +23,7 @@
     <thead>
       <tr bgcolor="#A9F5F2">
         <th>ID</th>
+        <th>No.Serie</th>
         <th>Feha de ingreso</th>
         <th>Componente</th>
         <th>Modelo</th>
@@ -40,6 +41,7 @@
     <tbody>
       <tr ng-repeat="inv_consulta in inv_consultas | filteri18n:{d_componente:filtro.d_componente}">
         <td>{{inv_consulta.id}}</td>
+        <td>{{inv_consulta.noSerie}}</td>
         <td>{{inv_consulta.fechaApertura}}</td>
         <td>{{inv_consulta.d_componente}}</td>
         <td>{{inv_consulta.d_modelo}}</td>
