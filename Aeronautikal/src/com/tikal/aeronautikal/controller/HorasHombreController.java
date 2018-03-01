@@ -219,7 +219,7 @@ public class HorasHombreController {
 			response.getWriter().println(JsonConvertidor.toJson(h));
 		}
 	    
-	   @RequestMapping(value = {"/start/{id}/{usrName}" }, method = RequestMethod.POST,produces = "application/json")
+	   @RequestMapping(value = {"/start/{id}/{userName}" }, method = RequestMethod.POST,produces = "application/json")
 		public void ini(HttpServletResponse response, HttpServletRequest request,@PathVariable Long id, @PathVariable String userName)
 				throws IOException, java.text.ParseException {
 		   System.out.println("si entraaaaaaa  INICIA");
