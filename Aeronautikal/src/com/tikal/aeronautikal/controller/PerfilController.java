@@ -90,13 +90,14 @@ public class PerfilController {
 
 	}
 
-	@RequestMapping(value = { "/delete/{userName}" }, method = RequestMethod.POST, consumes = "Application/Json")
+	@RequestMapping(value = { "/delete/{idPerfil}/{userName}" }, method = RequestMethod.POST, consumes = "Application/Json")
 	public void eliminarUsuario(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody String json, @PathVariable String userName)throws IOException {
+			@RequestBody String json,@PathVariable String idPerfil, @PathVariable String userName)throws IOException {
 		if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 47, sessionDao,userName)){
 			AsignadorDeCharset.asignar(request, response);
-			Perfil perfil = (Perfil) JsonConvertidor.fromJson(json, Perfil.class);
-			perfilDAO.eliminarPerfil(perfil.getTipo());
+			//Perfil perfil = (Perfil) JsonConvertidor.fromJson(json, Perfil.class);
+			Perfil per = perfilDAO.consultarPerfil(idPerfil);
+			perfilDAO.eliminarPerfil(per.getTipo());
 		}else{
 			response.sendError(403);
 		}
