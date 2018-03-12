@@ -526,6 +526,23 @@ function RemoteResource($http,$q, baseUrl) {
     return promise;
     
   }
+  
+  this.perfil_regis = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/perfil/getAll'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
 }
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
 function RemoteResourceProvider() {
@@ -832,6 +849,15 @@ $routeProvider.when('/Admin/Puestos/Consulta', {
       }]
     }
   });
+$routeProvider.when('/Admin/Perfiles/Consulta', {
+    templateUrl: "consul_Perfil.html",
+    controller: "PerfilMuestraController",
+    resolve: {
+      perfil_regis:['remoteResource',function(remoteResource) {
+        return remoteResource.perfil_regis();
+      }]
+    }
+  });
 $routeProvider.when('/Admin/Alta_Usuario', {
     templateUrl: "alta_Usuario.html",
     controller: "UsuarioController",
@@ -1037,6 +1063,8 @@ app.controller("MainController", ['$scope','remoteResource','IniSessServicio','C
         function(data) {
           console.log(data);
           alert("La session se cerrara");
+          $cookieStore.remove("usuario"),
+            $cookieStore.remove("password");
           location.href="/";
           })     
       }

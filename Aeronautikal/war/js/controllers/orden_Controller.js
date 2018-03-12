@@ -45,6 +45,23 @@ app.service('OrdenenDocumentoService', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+//servicio elmina orden
+app.service('EliminarOrdenService', [ '$http', '$q', function($http, $q) {
+  this.elimina_orden = function(id,user) {
+    var d = $q.defer();
+    $http.post("/empleado/delete/"+id+"/"+user).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
+    });
+    return d.promise;
+  }
+} ]);
 //Controlador de orden
 app.controller('ordenController', ['$scope','OrdenesService','new_folio','empresas','aeronaves','$cookies',function($scope,OrdenesService,new_folio,empresas,aeronaves,$cookies) {
  //$scope.fo = {}; alamcenar los datos en mi objeto para vidarlos
@@ -108,6 +125,19 @@ $scope.generadas = generadas;
         })
               
   }
+   $scope.elimina_orden=function(id) {
+  console.log("entro a eliminar orden");
+      //alert("variable comprobada: "+$scope.fo.con_nombre+" y la fecha "+ $scope.fo.fechaApertura+"folio: "+ $scope.new_folio );
+      EliminarOrdenService.elimina_orden(id,$cookies.cosa).then(
+        function(data) {
+          console.log(data);
+         // alert("Los datos aqui se habrían enviado al servidor  y estarían validados en la parte cliente");
+        console.log("se Elimino la Orden");
+         location.href="#/Orden/generadas";
+        })
+              
+  }
+
 }]);
 app.controller('detalledisController', ['$scope', 'detalle_dis','$cookies',function($scope, detalle_dis,$cookies) {
  console.log($cookies.cosa);

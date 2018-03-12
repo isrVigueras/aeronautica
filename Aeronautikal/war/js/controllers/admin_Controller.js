@@ -151,6 +151,23 @@ app.service('altaPerfilServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
+//servicio elimina perfil
+app.service('eliminaPerfilServicio', [ '$http', '$q', function($http, $q) {
+  this.elimina_perfil = function(id,user) {
+    var d = $q.defer();
+    $http.post("/perfil/delete/"+id+"/"+user).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
+    });
+    return d.promise;
+  }
+} ]);
 //servicio elimina usuario
 app.service('eliminaUsuarioServicio', [ '$http', '$q', function($http, $q) {
   this.elimina_usuario = function(id,user) {
@@ -358,4 +375,41 @@ app.controller('PerfilController', ['$scope','altaPerfilServicio','eliminaUsuari
           alert("El Nuevo Perfil se ha Creado");
           })         
   }
+}]);
+app.controller('PerfilMuestraController', ['$scope','perfil_regis','eliminaPerfilServicio','$cookies',function($scope,perfil_regis,eliminaPerfilServicio,$cookies) {
+    if($cookies.cosa == null){
+      alert("session vacia");
+      location.href="/";
+    }
+    else
+    {
+    $scope.perfil_regis = perfil_regis;
+      console.log($scope.perfil_regis);
+     console.log($cookies.cosa);
+    //$scope.discrepancias = discrepancias;
+    //console.log(discrepancias);
+  
+   $scope.fomPerfiles = {
+    id: undefined,
+    tipo: "",
+    permisos:[false,false,false,false,false,false,
+              false,false,false,false,false,false,
+              false,false,false,false,false,false,
+              false,false,false,false,false,false,
+              false,false,false,false,false,false,
+              false,false,false,false,false,false,
+              false,false,false,false,false,false,
+              false,false,false,false,false,false,
+              false,false,false,false,false]
+  }
+   $scope.elimina_perfil=function(id) {
+    console.log(id);
+      eliminaPerfilServicio.elimina_perfil(id,$cookies.cosa).then(
+        function(data) {
+          console.log(data);
+          location.reload();
+          alert("Perfil Eliminado");
+          })         
+  }
+   } 
 }]);
