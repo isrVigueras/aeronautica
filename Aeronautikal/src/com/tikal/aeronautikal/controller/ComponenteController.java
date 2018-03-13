@@ -299,7 +299,7 @@ public class ComponenteController {
 	   }
 	   
 	   
-	   @RequestMapping(value = {"/update/{userName}" }, method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+	   @RequestMapping(value = {"/update/{userName}" }, method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 		public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody String json, @PathVariable String userName)
 				throws IOException {
 		   if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 52, sessionDao,userName)){

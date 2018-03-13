@@ -55,8 +55,32 @@ public class ComponenteDaoImpl implements ComponenteDao{
 	public void update(ComponenteEntity c) {
 		// TODO Auto-generated method stub
 		
-			ofy().save().entity(c).now();
-			System.out.println("guarda los nuevos datos" );
+			//ofy().save().entity(c).now();
+			System.out.println("guarda los nuevos datos del componente" );
+			
+			ComponenteEntity old = this.consult(c.getId());
+			if (old != null) {
+				old.setAnaquel(c.getAnaquel());
+				old.setCertificado8130(c.getCertificado8130());
+				old.setD_cantidad(c.getD_cantidad());
+				old.setD_componente(c.getD_componente());
+				old.setD_descripcion(c.getD_descripcion());
+				old.setD_marca(c.getD_marca());
+				old.setD_modelo(c.getD_modelo());
+				old.setD_observaciones(c.getD_observaciones());
+				old.setD_parte(c.getD_parte());
+				old.setD_pendientes(c.getD_pendientes());
+				old.setFechaApertura(c.getFechaApertura());
+				old.setIdCategoria(c.getIdCategoria());
+				old.setIdCondicion(c.getIdCondicion());
+				old.setIdUnidad(c.getIdUnidad());
+				old.setMaximo(c.getMaximo());
+				old.setMinimo(c.getMinimo());
+				old.setNoSerie(c.getNoSerie());
+				old.setRepisa(c.getRepisa());
+				
+			}	
+				ofy().save().entity(old);
 		}
 
 		
