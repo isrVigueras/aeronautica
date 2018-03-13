@@ -1,0 +1,67 @@
+<script>
+  $('#editaCliente').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+</script>
+<link href="css/tabla.css" rel="stylesheet" type="text/css" />
+<div class="contenedor">
+ <center><h1 style="color:#EEE6E6">Consulta Perfil</h1></center>
+ <br>
+<table class="tito">
+    <thead>
+      <tr style="background-color: #201b17c9;">
+        <th>Numero de Identificacion</th>
+        <th>Tipo</th>
+        <th>Accion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="perfil in perfil_regis">
+        <td>{{perfil.id}}</td>
+        <td>{{perfil.tipo}}</td>
+        <td>
+           <button type="button" class="btn btn-default" ng-click="elimina_perfil(puesto.id)">
+  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+</button>
+<!--<input type ='button' value = 'texto boton' onclick="window.open('http://localhost/aeronau/Detalle_discrepancias.html', 'width=800,height=600');"/>--> 
+
+</td>
+      </tr>
+    </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="2">El Numero de perfiles es:</td>
+        <td ng-bind="perfil_regis.length"></td>
+      </tr>
+    </tfoot>
+  </table>
+  <br><br><br><br><br>
+</div>
+<br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br>
+<!--********************************** Modal Editar Puesto ***********************************-->
+<div class="modal fade" id="editaPuesto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <center><h3 class="modal-title" id="myModalLabel" style="color:#000000">Editar Puesto</h3></center>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+   <div class="row" style="margin: 1% 13%;">
+  
+   <h3>Roles de la Empresa</h3>
+  <label for="Clave">Clave:</label><input class="form-control" placeholder="Escriba la Clave del Puesto" ng-model="puesto_edi.Clave" id="Clave" name="Clave" type="text"/>
+  <label for="Descripcion">Nombre del Puesto</label><input class="form-control" placeholder="Escriba el Nombre del Puesto" ng-model="puesto_edi.Descripcion" id="Descripcion" name="Descripcion" type="text"/>
+
+  
+      </div>
+      <div class="modal-footer">
+                 <button type="button" class="btn btn-primary" ng-click="Actualiza_puesto()">
+        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Actualizar
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
