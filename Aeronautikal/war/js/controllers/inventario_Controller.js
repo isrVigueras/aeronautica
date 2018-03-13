@@ -33,7 +33,23 @@ app.service('EliminaInventarioService', [ '$http', '$q', function($http, $q) {
   }
 } ]);
 
-
+//servicio actualiza Componente
+app.service('ActualizaComponenteServicio', [ '$http', '$q', function($http, $q) {
+  this.Actualiza_componente = function(user,objeto) {
+    var d = $q.defer();
+    $http.post("/componente/update/"+user,objeto).then(function(response) {
+      console.log(response);
+      d.resolve(response.data);
+    }, function(response) {
+       if(response.status==403){
+      alert("No tienes Permisos");
+      location.href="#/Inicio/paginaPrincipal";
+      //$rootScope.authenticated = false;
+                              }
+    });
+    return d.promise;
+  }
+} ]);
 app.controller("InventarioController", ['$scope','InventarioService','categoria','unidad','condicion','$rootScope','$cookies',function($scope,InventarioService,categoria,unidad,condicion,$rootScope,$cookies) {
    console.log($cookies.cosa);
   /*$scope.Txt=true;
@@ -93,11 +109,33 @@ $scope.condicion =condicion;
     }
   }
 }]);
-app.controller("InventarioconsultaController", ['$scope','inv_consultas','EliminaInventarioService','$cookies',function($scope,inv_consultas,EliminaInventarioService,$cookies) {
+app.controller("InventarioconsultaController", ['$scope','inv_consultas','EliminaInventarioService','$cookies','categoria','unidad','condicion','ActualizaComponenteServicio',function($scope,inv_consultas,EliminaInventarioService,$cookies,categoria,unidad,condicion,ActualizaComponenteServicio) {
+ if($cookies.cosa == null){
+      alert("session vacia");
+      location.href="/";
+    }
+    else
+    {
+ console.log($cookies.cosa);
  $scope.inv_consultas =inv_consultas;
+ $scope.categoria =categoria;
+ $scope.unidad =unidad;
+$scope.condicion =condicion;
+
   console.log($scope.inv_consultas);
    $scope.muestra=function(data) {
     console.log(data);
     $scope.detalle_componentes = data; 
+  }
+  $scope.Actualiza_componente=function(objeto) {
+
+  console.log(objeto)
+      ActualizaComponenteServicio.Actualiza_componente($cookies.cosa,objeto).then(
+        function(data) {
+          console.log(data);
+          alert("Componente Modificado");
+          location.reload();
+        })  
+  }
   }
 }]);

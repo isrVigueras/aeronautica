@@ -34,7 +34,8 @@
         <th>Faltantes</th>
         <th>Anaquel</th>
         <th>Repisa</th>
-        
+        <th>Maximo</th>
+        <th>Minimo</th>
         <th>Accion</th>
       </tr>
   </thead>
@@ -52,6 +53,8 @@
         <td>{{inv_consulta.d_pendientes}}</td>
         <td>{{inv_consulta.anaquel}}</td>
         <td>{{inv_consulta.repisa}}</td>
+        <td>{{inv_consulta.maximo}}</td>
+        <td>{{inv_consulta.minimo}}</td>
         
         <td>      <button type="button" class="btn btn-default" data-toggle="modal" ng-click="muestra(inv_consulta)" data-target="#mydetalle">
   <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -91,22 +94,75 @@
       <div class="modal-body">
         <form>
           <div class="row">
-            <div class="col-xs-4">
-           <label for="con_nombre">Datos:</label>
+           <label for="con_nombre">&nbsp;&nbsp;Datos:</label>
               <br>
+              <div class="col-xs-5">
                 <label>ID:</label><span>{{detalle_componentes.id}}</span>
                 <br>
-                <label>Nombre del componente:</label><span>{{detalle_componentes.d_componente}}</span>
-                <br>
-                <label>Cantidad:</label><span>{{detalle_componentes.d_cantidad}}</span>
-                <br>
-                <label>Descripcion:</label><span>{{detalle_componentes.d_descripcion}}</span>
-            </div>
-          </div>
+                <label for="noSerie">No.Serie:</label><input class="form-control" placeholder="Escriba el Numero de Serie" id="noSerie" name="noSerie" type="text" ng-model="inventario.noSerie"/>
+                </div>
+                <div class="col-xs-4">
+                <label for="d_componente">Nombre del Componente/component:</label><input class="form-control" placeholder="Escriba el Nombre del Componente" id="d_componente" name="d_componente" type="text" ng-model="detalle_componentes.d_componente"/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <label for="em-pais">&nbsp;&nbsp;Categoria :</label>
+                <select class="form-control" ng-model="detalle_componentes.idCategoria" >
+            <option value="">--Elige una Categoria--</option>
+          <option value="{{categori.id}}" ng-repeat="categori in categoria"  >{{categori.descripcion}}</option>
+        </select>
+      </div>
+      <br>
+      <div class="row">
+        <label for="em-pais">&nbsp;&nbsp;Unidad de Medida :</label><select class="form-control" ng-model="detalle_componentes.idUnidad" >
+            <option value="">--Elige una Abreviatura--</option>
+          <option value="{{uni.id}}" ng-repeat="uni in unidad"  >{{uni.descripcion}}</option>
+        </select>
+      </div>
+        <br>
+        <div class="row">
+        <label for="em-pais">&nbsp;&nbsp;Condicion :</label><select class="form-control" ng-model="detalle_componentes.idCondicion" >
+            <option value="">--Elige la condicion--</option>
+          <option value="{{condicio.id}}" ng-repeat="condicio in condicion"  >{{condicio.descripcion}}</option>
+        </select>
+      </div>
+      <br>
+        <div class="checkbox">
+        <label>
+          <input type="checkbox" value="false" ng-model="detalle_componentes.certificado8130">
+          Seleccione esta opcion si el componente cuenta con certificacion 8130
+        </label>
+      </div>
+      <br>
+       <label for="d_modelo">Modelo/Item:</label><input class="form-control" placeholder="Escriba el Nombre del Modelo" id="d_modelo" name="d_modelo" type="text" ng-model="detalle_componentes.d_modelo"/>
+        <br>
+        <label for="d_marca">Marca:</label><input class="form-control" placeholder="Escriba la Marca" id="d_marca" name="d_marca" type="text" ng-model="detalle_componentes.d_marca"/>
+        <br>
+        <label for="d_parte">No.De parte/p.n.:</label><input class="form-control" placeholder="Escriba el No. de Parte" id="d_parte" name="d_parte" type="text" ng-model="detalle_componentes.d_parte"/>
+        <br>
+         <label for="d_cantidad">Cantidad/qty:</label><input class="form-control" placeholder="Escriba la Cantidad" id="d_cantidad" name="d_cantidad" type="number" ng-model="detalle_componentes.d_cantidad"/>
+         <br>
+         <label for="d_cantidad">Descripcion:</label>
+         <textarea class="form-control"  rows="4" cols="30" placeholder="Escriba la descripcion del componente." ng-model="detalle_componentes.d_descripcion">
+        </textarea>
+        <br>
+        <label for="d_observaciones">Observaciones:</label>
+         <textarea class="form-control"  rows="4" cols="30" placeholder="Escriba la las Observaciones que Requiera el Componente." ng-model="detalle_componentes.d_observaciones">
+        </textarea>
+        <br>
+        <h3>Ubicacion y Capacidad</h3>
+        <label for="anaquel">Anaquel:</label><input class="form-control" placeholder="Escriba la ubicacion del Anaquel" id="anaquel" name="anaquel" type="text" ng-model="detalle_componentes.anaquel"/>
+        <br>
+        <label for="repisa">Repisa:</label><input class="form-control" placeholder="Escriba la ubicacion de la Repisa" id="repisa" name="repisa" type="text" ng-model="detalle_componentes.repisa"/>
+        <br>
+        <label for="maximo">Maximo:</label><input class="form-control" placeholder="Escriba la cantidad maxima para el almacen" id="maximo" name="maximo" type="number" ng-model="detalle_componentes.maximo"/>
+        <br>
+        <label for="minimo">Minimo:</label><input class="form-control" placeholder="Escriba la cantidad minima para el almacen" id="minimo" name="minimo" type="number" ng-model="detalle_componentes.minimo"/>
             </form>
       </div>
       <div class="modal-footer">
-           <button type="button" class="btn btn-primary" ng-click="alta_discrepancia()">Guardar</button>
+           <button type="button" class="btn btn-primary" ng-click="Actualiza_componente(detalle_componentes)">Guardar</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       </div>
     </div>

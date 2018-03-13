@@ -646,6 +646,15 @@ app.config(['$routeProvider',function($routeProvider) {
      resolve: {
       inv_consultas:['remoteResource',function(remoteResource) {
         return remoteResource.listado_inv();
+      }],
+            categoria:['remoteResource','$route',function(remoteResource) {
+        return remoteResource.categoria();
+      }],
+      unidad:['remoteResource','$route',function(remoteResource) {
+        return remoteResource.unidad();
+      }],
+      condicion:['remoteResource','$route',function(remoteResource) {
+        return remoteResource.condicion();
       }]
     }
   });  
@@ -1051,7 +1060,6 @@ app.controller("MainController", ['$scope','remoteResource','IniSessServicio','C
            //$rootScope.authenticated = data;
             console.log("session almacenada");
           console.log($cookies);
-          alert("Inicio session");
           location.href="#/Inicio/paginaPrincipal";
           location.reload();
           })     
