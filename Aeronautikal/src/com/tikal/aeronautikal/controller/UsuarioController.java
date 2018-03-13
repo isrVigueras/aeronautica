@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.tikal.aeronautikal.dao.PerfilDAO;
 import com.tikal.aeronautikal.dao.PuestoDao;
-import com.tikal.aeronautikal.dao.SesionDao;
 import com.tikal.aeronautikal.dao.SessionDao;
 import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.entity.Perfil;
