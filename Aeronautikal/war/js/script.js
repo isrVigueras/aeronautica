@@ -888,6 +888,9 @@ $routeProvider.when('/Admin/Consulta_Usuario', {
       }],
        perfil_lista:['remoteResource',function(remoteResource) {
         return remoteResource.perfil_lista();
+      }],
+       puestos_lista:['remoteResource',function(remoteResource) {
+        return remoteResource.puestos_lista();
       }]
 
     }

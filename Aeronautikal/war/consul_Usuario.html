@@ -11,6 +11,8 @@
     <thead>
       <tr style="background-color: #201b17c9;">
         <th>ID</th>
+        <th>Nombre</th>
+        <th>Puesto</th>
         <th>Nombre de Usuario</th>
         <th>Perfil</th>
         <th>Accion</th>
@@ -19,6 +21,8 @@
     <tbody>
       <tr ng-repeat="usu in usuarios_lista">
         <td>{{usu.id}}</td>
+        <td>{{usu.nombre}}</td>
+        <td>{{usu.idPuesto}}</td>
         <td>{{usu.usuario}}</td>
         <td>{{usu.perfil}}</td>
         <td>
@@ -56,16 +60,22 @@
    <div class="row" style="margin: 1% 13%;">
   
    <h3>Datos Personales</h3>
+   <label for="nombre">Nombre</label><input class="form-control" placeholder="Escriba el Nombre del Empleado" ng-model="editaUsuarios.nombre" id="nombre" name="nombre" type="text"/>
+    <label for="idPuesto">Puesto:</label>
+  <select class="form-control" ng-model="editaUsuarios.idPuesto" >
+            <option value="">--Elige una Puesto--</option>
+          <option value="{{puesto.id}}" ng-repeat="puesto in puestos_lista"  >{{puesto.Descripcion}}</option>
+        </select>
   <label for="usuario">Usuario</label><input class="form-control" placeholder="Escriba el Nombre del Usuario" ng-model="editaUsuarios.usuario" id="usuario" name="usuario" type="text"/>
   <label for="pasword">Password</label><input class="form-control" placeholder="Escriba la Nueva Contraseña" ng-model="editaUsuarios.password" id="pasword" name="pasword" type="Password"/>
-  <label for="idPerfil">Puesto:</label>
+  <label for="idPerfil">Perfil:</label>
   <select class="form-control" ng-model="editaUsuarios.perfil" >
             <option value="">--Elige un Perfil--</option>
           <option value="{{perfil.tipo}}" ng-repeat="perfil in perfil_lista"  >{{perfil.tipo}}</option>
         </select>
       </div>
       <div class="modal-footer">
-                 <button type="button" class="btn btn-primary" ng-click="Actualiza_Empresa()">
+                 <button type="button" class="btn btn-primary" ng-click="actualiza_usuario()">
         <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Actualizar
         </button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
