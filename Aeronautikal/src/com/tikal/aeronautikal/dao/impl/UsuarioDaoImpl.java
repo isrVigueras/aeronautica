@@ -101,6 +101,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
 					old.setaMaterno(u.getaMaterno());
 					old.setPerfil(u.getPerfil());
 					old.setIdPuesto(u.getIdPuesto());
+					old.setNombrePuesto(u.getNombrePuesto());
 					
 				}
 

@@ -20,6 +20,7 @@ public class Usuario implements UserDetails{
 	//@Index private Long idPerfil;
 	//private String email;
 	@Index Long idPuesto;
+	private String nombrePuesto;
 	private String nombre;
 	private String aPaterno;
 	private String aMaterno;
@@ -28,6 +29,14 @@ public class Usuario implements UserDetails{
 
 	
 	
+
+	public String getNombrePuesto() {
+		return nombrePuesto;
+	}
+
+	public void setNombrePuesto(String nombrePuesto) {
+		this.nombrePuesto = nombrePuesto;
+	}
 
 	public Long getIdPuesto() {
 		return idPuesto;
