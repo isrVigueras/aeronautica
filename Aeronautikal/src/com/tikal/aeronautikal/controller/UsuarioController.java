@@ -100,10 +100,11 @@ public class UsuarioController {
 	}
 
 	@RequestMapping(value = { "/delete/{id}/{userName}" }, method = RequestMethod.POST)
-	public void eliminarUsuario(HttpServletRequest request, HttpServletResponse response, @RequestBody String json,
-			@PathVariable String userName, @PathVariable Long id )
+	public void eliminarUsuario(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable Long id, @PathVariable String userName )
 			throws IOException {
 		if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 50, sessionDao,userName)){
+			System.out.println("YYYYYYYYYYYYYy");
 			AsignadorDeCharset.asignar(request, response);
 			
 			Usuario usuario = usuarioDao.consult(id);
