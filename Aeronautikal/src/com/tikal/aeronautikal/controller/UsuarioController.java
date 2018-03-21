@@ -99,13 +99,16 @@ public class UsuarioController {
 		}
 	}
 
-	@RequestMapping(value = { "/delete/{userName}" }, method = RequestMethod.POST, consumes = "Application/Json")
-	public void eliminarUsuario(HttpServletRequest request, HttpServletResponse response, @RequestBody String json, @PathVariable String userName)
+	@RequestMapping(value = { "/delete/{id}/{userName}" }, method = RequestMethod.POST)
+	public void eliminarUsuario(HttpServletRequest request, HttpServletResponse response, @RequestBody String json,
+			@PathVariable String userName, @PathVariable Long id )
 			throws IOException {
 		if(SesionController.verificarPermiso2(request, usuarioDao, perfilDAO, 50, sessionDao,userName)){
 			AsignadorDeCharset.asignar(request, response);
-			Usuario usuario = (Usuario) JsonConvertidor.fromJson(json, Usuario.class);
+			
+			Usuario usuario = usuarioDao.consult(id);
 			usuarioDao.eliminarUsuario(usuario);
+			response.getWriter().println("ok");
 		}else{
 			response.sendError(403);
 		}
