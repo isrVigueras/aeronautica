@@ -117,23 +117,6 @@ app.service('altaUsuarioServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
-//servicio elmina usuario
-app.service('eliminaUsuarioServicio', [ '$http', '$q', function($http, $q) {
-  this.elimina_usuario = function(id) {
-    var d = $q.defer();
-    $http.post("/usuario/delete/"+id).then(function(response) {
-      console.log(response);
-      d.resolve(response.data);
-    }, function(response) {
-       if(response.status==403){
-      alert("No tienes Permisos");
-      location.href="#/Inicio/paginaPrincipal";
-      //$rootScope.authenticated = false;
-                              }
-    });
-    return d.promise;
-  }
-} ]);
 //servicio alta perfil
 app.service('altaPerfilServicio', [ '$http', '$q', function($http, $q) {
   this.alta_perfil = function(user,objeto) {
