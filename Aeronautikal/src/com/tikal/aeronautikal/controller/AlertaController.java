@@ -52,6 +52,9 @@ public class AlertaController {
 			
 					System.out.println("No hay componentes en alerta");
 					response.getWriter().println(0);
+				}else{
+					System.out.println("Los componentes en alerta son :"+lista);
+					response.getWriter().println(JsonConvertidor.toJson(lista));
 				}
 				
 				///para requisiciones
@@ -64,11 +67,13 @@ public class AlertaController {
 					//reqs = new ArrayList<RequisicionEntity>();
 					System.out.println("No hay requisiciones");
 					response.getWriter().println(0);
+				}else{
+					System.out.println("Los componentes en alerta son :"+reqs);
+					response.getWriter().println(JsonConvertidor.toJson(reqs));
 				}
 				
-				System.out.println("Los componentes en alerta son :"+lista);
-				response.getWriter().println(JsonConvertidor.toJson(lista));
-				response.getWriter().println(JsonConvertidor.toJson(reqs));
+			
+				
 
 			}
 	   
