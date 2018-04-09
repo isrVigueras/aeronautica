@@ -81,7 +81,7 @@ import com.tikal.aeronautikal.entity.EmpresaEntity;
 		    }
 		    
 
-		   @RequestMapping(value = {"/add{userName}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
+		   @RequestMapping(value = {"/add/{userName}"}, method = RequestMethod.POST, produces = "application/json", consumes = "application/json") 
 		   public void addEmpresa(HttpServletResponse response, HttpServletRequest request,
 				   @RequestBody String json, @PathVariable String userName) throws IOException{
 		       System.out.println("si entra al add por POST"+json);
