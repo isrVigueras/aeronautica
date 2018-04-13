@@ -56,6 +56,14 @@ public class ValeDaoImpl implements ValeDao{
 		}
 
 		
+	/*	@Override
+		public List<ValeEntity> getByUser(Long idUser) {
+			// TODO Auto-generated method stub
+			List<ValeEntity> vs = ofy().load().type(ValeEntity.class).filter("idUser", idUser).list();
+			return vs;
+		}*/
+		
+		
 		@Override
 		public List<ValeEntity> getByDiscrepancia(Long idDiscrepancia) {
 			// TODO Auto-generated method stub

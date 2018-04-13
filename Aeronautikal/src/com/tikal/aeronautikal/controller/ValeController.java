@@ -150,6 +150,18 @@ public class ValeController {
 
 		}
 	   
+	   
+	  /* @RequestMapping(value = { "/findAll" }, method = RequestMethod.GET, produces = "application/json")
+		public void findAllValesbyUser(HttpServletResponse response, HttpServletRequest request) throws IOException {
+			AsignadorDeCharset.asignar(request, response);
+			List<ValeEntity> lista = valeDao.getByUser();
+			if (lista == null) {
+				lista = new ArrayList<ValeEntity>();
+			}
+			response.getWriter().println(JsonConvertidor.toJson(lista));
+
+		}*/
+	   
 	     
 	   
 	   

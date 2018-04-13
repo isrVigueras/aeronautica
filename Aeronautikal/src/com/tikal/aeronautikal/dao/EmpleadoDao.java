@@ -17,6 +17,8 @@ public interface EmpleadoDao {
 	    
 	public void findAll(EmpleadoEntity e);
 	
+	//public void getByNAme(String Empleado);
+	
 	public List<EmpleadoEntity> getAll();
 	
 }

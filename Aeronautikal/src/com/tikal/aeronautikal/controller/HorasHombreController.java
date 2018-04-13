@@ -34,6 +34,7 @@ import com.tikal.aeronautikal.dao.PerfilDAO;
 import com.tikal.aeronautikal.dao.SessionDao;
 import com.tikal.aeronautikal.dao.UsuarioDao;
 import com.tikal.aeronautikal.entity.HorasHombre;
+import com.tikal.aeronautikal.entity.Usuario;
 import com.tikal.aeronautikal.util.AsignadorDeCharset;
 import com.tikal.aeronautikal.util.JsonConvertidor;
 
@@ -166,12 +167,14 @@ public class HorasHombreController {
 		}
 
 	   
-	   @RequestMapping(value = { "/getAsignadasByEmpleado/{idEmpleado}" }, method = RequestMethod.GET, produces = "application/json")
+	   @RequestMapping(value = { "/getAsignadasByUser/{Name}" }, method = RequestMethod.GET, produces = "application/json")
 		public void findByEmpleado(HttpServletResponse response, HttpServletRequest request,
-				@PathVariable Long idEmpleado) throws IOException {
-		   System.out.println("ya entro a buscar horas hombe por empleado");
+				@PathVariable String Name) throws IOException {
+		   System.out.println("ya entro a buscar horas hombe por usuario");
 			AsignadorDeCharset.asignar(request, response);
-			List<HorasHombre> lista= horasHombreDao.getByEmpleado(idEmpleado);
+			Usuario usu= usuarioDao.consultarUsuario(Name);
+			
+			List<HorasHombre> lista= horasHombreDao.getByEmpleado(usu.getId());
 
 			System.out.println("Asignadas::"+lista);
 			if (lista == null) {

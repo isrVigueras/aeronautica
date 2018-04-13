@@ -17,6 +17,8 @@ public interface ValeDao {
 	    
 	public List<ValeEntity> findAll();
 	
+	//public List<ValeEntity> getByUser();
+	
 	public List<ValeEntity> getByDiscrepancia(Long id);
 
 }

@@ -20,7 +20,7 @@ public class RequisicionDaoImpl implements RequisicionDao {
         ofy().save().entity(r).now();
     }
 	public List<RequisicionEntity> getAll() {
-		return ofy().load().type(RequisicionEntity.class).list();
+		return ofy().load().type(RequisicionEntity.class).filter("estatus", "ABIERTO").list();
 	}
 
 
