@@ -109,7 +109,7 @@ font-size: 11px;
           </ul>
       </li>
      <li id="notification_li">
-<span id="notification_count" ng-bind="alertas.length"></span>
+<span id="notification_count" ng-bind="num"></span>
 <a href="#/Notificaciones/Ver" id="notificationLink">Notificaciones</a>
 </li>
  <li>     
@@ -125,6 +125,7 @@ font-size: 11px;
           <li class="divider"></li>
           <li class="dropdown-header"><B>CONSULTAS</B></li>
           <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#/Admin/Empleados/Consulta">Empleados</a></li>-->
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Admin/Con_HHombre">Horas hombre</a></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Admin/Puestos/Consulta">Puestos</a></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#Admin/Consulta_Usuario">Usuario</a></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Admin/Perfiles/Consulta">Perfil</a></li>
@@ -137,7 +138,7 @@ font-size: 11px;
           <a data-toggle="dropdown" type="button" href="">Trabajos
           <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Usuario/Horas_Hombre">Horas Hombre</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#/Usuario/Horas_Hombre/{{u}}">Horas Hombre</a></li>
           <!--<li role="presentation" class="divider"></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>-->    
           </ul>

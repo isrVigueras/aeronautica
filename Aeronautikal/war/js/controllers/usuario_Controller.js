@@ -66,10 +66,10 @@ app.service('ReiniciarTrabajoServicio', [ '$http', '$q', function($http, $q) {
     return d.promise;
   }
 } ]);
-app.controller('UsuariosH_Hombre_Controller', ['$scope','IniciaTrabajoServicio','PausarTrabajoServicio','PararTrabajoServicio','ReiniciarTrabajoServicio','dis_asignadas','$cookies',function($scope,IniciaTrabajoServicio,PausarTrabajoServicio,PararTrabajoServicio,ReiniciarTrabajoServicio,dis_asignadas,$cookies) {
+app.controller('UsuariosH_Hombre_Controller', ['$scope','IniciaTrabajoServicio','PausarTrabajoServicio','PararTrabajoServicio','ReiniciarTrabajoServicio','Consulta_HHombre','$cookies',function($scope,IniciaTrabajoServicio,PausarTrabajoServicio,PararTrabajoServicio,ReiniciarTrabajoServicio,Consulta_HHombre,$cookies) {
     console.log($cookies.cosa);
-    $scope.dis_asignadas = dis_asignadas;
-    console.log(dis_asignadas);
+    $scope.Consulta_HHombre = Consulta_HHombre;
+    console.log(Consulta_HHombre);
    
      $scope.iniciar_trabajo=function(id) {
     	console.log(id);

@@ -28,8 +28,35 @@
     </tbody>
       <tfoot>
       <tr>
-        <td colspan="3">Numero de Notificaciones:</td>
+        <td colspan="3">Notificaciones:</td>
         <td ng-bind="aalertas.length"></td>
+      </tr>
+    </tfoot>
+  </table>
+  <br>
+  <center><h1 style="color:#EEE6E6">Requisiciones</h1></center>
+  <br>
+  <table class="tito">
+    <thead>
+      <tr style="background-color: #201b17c9;">
+        <th>ID Componenete</th>
+        <th>Fecha</th>
+        <th>Folio Discrepancia</th>
+        <th>Numero de Piezas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="lista in lista_derequisiciones">
+        <td>{{lista.folio_componente}}</td>
+        <td>{{lista.fechaApertura}}</td>
+        <td>{{lista.folio_discrepancia}}</td>
+        <td>{{lista.numero_piezas}}</td>
+      </tr>
+    </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="2">Numero de Requisiciones:</td>
+        <td ng-bind="lista_derequisiciones.length"></td>
       </tr>
     </tfoot>
   </table>

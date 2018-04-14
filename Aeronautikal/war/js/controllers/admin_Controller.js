@@ -266,6 +266,12 @@ app.controller('HorasHombreController', ['$scope', 'usuarios_lista','discrepanci
           })         
   }
 }]);
+app.controller('HHombreConsController', ['$scope','dis_asignadas_l','$cookies',function($scope,dis_asignadas_l,$cookies) {
+     console.log($cookies.cosa);
+    $scope.dis_asignadas_l = dis_asignadas_l;
+    console.log($scope.dis_asignadas_l);  
+     
+}]);
 app.controller('UsuarioController', ['$scope','altaUsuarioServicio','AsignarDiscServicio','perfil_lista','$cookies','puestos',function($scope,altaUsuarioServicio,AsignarDiscServicio,perfil_lista,$cookies,puestos) {
      console.log($cookies.cosa);
     $scope.perfil_lista = perfil_lista;

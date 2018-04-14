@@ -3,7 +3,7 @@
 <div class="contenedor" style="color:#EEE6E6">
  <center><h1>Horas Hombre</h1></center>
   <div class="row" style="margin: 1% 13%;">
-    <label for="d_componente">Nombre del Usuario: {{dis_asignadas.Empleado}}</label>
+    <label for="d_componente">Nombre del Usuario: {{idEmpleado}}</label>
     <br>
     <label for="d_componente">Orden de trabajo: 13000</label>
 
@@ -19,7 +19,7 @@
       </tr>
   </thead>
     <tbody>
-      <tr ng-repeat="dis in dis_asignadas">
+      <tr ng-repeat="dis in Consulta_HHombre">
         <td>{{dis.idDiscrepancia}}</td>
         <td>{{dis.accion}}</td>
         <td>{{dis.estatus}}</td>
@@ -43,8 +43,8 @@
     </tbody>
       <tfoot>
       <tr>
-        <td colspan="2">El Numero de Asignaciones es:</td>
-        <td ng-bind="inv_consultas.length">2</td>
+        <td colspan="2">El Numero de discrepancias asignaciones es:</td>
+        <td ng-bind="Consulta_HHombre.length">2</td>
       </tr>
     </tfoot>
   </table>

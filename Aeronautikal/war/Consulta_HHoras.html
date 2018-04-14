@@ -1,0 +1,40 @@
+<link href="css/estilos.css" rel="stylesheet" type="text/css" />
+<link href="css/tabla.css" rel="stylesheet" type="text/css" />
+<div class="contenedor" style="color:#EEE6E6">
+ <center><h1>Horas Hombre</h1></center>
+  <div class="row" style="margin: 1% 13%;">
+  <div class="table-responsive">
+ <table class="table table-striped">
+    <thead>
+      <tr bgcolor="#A9F5F2">
+        <th>Orden de Trabajo</th>
+        <th>Discrepancia</th>
+        <th>Empleado</th>
+        <th>Estatus</th>
+        <th>Tiempo parcial</th>
+        <th>Accion de la discrepancia</th>
+      </tr>
+  </thead>
+    <tbody>
+       <tr ng-repeat="disc in dis_asignadas_l">
+        <td>{{disc.idOrden}}</td>
+        <td>{{disc.idDiscrepancia}}</td>
+        <td>{{disc.Empleado}}</td>
+        <td>{{disc.estatus}}</td>
+        <td>{{disc.ParcialEnHoras}}</td>
+        <td>{{disc.accion}}</td>
+      </tr>
+    </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="3">El Numero de discrepancias asignadas es:</td>
+        <td ng-bind="inv_consultas.length">2</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+  
+</div>
+
+<br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br>   

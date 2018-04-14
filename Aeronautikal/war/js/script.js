@@ -543,6 +543,41 @@ function RemoteResource($http,$q, baseUrl) {
     return promise;
     
   }
+
+  this.lista_derequisiciones = function() {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/alerta/findRequisiciones'
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+  
+  this.Horas_lista_C = function(folio) {
+    var defered=$q.defer();
+    var promise=defered.promise;
+    
+    $http({
+      method: 'GET',
+      url: baseUrl + '/horasHombre/getAsignadasByUser/'+folio
+    }).success(function(data, status, headers, config) {
+      defered.resolve(data);
+    }).error(function(data, status, headers, config) {
+      defered.reject(status);
+    });
+    
+    return promise;
+    
+  }
+
 }
 //Provedor de recursos remotos , es el provedor que nos permite conectar las promesas con los datos json
 function RemoteResourceProvider() {
@@ -795,6 +830,10 @@ $routeProvider.when('/Notificaciones/Ver', {
     resolve: {
       aalertas:['remoteResource',function(remoteResource) {
         return remoteResource.alertas();
+      }],
+
+      lista_derequisiciones:['remoteResource','$route',function(remoteResource) {
+        return remoteResource.lista_derequisiciones();
       }]
     }
   });
@@ -814,13 +853,25 @@ $routeProvider.when('/Admin/Horas_Hombre', {
       }]
     }
   });
-$routeProvider.when('/Usuario/Horas_Hombre', {
+$routeProvider.when('/Admin/Con_HHombre', {
+    templateUrl: "Consulta_HHoras.html",
+    controller: "HHombreConsController",
+    resolve: {
+
+      dis_asignadas_l:['remoteResource',function(remoteResource) {
+        return remoteResource.dis_asignadas_lista();
+      }]
+    }
+  });
+$routeProvider.when('/Usuario/Horas_Hombre/:folio', {
     templateUrl: "horas_hombre.html",
     controller: "UsuariosH_Hombre_Controller",
     resolve: {
-      dis_asignadas:['remoteResource',function(remoteResource) {
-        return remoteResource.dis_asignadas_lista();
+
+       Consulta_HHombre:['remoteResource','$route',function(remoteResource,$route) {
+        return remoteResource.Horas_lista_C($route.current.params.folio);
       }]
+
     }
   });
 $routeProvider.when('/Admin/alta_empleados', {
@@ -1044,10 +1095,28 @@ app.service('sessionService', [
 
 
 app.controller("MainController", ['$scope','remoteResource','IniSessServicio','CerrarSessServicio','$rootScope','$cookieStore','$cookies',function($scope,remoteResource,IniSessServicio,CerrarSessServicio,$rootScope,$cookieStore,$cookies) {
+  console.log($cookies.cosa);
+  $scope.u = $cookies.cosa;
   remoteResource.alertas().then(function(data){
-    $scope.alertas = data;
+    $scope.data = data;
+  
+    remoteResource.lista_derequisiciones().then(function(datad){
+    $scope.datad = datad;
+    console.log("objeto alertas");
+        console.log(data.length);
+        console.log("objeto requisiciones");
+         console.log(datad.length);
+
+  var i= data.length;
+  var u= datad.length;
+  var w= i+u;
+    console.log(w); 
+    $scope.num = w; 
   })
-  console.log($scope.alertas);
+
+  })
+  
+
 
    $scope.forminicia = {
     usuario:"",
