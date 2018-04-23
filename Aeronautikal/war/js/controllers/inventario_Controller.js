@@ -94,7 +94,6 @@ $scope.condicion =condicion;
 
    $scope.alta_inventario=function() {
     console.log($scope.inventario);
-    if ($scope.form.$valid) {
       //alert("variable comprobada: "+$scope.inventario.d_componente+" y la fecha "+ $scope.inventario.fechaApertura);
       InventarioService.genera_inventario($cookies.cosa,$scope.inventario).then(
         function(data) {
@@ -104,9 +103,7 @@ $scope.condicion =condicion;
          alert("componente dado de alta");
         })
               
-    }else {
-      alert("Hay datos inválidos");
-    }
+    
   }
 }]);
 app.controller("InventarioconsultaController", ['$scope','inv_consultas','EliminaInventarioService','$cookies','categoria','unidad','condicion','ActualizaComponenteServicio',function($scope,inv_consultas,EliminaInventarioService,$cookies,categoria,unidad,condicion,ActualizaComponenteServicio) {
